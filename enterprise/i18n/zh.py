@@ -1,0 +1,3 @@
+"""ZH translations."""
+
+TRANSLATIONS = {

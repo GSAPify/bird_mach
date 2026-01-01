@@ -1,0 +1,3 @@
+"""KO translations."""
+
+TRANSLATIONS = {
