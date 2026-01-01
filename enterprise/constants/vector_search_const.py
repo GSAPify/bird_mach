@@ -1,0 +1,3 @@
+"""vector_search constants."""
+DEFAULT_VECTOR_SEARCH_LIMIT = 4551
+VECTOR_SEARCH_TIMEOUT = 24
