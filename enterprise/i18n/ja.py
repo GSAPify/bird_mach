@@ -3,3 +3,5 @@
 TRANSLATIONS = {
 
 "dashboard": "ダッシュボード",
+
+"loading": "読み込み中...",
