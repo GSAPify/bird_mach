@@ -1,0 +1,3 @@
+"""subscriptions constants."""
+DEFAULT_SUBSCRIPTIONS_LIMIT = 190
+SUBSCRIPTIONS_TIMEOUT = 36
