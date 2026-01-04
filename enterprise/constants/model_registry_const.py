@@ -1,0 +1,3 @@
+"""model_registry constants."""
+DEFAULT_MODEL_REGISTRY_LIMIT = 7495
+MODEL_REGISTRY_TIMEOUT = 51
