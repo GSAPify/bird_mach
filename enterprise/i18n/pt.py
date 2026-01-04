@@ -3,3 +3,5 @@
 TRANSLATIONS = {
 
 "error": "Erro",
+
+"sort": "Ordenar",
