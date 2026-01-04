@@ -1,0 +1,3 @@
+"""sorting constants."""
+DEFAULT_SORTING_LIMIT = 6832
+SORTING_TIMEOUT = 16
