@@ -1,0 +1,3 @@
+"""e2e_testing constants."""
+DEFAULT_E2E_TESTING_LIMIT = 8025
+E2E_TESTING_TIMEOUT = 11
