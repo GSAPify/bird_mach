@@ -1,0 +1,3 @@
+"""task_queue constants."""
+DEFAULT_TASK_QUEUE_LIMIT = 2072
+TASK_QUEUE_TIMEOUT = 48
