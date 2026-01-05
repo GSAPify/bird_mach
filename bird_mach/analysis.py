@@ -28,6 +28,26 @@ class OnsetResult:
         return float(np.mean(np.diff(self.times_s)))
 
 
+@dataclass
+class BeatResult:
+    """Result of beat tracking."""
+
+    tempo_bpm: float
+    beat_times_s: np.ndarray
+    beat_count: int
+
+
+def track_beats(y: np.ndarray, *, sr: int) -> BeatResult:
+    """Estimate tempo and locate beat positions."""
+    tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
+    beat_times = librosa.frames_to_time(beat_frames, sr=sr)
+    return BeatResult(
+        tempo_bpm=float(np.atleast_1d(tempo)[0]),
+        beat_times_s=beat_times,
+        beat_count=len(beat_frames),
+    )
+
+
 def detect_onsets(
     y: np.ndarray, *, sr: int, hop_length: int = 512
 ) -> OnsetResult:
