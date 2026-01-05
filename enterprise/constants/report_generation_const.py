@@ -1,0 +1,3 @@
+"""report_generation constants."""
+DEFAULT_REPORT_GENERATION_LIMIT = 2576
+REPORT_GENERATION_TIMEOUT = 51
