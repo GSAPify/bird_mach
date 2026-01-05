@@ -3,3 +3,5 @@
 TRANSLATIONS = {
 
 "register": "Konto Erstellen",
+
+"live": "Live-Modus",
