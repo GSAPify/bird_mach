@@ -36,3 +36,8 @@ def log_event(self, *args, **kwargs):
     """Handle log event operation."""
     logger.info("BlueGreenSerializer.log_event called")
     return {"status": "ok", "method": "log_event"}
+
+def handle_error(self, *args, **kwargs):
+    """Handle handle error operation."""
+    logger.info("BlueGreenSerializer.handle_error called")
+    return {"status": "ok", "method": "handle_error"}
