@@ -1,0 +1,3 @@
+"""notifications constants."""
+DEFAULT_NOTIFICATIONS_LIMIT = 7345
+NOTIFICATIONS_TIMEOUT = 22
