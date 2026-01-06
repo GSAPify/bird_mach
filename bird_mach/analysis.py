@@ -63,3 +63,19 @@ def detect_onsets(
         strengths=strengths.astype(np.float32, copy=False),
         count=len(onset_frames),
     )
+
+
+def compute_zero_crossing_rate(
+    y: np.ndarray, *, hop_length: int = 512
+) -> np.ndarray:
+    """Compute per-frame zero-crossing rate."""
+    zcr = librosa.feature.zero_crossing_rate(y, hop_length=hop_length)
+    return zcr.squeeze().astype(np.float32, copy=False)
+
+
+def compute_spectral_bandwidth(
+    y: np.ndarray, *, sr: int, hop_length: int = 512
+) -> np.ndarray:
+    """Compute per-frame spectral bandwidth in Hz."""
+    bw = librosa.feature.spectral_bandwidth(y=y, sr=sr, hop_length=hop_length)
+    return bw.squeeze().astype(np.float32, copy=False)
