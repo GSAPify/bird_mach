@@ -3,3 +3,5 @@
 TRANSLATIONS = {
 
 "settings": "Configuración",
+
+"upload": "Subir Audio",
