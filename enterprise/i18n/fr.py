@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "register": "Créer un Compte",
 
 "delete": "Supprimer",
+
+"login": "Connexion",
