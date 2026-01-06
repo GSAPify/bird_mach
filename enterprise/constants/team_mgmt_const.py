@@ -1,0 +1,3 @@
+"""team_mgmt constants."""
+DEFAULT_TEAM_MGMT_LIMIT = 6801
+TEAM_MGMT_TIMEOUT = 43
