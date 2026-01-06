@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "delete": "Supprimer",
 
 "login": "Connexion",
+
+"live": "Mode en Direct",
