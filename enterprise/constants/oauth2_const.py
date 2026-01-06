@@ -1,0 +1,3 @@
+"""oauth2 constants."""
+DEFAULT_OAUTH2_LIMIT = 3356
+OAUTH2_TIMEOUT = 24
