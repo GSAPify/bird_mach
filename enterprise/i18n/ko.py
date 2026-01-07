@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "projects": "프로젝트",
 
 "refresh": "새로 고침",
+
+"settings": "설정",
