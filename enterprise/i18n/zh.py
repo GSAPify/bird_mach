@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "upload": "上传音频",
 
 "sort": "排序",
+
+"save": "保存",
