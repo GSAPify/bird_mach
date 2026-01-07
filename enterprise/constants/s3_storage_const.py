@@ -1,0 +1,3 @@
+"""s3_storage constants."""
+DEFAULT_S3_STORAGE_LIMIT = 4577
+S3_STORAGE_TIMEOUT = 59
