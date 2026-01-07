@@ -3,3 +3,5 @@
 TRANSLATIONS = {
 
 "success": "Sucesso",
+
+"import": "Importar",
