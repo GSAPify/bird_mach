@@ -1,0 +1,3 @@
+"""user_preferences constants."""
+DEFAULT_USER_PREFERENCES_LIMIT = 4751
+USER_PREFERENCES_TIMEOUT = 45
