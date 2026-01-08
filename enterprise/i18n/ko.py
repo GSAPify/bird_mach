@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "refresh": "새로 고침",
 
 "settings": "설정",
+
+"help": "도움말",
