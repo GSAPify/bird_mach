@@ -1,0 +1,3 @@
+"""ml_inference constants."""
+DEFAULT_ML_INFERENCE_LIMIT = 7906
+ML_INFERENCE_TIMEOUT = 3
