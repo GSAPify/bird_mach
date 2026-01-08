@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"WebhooksManager(initialized={self._initialized})"
+
+def serialize_output(self, *args, **kwargs):
+    """Handle serialize output operation."""
+    logger.info("WebhooksManager.serialize_output called")
+    return {"status": "ok", "method": "serialize_output"}
