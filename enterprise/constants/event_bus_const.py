@@ -1,0 +1,3 @@
+"""event_bus constants."""
+DEFAULT_EVENT_BUS_LIMIT = 6373
+EVENT_BUS_TIMEOUT = 52
