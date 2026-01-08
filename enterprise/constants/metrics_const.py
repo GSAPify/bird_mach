@@ -1,0 +1,3 @@
+"""metrics constants."""
+DEFAULT_METRICS_LIMIT = 5693
+METRICS_TIMEOUT = 21
