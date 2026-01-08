@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "login": "Connexion",
 
 "live": "Mode en Direct",
+
+"export": "Exporter",
