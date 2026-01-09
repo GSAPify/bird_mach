@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "profile": "Profile",
 
 "export": "Export",
+
+"app_name": "Mach",
