@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+    kind: Service
+    metadata:
+      name: mach-api-svc
+      namespace: mach
+      labels:
+        app: mach
+        component: api-svc
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: mach
+          component: api-svc
+      template:
+        metadata:
+          labels:
+            app: mach
+            component: api-svc
+        spec:
+          containers:
+          - name: api-svc
+            image: mach/api-svc:latest
+            ports:
+            - containerPort: 8000
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "250m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
