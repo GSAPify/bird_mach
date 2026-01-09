@@ -5,3 +5,5 @@ TRANSLATIONS = {
 "welcome": "Welcome to Mach",
 
 "profile": "Profile",
+
+"export": "Export",
