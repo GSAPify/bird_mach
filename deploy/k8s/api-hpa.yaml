@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: mach-api-hpa
+      namespace: mach
+      labels:
+        app: mach
+        component: api-hpa
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: mach
+          component: api-hpa
+      template:
+        metadata:
+          labels:
+            app: mach
+            component: api-hpa
+        spec:
+          containers:
+          - name: api-hpa
+            image: mach/api-hpa:latest
+            ports:
+            - containerPort: 8000
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "250m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
