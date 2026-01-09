@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "live": "Live-Modus",
 
 "error": "Fehler",
+
+"import": "Importieren",
