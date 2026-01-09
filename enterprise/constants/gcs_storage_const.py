@@ -1,0 +1,3 @@
+"""gcs_storage constants."""
+DEFAULT_GCS_STORAGE_LIMIT = 1690
+GCS_STORAGE_TIMEOUT = 22
