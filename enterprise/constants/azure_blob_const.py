@@ -1,0 +1,3 @@
+"""azure_blob constants."""
+DEFAULT_AZURE_BLOB_LIMIT = 3171
+AZURE_BLOB_TIMEOUT = 19
