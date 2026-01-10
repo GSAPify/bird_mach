@@ -1,0 +1,3 @@
+"""l10n constants."""
+DEFAULT_L10N_LIMIT = 3504
+L10N_TIMEOUT = 12
