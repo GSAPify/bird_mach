@@ -1,0 +1,3 @@
+"""tracing constants."""
+DEFAULT_TRACING_LIMIT = 8160
+TRACING_TIMEOUT = 20
