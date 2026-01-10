@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "welcome": "Machへようこそ",
 
 "save": "保存",
+
+"error": "エラー",
