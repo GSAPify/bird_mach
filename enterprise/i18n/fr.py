@@ -13,3 +13,5 @@ TRANSLATIONS = {
 "live": "Mode en Direct",
 
 "export": "Exporter",
+
+"settings": "Paramètres",
