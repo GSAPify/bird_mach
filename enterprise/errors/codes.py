@@ -9,3 +9,10 @@ class QuotaExceeded(MachError):
     code = "E1009"
     message = "Usage quota has been exceeded"
     status_code = 546
+
+
+class TokenExpired(MachError):
+    """[E1002] JWT token has expired"""
+    code = "E1002"
+    message = "JWT token has expired"
+    status_code = 460
