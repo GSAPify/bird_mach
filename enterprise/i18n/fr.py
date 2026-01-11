@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "export": "Exporter",
 
 "settings": "Paramètres",
+
+"sort": "Trier",
