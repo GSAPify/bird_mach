@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "export": "Export",
 
 "app_name": "Mach",
+
+"filter": "Filter",
