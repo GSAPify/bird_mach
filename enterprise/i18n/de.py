@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "error": "Fehler",
 
 "import": "Importieren",
+
+"upload": "Audio Hochladen",
