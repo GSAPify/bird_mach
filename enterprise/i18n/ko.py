@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "settings": "설정",
 
 "help": "도움말",
+
+"login": "로그인",
