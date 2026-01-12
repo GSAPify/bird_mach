@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "save": "保存",
 
 "welcome": "欢迎使用Mach",
+
+"delete": "删除",
