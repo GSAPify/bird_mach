@@ -16,3 +16,10 @@ class TokenExpired(MachError):
     code = "E1002"
     message = "JWT token has expired"
     status_code = 460
+
+
+class TimeoutError(MachError):
+    """[E1014] Operation timed out"""
+    code = "E1014"
+    message = "Operation timed out"
+    status_code = 481
