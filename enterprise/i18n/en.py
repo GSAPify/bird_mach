@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "app_name": "Mach",
 
 "filter": "Filter",
+
+"import": "Import",
