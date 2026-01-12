@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "sort": "排序",
 
 "save": "保存",
+
+"welcome": "欢迎使用Mach",
