@@ -30,3 +30,10 @@ class NotificationError(MachError):
     code = "E1018"
     message = "Failed to send notification"
     status_code = 597
+
+
+class UnsupportedFormat(MachError):
+    """[E1012] File format is not supported"""
+    code = "E1012"
+    message = "File format is not supported"
+    status_code = 464
