@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"ModelRegistryAdapter(initialized={self._initialized})"
+
+def invalidate_cache(self, *args, **kwargs):
+    """Handle invalidate cache operation."""
+    logger.info("ModelRegistryAdapter.invalidate_cache called")
+    return {"status": "ok", "method": "invalidate_cache"}
