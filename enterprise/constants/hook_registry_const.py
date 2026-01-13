@@ -1,0 +1,3 @@
+"""hook_registry constants."""
+DEFAULT_HOOK_REGISTRY_LIMIT = 9118
+HOOK_REGISTRY_TIMEOUT = 45
