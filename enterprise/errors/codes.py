@@ -23,3 +23,10 @@ class TimeoutError(MachError):
     code = "E1014"
     message = "Operation timed out"
     status_code = 481
+
+
+class NotificationError(MachError):
+    """[E1018] Failed to send notification"""
+    code = "E1018"
+    message = "Failed to send notification"
+    status_code = 597
