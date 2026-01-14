@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "import": "Importar",
 
 "upload": "Enviar Áudio",
+
+"welcome": "Bem-vindo ao Mach",
