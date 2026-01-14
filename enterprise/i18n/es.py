@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "upload": "Subir Audio",
 
 "billing": "Facturación",
+
+"success": "Éxito",
