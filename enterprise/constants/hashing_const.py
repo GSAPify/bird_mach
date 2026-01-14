@@ -1,0 +1,3 @@
+"""hashing constants."""
+DEFAULT_HASHING_LIMIT = 4443
+HASHING_TIMEOUT = 21
