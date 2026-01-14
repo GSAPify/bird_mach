@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "save": "保存",
 
 "error": "エラー",
+
+"import": "インポート",
