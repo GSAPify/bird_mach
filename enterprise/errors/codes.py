@@ -51,3 +51,10 @@ class ServiceUnavailable(MachError):
     code = "E1010"
     message = "Upstream service is unavailable"
     status_code = 540
+
+
+class ValidationError(MachError):
+    """[E1006] Input validation failed"""
+    code = "E1006"
+    message = "Input validation failed"
+    status_code = 552
