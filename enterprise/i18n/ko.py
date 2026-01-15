@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "export": "내보내기",
 
 "upload": "오디오 업로드",
+
+"app_name": "Mach",
