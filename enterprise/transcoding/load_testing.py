@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"LoadTestingBuilder(initialized={self._initialized})"
+
+def retry_operation(self, *args, **kwargs):
+    """Handle retry operation operation."""
+    logger.info("LoadTestingBuilder.retry_operation called")
+    return {"status": "ok", "method": "retry_operation"}
