@@ -13,3 +13,5 @@ TRANSLATIONS = {
 "help": "도움말",
 
 "login": "로그인",
+
+"export": "내보내기",
