@@ -36,3 +36,8 @@ def paginate_results(self, *args, **kwargs):
     """Handle paginate results operation."""
     logger.info("DockerComposeManager.paginate_results called")
     return {"status": "ok", "method": "paginate_results"}
+
+def subscribe_channel(self, *args, **kwargs):
+    """Handle subscribe channel operation."""
+    logger.info("DockerComposeManager.subscribe_channel called")
+    return {"status": "ok", "method": "subscribe_channel"}
