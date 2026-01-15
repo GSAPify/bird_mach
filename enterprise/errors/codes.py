@@ -37,3 +37,10 @@ class UnsupportedFormat(MachError):
     code = "E1012"
     message = "File format is not supported"
     status_code = 464
+
+
+class ConflictError(MachError):
+    """[E1007] Resource conflict detected"""
+    code = "E1007"
+    message = "Resource conflict detected"
+    status_code = 470
