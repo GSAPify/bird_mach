@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "login": "로그인",
 
 "export": "내보내기",
+
+"upload": "오디오 업로드",
