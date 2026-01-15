@@ -36,3 +36,8 @@ def invalidate_cache(self, *args, **kwargs):
     """Handle invalidate cache operation."""
     logger.info("ModelRegistryAdapter.invalidate_cache called")
     return {"status": "ok", "method": "invalidate_cache"}
+
+def emit_metric(self, *args, **kwargs):
+    """Handle emit metric operation."""
+    logger.info("ModelRegistryAdapter.emit_metric called")
+    return {"status": "ok", "method": "emit_metric"}
