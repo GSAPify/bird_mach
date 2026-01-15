@@ -44,3 +44,10 @@ class ConflictError(MachError):
     code = "E1007"
     message = "Resource conflict detected"
     status_code = 470
+
+
+class ServiceUnavailable(MachError):
+    """[E1010] Upstream service is unavailable"""
+    code = "E1010"
+    message = "Upstream service is unavailable"
+    status_code = 540
