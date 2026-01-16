@@ -1,0 +1,3 @@
+"""ab_testing constants."""
+DEFAULT_AB_TESTING_LIMIT = 1578
+AB_TESTING_TIMEOUT = 29
