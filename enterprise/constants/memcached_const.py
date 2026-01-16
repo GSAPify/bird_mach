@@ -1,0 +1,3 @@
+"""memcached constants."""
+DEFAULT_MEMCACHED_LIMIT = 3217
+MEMCACHED_TIMEOUT = 35
