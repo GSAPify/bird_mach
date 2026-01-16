@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "upload": "오디오 업로드",
 
 "app_name": "Mach",
+
+"loading": "로딩 중...",
