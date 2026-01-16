@@ -1,0 +1,33 @@
+"""
+    ActivityFeedProvider for activity_feed in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
+
+    class ActivityFeedProvider:
+        """Activity Feed activityfeedprovider."""
+
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("ActivityFeedProvider initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("ActivityFeedProvider not configured")
+            logger.info("ActivityFeedProvider.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"ActivityFeedProvider(initialized={self._initialized})"
