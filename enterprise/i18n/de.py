@@ -13,3 +13,5 @@ TRANSLATIONS = {
 "upload": "Audio Hochladen",
 
 "success": "Erfolg",
+
+"sort": "Sortieren",
