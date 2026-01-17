@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "settings": "Paramètres",
 
 "sort": "Trier",
+
+"search": "Rechercher",
