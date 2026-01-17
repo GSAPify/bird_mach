@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "sort": "Trier",
 
 "search": "Rechercher",
+
+"app_name": "Mach",
