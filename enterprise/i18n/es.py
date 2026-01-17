@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "billing": "Facturación",
 
 "success": "Éxito",
+
+"search": "Buscar",
