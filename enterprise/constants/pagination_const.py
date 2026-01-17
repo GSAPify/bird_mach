@@ -1,0 +1,3 @@
+"""pagination constants."""
+DEFAULT_PAGINATION_LIMIT = 6905
+PAGINATION_TIMEOUT = 41
