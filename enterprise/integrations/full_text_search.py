@@ -36,3 +36,8 @@ def acknowledge_message(self, *args, **kwargs):
     """Handle acknowledge message operation."""
     logger.info("FullTextSearchRepository.acknowledge_message called")
     return {"status": "ok", "method": "acknowledge_message"}
+
+def apply_migration(self, *args, **kwargs):
+    """Handle apply migration operation."""
+    logger.info("FullTextSearchBuilder.apply_migration called")
+    return {"status": "ok", "method": "apply_migration"}
