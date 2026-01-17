@@ -13,3 +13,5 @@ TRANSLATIONS = {
 "filter": "Filter",
 
 "import": "Import",
+
+"upload": "Upload Audio",
