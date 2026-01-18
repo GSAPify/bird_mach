@@ -58,3 +58,10 @@ class ValidationError(MachError):
     code = "E1006"
     message = "Input validation failed"
     status_code = 552
+
+
+class ProcessingFailed(MachError):
+    """[E1013] Audio processing pipeline failed"""
+    code = "E1013"
+    message = "Audio processing pipeline failed"
+    status_code = 437
