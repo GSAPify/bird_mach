@@ -13,3 +13,5 @@ TRANSLATIONS = {
 "welcome": "欢迎使用Mach",
 
 "delete": "删除",
+
+"billing": "计费",
