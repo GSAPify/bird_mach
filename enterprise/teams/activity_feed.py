@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"ActivityFeedProvider(initialized={self._initialized})"
+
+def emit_metric(self, *args, **kwargs):
+    """Handle emit metric operation."""
+    logger.info("ActivityFeedProvider.emit_metric called")
+    return {"status": "ok", "method": "emit_metric"}
