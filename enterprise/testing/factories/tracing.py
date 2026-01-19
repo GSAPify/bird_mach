@@ -8,3 +8,8 @@ def apply_migration(self, *args, **kwargs):
     """Handle apply migration operation."""
     logger.info("TracingWorker.apply_migration called")
     return {"status": "ok", "method": "apply_migration"}
+
+def import_data(self, *args, **kwargs):
+    """Handle import data operation."""
+    logger.info("TracingWorker.import_data called")
+    return {"status": "ok", "method": "import_data"}
