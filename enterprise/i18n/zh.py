@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "delete": "删除",
 
 "billing": "计费",
+
+"settings": "设置",
