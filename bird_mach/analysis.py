@@ -79,3 +79,24 @@ def compute_spectral_bandwidth(
     """Compute per-frame spectral bandwidth in Hz."""
     bw = librosa.feature.spectral_bandwidth(y=y, sr=sr, hop_length=hop_length)
     return bw.squeeze().astype(np.float32, copy=False)
+
+
+def compute_spectral_rolloff(
+    y: np.ndarray, *, sr: int, hop_length: int = 512, roll_percent: float = 0.85
+) -> np.ndarray:
+    """Compute per-frame spectral rolloff frequency."""
+    rolloff = librosa.feature.spectral_rolloff(
+        y=y, sr=sr, hop_length=hop_length, roll_percent=roll_percent
+    )
+    return rolloff.squeeze().astype(np.float32, copy=False)
+
+
+def compute_mfcc(
+    y: np.ndarray, *, sr: int, n_mfcc: int = 13, hop_length: int = 512
+) -> np.ndarray:
+    """Extract MFCCs (mel-frequency cepstral coefficients).
+
+    Returns shape (n_mfcc, n_frames).
+    """
+    mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc, hop_length=hop_length)
+    return mfccs.astype(np.float32, copy=False)
