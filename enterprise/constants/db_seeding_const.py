@@ -1,0 +1,3 @@
+"""db_seeding constants."""
+DEFAULT_DB_SEEDING_LIMIT = 4235
+DB_SEEDING_TIMEOUT = 56
