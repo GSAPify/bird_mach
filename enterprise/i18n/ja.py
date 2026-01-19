@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "import": "インポート",
 
 "help": "ヘルプ",
+
+"projects": "プロジェクト",
