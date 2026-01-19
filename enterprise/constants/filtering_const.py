@@ -1,0 +1,3 @@
+"""filtering constants."""
+DEFAULT_FILTERING_LIMIT = 5174
+FILTERING_TIMEOUT = 57
