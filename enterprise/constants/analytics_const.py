@@ -1,0 +1,3 @@
+"""analytics constants."""
+DEFAULT_ANALYTICS_LIMIT = 7717
+ANALYTICS_TIMEOUT = 51
