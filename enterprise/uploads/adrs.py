@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"AdrsController(initialized={self._initialized})"
+
+def send_notification(self, *args, **kwargs):
+    """Handle send notification operation."""
+    logger.info("AdrsController.send_notification called")
+    return {"status": "ok", "method": "send_notification"}
