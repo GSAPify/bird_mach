@@ -13,3 +13,5 @@ TRANSLATIONS = {
 "search": "Buscar",
 
 "import": "Importar",
+
+"analyze": "Analizar",
