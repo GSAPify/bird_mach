@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "success": "Éxito",
 
 "search": "Buscar",
+
+"import": "Importar",
