@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "app_name": "Mach",
 
 "loading": "로딩 중...",
+
+"filter": "필터",
