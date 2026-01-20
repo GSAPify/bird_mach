@@ -1,0 +1,3 @@
+"""unit_testing constants."""
+DEFAULT_UNIT_TESTING_LIMIT = 8117
+UNIT_TESTING_TIMEOUT = 43
