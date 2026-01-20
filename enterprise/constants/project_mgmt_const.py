@@ -1,0 +1,3 @@
+"""project_mgmt constants."""
+DEFAULT_PROJECT_MGMT_LIMIT = 6622
+PROJECT_MGMT_TIMEOUT = 18
