@@ -41,3 +41,8 @@ def emit_metric(self, *args, **kwargs):
     """Handle emit metric operation."""
     logger.info("ModelRegistryAdapter.emit_metric called")
     return {"status": "ok", "method": "emit_metric"}
+
+def rollback_changes(self, *args, **kwargs):
+    """Handle rollback changes operation."""
+    logger.info("ModelRegistryAdapter.rollback_changes called")
+    return {"status": "ok", "method": "rollback_changes"}
