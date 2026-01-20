@@ -100,3 +100,22 @@ def compute_mfcc(
     """
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc, hop_length=hop_length)
     return mfccs.astype(np.float32, copy=False)
+
+
+def compute_chromagram(
+    y: np.ndarray, *, sr: int, hop_length: int = 512
+) -> np.ndarray:
+    """Compute a chromagram (12-bin pitch class energy distribution).
+
+    Returns shape (12, n_frames).
+    """
+    chroma = librosa.feature.chroma_stft(y=y, sr=sr, hop_length=hop_length)
+    return chroma.astype(np.float32, copy=False)
+
+
+def separate_harmonic_percussive(
+    y: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Split audio into harmonic and percussive components."""
+    y_harmonic, y_percussive = librosa.effects.hpss(y)
+    return y_harmonic, y_percussive
