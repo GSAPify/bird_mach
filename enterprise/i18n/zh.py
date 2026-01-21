@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "settings": "设置",
 
 "help": "帮助",
+
+"error": "错误",
