@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "loading": "로딩 중...",
 
 "filter": "필터",
+
+"profile": "프로필",
