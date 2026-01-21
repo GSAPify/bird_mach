@@ -1,0 +1,3 @@
+"""db_migration constants."""
+DEFAULT_DB_MIGRATION_LIMIT = 5396
+DB_MIGRATION_TIMEOUT = 19
