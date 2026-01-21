@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"DockerComposeFactory(initialized={self._initialized})"
+
+def cache_result(self, *args, **kwargs):
+    """Handle cache result operation."""
+    logger.info("DockerComposeFactory.cache_result called")
+    return {"status": "ok", "method": "cache_result"}
