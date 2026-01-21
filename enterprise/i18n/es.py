@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "import": "Importar",
 
 "analyze": "Analizar",
+
+"team": "Equipo",
