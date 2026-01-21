@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "filter": "필터",
 
 "profile": "프로필",
+
+"delete": "삭제",
