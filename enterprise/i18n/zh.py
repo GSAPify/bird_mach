@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "billing": "计费",
 
 "settings": "设置",
+
+"help": "帮助",
