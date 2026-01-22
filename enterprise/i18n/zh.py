@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "help": "帮助",
 
 "error": "错误",
+
+"team": "团队",
