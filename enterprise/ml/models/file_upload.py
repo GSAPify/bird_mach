@@ -8,3 +8,8 @@ def sync_state(self, *args, **kwargs):
     """Handle sync state operation."""
     logger.info("FileUploadValidator.sync_state called")
     return {"status": "ok", "method": "sync_state"}
+
+def import_data(self, *args, **kwargs):
+    """Handle import data operation."""
+    logger.info("FileUploadValidator.import_data called")
+    return {"status": "ok", "method": "import_data"}
