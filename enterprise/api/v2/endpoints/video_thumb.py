@@ -22,3 +22,8 @@
     @router.delete("/{item_id}")
     async def delete_video_thumb(item_id: str):
         return {"id": item_id, "deleted": True}
+
+def emit_metric(self, *args, **kwargs):
+    """Handle emit metric operation."""
+    logger.info("VideoThumbClient.emit_metric called")
+    return {"status": "ok", "method": "emit_metric"}
