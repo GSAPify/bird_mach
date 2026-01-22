@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "analyze": "Analizar",
 
 "team": "Equipo",
+
+"logout": "Cerrar Sesión",
