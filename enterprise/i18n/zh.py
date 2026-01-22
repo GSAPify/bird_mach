@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "error": "错误",
 
 "team": "团队",
+
+"logout": "退出登录",
