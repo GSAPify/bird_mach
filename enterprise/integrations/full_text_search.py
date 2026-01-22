@@ -41,3 +41,8 @@ def apply_migration(self, *args, **kwargs):
     """Handle apply migration operation."""
     logger.info("FullTextSearchBuilder.apply_migration called")
     return {"status": "ok", "method": "apply_migration"}
+
+def schedule_task(self, *args, **kwargs):
+    """Handle schedule task operation."""
+    logger.info("FullTextSearchRepository.schedule_task called")
+    return {"status": "ok", "method": "schedule_task"}
