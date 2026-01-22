@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "import": "Import",
 
 "upload": "Upload Audio",
+
+"success": "Success",
