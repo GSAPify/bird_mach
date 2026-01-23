@@ -1,10 +1,33 @@
+"""
+    E2ETestingProxy for e2e_testing in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def export_data(self, *args, **kwargs):
-    """Handle export data operation."""
-    logger.info("E2ETestingProxy.export_data called")
-    return {"status": "ok", "method": "export_data"}
+    class E2ETestingProxy:
+        """E2E Testing e2etestingproxy."""
 
-def emit_metric(self, *args, **kwargs):
-    """Handle emit metric operation."""
-    logger.info("E2ETestingProxy.emit_metric called")
-    return {"status": "ok", "method": "emit_metric"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("E2ETestingProxy initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("E2ETestingProxy not configured")
+            logger.info("E2ETestingProxy.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"E2ETestingProxy(initialized={self._initialized})"
