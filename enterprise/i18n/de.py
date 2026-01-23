@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "success": "Erfolg",
 
 "sort": "Sortieren",
+
+"save": "Speichern",
