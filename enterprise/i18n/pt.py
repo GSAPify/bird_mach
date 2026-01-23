@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "welcome": "Bem-vindo ao Mach",
 
 "refresh": "Atualizar",
+
+"app_name": "Mach",
