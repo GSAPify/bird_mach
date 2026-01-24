@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "team": "团队",
 
 "logout": "退出登录",
+
+"success": "成功",
