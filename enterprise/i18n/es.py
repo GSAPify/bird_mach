@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "team": "Equipo",
 
 "logout": "Cerrar Sesión",
+
+"filter": "Filtrar",
