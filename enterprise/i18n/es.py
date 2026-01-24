@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "logout": "Cerrar Sesión",
 
 "filter": "Filtrar",
+
+"profile": "Perfil",
