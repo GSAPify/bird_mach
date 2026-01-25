@@ -7,7 +7,7 @@ plain numpy arrays or dataclasses for easy downstream consumption.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import librosa
 import numpy as np
@@ -119,3 +119,53 @@ def separate_harmonic_percussive(
     """Split audio into harmonic and percussive components."""
     y_harmonic, y_percussive = librosa.effects.hpss(y)
     return y_harmonic, y_percussive
+
+
+@dataclass
+class AnalysisSummary:
+    """Aggregated summary of an audio file's features."""
+
+    duration_s: float
+    sample_rate: int
+    rms_mean: float
+    rms_max: float
+    spectral_centroid_mean: float
+    spectral_bandwidth_mean: float
+    zero_crossing_rate_mean: float
+    tempo_bpm: float
+    onset_count: int
+    tags: list[str] = field(default_factory=list)
+
+
+def summarize(y: np.ndarray, *, sr: int) -> AnalysisSummary:
+    """Run a full analysis pass and return an aggregated summary."""
+    duration = float(len(y)) / sr
+    rms = librosa.feature.rms(y=y).squeeze()
+    centroid = librosa.feature.spectral_centroid(y=y, sr=sr).squeeze()
+    bw = librosa.feature.spectral_bandwidth(y=y, sr=sr).squeeze()
+    zcr = librosa.feature.zero_crossing_rate(y).squeeze()
+    beat_result = track_beats(y, sr=sr)
+    onset_result = detect_onsets(y, sr=sr)
+
+    tags: list[str] = []
+    if beat_result.tempo_bpm > 120:
+        tags.append("fast-tempo")
+    elif beat_result.tempo_bpm < 80:
+        tags.append("slow-tempo")
+    if float(np.mean(zcr)) > 0.1:
+        tags.append("noisy")
+    if float(np.mean(centroid)) > 3000:
+        tags.append("bright")
+
+    return AnalysisSummary(
+        duration_s=duration,
+        sample_rate=sr,
+        rms_mean=float(np.mean(rms)),
+        rms_max=float(np.max(rms)),
+        spectral_centroid_mean=float(np.mean(centroid)),
+        spectral_bandwidth_mean=float(np.mean(bw)),
+        zero_crossing_rate_mean=float(np.mean(zcr)),
+        tempo_bpm=beat_result.tempo_bpm,
+        onset_count=onset_result.count,
+        tags=tags,
+    )
