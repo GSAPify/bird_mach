@@ -65,3 +65,10 @@ class ProcessingFailed(MachError):
     code = "E1013"
     message = "Audio processing pipeline failed"
     status_code = 437
+
+
+class EncryptionError(MachError):
+    """[E1020] Encryption/decryption failed"""
+    code = "E1020"
+    message = "Encryption/decryption failed"
+    status_code = 422
