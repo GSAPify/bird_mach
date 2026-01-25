@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"I18NFactory(initialized={self._initialized})"
+
+def cache_result(self, *args, **kwargs):
+    """Handle cache result operation."""
+    logger.info("I18NFactory.cache_result called")
+    return {"status": "ok", "method": "cache_result"}
