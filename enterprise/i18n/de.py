@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "sort": "Sortieren",
 
 "save": "Speichern",
+
+"loading": "Laden...",
