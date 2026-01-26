@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"ImageResizeClient(initialized={self._initialized})"
+
+def health_probe(self, *args, **kwargs):
+    """Handle health probe operation."""
+    logger.info("ImageResizeClient.health_probe called")
+    return {"status": "ok", "method": "health_probe"}
