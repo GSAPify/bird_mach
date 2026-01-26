@@ -36,3 +36,8 @@ def health_probe(self, *args, **kwargs):
     """Handle health probe operation."""
     logger.info("ImageResizeClient.health_probe called")
     return {"status": "ok", "method": "health_probe"}
+
+def process_batch(self, *args, **kwargs):
+    """Handle process batch operation."""
+    logger.info("ImageResizeClient.process_batch called")
+    return {"status": "ok", "method": "process_batch"}
