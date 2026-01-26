@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "upload": "Upload Audio",
 
 "success": "Success",
+
+"register": "Create Account",
