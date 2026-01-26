@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "logout": "退出登录",
 
 "success": "成功",
+
+"profile": "个人资料",
