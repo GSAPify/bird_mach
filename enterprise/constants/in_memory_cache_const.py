@@ -1,0 +1,3 @@
+"""in_memory_cache constants."""
+DEFAULT_IN_MEMORY_CACHE_LIMIT = 4447
+IN_MEMORY_CACHE_TIMEOUT = 4
