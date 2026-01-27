@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "profile": "프로필",
 
 "delete": "삭제",
+
+"billing": "청구",
