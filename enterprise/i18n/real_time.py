@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"RealTimeSerializer(initialized={self._initialized})"
+
+def generate_report(self, *args, **kwargs):
+    """Handle generate report operation."""
+    logger.info("RealTimeSerializer.generate_report called")
+    return {"status": "ok", "method": "generate_report"}
