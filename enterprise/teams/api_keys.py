@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"ApiKeysManager(initialized={self._initialized})"
+
+def export_data(self, *args, **kwargs):
+    """Handle export data operation."""
+    logger.info("ApiKeysManager.export_data called")
+    return {"status": "ok", "method": "export_data"}
