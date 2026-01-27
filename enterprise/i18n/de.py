@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "save": "Speichern",
 
 "loading": "Laden...",
+
+"filter": "Filtern",
