@@ -1,10 +1,33 @@
+"""
+    EmailManager for email in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def health_probe(self, *args, **kwargs):
-    """Handle health probe operation."""
-    logger.info("EmailManager.health_probe called")
-    return {"status": "ok", "method": "health_probe"}
+    class EmailManager:
+        """Email emailmanager."""
 
-def send_notification(self, *args, **kwargs):
-    """Handle send notification operation."""
-    logger.info("EmailManager.send_notification called")
-    return {"status": "ok", "method": "send_notification"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("EmailManager initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("EmailManager not configured")
+            logger.info("EmailManager.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"EmailManager(initialized={self._initialized})"
