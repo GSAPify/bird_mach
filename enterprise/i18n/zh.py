@@ -29,3 +29,5 @@ TRANSLATIONS = {
 "success": "成功",
 
 "profile": "个人资料",
+
+"dashboard": "仪表板",
