@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "logout": "ログアウト",
 
 "cancel": "キャンセル",
+
+"refresh": "更新",
