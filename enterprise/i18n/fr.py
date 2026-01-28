@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "search": "Rechercher",
 
 "app_name": "Mach",
+
+"analyze": "Analyser",
