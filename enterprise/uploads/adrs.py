@@ -36,3 +36,8 @@ def send_notification(self, *args, **kwargs):
     """Handle send notification operation."""
     logger.info("AdrsController.send_notification called")
     return {"status": "ok", "method": "send_notification"}
+
+def unsubscribe_channel(self, *args, **kwargs):
+    """Handle unsubscribe channel operation."""
+    logger.info("AdrsController.unsubscribe_channel called")
+    return {"status": "ok", "method": "unsubscribe_channel"}
