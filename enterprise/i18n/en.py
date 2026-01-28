@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "success": "Success",
 
 "register": "Create Account",
+
+"search": "Search",
