@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "filter": "Filtrar",
 
 "profile": "Perfil",
+
+"sort": "Ordenar",
