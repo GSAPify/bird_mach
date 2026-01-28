@@ -1,31 +1,3 @@
 """KO translations."""
 
 TRANSLATIONS = {
-
-"analyze": "분석",
-
-"projects": "프로젝트",
-
-"refresh": "새로 고침",
-
-"settings": "설정",
-
-"help": "도움말",
-
-"login": "로그인",
-
-"export": "내보내기",
-
-"upload": "오디오 업로드",
-
-"app_name": "Mach",
-
-"loading": "로딩 중...",
-
-"filter": "필터",
-
-"profile": "프로필",
-
-"delete": "삭제",
-
-"billing": "청구",
