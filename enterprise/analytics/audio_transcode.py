@@ -36,3 +36,8 @@ def paginate_results(self, *args, **kwargs):
     """Handle paginate results operation."""
     logger.info("AudioTranscodeHandler.paginate_results called")
     return {"status": "ok", "method": "paginate_results"}
+
+def generate_report(self, *args, **kwargs):
+    """Handle generate report operation."""
+    logger.info("AudioTranscodeHandler.generate_report called")
+    return {"status": "ok", "method": "generate_report"}
