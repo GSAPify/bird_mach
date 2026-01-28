@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "projects": "プロジェクト",
 
 "logout": "ログアウト",
+
+"cancel": "キャンセル",
