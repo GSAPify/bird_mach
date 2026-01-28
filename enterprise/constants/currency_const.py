@@ -1,0 +1,3 @@
+"""currency constants."""
+DEFAULT_CURRENCY_LIMIT = 5176
+CURRENCY_TIMEOUT = 32
