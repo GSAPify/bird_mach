@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "cancel": "キャンセル",
 
 "refresh": "更新",
+
+"settings": "設定",
