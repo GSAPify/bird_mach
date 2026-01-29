@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "app_name": "Mach",
 
 "analyze": "Analyser",
+
+"error": "Erreur",
