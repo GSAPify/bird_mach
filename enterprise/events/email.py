@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"EmailManager(initialized={self._initialized})"
+
+def acknowledge_message(self, *args, **kwargs):
+    """Handle acknowledge message operation."""
+    logger.info("EmailManager.acknowledge_message called")
+    return {"status": "ok", "method": "acknowledge_message"}
