@@ -41,3 +41,8 @@ def process_batch(self, *args, **kwargs):
     """Handle process batch operation."""
     logger.info("ImageResizeClient.process_batch called")
     return {"status": "ok", "method": "process_batch"}
+
+def emit_metric(self, *args, **kwargs):
+    """Handle emit metric operation."""
+    logger.info("ImageResizeClient.emit_metric called")
+    return {"status": "ok", "method": "emit_metric"}
