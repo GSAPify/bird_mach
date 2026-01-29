@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "loading": "Laden...",
 
 "filter": "Filtern",
+
+"help": "Hilfe",
