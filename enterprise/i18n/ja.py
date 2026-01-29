@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "refresh": "更新",
 
 "settings": "設定",
+
+"team": "チーム",
