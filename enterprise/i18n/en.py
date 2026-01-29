@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "register": "Create Account",
 
 "search": "Search",
+
+"team": "Team",
