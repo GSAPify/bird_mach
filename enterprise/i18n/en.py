@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "search": "Search",
 
 "team": "Team",
+
+"delete": "Delete",
