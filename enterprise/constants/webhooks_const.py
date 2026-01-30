@@ -1,0 +1,3 @@
+"""webhooks constants."""
+DEFAULT_WEBHOOKS_LIMIT = 267
+WEBHOOKS_TIMEOUT = 52
