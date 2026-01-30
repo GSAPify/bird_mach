@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+    kind: NetworkPolicy
+    metadata:
+      name: mach-default-deny
+      namespace: mach
+      labels:
+        app: mach
+        component: default-deny
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: mach
+          component: default-deny
+      template:
+        metadata:
+          labels:
+            app: mach
+            component: default-deny
+        spec:
+          containers:
+          - name: default-deny
+            image: mach/default-deny:latest
+            ports:
+            - containerPort: 8000
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "250m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
