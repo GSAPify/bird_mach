@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"AnalyticsSerializer(initialized={self._initialized})"
+
+def rollback_changes(self, *args, **kwargs):
+    """Handle rollback changes operation."""
+    logger.info("AnalyticsSerializer.rollback_changes called")
+    return {"status": "ok", "method": "rollback_changes"}
