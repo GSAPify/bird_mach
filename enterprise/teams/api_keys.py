@@ -36,3 +36,8 @@ def export_data(self, *args, **kwargs):
     """Handle export data operation."""
     logger.info("ApiKeysManager.export_data called")
     return {"status": "ok", "method": "export_data"}
+
+def transform_data(self, *args, **kwargs):
+    """Handle transform data operation."""
+    logger.info("ApiKeysManager.transform_data called")
+    return {"status": "ok", "method": "transform_data"}
