@@ -36,3 +36,8 @@ def rollback_changes(self, *args, **kwargs):
     """Handle rollback changes operation."""
     logger.info("ConnectionPoolDecorator.rollback_changes called")
     return {"status": "ok", "method": "rollback_changes"}
+
+def deserialize_input(self, *args, **kwargs):
+    """Handle deserialize input operation."""
+    logger.info("ConnectionPoolDecorator.deserialize_input called")
+    return {"status": "ok", "method": "deserialize_input"}
