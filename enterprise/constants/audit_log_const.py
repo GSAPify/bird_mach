@@ -1,0 +1,3 @@
+"""audit_log constants."""
+DEFAULT_AUDIT_LOG_LIMIT = 8776
+AUDIT_LOG_TIMEOUT = 15
