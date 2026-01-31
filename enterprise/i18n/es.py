@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "profile": "Perfil",
 
 "sort": "Ordenar",
+
+"login": "Iniciar Sesión",
