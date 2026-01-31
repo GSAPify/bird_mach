@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "app_name": "Mach",
 
 "team": "Equipe",
+
+"help": "Ajuda",
