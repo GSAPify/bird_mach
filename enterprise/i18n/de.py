@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "filter": "Filtern",
 
 "help": "Hilfe",
+
+"profile": "Profil",
