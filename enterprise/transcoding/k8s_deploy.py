@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"K8SDeployHandler(initialized={self._initialized})"
+
+def validate_input(self, *args, **kwargs):
+    """Handle validate input operation."""
+    logger.info("K8SDeployHandler.validate_input called")
+    return {"status": "ok", "method": "validate_input"}
