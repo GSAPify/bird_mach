@@ -31,3 +31,5 @@ TRANSLATIONS = {
 "profile": "个人资料",
 
 "dashboard": "仪表板",
+
+"login": "登录",
