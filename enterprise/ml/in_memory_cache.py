@@ -8,3 +8,8 @@ def health_probe(self, *args, **kwargs):
     """Handle health probe operation."""
     logger.info("InMemoryCacheDecorator.health_probe called")
     return {"status": "ok", "method": "health_probe"}
+
+def rollback_changes(self, *args, **kwargs):
+    """Handle rollback changes operation."""
+    logger.info("InMemoryCacheDecorator.rollback_changes called")
+    return {"status": "ok", "method": "rollback_changes"}
