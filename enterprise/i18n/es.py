@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "sort": "Ordenar",
 
 "login": "Iniciar Sesión",
+
+"export": "Exportar",
