@@ -1,0 +1,3 @@
+"""file_upload constants."""
+DEFAULT_FILE_UPLOAD_LIMIT = 8083
+FILE_UPLOAD_TIMEOUT = 44
