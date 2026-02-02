@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "team": "Team",
 
 "delete": "Delete",
+
+"settings": "Settings",
