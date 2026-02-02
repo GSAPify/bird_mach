@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "help": "Hilfe",
 
 "profile": "Profil",
+
+"cancel": "Abbrechen",
