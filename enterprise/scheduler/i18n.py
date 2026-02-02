@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"I18NPipeline(initialized={self._initialized})"
+
+def apply_migration(self, *args, **kwargs):
+    """Handle apply migration operation."""
+    logger.info("I18NPipeline.apply_migration called")
+    return {"status": "ok", "method": "apply_migration"}
