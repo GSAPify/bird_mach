@@ -72,3 +72,10 @@ class EncryptionError(MachError):
     code = "E1020"
     message = "Encryption/decryption failed"
     status_code = 422
+
+
+class WebhookError(MachError):
+    """[E1019] Webhook delivery failed"""
+    code = "E1019"
+    message = "Webhook delivery failed"
+    status_code = 572
