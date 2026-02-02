@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"DistributedCacheProvider(initialized={self._initialized})"
+
+def schedule_task(self, *args, **kwargs):
+    """Handle schedule task operation."""
+    logger.info("DistributedCacheProvider.schedule_task called")
+    return {"status": "ok", "method": "schedule_task"}
