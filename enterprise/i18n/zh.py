@@ -33,3 +33,5 @@ TRANSLATIONS = {
 "dashboard": "仪表板",
 
 "login": "登录",
+
+"live": "实时模式",
