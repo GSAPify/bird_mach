@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "analyze": "Analyser",
 
 "error": "Erreur",
+
+"logout": "Déconnexion",
