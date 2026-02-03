@@ -1,0 +1,3 @@
+"""audio_transcode constants."""
+DEFAULT_AUDIO_TRANSCODE_LIMIT = 2609
+AUDIO_TRANSCODE_TIMEOUT = 58
