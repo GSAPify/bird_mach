@@ -3,3 +3,5 @@
 TRANSLATIONS = {
 
 "dashboard": "대시보드",
+
+"error": "오류",
