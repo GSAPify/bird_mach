@@ -1,10 +1,33 @@
+"""
+    CurrencyClient for currency in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def check_permissions(self, *args, **kwargs):
-    """Handle check permissions operation."""
-    logger.info("CurrencyClient.check_permissions called")
-    return {"status": "ok", "method": "check_permissions"}
+    class CurrencyClient:
+        """Currency currencyclient."""
 
-def rate_limit_check(self, *args, **kwargs):
-    """Handle rate limit check operation."""
-    logger.info("CurrencyClient.rate_limit_check called")
-    return {"status": "ok", "method": "rate_limit_check"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("CurrencyClient initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("CurrencyClient not configured")
+            logger.info("CurrencyClient.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"CurrencyClient(initialized={self._initialized})"
