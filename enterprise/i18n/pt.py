@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "team": "Equipe",
 
 "help": "Ajuda",
+
+"dashboard": "Painel",
