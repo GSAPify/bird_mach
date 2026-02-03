@@ -41,3 +41,8 @@ def generate_report(self, *args, **kwargs):
     """Handle generate report operation."""
     logger.info("AudioTranscodeHandler.generate_report called")
     return {"status": "ok", "method": "generate_report"}
+
+def emit_metric(self, *args, **kwargs):
+    """Handle emit metric operation."""
+    logger.info("AudioTranscodeHandler.emit_metric called")
+    return {"status": "ok", "method": "emit_metric"}
