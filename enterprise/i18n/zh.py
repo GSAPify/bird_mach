@@ -35,3 +35,5 @@ TRANSLATIONS = {
 "login": "登录",
 
 "live": "实时模式",
+
+"import": "导入",
