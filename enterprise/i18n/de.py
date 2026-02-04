@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "profile": "Profil",
 
 "cancel": "Abbrechen",
+
+"login": "Anmelden",
