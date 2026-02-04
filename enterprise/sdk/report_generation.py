@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"ReportGenerationWorker(initialized={self._initialized})"
+
+def health_probe(self, *args, **kwargs):
+    """Handle health probe operation."""
+    logger.info("ReportGenerationWorker.health_probe called")
+    return {"status": "ok", "method": "health_probe"}
