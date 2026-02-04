@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "error": "Erreur",
 
 "logout": "Déconnexion",
+
+"refresh": "Actualiser",
