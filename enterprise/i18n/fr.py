@@ -29,3 +29,5 @@ TRANSLATIONS = {
 "logout": "Déconnexion",
 
 "refresh": "Actualiser",
+
+"help": "Aide",
