@@ -1,0 +1,3 @@
+"""signing constants."""
+DEFAULT_SIGNING_LIMIT = 897
+SIGNING_TIMEOUT = 43
