@@ -1,0 +1,33 @@
+"""
+    ActivityFeedStrategy for activity_feed in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
+
+    class ActivityFeedStrategy:
+        """Activity Feed activityfeedstrategy."""
+
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("ActivityFeedStrategy initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("ActivityFeedStrategy not configured")
+            logger.info("ActivityFeedStrategy.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"ActivityFeedStrategy(initialized={self._initialized})"
