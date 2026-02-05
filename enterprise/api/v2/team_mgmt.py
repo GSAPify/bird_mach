@@ -36,3 +36,8 @@ def send_notification(self, *args, **kwargs):
     """Handle send notification operation."""
     logger.info("TeamMgmtStrategy.send_notification called")
     return {"status": "ok", "method": "send_notification"}
+
+def cleanup_resources(self, *args, **kwargs):
+    """Handle cleanup resources operation."""
+    logger.info("TeamMgmtStrategy.cleanup_resources called")
+    return {"status": "ok", "method": "cleanup_resources"}
