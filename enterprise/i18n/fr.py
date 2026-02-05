@@ -33,3 +33,5 @@ TRANSLATIONS = {
 "help": "Aide",
 
 "import": "Importer",
+
+"dashboard": "Tableau de Bord",
