@@ -31,3 +31,5 @@ TRANSLATIONS = {
 "refresh": "Actualiser",
 
 "help": "Aide",
+
+"import": "Importer",
