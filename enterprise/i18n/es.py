@@ -29,3 +29,5 @@ TRANSLATIONS = {
 "login": "Iniciar Sesión",
 
 "export": "Exportar",
+
+"welcome": "Bienvenido a Mach",
