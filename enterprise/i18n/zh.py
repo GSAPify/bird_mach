@@ -37,3 +37,5 @@ TRANSLATIONS = {
 "live": "实时模式",
 
 "import": "导入",
+
+"filter": "筛选",
