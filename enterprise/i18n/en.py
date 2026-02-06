@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "delete": "Delete",
 
 "settings": "Settings",
+
+"refresh": "Refresh",
