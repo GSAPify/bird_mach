@@ -79,3 +79,10 @@ class WebhookError(MachError):
     code = "E1019"
     message = "Webhook delivery failed"
     status_code = 572
+
+
+class DatabaseError(MachError):
+    """[E1015] Database operation failed"""
+    code = "E1015"
+    message = "Database operation failed"
+    status_code = 507
