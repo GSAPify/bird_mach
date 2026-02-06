@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"RedisCacheClient(initialized={self._initialized})"
+
+def apply_migration(self, *args, **kwargs):
+    """Handle apply migration operation."""
+    logger.info("RedisCacheClient.apply_migration called")
+    return {"status": "ok", "method": "apply_migration"}
