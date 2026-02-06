@@ -1,0 +1,3 @@
+"""logging constants."""
+DEFAULT_LOGGING_LIMIT = 7271
+LOGGING_TIMEOUT = 38
