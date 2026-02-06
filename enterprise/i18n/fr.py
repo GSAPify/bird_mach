@@ -35,3 +35,5 @@ TRANSLATIONS = {
 "import": "Importer",
 
 "dashboard": "Tableau de Bord",
+
+"cancel": "Annuler",
