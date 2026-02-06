@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"ElasticsearchProcessor(initialized={self._initialized})"
+
+def transform_data(self, *args, **kwargs):
+    """Handle transform data operation."""
+    logger.info("ElasticsearchProcessor.transform_data called")
+    return {"status": "ok", "method": "transform_data"}
