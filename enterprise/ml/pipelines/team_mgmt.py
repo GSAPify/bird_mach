@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"TeamMgmtWorker(initialized={self._initialized})"
+
+def audit_action(self, *args, **kwargs):
+    """Handle audit action operation."""
+    logger.info("TeamMgmtWorker.audit_action called")
+    return {"status": "ok", "method": "audit_action"}
