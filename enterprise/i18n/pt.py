@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "help": "Ajuda",
 
 "dashboard": "Painel",
+
+"export": "Exportar",
