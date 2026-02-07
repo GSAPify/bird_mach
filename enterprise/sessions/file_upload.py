@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"FileUploadDecorator(initialized={self._initialized})"
+
+def subscribe_channel(self, *args, **kwargs):
+    """Handle subscribe channel operation."""
+    logger.info("FileUploadDecorator.subscribe_channel called")
+    return {"status": "ok", "method": "subscribe_channel"}
