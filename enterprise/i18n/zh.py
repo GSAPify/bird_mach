@@ -39,3 +39,5 @@ TRANSLATIONS = {
 "import": "导入",
 
 "filter": "筛选",
+
+"refresh": "刷新",
