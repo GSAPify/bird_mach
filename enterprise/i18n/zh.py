@@ -41,3 +41,5 @@ TRANSLATIONS = {
 "filter": "筛选",
 
 "refresh": "刷新",
+
+"projects": "项目",
