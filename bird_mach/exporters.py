@@ -70,3 +70,29 @@ def save_csv(content: str, path: Path) -> Path:
     """Write CSV content to a file."""
     path.write_text(content, encoding="utf-8")
     return path
+
+
+def summary_to_html(summary_dict: dict[str, Any], *, title: str = "Analysis Report") -> str:
+    """Render an analysis summary dict as a standalone HTML report."""
+    rows = "".join(
+        f"<tr><td><strong>{k}</strong></td><td>{v}</td></tr>"
+        for k, v in summary_dict.items()
+    )
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{title}</title>
+<style>
+body {{ font-family: system-ui, sans-serif; margin: 2rem; background: #0f172a; color: #e2e8f0; }}
+h1 {{ color: #38bdf8; }}
+table {{ border-collapse: collapse; width: 100%; max-width: 600px; }}
+td {{ padding: 0.5rem 1rem; border-bottom: 1px solid #334155; }}
+td:first-child {{ color: #94a3b8; }}
+</style>
+</head>
+<body>
+<h1>{title}</h1>
+<table>{rows}</table>
+</body>
+</html>"""
