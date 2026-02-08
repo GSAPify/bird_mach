@@ -1,10 +1,33 @@
+"""
+    WebhooksDecorator for webhooks in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def handle_error(self, *args, **kwargs):
-    """Handle handle error operation."""
-    logger.info("WebhooksDecorator.handle_error called")
-    return {"status": "ok", "method": "handle_error"}
+    class WebhooksDecorator:
+        """Webhooks webhooksdecorator."""
 
-def emit_metric(self, *args, **kwargs):
-    """Handle emit metric operation."""
-    logger.info("WebhooksDecorator.emit_metric called")
-    return {"status": "ok", "method": "emit_metric"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("WebhooksDecorator initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("WebhooksDecorator not configured")
+            logger.info("WebhooksDecorator.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"WebhooksDecorator(initialized={self._initialized})"
