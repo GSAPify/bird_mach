@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"DockerComposeController(initialized={self._initialized})"
+
+def handle_error(self, *args, **kwargs):
+    """Handle handle error operation."""
+    logger.info("DockerComposeController.handle_error called")
+    return {"status": "ok", "method": "handle_error"}
