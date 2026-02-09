@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "search": "Pesquisar",
 
 "register": "Criar Conta",
+
+"billing": "Faturamento",
