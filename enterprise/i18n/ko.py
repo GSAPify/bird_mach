@@ -7,3 +7,5 @@ TRANSLATIONS = {
 "error": "오류",
 
 "live": "라이브 모드",
+
+"import": "가져오기",
