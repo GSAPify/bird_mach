@@ -29,3 +29,5 @@ TRANSLATIONS = {
 "cancel": "Abbrechen",
 
 "login": "Anmelden",
+
+"export": "Exportieren",
