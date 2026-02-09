@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "settings": "設定",
 
 "team": "チーム",
+
+"analyze": "分析",
