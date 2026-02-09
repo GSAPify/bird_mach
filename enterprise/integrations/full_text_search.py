@@ -1,16 +1,16 @@
 """
-    FullTextSearchBuilder for full_text_search in the Mach platform.
+    FullTextSearchRepository for full_text_search in the Mach platform.
     """
     from __future__ import annotations
     import logging
     logger = logging.getLogger(__name__)
 
-    class FullTextSearchBuilder:
-        """Full Text Search fulltextsearchbuilder."""
+    class FullTextSearchRepository:
+        """Full Text Search fulltextsearchrepository."""
 
         def __init__(self) -> None:
             self._initialized = False
-            logger.info("FullTextSearchBuilder initialized")
+            logger.info("FullTextSearchRepository initialized")
 
         def configure(self, **kwargs) -> None:
             for k, v in kwargs.items():
@@ -22,32 +22,12 @@
 
         def execute(self, *args, **kwargs):
             if not self._initialized:
-                raise RuntimeError("FullTextSearchBuilder not configured")
-            logger.info("FullTextSearchBuilder.execute called")
+                raise RuntimeError("FullTextSearchRepository not configured")
+            logger.info("FullTextSearchRepository.execute called")
             return self._process(*args, **kwargs)
 
         def _process(self, *args, **kwargs):
             raise NotImplementedError
 
         def __repr__(self) -> str:
-            return f"FullTextSearchBuilder(initialized={self._initialized})"
-
-def acknowledge_message(self, *args, **kwargs):
-    """Handle acknowledge message operation."""
-    logger.info("FullTextSearchRepository.acknowledge_message called")
-    return {"status": "ok", "method": "acknowledge_message"}
-
-def apply_migration(self, *args, **kwargs):
-    """Handle apply migration operation."""
-    logger.info("FullTextSearchBuilder.apply_migration called")
-    return {"status": "ok", "method": "apply_migration"}
-
-def schedule_task(self, *args, **kwargs):
-    """Handle schedule task operation."""
-    logger.info("FullTextSearchRepository.schedule_task called")
-    return {"status": "ok", "method": "schedule_task"}
-
-def serialize_output(self, *args, **kwargs):
-    """Handle serialize output operation."""
-    logger.info("FullTextSearchRepository.serialize_output called")
-    return {"status": "ok", "method": "serialize_output"}
+            return f"FullTextSearchRepository(initialized={self._initialized})"
