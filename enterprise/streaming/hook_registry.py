@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"HookRegistryBuilder(initialized={self._initialized})"
+
+def rate_limit_check(self, *args, **kwargs):
+    """Handle rate limit check operation."""
+    logger.info("HookRegistryBuilder.rate_limit_check called")
+    return {"status": "ok", "method": "rate_limit_check"}
