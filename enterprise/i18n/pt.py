@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "dashboard": "Painel",
 
 "export": "Exportar",
+
+"search": "Pesquisar",
