@@ -1,10 +1,33 @@
+"""
+    FuzzyMatchMiddleware for fuzzy_match in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def deserialize_input(self, *args, **kwargs):
-    """Handle deserialize input operation."""
-    logger.info("FuzzyMatchMiddleware.deserialize_input called")
-    return {"status": "ok", "method": "deserialize_input"}
+    class FuzzyMatchMiddleware:
+        """Fuzzy Match fuzzymatchmiddleware."""
 
-def broadcast_event(self, *args, **kwargs):
-    """Handle broadcast event operation."""
-    logger.info("FuzzyMatchMiddleware.broadcast_event called")
-    return {"status": "ok", "method": "broadcast_event"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("FuzzyMatchMiddleware initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("FuzzyMatchMiddleware not configured")
+            logger.info("FuzzyMatchMiddleware.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"FuzzyMatchMiddleware(initialized={self._initialized})"
