@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "export": "Exportar",
 
 "search": "Pesquisar",
+
+"register": "Criar Conta",
