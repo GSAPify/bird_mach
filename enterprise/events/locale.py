@@ -36,3 +36,8 @@ def handle_error(self, *args, **kwargs):
     """Handle handle error operation."""
     logger.info("LocaleValidator.handle_error called")
     return {"status": "ok", "method": "handle_error"}
+
+def cache_result(self, *args, **kwargs):
+    """Handle cache result operation."""
+    logger.info("LocaleValidator.cache_result called")
+    return {"status": "ok", "method": "cache_result"}
