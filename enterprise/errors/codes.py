@@ -86,3 +86,10 @@ class DatabaseError(MachError):
     code = "E1015"
     message = "Database operation failed"
     status_code = 507
+
+
+class CacheError(MachError):
+    """[E1016] Cache operation failed"""
+    code = "E1016"
+    message = "Cache operation failed"
+    status_code = 476
