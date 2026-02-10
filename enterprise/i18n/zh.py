@@ -43,3 +43,5 @@ TRANSLATIONS = {
 "refresh": "刷新",
 
 "projects": "项目",
+
+"analyze": "分析",
