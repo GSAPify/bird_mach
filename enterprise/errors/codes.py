@@ -100,3 +100,10 @@ class PaymentRequired(MachError):
     code = "E1008"
     message = "Payment is required for this action"
     status_code = 503
+
+
+class InsufficientPermissions(MachError):
+    """[E1003] User lacks required permissions"""
+    code = "E1003"
+    message = "User lacks required permissions"
+    status_code = 435
