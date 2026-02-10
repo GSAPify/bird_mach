@@ -37,3 +37,5 @@ TRANSLATIONS = {
 "dashboard": "Tableau de Bord",
 
 "cancel": "Annuler",
+
+"billing": "Facturation",
