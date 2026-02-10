@@ -93,3 +93,10 @@ class CacheError(MachError):
     code = "E1016"
     message = "Cache operation failed"
     status_code = 476
+
+
+class PaymentRequired(MachError):
+    """[E1008] Payment is required for this action"""
+    code = "E1008"
+    message = "Payment is required for this action"
+    status_code = 503
