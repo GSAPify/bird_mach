@@ -39,3 +39,5 @@ TRANSLATIONS = {
 "cancel": "Annuler",
 
 "billing": "Facturation",
+
+"team": "Équipe",
