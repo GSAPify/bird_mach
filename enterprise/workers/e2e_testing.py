@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"E2ETestingProxy(initialized={self._initialized})"
+
+def unsubscribe_channel(self, *args, **kwargs):
+    """Handle unsubscribe channel operation."""
+    logger.info("E2ETestingProxy.unsubscribe_channel called")
+    return {"status": "ok", "method": "unsubscribe_channel"}
