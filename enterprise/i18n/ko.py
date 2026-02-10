@@ -9,3 +9,5 @@ TRANSLATIONS = {
 "live": "라이브 모드",
 
 "import": "가져오기",
+
+"team": "팀",
