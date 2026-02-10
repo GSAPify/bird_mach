@@ -31,3 +31,5 @@ TRANSLATIONS = {
 "export": "Exportar",
 
 "welcome": "Bienvenido a Mach",
+
+"help": "Ayuda",
