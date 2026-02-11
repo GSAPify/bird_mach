@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"CiPipelineObserver(initialized={self._initialized})"
+
+def paginate_results(self, *args, **kwargs):
+    """Handle paginate results operation."""
+    logger.info("CiPipelineObserver.paginate_results called")
+    return {"status": "ok", "method": "paginate_results"}
