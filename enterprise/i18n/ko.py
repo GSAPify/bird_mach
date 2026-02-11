@@ -11,3 +11,5 @@ TRANSLATIONS = {
 "import": "가져오기",
 
 "team": "팀",
+
+"welcome": "Mach에 오신 것을 환영합니다",
