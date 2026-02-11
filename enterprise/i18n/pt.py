@@ -27,3 +27,5 @@ TRANSLATIONS = {
 "register": "Criar Conta",
 
 "billing": "Faturamento",
+
+"logout": "Sair",
