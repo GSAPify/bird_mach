@@ -1,5 +1,33 @@
+"""
+    JwtAuthValidator for jwt_auth in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def cache_result(self, *args, **kwargs):
-    """Handle cache result operation."""
-    logger.info("JwtAuthValidator.cache_result called")
-    return {"status": "ok", "method": "cache_result"}
+    class JwtAuthValidator:
+        """Jwt Auth jwtauthvalidator."""
+
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("JwtAuthValidator initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("JwtAuthValidator not configured")
+            logger.info("JwtAuthValidator.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"JwtAuthValidator(initialized={self._initialized})"
