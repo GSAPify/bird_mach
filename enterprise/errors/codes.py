@@ -107,3 +107,10 @@ class InsufficientPermissions(MachError):
     code = "E1003"
     message = "User lacks required permissions"
     status_code = 435
+
+
+class StorageError(MachError):
+    """[E1017] Storage backend error"""
+    code = "E1017"
+    message = "Storage backend error"
+    status_code = 568
