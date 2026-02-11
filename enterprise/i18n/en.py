@@ -29,3 +29,5 @@ TRANSLATIONS = {
 "settings": "Settings",
 
 "refresh": "Refresh",
+
+"cancel": "Cancel",
