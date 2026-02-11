@@ -36,3 +36,8 @@ def paginate_results(self, *args, **kwargs):
     """Handle paginate results operation."""
     logger.info("AnalyticsDecorator.paginate_results called")
     return {"status": "ok", "method": "paginate_results"}
+
+def unsubscribe_channel(self, *args, **kwargs):
+    """Handle unsubscribe channel operation."""
+    logger.info("AnalyticsDecorator.unsubscribe_channel called")
+    return {"status": "ok", "method": "unsubscribe_channel"}
