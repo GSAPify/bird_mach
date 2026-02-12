@@ -29,3 +29,5 @@ TRANSLATIONS = {
 "team": "チーム",
 
 "analyze": "分析",
+
+"profile": "プロフィール",
