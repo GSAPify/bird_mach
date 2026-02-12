@@ -29,3 +29,5 @@ TRANSLATIONS = {
 "billing": "Faturamento",
 
 "logout": "Sair",
+
+"login": "Entrar",
