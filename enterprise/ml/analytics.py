@@ -41,3 +41,8 @@ def serialize_output(self, *args, **kwargs):
     """Handle serialize output operation."""
     logger.info("AnalyticsSerializer.serialize_output called")
     return {"status": "ok", "method": "serialize_output"}
+
+def process_batch(self, *args, **kwargs):
+    """Handle process batch operation."""
+    logger.info("AnalyticsSerializer.process_batch called")
+    return {"status": "ok", "method": "process_batch"}
