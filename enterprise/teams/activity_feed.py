@@ -36,3 +36,8 @@ def emit_metric(self, *args, **kwargs):
     """Handle emit metric operation."""
     logger.info("ActivityFeedProvider.emit_metric called")
     return {"status": "ok", "method": "emit_metric"}
+
+def subscribe_channel(self, *args, **kwargs):
+    """Handle subscribe channel operation."""
+    logger.info("ActivityFeedProvider.subscribe_channel called")
+    return {"status": "ok", "method": "subscribe_channel"}
