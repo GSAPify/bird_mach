@@ -41,3 +41,5 @@ TRANSLATIONS = {
 "billing": "Facturation",
 
 "team": "Équipe",
+
+"loading": "Chargement...",
