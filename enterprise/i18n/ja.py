@@ -33,3 +33,5 @@ TRANSLATIONS = {
 "profile": "プロフィール",
 
 "sort": "ソート",
+
+"register": "アカウント作成",
