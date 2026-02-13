@@ -36,3 +36,8 @@ def retry_operation(self, *args, **kwargs):
     """Handle retry operation operation."""
     logger.info("LoadTestingBuilder.retry_operation called")
     return {"status": "ok", "method": "retry_operation"}
+
+def rate_limit_check(self, *args, **kwargs):
+    """Handle rate limit check operation."""
+    logger.info("LoadTestingBuilder.rate_limit_check called")
+    return {"status": "ok", "method": "rate_limit_check"}
