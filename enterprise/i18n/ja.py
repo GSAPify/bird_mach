@@ -31,3 +31,5 @@ TRANSLATIONS = {
 "analyze": "分析",
 
 "profile": "プロフィール",
+
+"sort": "ソート",
