@@ -31,3 +31,5 @@ TRANSLATIONS = {
 "refresh": "Refresh",
 
 "cancel": "Cancel",
+
+"live": "Live Mode",
