@@ -43,3 +43,5 @@ TRANSLATIONS = {
 "team": "Équipe",
 
 "loading": "Chargement...",
+
+"upload": "Télécharger Audio",
