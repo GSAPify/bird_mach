@@ -33,3 +33,5 @@ TRANSLATIONS = {
 "cancel": "Cancel",
 
 "live": "Live Mode",
+
+"analyze": "Analyze",
