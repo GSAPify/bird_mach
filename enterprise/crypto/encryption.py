@@ -8,3 +8,8 @@ def deserialize_input(self, *args, **kwargs):
     """Handle deserialize input operation."""
     logger.info("EncryptionPipeline.deserialize_input called")
     return {"status": "ok", "method": "deserialize_input"}
+
+def validate_input(self, *args, **kwargs):
+    """Handle validate input operation."""
+    logger.info("EncryptionPipeline.validate_input called")
+    return {"status": "ok", "method": "validate_input"}
