@@ -35,3 +35,5 @@ TRANSLATIONS = {
 "sort": "ソート",
 
 "register": "アカウント作成",
+
+"search": "検索",
