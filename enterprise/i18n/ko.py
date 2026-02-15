@@ -15,3 +15,5 @@ TRANSLATIONS = {
 "welcome": "Mach에 오신 것을 환영합니다",
 
 "success": "성공",
+
+"save": "저장",
