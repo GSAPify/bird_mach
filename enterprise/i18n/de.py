@@ -31,3 +31,5 @@ TRANSLATIONS = {
 "login": "Anmelden",
 
 "export": "Exportieren",
+
+"settings": "Einstellungen",
