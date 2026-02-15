@@ -17,3 +17,5 @@ TRANSLATIONS = {
 "success": "성공",
 
 "save": "저장",
+
+"register": "계정 만들기",
