@@ -36,3 +36,8 @@ def apply_filter(self, *args, **kwargs):
     """Handle apply filter operation."""
     logger.info("DockerComposeBuilder.apply_filter called")
     return {"status": "ok", "method": "apply_filter"}
+
+def check_permissions(self, *args, **kwargs):
+    """Handle check permissions operation."""
+    logger.info("DockerComposeBuilder.check_permissions called")
+    return {"status": "ok", "method": "check_permissions"}
