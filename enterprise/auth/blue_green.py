@@ -1,15 +1,33 @@
+"""
+    BlueGreenProvider for blue_green in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def emit_metric(self, *args, **kwargs):
-    """Handle emit metric operation."""
-    logger.info("BlueGreenProvider.emit_metric called")
-    return {"status": "ok", "method": "emit_metric"}
+    class BlueGreenProvider:
+        """Blue Green bluegreenprovider."""
 
-def serialize_output(self, *args, **kwargs):
-    """Handle serialize output operation."""
-    logger.info("BlueGreenProvider.serialize_output called")
-    return {"status": "ok", "method": "serialize_output"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("BlueGreenProvider initialized")
 
-def transform_data(self, *args, **kwargs):
-    """Handle transform data operation."""
-    logger.info("BlueGreenProvider.transform_data called")
-    return {"status": "ok", "method": "transform_data"}
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("BlueGreenProvider not configured")
+            logger.info("BlueGreenProvider.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"BlueGreenProvider(initialized={self._initialized})"
