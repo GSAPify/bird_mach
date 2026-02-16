@@ -36,3 +36,8 @@ def validate_input(self, *args, **kwargs):
     """Handle validate input operation."""
     logger.info("K8SDeployHandler.validate_input called")
     return {"status": "ok", "method": "validate_input"}
+
+def retry_operation(self, *args, **kwargs):
+    """Handle retry operation operation."""
+    logger.info("K8SDeployHandler.retry_operation called")
+    return {"status": "ok", "method": "retry_operation"}
