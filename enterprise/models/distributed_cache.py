@@ -36,3 +36,8 @@ def schedule_task(self, *args, **kwargs):
     """Handle schedule task operation."""
     logger.info("DistributedCacheProvider.schedule_task called")
     return {"status": "ok", "method": "schedule_task"}
+
+def health_probe(self, *args, **kwargs):
+    """Handle health probe operation."""
+    logger.info("DistributedCacheProvider.health_probe called")
+    return {"status": "ok", "method": "health_probe"}
