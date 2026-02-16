@@ -35,3 +35,5 @@ TRANSLATIONS = {
 "live": "Live Mode",
 
 "analyze": "Analyze",
+
+"help": "Help",
