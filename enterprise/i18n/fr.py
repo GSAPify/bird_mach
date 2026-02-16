@@ -45,3 +45,5 @@ TRANSLATIONS = {
 "loading": "Chargement...",
 
 "upload": "Télécharger Audio",
+
+"projects": "Projets",
