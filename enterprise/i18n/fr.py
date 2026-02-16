@@ -47,3 +47,5 @@ TRANSLATIONS = {
 "upload": "Télécharger Audio",
 
 "projects": "Projets",
+
+"welcome": "Bienvenue sur Mach",
