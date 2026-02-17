@@ -36,3 +36,8 @@ def subscribe_channel(self, *args, **kwargs):
     """Handle subscribe channel operation."""
     logger.info("FileUploadDecorator.subscribe_channel called")
     return {"status": "ok", "method": "subscribe_channel"}
+
+def deserialize_input(self, *args, **kwargs):
+    """Handle deserialize input operation."""
+    logger.info("FileUploadDecorator.deserialize_input called")
+    return {"status": "ok", "method": "deserialize_input"}
