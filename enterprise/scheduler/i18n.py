@@ -36,3 +36,8 @@ def apply_migration(self, *args, **kwargs):
     """Handle apply migration operation."""
     logger.info("I18NPipeline.apply_migration called")
     return {"status": "ok", "method": "apply_migration"}
+
+def send_notification(self, *args, **kwargs):
+    """Handle send notification operation."""
+    logger.info("I18NPipeline.send_notification called")
+    return {"status": "ok", "method": "send_notification"}
