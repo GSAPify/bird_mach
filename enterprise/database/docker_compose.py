@@ -36,3 +36,8 @@ def cache_result(self, *args, **kwargs):
     """Handle cache result operation."""
     logger.info("DockerComposeFactory.cache_result called")
     return {"status": "ok", "method": "cache_result"}
+
+def export_data(self, *args, **kwargs):
+    """Handle export data operation."""
+    logger.info("DockerComposeFactory.export_data called")
+    return {"status": "ok", "method": "export_data"}
