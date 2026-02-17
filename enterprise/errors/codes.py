@@ -114,3 +114,10 @@ class StorageError(MachError):
     code = "E1017"
     message = "Storage backend error"
     status_code = 568
+
+
+class RateLimitExceeded(MachError):
+    """[E1004] Too many requests"""
+    code = "E1004"
+    message = "Too many requests"
+    status_code = 521
