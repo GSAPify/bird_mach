@@ -37,3 +37,5 @@ TRANSLATIONS = {
 "analyze": "Analyze",
 
 "help": "Help",
+
+"error": "Error",
