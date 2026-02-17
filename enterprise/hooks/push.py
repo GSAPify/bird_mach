@@ -1,5 +1,33 @@
+"""
+    PushController for push in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def invalidate_cache(self, *args, **kwargs):
-    """Handle invalidate cache operation."""
-    logger.info("PushController.invalidate_cache called")
-    return {"status": "ok", "method": "invalidate_cache"}
+    class PushController:
+        """Push pushcontroller."""
+
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("PushController initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("PushController not configured")
+            logger.info("PushController.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"PushController(initialized={self._initialized})"
