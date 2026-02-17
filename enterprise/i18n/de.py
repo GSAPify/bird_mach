@@ -33,3 +33,5 @@ TRANSLATIONS = {
 "export": "Exportieren",
 
 "settings": "Einstellungen",
+
+"logout": "Abmelden",
