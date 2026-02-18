@@ -45,3 +45,5 @@ TRANSLATIONS = {
 "projects": "项目",
 
 "analyze": "分析",
+
+"loading": "加载中...",
