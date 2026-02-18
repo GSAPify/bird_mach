@@ -37,3 +37,5 @@ TRANSLATIONS = {
 "logout": "Abmelden",
 
 "welcome": "Willkommen bei Mach",
+
+"projects": "Projekte",
