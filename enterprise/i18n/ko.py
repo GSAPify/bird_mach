@@ -19,3 +19,5 @@ TRANSLATIONS = {
 "save": "저장",
 
 "register": "계정 만들기",
+
+"logout": "로그아웃",
