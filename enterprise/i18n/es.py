@@ -33,3 +33,5 @@ TRANSLATIONS = {
 "welcome": "Bienvenido a Mach",
 
 "help": "Ayuda",
+
+"delete": "Eliminar",
