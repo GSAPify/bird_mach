@@ -37,3 +37,5 @@ TRANSLATIONS = {
 "register": "アカウント作成",
 
 "search": "検索",
+
+"upload": "オーディオをアップロード",
