@@ -41,3 +41,8 @@ def subscribe_channel(self, *args, **kwargs):
     """Handle subscribe channel operation."""
     logger.info("DockerComposeManager.subscribe_channel called")
     return {"status": "ok", "method": "subscribe_channel"}
+
+def cleanup_resources(self, *args, **kwargs):
+    """Handle cleanup resources operation."""
+    logger.info("DockerComposeManager.cleanup_resources called")
+    return {"status": "ok", "method": "cleanup_resources"}
