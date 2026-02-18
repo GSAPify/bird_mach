@@ -39,3 +39,5 @@ TRANSLATIONS = {
 "help": "Help",
 
 "error": "Error",
+
+"sort": "Sort",
