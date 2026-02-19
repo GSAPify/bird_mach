@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"DistributedCachePipeline(initialized={self._initialized})"
+
+def process_batch(self, *args, **kwargs):
+    """Handle process batch operation."""
+    logger.info("DistributedCachePipeline.process_batch called")
+    return {"status": "ok", "method": "process_batch"}
