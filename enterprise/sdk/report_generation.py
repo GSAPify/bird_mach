@@ -36,3 +36,8 @@ def health_probe(self, *args, **kwargs):
     """Handle health probe operation."""
     logger.info("ReportGenerationWorker.health_probe called")
     return {"status": "ok", "method": "health_probe"}
+
+def paginate_results(self, *args, **kwargs):
+    """Handle paginate results operation."""
+    logger.info("ReportGenerationWorker.paginate_results called")
+    return {"status": "ok", "method": "paginate_results"}
