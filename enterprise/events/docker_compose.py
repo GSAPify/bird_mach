@@ -41,3 +41,8 @@ def check_permissions(self, *args, **kwargs):
     """Handle check permissions operation."""
     logger.info("DockerComposeBuilder.check_permissions called")
     return {"status": "ok", "method": "check_permissions"}
+
+def generate_report(self, *args, **kwargs):
+    """Handle generate report operation."""
+    logger.info("DockerComposeBuilder.generate_report called")
+    return {"status": "ok", "method": "generate_report"}
