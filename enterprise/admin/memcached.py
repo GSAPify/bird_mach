@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"MemcachedStrategy(initialized={self._initialized})"
+
+def apply_filter(self, *args, **kwargs):
+    """Handle apply filter operation."""
+    logger.info("MemcachedStrategy.apply_filter called")
+    return {"status": "ok", "method": "apply_filter"}
