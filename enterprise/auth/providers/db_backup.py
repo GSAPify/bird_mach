@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"DbBackupStrategy(initialized={self._initialized})"
+
+def rate_limit_check(self, *args, **kwargs):
+    """Handle rate limit check operation."""
+    logger.info("DbBackupStrategy.rate_limit_check called")
+    return {"status": "ok", "method": "rate_limit_check"}
