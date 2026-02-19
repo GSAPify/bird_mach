@@ -39,3 +39,5 @@ TRANSLATIONS = {
 "search": "検索",
 
 "upload": "オーディオをアップロード",
+
+"app_name": "Mach",
