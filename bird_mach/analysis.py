@@ -65,6 +65,17 @@ def detect_onsets(
     )
 
 
+def compute_rms_energy(
+    y: np.ndarray, *, hop_length: int = 512
+) -> np.ndarray:
+    """Compute per-frame RMS energy.
+
+    Useful for detecting loud/quiet passages and as an envelope follower.
+    """
+    rms = librosa.feature.rms(y=y, hop_length=hop_length)
+    return rms.squeeze().astype(np.float32, copy=False)
+
+
 def compute_zero_crossing_rate(
     y: np.ndarray, *, hop_length: int = 512
 ) -> np.ndarray:
