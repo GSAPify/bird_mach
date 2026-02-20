@@ -35,3 +35,5 @@ TRANSLATIONS = {
 "help": "Ayuda",
 
 "delete": "Eliminar",
+
+"refresh": "Actualizar",
