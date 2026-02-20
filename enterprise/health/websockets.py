@@ -36,3 +36,8 @@ def process_batch(self, *args, **kwargs):
     """Handle process batch operation."""
     logger.info("WebsocketsStrategy.process_batch called")
     return {"status": "ok", "method": "process_batch"}
+
+def transform_data(self, *args, **kwargs):
+    """Handle transform data operation."""
+    logger.info("WebsocketsStrategy.transform_data called")
+    return {"status": "ok", "method": "transform_data"}
