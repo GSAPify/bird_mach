@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 
 import librosa
 import numpy as np
+import plotly.graph_objects as go
 
 
 @dataclass
@@ -180,3 +181,30 @@ def summarize(y: np.ndarray, *, sr: int) -> AnalysisSummary:
         onset_count=onset_result.count,
         tags=tags,
     )
+
+
+def build_onset_figure(
+    onset_result: OnsetResult,
+    *,
+    title: str = "Onset Strength",
+) -> go.Figure:
+    """Build a stem-style chart of onset times and strengths."""
+    fig = go.Figure()
+    if onset_result.count > 0:
+        fig.add_trace(go.Bar(
+            x=onset_result.times_s,
+            y=onset_result.strengths,
+            marker={"color": "rgba(251,146,60,0.85)"},
+            width=0.02,
+        ))
+    fig.update_layout(
+        title=title,
+        margin={"l": 40, "r": 10, "t": 40, "b": 40},
+        height=220,
+        xaxis={"title": "time (s)"},
+        yaxis={"title": "onset strength"},
+        plot_bgcolor="#0f172a",
+        paper_bgcolor="#0f172a",
+        font={"color": "#e2e8f0"},
+    )
+    return fig
