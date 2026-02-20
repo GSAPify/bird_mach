@@ -2,6 +2,28 @@
 
 All notable changes to Mach are documented here.
 
+## [0.3.0] - 2026-02-20
+
+### Added
+- Audio comparison module for side-by-side summary diffing.
+- Per-frame RMS energy computation in analysis pipeline.
+- Onset strength bar chart visualization.
+- Audio comparison CLI script (`scripts/compare_audio.py`).
+- Dockerfile and docker-compose.yml for containerized deployment.
+- Centralized logging configuration with JSON output option.
+- Visualization presets for music, speech, nature, and percussive audio.
+- Input validators module (URL, file size, extension checks).
+- Batch processing CLI for analyzing entire directories.
+- Analysis pipeline with onset detection, beat tracking, MFCC, chromagram.
+- JSON and CSV exporters with numpy-aware serialization.
+- Comprehensive test suite (embedding, analysis, exporters, presets, validators, compare).
+- GitHub issue templates, PR template, and test CI workflow.
+- Architecture docs, API reference, live mode guide, and preset docs.
+
+### Changed
+- Bumped version to 0.3.0.
+- Package now exports all new modules (compare, logging_config, etc.).
+
 ## [0.2.0] - 2026-02-21
 
 ### Added
