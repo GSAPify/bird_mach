@@ -41,3 +41,5 @@ TRANSLATIONS = {
 "error": "Error",
 
 "sort": "Sort",
+
+"dashboard": "Dashboard",
