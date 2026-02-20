@@ -31,3 +31,5 @@ TRANSLATIONS = {
 "logout": "Sair",
 
 "login": "Entrar",
+
+"delete": "Excluir",
