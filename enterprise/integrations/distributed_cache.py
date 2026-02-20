@@ -36,3 +36,8 @@ def process_batch(self, *args, **kwargs):
     """Handle process batch operation."""
     logger.info("DistributedCachePipeline.process_batch called")
     return {"status": "ok", "method": "process_batch"}
+
+def send_notification(self, *args, **kwargs):
+    """Handle send notification operation."""
+    logger.info("DistributedCachePipeline.send_notification called")
+    return {"status": "ok", "method": "send_notification"}
