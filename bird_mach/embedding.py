@@ -37,6 +37,7 @@ __all__ = [
     "build_mel_spectrogram_figure",
     "build_energy_figure",
     "compute_spectral_flatness",
+    "compute_spectral_centroid",
     "build_flatness_figure",
 ]
 
@@ -126,6 +127,18 @@ def compute_spectral_flatness(y: np.ndarray, *, hop_length: int = 512) -> np.nda
     """
     flatness = librosa.feature.spectral_flatness(y=y, hop_length=hop_length)
     return flatness.squeeze().astype(np.float32, copy=False)
+
+
+def compute_spectral_centroid(
+    y: np.ndarray, *, sr: int, hop_length: int = 512
+) -> np.ndarray:
+    """Compute per-frame spectral centroid in Hz.
+
+    The centroid is the weighted mean frequency of the spectrum,
+    indicating the "brightness" of each frame.
+    """
+    centroid = librosa.feature.spectral_centroid(y=y, sr=sr, hop_length=hop_length)
+    return centroid.squeeze().astype(np.float32, copy=False)
 
 
 def stride_downsample(
