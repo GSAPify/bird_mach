@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"WebsocketsMiddleware(initialized={self._initialized})"
+
+def schedule_task(self, *args, **kwargs):
+    """Handle schedule task operation."""
+    logger.info("WebsocketsMiddleware.schedule_task called")
+    return {"status": "ok", "method": "schedule_task"}
