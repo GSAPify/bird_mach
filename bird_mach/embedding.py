@@ -37,6 +37,7 @@ __all__ = [
     "build_mel_spectrogram_figure",
     "build_energy_figure",
     "compute_spectral_flatness",
+    "build_flatness_figure",
 ]
 
 
@@ -434,6 +435,32 @@ def build_energy_figure(times_s: np.ndarray, energy: np.ndarray, *, title: str) 
         height=240,
         xaxis={"title": "time (s)"},
         yaxis={"title": "energy"},
+    )
+    return fig
+
+
+def build_flatness_figure(
+    times_s: np.ndarray, flatness: np.ndarray, *, title: str
+) -> go.Figure:
+    """Build a line chart of per-frame spectral flatness over time."""
+    fig = go.Figure(
+        data=[
+            go.Scatter(
+                x=times_s,
+                y=flatness,
+                mode="lines",
+                fill="tozeroy",
+                line={"width": 1.5, "color": "rgba(56,189,248,0.85)"},
+                fillcolor="rgba(56,189,248,0.15)",
+            )
+        ]
+    )
+    fig.update_layout(
+        title=title,
+        margin={"l": 40, "r": 10, "t": 40, "b": 40},
+        height=240,
+        xaxis={"title": "time (s)"},
+        yaxis={"title": "spectral flatness", "range": [0, 1]},
     )
     return fig
 
