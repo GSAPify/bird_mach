@@ -5,6 +5,7 @@ APP_VERSION = "0.2.0"
 APP_DESCRIPTION = "3D audio visualization using UMAP embeddings — any sound, any source"
 
 MAX_UPLOAD_SIZE_MB = 50
+MAX_AUDIO_DURATION_S = 600
 MAX_URL_FETCH_BYTES = 50 * 1024 * 1024
 URL_FETCH_TIMEOUT_S = 30
 
