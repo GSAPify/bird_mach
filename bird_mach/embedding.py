@@ -17,7 +17,7 @@ import plotly.graph_objects as go
 import umap
 from plotly.subplots import make_subplots
 
-ColorBy = Literal["time", "energy"]
+ColorBy = Literal["time", "energy", "flatness"]
 
 __all__ = [
     "AudioFeatureConfig",
@@ -185,10 +185,10 @@ def build_2d_figure(
     connect: bool,
     title: str,
     colorscale: str = "Turbo",
+    flatness: np.ndarray | None = None,
 ) -> go.Figure:
     """Build a 2D scatter plot of the UMAP embedding."""
-    color_values = _marker_values(color_by, times_s=times_s, energy=energy)
-    colorbar_title = "time (s)" if color_by == "time" else "energy"
+    color_values, colorbar_title = _marker_values(color_by, times_s=times_s, energy=energy, flatness=flatness)
     mode = "markers+lines" if connect else "markers"
 
     trace = go.Scatter(
@@ -225,10 +225,19 @@ def _camera_presets() -> list[dict]:
     ]
 
 
-def _marker_values(color_by: ColorBy, *, times_s: np.ndarray, energy: np.ndarray) -> np.ndarray:
+def _marker_values(
+    color_by: ColorBy,
+    *,
+    times_s: np.ndarray,
+    energy: np.ndarray,
+    flatness: np.ndarray | None = None,
+) -> tuple[np.ndarray, str]:
+    """Return (color_values, colorbar_title) for the chosen color mode."""
     if color_by == "time":
-        return times_s
-    return energy
+        return times_s, "time (s)"
+    if color_by == "flatness" and flatness is not None:
+        return flatness, "flatness"
+    return energy, "energy"
 
 
 def build_multiview_figure(
@@ -240,11 +249,11 @@ def build_multiview_figure(
     connect: bool,
     title: str,
     colorscale: str = "Turbo",
+    flatness: np.ndarray | None = None,
 ) -> go.Figure:
     """Build a 3-row stacked Plotly figure showing the embedding from three camera angles."""
     cameras = _camera_presets()
-    color_values = _marker_values(color_by, times_s=times_s, energy=energy)
-    colorbar_title = "time (s)" if color_by == "time" else "energy"
+    color_values, colorbar_title = _marker_values(color_by, times_s=times_s, energy=energy, flatness=flatness)
 
     fig = make_subplots(
         rows=3,
@@ -296,10 +305,10 @@ def build_singleview_figure(
     connect: bool,
     title: str,
     colorscale: str = "Turbo",
+    flatness: np.ndarray | None = None,
 ) -> go.Figure:
     """Build a single interactive 3D scatter plot of the embedding."""
-    color_values = _marker_values(color_by, times_s=times_s, energy=energy)
-    colorbar_title = "time (s)" if color_by == "time" else "energy"
+    color_values, colorbar_title = _marker_values(color_by, times_s=times_s, energy=energy, flatness=flatness)
     mode = "markers+lines" if connect else "markers"
 
     trace = go.Scatter3d(
