@@ -37,3 +37,5 @@ TRANSLATIONS = {
 "delete": "Eliminar",
 
 "refresh": "Actualizar",
+
+"loading": "Cargando...",
