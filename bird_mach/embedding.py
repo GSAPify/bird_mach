@@ -36,6 +36,7 @@ __all__ = [
     "build_waveform_figure",
     "build_mel_spectrogram_figure",
     "build_energy_figure",
+    "compute_spectral_flatness",
 ]
 
 
@@ -113,6 +114,17 @@ def extract_log_mel_frames(
     energy = np.mean(mel, axis=0).astype(np.float32, copy=False)
 
     return X, times_s, energy
+
+
+def compute_spectral_flatness(y: np.ndarray, *, hop_length: int = 512) -> np.ndarray:
+    """Compute per-frame spectral flatness (Wiener entropy ratio).
+
+    Values close to 1.0 indicate noise-like content; values near 0.0
+    indicate tonal/harmonic content. Useful for distinguishing speech
+    from music or silence from signal.
+    """
+    flatness = librosa.feature.spectral_flatness(y=y, hop_length=hop_length)
+    return flatness.squeeze().astype(np.float32, copy=False)
 
 
 def stride_downsample(
