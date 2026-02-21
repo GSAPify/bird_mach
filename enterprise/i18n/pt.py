@@ -33,3 +33,5 @@ TRANSLATIONS = {
 "login": "Entrar",
 
 "delete": "Excluir",
+
+"live": "Modo Ao Vivo",
