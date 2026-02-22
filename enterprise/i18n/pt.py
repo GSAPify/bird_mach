@@ -35,3 +35,5 @@ TRANSLATIONS = {
 "delete": "Excluir",
 
 "live": "Modo Ao Vivo",
+
+"projects": "Projetos",
