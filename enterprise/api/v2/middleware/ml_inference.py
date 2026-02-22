@@ -36,3 +36,8 @@ def acknowledge_message(self, *args, **kwargs):
     """Handle acknowledge message operation."""
     logger.info("MlInferenceProcessor.acknowledge_message called")
     return {"status": "ok", "method": "acknowledge_message"}
+
+def transform_data(self, *args, **kwargs):
+    """Handle transform data operation."""
+    logger.info("MlInferenceProcessor.transform_data called")
+    return {"status": "ok", "method": "transform_data"}
