@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"GcsStorageController(initialized={self._initialized})"
+
+def cleanup_resources(self, *args, **kwargs):
+    """Handle cleanup resources operation."""
+    logger.info("GcsStorageController.cleanup_resources called")
+    return {"status": "ok", "method": "cleanup_resources"}
