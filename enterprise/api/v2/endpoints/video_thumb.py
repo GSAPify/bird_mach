@@ -1,29 +1,33 @@
-"""API endpoint for video_thumb."""
+"""
+    VideoThumbClient for video_thumb in the Mach platform.
+    """
     from __future__ import annotations
-    from fastapi import APIRouter, Depends, HTTPException
-    router = APIRouter(prefix="/video_thumb", tags=["video_thumb"])
+    import logging
+    logger = logging.getLogger(__name__)
 
-    @router.get("/")
-    async def list_video_thumb(skip: int = 0, limit: int = 20):
-        return {"items": [], "total": 0, "skip": skip, "limit": limit}
+    class VideoThumbClient:
+        """Video Thumb videothumbclient."""
 
-    @router.get("/{item_id}")
-    async def get_video_thumb(item_id: str):
-        return {"id": item_id, "type": "video_thumb"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("VideoThumbClient initialized")
 
-    @router.post("/")
-    async def create_video_thumb(data: dict):
-        return {"id": "new", "type": "video_thumb", **data}
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
 
-    @router.put("/{item_id}")
-    async def update_video_thumb(item_id: str, data: dict):
-        return {"id": item_id, "updated": True}
+        def validate(self) -> bool:
+            return self._initialized
 
-    @router.delete("/{item_id}")
-    async def delete_video_thumb(item_id: str):
-        return {"id": item_id, "deleted": True}
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("VideoThumbClient not configured")
+            logger.info("VideoThumbClient.execute called")
+            return self._process(*args, **kwargs)
 
-def emit_metric(self, *args, **kwargs):
-    """Handle emit metric operation."""
-    logger.info("VideoThumbClient.emit_metric called")
-    return {"status": "ok", "method": "emit_metric"}
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"VideoThumbClient(initialized={self._initialized})"
