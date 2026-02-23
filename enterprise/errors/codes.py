@@ -121,3 +121,10 @@ class RateLimitExceeded(MachError):
     code = "E1004"
     message = "Too many requests"
     status_code = 521
+
+
+class ResourceNotFound(MachError):
+    """[E1005] Requested resource does not exist"""
+    code = "E1005"
+    message = "Requested resource does not exist"
+    status_code = 535
