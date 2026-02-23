@@ -43,3 +43,5 @@ TRANSLATIONS = {
 "sort": "Sort",
 
 "dashboard": "Dashboard",
+
+"projects": "Projects",
