@@ -39,3 +39,5 @@ TRANSLATIONS = {
 "welcome": "Willkommen bei Mach",
 
 "projects": "Projekte",
+
+"refresh": "Aktualisieren",
