@@ -1,15 +1,33 @@
+"""
+    TracingWorker for tracing in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def serialize_output(self, *args, **kwargs):
-    """Handle serialize output operation."""
-    logger.info("TracingWorker.serialize_output called")
-    return {"status": "ok", "method": "serialize_output"}
+    class TracingWorker:
+        """Tracing tracingworker."""
 
-def apply_migration(self, *args, **kwargs):
-    """Handle apply migration operation."""
-    logger.info("TracingWorker.apply_migration called")
-    return {"status": "ok", "method": "apply_migration"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("TracingWorker initialized")
 
-def import_data(self, *args, **kwargs):
-    """Handle import data operation."""
-    logger.info("TracingWorker.import_data called")
-    return {"status": "ok", "method": "import_data"}
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("TracingWorker not configured")
+            logger.info("TracingWorker.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"TracingWorker(initialized={self._initialized})"
