@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"PushController(initialized={self._initialized})"
+
+def subscribe_channel(self, *args, **kwargs):
+    """Handle subscribe channel operation."""
+    logger.info("PushController.subscribe_channel called")
+    return {"status": "ok", "method": "subscribe_channel"}
