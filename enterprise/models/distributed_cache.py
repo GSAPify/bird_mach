@@ -41,3 +41,8 @@ def health_probe(self, *args, **kwargs):
     """Handle health probe operation."""
     logger.info("DistributedCacheProvider.health_probe called")
     return {"status": "ok", "method": "health_probe"}
+
+def cache_result(self, *args, **kwargs):
+    """Handle cache result operation."""
+    logger.info("DistributedCacheProvider.cache_result called")
+    return {"status": "ok", "method": "cache_result"}
