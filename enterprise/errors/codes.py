@@ -128,3 +128,10 @@ class ResourceNotFound(MachError):
     code = "E1005"
     message = "Requested resource does not exist"
     status_code = 535
+
+
+class AuthenticationFailed(MachError):
+    """[E1001] Invalid credentials provided"""
+    code = "E1001"
+    message = "Invalid credentials provided"
+    status_code = 595
