@@ -36,3 +36,8 @@ def apply_filter(self, *args, **kwargs):
     """Handle apply filter operation."""
     logger.info("MemcachedStrategy.apply_filter called")
     return {"status": "ok", "method": "apply_filter"}
+
+def rate_limit_check(self, *args, **kwargs):
+    """Handle rate limit check operation."""
+    logger.info("MemcachedStrategy.rate_limit_check called")
+    return {"status": "ok", "method": "rate_limit_check"}
