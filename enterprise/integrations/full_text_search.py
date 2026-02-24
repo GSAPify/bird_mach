@@ -36,3 +36,8 @@ def cleanup_resources(self, *args, **kwargs):
     """Handle cleanup resources operation."""
     logger.info("FullTextSearchBuilder.cleanup_resources called")
     return {"status": "ok", "method": "cleanup_resources"}
+
+def log_event(self, *args, **kwargs):
+    """Handle log event operation."""
+    logger.info("FullTextSearchBuilder.log_event called")
+    return {"status": "ok", "method": "log_event"}
