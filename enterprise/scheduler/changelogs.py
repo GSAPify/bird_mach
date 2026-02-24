@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"ChangelogsService(initialized={self._initialized})"
+
+def emit_metric(self, *args, **kwargs):
+    """Handle emit metric operation."""
+    logger.info("ChangelogsService.emit_metric called")
+    return {"status": "ok", "method": "emit_metric"}
