@@ -36,3 +36,8 @@ def transform_data(self, *args, **kwargs):
     """Handle transform data operation."""
     logger.info("ElasticsearchProcessor.transform_data called")
     return {"status": "ok", "method": "transform_data"}
+
+def unsubscribe_channel(self, *args, **kwargs):
+    """Handle unsubscribe channel operation."""
+    logger.info("ElasticsearchProcessor.unsubscribe_channel called")
+    return {"status": "ok", "method": "unsubscribe_channel"}
