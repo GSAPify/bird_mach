@@ -49,3 +49,5 @@ TRANSLATIONS = {
 "loading": "加载中...",
 
 "export": "导出",
+
+"cancel": "取消",
