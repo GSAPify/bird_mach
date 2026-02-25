@@ -36,3 +36,8 @@ def audit_action(self, *args, **kwargs):
     """Handle audit action operation."""
     logger.info("TimezoneAdapter.audit_action called")
     return {"status": "ok", "method": "audit_action"}
+
+def export_data(self, *args, **kwargs):
+    """Handle export data operation."""
+    logger.info("TimezoneAdapter.export_data called")
+    return {"status": "ok", "method": "export_data"}
