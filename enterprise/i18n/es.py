@@ -39,3 +39,5 @@ TRANSLATIONS = {
 "refresh": "Actualizar",
 
 "loading": "Cargando...",
+
+"dashboard": "Panel",
