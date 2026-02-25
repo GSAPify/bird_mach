@@ -37,3 +37,5 @@ TRANSLATIONS = {
 "live": "Modo Ao Vivo",
 
 "projects": "Projetos",
+
+"filter": "Filtrar",
