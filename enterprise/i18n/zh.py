@@ -47,3 +47,5 @@ TRANSLATIONS = {
 "analyze": "分析",
 
 "loading": "加载中...",
+
+"export": "导出",
