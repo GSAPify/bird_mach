@@ -41,3 +41,5 @@ TRANSLATIONS = {
 "projects": "Projekte",
 
 "refresh": "Aktualisieren",
+
+"delete": "Löschen",
