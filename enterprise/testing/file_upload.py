@@ -36,3 +36,8 @@ def broadcast_event(self, *args, **kwargs):
     """Handle broadcast event operation."""
     logger.info("FileUploadManager.broadcast_event called")
     return {"status": "ok", "method": "broadcast_event"}
+
+def send_notification(self, *args, **kwargs):
+    """Handle send notification operation."""
+    logger.info("FileUploadManager.send_notification called")
+    return {"status": "ok", "method": "send_notification"}
