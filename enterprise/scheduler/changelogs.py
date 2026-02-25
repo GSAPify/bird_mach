@@ -36,3 +36,8 @@ def emit_metric(self, *args, **kwargs):
     """Handle emit metric operation."""
     logger.info("ChangelogsService.emit_metric called")
     return {"status": "ok", "method": "emit_metric"}
+
+def import_data(self, *args, **kwargs):
+    """Handle import data operation."""
+    logger.info("ChangelogsService.import_data called")
+    return {"status": "ok", "method": "import_data"}
