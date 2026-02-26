@@ -39,3 +39,5 @@ TRANSLATIONS = {
 "projects": "Projetos",
 
 "filter": "Filtrar",
+
+"analyze": "Analisar",
