@@ -36,3 +36,8 @@ def audit_action(self, *args, **kwargs):
     """Handle audit action operation."""
     logger.info("DbSeedingProxy.audit_action called")
     return {"status": "ok", "method": "audit_action"}
+
+def import_data(self, *args, **kwargs):
+    """Handle import data operation."""
+    logger.info("DbSeedingProxy.import_data called")
+    return {"status": "ok", "method": "import_data"}
