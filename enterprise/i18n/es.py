@@ -41,3 +41,5 @@ TRANSLATIONS = {
 "loading": "Cargando...",
 
 "dashboard": "Panel",
+
+"cancel": "Cancelar",
