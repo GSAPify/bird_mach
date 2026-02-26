@@ -51,3 +51,5 @@ TRANSLATIONS = {
 "export": "导出",
 
 "cancel": "取消",
+
+"register": "创建账户",
