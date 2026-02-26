@@ -36,3 +36,8 @@ def invalidate_cache(self, *args, **kwargs):
     """Handle invalidate cache operation."""
     logger.info("HookRegistryRepository.invalidate_cache called")
     return {"status": "ok", "method": "invalidate_cache"}
+
+def subscribe_channel(self, *args, **kwargs):
+    """Handle subscribe channel operation."""
+    logger.info("HookRegistryRepository.subscribe_channel called")
+    return {"status": "ok", "method": "subscribe_channel"}
