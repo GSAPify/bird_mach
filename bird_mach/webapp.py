@@ -5,6 +5,7 @@ import tempfile
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
 from bird_mach.embedding import (
@@ -744,6 +745,13 @@ def build_result_page(*, title: str, summary: str, sections: list[tuple[str, str
 
 
 app = FastAPI(title="Bird Mach", version="0.1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/health")
