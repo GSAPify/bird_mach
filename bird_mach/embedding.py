@@ -19,6 +19,23 @@ from plotly.subplots import make_subplots
 
 ColorBy = Literal["time", "energy"]
 
+__all__ = [
+    "AudioFeatureConfig",
+    "UmapConfig",
+    "ColorBy",
+    "DEFAULT_AUDIO_FEATURE_CONFIG",
+    "DEFAULT_UMAP_CONFIG",
+    "load_audio_mono_from_path",
+    "extract_log_mel_frames",
+    "stride_downsample",
+    "compute_umap_3d",
+    "build_multiview_figure",
+    "build_singleview_figure",
+    "build_waveform_figure",
+    "build_mel_spectrogram_figure",
+    "build_energy_figure",
+]
+
 
 @dataclass(frozen=True)
 class AudioFeatureConfig:
