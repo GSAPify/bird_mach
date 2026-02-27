@@ -24,10 +24,33 @@ dist/
 
 # OS / editor
 .DS_Store
+Thumbs.db
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
 
 # Logs
 *.log
 
+# Audio files (keep repo lightweight)
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
 
+# Generated HTML outputs
+output/
+*.output.html
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+.env.local
+
+# OpenMemory - IDE/Assistant specific rules
+.cursor/rules/openmemory.mdc

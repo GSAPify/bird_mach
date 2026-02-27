@@ -1,3 +1,10 @@
+"""Audio feature extraction, UMAP dimensionality reduction, and Plotly visualization.
+
+This module provides a pipeline for converting audio recordings into interactive
+3D point-cloud visualizations. Each point represents a short-time frame of audio,
+embedded into 3D space via UMAP on log-mel spectrogram features.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -12,9 +19,28 @@ from plotly.subplots import make_subplots
 
 ColorBy = Literal["time", "energy"]
 
+__all__ = [
+    "AudioFeatureConfig",
+    "UmapConfig",
+    "ColorBy",
+    "DEFAULT_AUDIO_FEATURE_CONFIG",
+    "DEFAULT_UMAP_CONFIG",
+    "load_audio_mono_from_path",
+    "extract_log_mel_frames",
+    "stride_downsample",
+    "compute_umap_3d",
+    "build_multiview_figure",
+    "build_singleview_figure",
+    "build_waveform_figure",
+    "build_mel_spectrogram_figure",
+    "build_energy_figure",
+]
+
 
 @dataclass(frozen=True)
 class AudioFeatureConfig:
+    """Configuration for audio feature extraction (log-mel spectrogram)."""
+
     sr: int = 22050
     n_fft: int = 2048
     hop_length: int = 512
@@ -25,6 +51,8 @@ class AudioFeatureConfig:
 
 @dataclass(frozen=True)
 class UmapConfig:
+    """Configuration for UMAP dimensionality reduction to 3D."""
+
     n_neighbors: int = 15
     min_dist: float = 0.1
     metric: str = "cosine"
@@ -36,6 +64,7 @@ DEFAULT_UMAP_CONFIG = UmapConfig()
 
 
 def load_audio_mono_from_path(audio_path: Path, *, sr: int) -> tuple[np.ndarray, int]:
+    """Load an audio file as a mono waveform at the given sample rate."""
     if not audio_path.exists():
         raise FileNotFoundError(f"Input audio not found: {audio_path}")
 
@@ -87,12 +116,21 @@ def extract_log_mel_frames(
 def stride_downsample(
     X: np.ndarray, times_s: np.ndarray, energy: np.ndarray, *, stride: int
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Downsample feature arrays by keeping every Nth frame."""
     if stride <= 1:
         return X, times_s, energy
     return X[::stride], times_s[::stride], energy[::stride]
 
 
 def compute_umap_3d(X: np.ndarray, cfg: UmapConfig) -> np.ndarray:
+    """Project high-dimensional feature matrix into 3D via UMAP."""
+    if X.ndim != 2:
+        raise ValueError(f"Expected 2D feature matrix, got shape {X.shape}")
+    if X.shape[0] < cfg.n_neighbors:
+        raise ValueError(
+            f"Too few frames ({X.shape[0]}) for n_neighbors={cfg.n_neighbors}. "
+            "Increase stride or provide a longer recording."
+        )
     reducer = umap.UMAP(
         n_components=3,
         n_neighbors=cfg.n_neighbors,
@@ -127,6 +165,7 @@ def build_multiview_figure(
     connect: bool,
     title: str,
 ) -> go.Figure:
+    """Build a 3-row stacked Plotly figure showing the embedding from three camera angles."""
     cameras = _camera_presets()
     color_values = _marker_values(color_by, times_s=times_s, energy=energy)
     colorbar_title = "time (s)" if color_by == "time" else "energy"
@@ -181,6 +220,7 @@ def build_singleview_figure(
     connect: bool,
     title: str,
 ) -> go.Figure:
+    """Build a single interactive 3D scatter plot of the embedding."""
     color_values = _marker_values(color_by, times_s=times_s, energy=energy)
     colorbar_title = "time (s)" if color_by == "time" else "energy"
     mode = "markers+lines" if connect else "markers"
@@ -218,6 +258,7 @@ def build_waveform_figure(
     title: str,
     max_points: int = 50_000,
 ) -> go.Figure:
+    """Build a 2D waveform plot, downsampling if the signal exceeds max_points."""
     n = int(y.shape[0])
     if n <= 0:
         raise ValueError("Cannot plot empty waveform.")
@@ -258,6 +299,7 @@ def build_mel_spectrogram_figure(
     cfg: AudioFeatureConfig,
     title: str,
 ) -> go.Figure:
+    """Build a heatmap visualization of the log-mel spectrogram."""
     if X_log_mel.ndim != 2:
         raise ValueError("X_log_mel must be a 2D array (n_frames, n_mels).")
     if times_s.ndim != 1:
@@ -289,6 +331,7 @@ def build_mel_spectrogram_figure(
 
 
 def build_energy_figure(times_s: np.ndarray, energy: np.ndarray, *, title: str) -> go.Figure:
+    """Build a line chart of per-frame energy over time."""
     fig = go.Figure(
         data=[
             go.Scatter(

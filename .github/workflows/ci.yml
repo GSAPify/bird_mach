@@ -5,8 +5,22 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff
+      - name: Ruff check
+        run: ruff check bird_mach scripts
+      - name: Ruff format check
+        run: ruff format --check bird_mach scripts
+
   sanity:
     runs-on: ubuntu-latest
+    needs: lint
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,5 +40,4 @@ jobs:
           python -m compileall bird_mach scripts
           python -c "from bird_mach.webapp import app; print(app.title)"
           python scripts/bird_sound_3d.py --help > /dev/null
-
 

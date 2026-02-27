@@ -1,12 +1,19 @@
+"""FastAPI web application for Bird Mach audio visualization."""
+
 from __future__ import annotations
 
 import html
+import logging
 import tempfile
 from pathlib import Path
 
+logger = logging.getLogger(__name__)
+
 from fastapi import FastAPI, File, Form, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
+from bird_mach.constants import APP_NAME, APP_VERSION
 from bird_mach.embedding import (
     DEFAULT_AUDIO_FEATURE_CONFIG,
     DEFAULT_UMAP_CONFIG,
@@ -30,6 +37,8 @@ INDEX_HTML = """\
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Upload audio and generate interactive 3D UMAP embeddings of bird sounds" />
+    <meta name="theme-color" content="#0b0f19" />
     <title>Bird Mach — 3D Sound Map</title>
     <style>
       body {
@@ -130,6 +139,8 @@ LIVE_HTML = """\
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Real-time audio visualization with waveform, spectrogram, and 3D point cloud" />
+    <meta name="theme-color" content="#0b0f19" />
     <title>Bird Mach — Live</title>
     <style>
       body {
@@ -743,7 +754,20 @@ def build_result_page(*, title: str, summary: str, sections: list[tuple[str, str
 """
 
 
-app = FastAPI(title="Bird Mach", version="0.1.0")
+app = FastAPI(title=APP_NAME, version=APP_VERSION)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/health")
+def health() -> dict:
+    """Lightweight health-check for uptime monitors and load balancers."""
+    return {"status": "ok", "version": app.version}
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -768,7 +792,14 @@ async def visualize(
 ) -> HTMLResponse:
     raw = await audio.read()
     if not raw:
+        logger.warning("Received empty audio upload")
         return HTMLResponse("No audio received.", status_code=400)
+
+    logger.info("Processing upload: %s (%d bytes)", audio.filename, len(raw))
+
+    stride = max(1, min(stride, 50))
+    n_neighbors = max(2, min(n_neighbors, 200))
+    min_dist = max(0.0, min(min_dist, 1.0))
 
     suffix = Path(audio.filename or "audio.wav").suffix
     if not suffix:
@@ -847,6 +878,7 @@ async def visualize(
 
         return HTMLResponse(build_result_page(title=title, summary=summary, sections=sections))
     except Exception as e:
+        logger.exception("Visualization failed for %s", audio.filename)
         msg = html.escape(str(e))
         return HTMLResponse(f"<pre>Failed to visualize audio:\n{msg}</pre>", status_code=500)
     finally:

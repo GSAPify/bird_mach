@@ -1,6 +1,13 @@
+"""CLI tool to generate 3D bird-sound embedding visualizations.
+
+Usage:
+    python scripts/bird_sound_3d.py --input recording.wav --output viz.html --multi-view
+"""
+
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 from bird_mach.embedding import (
@@ -94,7 +101,7 @@ def main() -> None:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fig.write_html(str(args.output), include_plotlyjs="cdn")
-    print(f"Wrote: {args.output}")
+    print(f"Wrote: {args.output} ({X.shape[0]} frames, {emb.shape[0]} points)")
 
 
 if __name__ == "__main__":

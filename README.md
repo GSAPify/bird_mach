@@ -53,10 +53,24 @@ Common options:
 - `--color-by time|energy` (default: `time`)
 - `--stride N` (downsample frames; useful for long recordings)
 
+## API endpoints
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/` | GET | Upload form for batch UMAP visualization |
+| `/live` | GET | Real-time audio visualization (mic or file) |
+| `/visualize` | POST | Process uploaded audio and return results |
+| `/health` | GET | Health check (returns `{"status": "ok"}`) |
+
 ## Notes
 
 - Works best with relatively clean clips (a few seconds to a couple minutes).
 - For very long recordings, increase `--stride` to keep the plot responsive.
+- The `/health` endpoint can be used by load balancers and uptime monitors.
+
+## n8n Workflows
+
+The `workflows/` directory contains automation workflows for n8n. See [`workflows/README.md`](workflows/README.md) for details.
 
 ## License
 

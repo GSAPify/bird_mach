@@ -1,0 +1,41 @@
+{
+  "name": "Weekly Regulatory Brief - Complete",
+  "meta": {
+    "description": "Automated regulatory intelligence system monitoring 22 agencies across US, Canada, and EU",
+    "version": "2.0",
+    "schedule": "Every Monday at 8:00 AM"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [-208, 1648],
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger - Weekly Monday 8am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [16, 1648],
+      "id": "start-hub",
+      "name": "Start Hub"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger - Weekly Monday 8am": {
+      "main": [[{"node": "Start Hub", "type": "main", "index": 0}]]
+    }
+  },
+  "_note": "Full workflow with 22 SerpAPI nodes, merge, dedup, AI analysis, email delivery. See WORKFLOW_NOTES.md for complete documentation."
+}
