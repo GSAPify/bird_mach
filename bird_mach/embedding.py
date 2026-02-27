@@ -165,6 +165,7 @@ def build_multiview_figure(
     connect: bool,
     title: str,
 ) -> go.Figure:
+    """Build a 3-row stacked Plotly figure showing the embedding from three camera angles."""
     cameras = _camera_presets()
     color_values = _marker_values(color_by, times_s=times_s, energy=energy)
     colorbar_title = "time (s)" if color_by == "time" else "energy"
@@ -219,6 +220,7 @@ def build_singleview_figure(
     connect: bool,
     title: str,
 ) -> go.Figure:
+    """Build a single interactive 3D scatter plot of the embedding."""
     color_values = _marker_values(color_by, times_s=times_s, energy=energy)
     colorbar_title = "time (s)" if color_by == "time" else "energy"
     mode = "markers+lines" if connect else "markers"
@@ -256,6 +258,7 @@ def build_waveform_figure(
     title: str,
     max_points: int = 50_000,
 ) -> go.Figure:
+    """Build a 2D waveform plot, downsampling if the signal exceeds max_points."""
     n = int(y.shape[0])
     if n <= 0:
         raise ValueError("Cannot plot empty waveform.")
@@ -296,6 +299,7 @@ def build_mel_spectrogram_figure(
     cfg: AudioFeatureConfig,
     title: str,
 ) -> go.Figure:
+    """Build a heatmap visualization of the log-mel spectrogram."""
     if X_log_mel.ndim != 2:
         raise ValueError("X_log_mel must be a 2D array (n_frames, n_mels).")
     if times_s.ndim != 1:
@@ -327,6 +331,7 @@ def build_mel_spectrogram_figure(
 
 
 def build_energy_figure(times_s: np.ndarray, energy: np.ndarray, *, title: str) -> go.Figure:
+    """Build a line chart of per-frame energy over time."""
     fig = go.Figure(
         data=[
             go.Scatter(
