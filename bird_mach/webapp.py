@@ -746,6 +746,12 @@ def build_result_page(*, title: str, summary: str, sections: list[tuple[str, str
 app = FastAPI(title="Bird Mach", version="0.1.0")
 
 
+@app.get("/health")
+def health() -> dict:
+    """Lightweight health-check for uptime monitors and load balancers."""
+    return {"status": "ok", "version": app.version}
+
+
 @app.get("/", response_class=HTMLResponse)
 def index() -> HTMLResponse:
     return HTMLResponse(INDEX_HTML)
