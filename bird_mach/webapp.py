@@ -791,6 +791,11 @@ async def visualize(
         return HTMLResponse("No audio received.", status_code=400)
 
     logger.info("Processing upload: %s (%d bytes)", audio.filename, len(raw))
+
+    stride = max(1, min(stride, 50))
+    n_neighbors = max(2, min(n_neighbors, 200))
+    min_dist = max(0.0, min(min_dist, 1.0))
+
     suffix = Path(audio.filename or "audio.wav").suffix
     if not suffix:
         suffix = ".wav"
