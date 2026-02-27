@@ -36,6 +36,8 @@ INDEX_HTML = """\
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Upload audio and generate interactive 3D UMAP embeddings of bird sounds" />
+    <meta name="theme-color" content="#0b0f19" />
     <title>Bird Mach — 3D Sound Map</title>
     <style>
       body {
@@ -136,6 +138,8 @@ LIVE_HTML = """\
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Real-time audio visualization with waveform, spectrogram, and 3D point cloud" />
+    <meta name="theme-color" content="#0b0f19" />
     <title>Bird Mach — Live</title>
     <style>
       body {
