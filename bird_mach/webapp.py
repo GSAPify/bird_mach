@@ -13,6 +13,7 @@ from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
+from bird_mach.constants import APP_NAME, APP_VERSION
 from bird_mach.embedding import (
     DEFAULT_AUDIO_FEATURE_CONFIG,
     DEFAULT_UMAP_CONFIG,
@@ -753,7 +754,7 @@ def build_result_page(*, title: str, summary: str, sections: list[tuple[str, str
 """
 
 
-app = FastAPI(title="Bird Mach", version="0.1.0")
+app = FastAPI(title=APP_NAME, version=APP_VERSION)
 
 app.add_middleware(
     CORSMiddleware,
