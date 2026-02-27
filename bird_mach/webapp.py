@@ -1,8 +1,13 @@
+"""FastAPI web application for Bird Mach audio visualization."""
+
 from __future__ import annotations
 
 import html
+import logging
 import tempfile
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -782,8 +787,10 @@ async def visualize(
 ) -> HTMLResponse:
     raw = await audio.read()
     if not raw:
+        logger.warning("Received empty audio upload")
         return HTMLResponse("No audio received.", status_code=400)
 
+    logger.info("Processing upload: %s (%d bytes)", audio.filename, len(raw))
     suffix = Path(audio.filename or "audio.wav").suffix
     if not suffix:
         suffix = ".wav"
@@ -861,6 +868,7 @@ async def visualize(
 
         return HTMLResponse(build_result_page(title=title, summary=summary, sections=sections))
     except Exception as e:
+        logger.exception("Visualization failed for %s", audio.filename)
         msg = html.escape(str(e))
         return HTMLResponse(f"<pre>Failed to visualize audio:\n{msg}</pre>", status_code=500)
     finally:
