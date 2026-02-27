@@ -124,6 +124,13 @@ def stride_downsample(
 
 def compute_umap_3d(X: np.ndarray, cfg: UmapConfig) -> np.ndarray:
     """Project high-dimensional feature matrix into 3D via UMAP."""
+    if X.ndim != 2:
+        raise ValueError(f"Expected 2D feature matrix, got shape {X.shape}")
+    if X.shape[0] < cfg.n_neighbors:
+        raise ValueError(
+            f"Too few frames ({X.shape[0]}) for n_neighbors={cfg.n_neighbors}. "
+            "Increase stride or provide a longer recording."
+        )
     reducer = umap.UMAP(
         n_components=3,
         n_neighbors=cfg.n_neighbors,
