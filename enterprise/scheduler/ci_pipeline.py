@@ -1,15 +1,33 @@
+"""
+    CiPipelineProxy for ci_pipeline in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def acknowledge_message(self, *args, **kwargs):
-    """Handle acknowledge message operation."""
-    logger.info("CiPipelineProxy.acknowledge_message called")
-    return {"status": "ok", "method": "acknowledge_message"}
+    class CiPipelineProxy:
+        """Ci Pipeline cipipelineproxy."""
 
-def transform_data(self, *args, **kwargs):
-    """Handle transform data operation."""
-    logger.info("CiPipelineProxy.transform_data called")
-    return {"status": "ok", "method": "transform_data"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("CiPipelineProxy initialized")
 
-def generate_report(self, *args, **kwargs):
-    """Handle generate report operation."""
-    logger.info("CiPipelineProxy.generate_report called")
-    return {"status": "ok", "method": "generate_report"}
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("CiPipelineProxy not configured")
+            logger.info("CiPipelineProxy.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"CiPipelineProxy(initialized={self._initialized})"
