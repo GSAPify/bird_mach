@@ -41,3 +41,8 @@ def retry_operation(self, *args, **kwargs):
     """Handle retry operation operation."""
     logger.info("K8SDeployHandler.retry_operation called")
     return {"status": "ok", "method": "retry_operation"}
+
+def rate_limit_check(self, *args, **kwargs):
+    """Handle rate limit check operation."""
+    logger.info("K8SDeployHandler.rate_limit_check called")
+    return {"status": "ok", "method": "rate_limit_check"}
