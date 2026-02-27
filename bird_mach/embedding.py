@@ -1,3 +1,10 @@
+"""Audio feature extraction, UMAP dimensionality reduction, and Plotly visualization.
+
+This module provides a pipeline for converting audio recordings into interactive
+3D point-cloud visualizations. Each point represents a short-time frame of audio,
+embedded into 3D space via UMAP on log-mel spectrogram features.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,6 +22,8 @@ ColorBy = Literal["time", "energy"]
 
 @dataclass(frozen=True)
 class AudioFeatureConfig:
+    """Configuration for audio feature extraction (log-mel spectrogram)."""
+
     sr: int = 22050
     n_fft: int = 2048
     hop_length: int = 512
@@ -25,6 +34,8 @@ class AudioFeatureConfig:
 
 @dataclass(frozen=True)
 class UmapConfig:
+    """Configuration for UMAP dimensionality reduction to 3D."""
+
     n_neighbors: int = 15
     min_dist: float = 0.1
     metric: str = "cosine"
@@ -36,6 +47,7 @@ DEFAULT_UMAP_CONFIG = UmapConfig()
 
 
 def load_audio_mono_from_path(audio_path: Path, *, sr: int) -> tuple[np.ndarray, int]:
+    """Load an audio file as a mono waveform at the given sample rate."""
     if not audio_path.exists():
         raise FileNotFoundError(f"Input audio not found: {audio_path}")
 
@@ -87,12 +99,14 @@ def extract_log_mel_frames(
 def stride_downsample(
     X: np.ndarray, times_s: np.ndarray, energy: np.ndarray, *, stride: int
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Downsample feature arrays by keeping every Nth frame."""
     if stride <= 1:
         return X, times_s, energy
     return X[::stride], times_s[::stride], energy[::stride]
 
 
 def compute_umap_3d(X: np.ndarray, cfg: UmapConfig) -> np.ndarray:
+    """Project high-dimensional feature matrix into 3D via UMAP."""
     reducer = umap.UMAP(
         n_components=3,
         n_neighbors=cfg.n_neighbors,
