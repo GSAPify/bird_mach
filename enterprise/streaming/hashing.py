@@ -1,15 +1,33 @@
+"""
+    HashingAdapter for hashing in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def unsubscribe_channel(self, *args, **kwargs):
-    """Handle unsubscribe channel operation."""
-    logger.info("HashingAdapter.unsubscribe_channel called")
-    return {"status": "ok", "method": "unsubscribe_channel"}
+    class HashingAdapter:
+        """Hashing hashingadapter."""
 
-def generate_report(self, *args, **kwargs):
-    """Handle generate report operation."""
-    logger.info("HashingAdapter.generate_report called")
-    return {"status": "ok", "method": "generate_report"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("HashingAdapter initialized")
 
-def process_batch(self, *args, **kwargs):
-    """Handle process batch operation."""
-    logger.info("HashingAdapter.process_batch called")
-    return {"status": "ok", "method": "process_batch"}
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("HashingAdapter not configured")
+            logger.info("HashingAdapter.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"HashingAdapter(initialized={self._initialized})"
