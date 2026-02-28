@@ -5,7 +5,9 @@ from __future__ import annotations
 import html
 import logging
 import tempfile
+import urllib.request
 from pathlib import Path
+from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 
@@ -93,9 +95,12 @@ INDEX_HTML = """\
           <label for="audio">Audio file</label>
           <div id="dropZone" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;">
             <div style="color: #b7bdd1; margin-bottom: 8px;">Drag & drop an audio file here, or click to browse</div>
-            <input id="audio" name="audio" type="file" accept="audio/*" required style="display:none" />
+            <input id="audio" name="audio" type="file" accept="audio/*" style="display:none" />
             <div id="fileName" style="color: #93c5fd; font-weight: 600; margin-top: 6px;"></div>
           </div>
+
+          <div style="text-align: center; color: #b7bdd1; margin: 10px 0 6px; font-size: 13px;">— or paste a URL —</div>
+          <input id="audioUrl" name="audio_url" type="url" placeholder="https://example.com/audio.wav" style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.14); background:#0e1526; color:#e6e8ef;" />
 
           <div class="row">
             <div>
@@ -813,9 +818,22 @@ def live() -> HTMLResponse:
     return HTMLResponse(LIVE_HTML)
 
 
+def _fetch_audio_from_url(url: str) -> tuple[bytes, str]:
+    """Download audio from a URL, return (bytes, filename)."""
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError("Only http/https URLs are supported")
+    filename = Path(parsed.path).name or "remote_audio.wav"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mach/0.2"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        data = resp.read(50 * 1024 * 1024)  # 50 MB limit
+    return data, filename
+
+
 @app.post("/visualize", response_class=HTMLResponse)
 async def visualize(
-    audio: UploadFile = File(...),
+    audio: UploadFile = File(None),
+    audio_url: str = Form(""),
     color_by: str = Form("time"),
     stride: int = Form(2),
     n_neighbors: int = Form(DEFAULT_UMAP_CONFIG.n_neighbors),
@@ -823,18 +841,30 @@ async def visualize(
     multi_view: bool = Form(False),
     connect: bool = Form(False),
 ) -> HTMLResponse:
-    raw = await audio.read()
-    if not raw:
-        logger.warning("Received empty audio upload")
-        return HTMLResponse("No audio received.", status_code=400)
+    raw: bytes = b""
+    filename = "audio"
 
-    logger.info("Processing upload: %s (%d bytes)", audio.filename, len(raw))
+    if audio and audio.filename:
+        raw = await audio.read()
+        filename = audio.filename
+    elif audio_url.strip():
+        try:
+            raw, filename = _fetch_audio_from_url(audio_url.strip())
+        except Exception as e:
+            logger.warning("URL fetch failed: %s", e)
+            return HTMLResponse(f"Failed to fetch audio from URL: {html.escape(str(e))}", status_code=400)
+
+    if not raw:
+        logger.warning("No audio provided (neither file nor URL)")
+        return HTMLResponse("No audio received. Upload a file or provide a URL.", status_code=400)
+
+    logger.info("Processing: %s (%d bytes)", filename, len(raw))
 
     stride = max(1, min(stride, 50))
     n_neighbors = max(2, min(n_neighbors, 200))
     min_dist = max(0.0, min(min_dist, 1.0))
 
-    suffix = Path(audio.filename or "audio.wav").suffix
+    suffix = Path(filename).suffix
     if not suffix:
         suffix = ".wav"
 
@@ -865,7 +895,7 @@ async def visualize(
         emb = compute_umap_3d(X, umap_cfg)
 
         chosen_color_by = normalize_color_by(color_by)
-        title = f"{audio.filename or 'audio'} — 3D embedding"
+        title = f"{filename} — 3D embedding"
         duration_s = float(y.shape[0]) / float(sr)
         summary = (
             f"duration={duration_s:.2f}s frames={X.shape[0]} stride={stride} "
@@ -911,7 +941,7 @@ async def visualize(
 
         return HTMLResponse(build_result_page(title=title, summary=summary, sections=sections))
     except Exception as e:
-        logger.exception("Visualization failed for %s", audio.filename)
+        logger.exception("Visualization failed for %s", filename)
         msg = html.escape(str(e))
         return HTMLResponse(f"<pre>Failed to visualize audio:\n{msg}</pre>", status_code=500)
     finally:
