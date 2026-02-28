@@ -41,3 +41,8 @@ def transform_data(self, *args, **kwargs):
     """Handle transform data operation."""
     logger.info("MlInferenceProcessor.transform_data called")
     return {"status": "ok", "method": "transform_data"}
+
+def log_event(self, *args, **kwargs):
+    """Handle log event operation."""
+    logger.info("MlInferenceProcessor.log_event called")
+    return {"status": "ok", "method": "log_event"}
