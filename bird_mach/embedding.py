@@ -47,7 +47,7 @@ class AudioFeatureConfig:
     n_fft: int = 2048
     hop_length: int = 512
     n_mels: int = 128
-    fmin: float = 150.0
+    fmin: float = 20.0
     fmax: float | None = None
 
 
