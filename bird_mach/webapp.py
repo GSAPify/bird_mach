@@ -89,9 +89,13 @@ INDEX_HTML = """\
       <h1>Mach — 3D Audio Map</h1>
       <p>Upload any audio — music, speech, bird calls, field recordings — and generate a 3D embedding (UMAP) where each point represents a short-time frame. For real-time visuals while audio plays, try <a href="/live">Live mode</a>.</p>
       <div class="card">
-        <form action="/visualize" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" action="/visualize" method="post" enctype="multipart/form-data">
           <label for="audio">Audio file</label>
-          <input id="audio" name="audio" type="file" accept="audio/*" required />
+          <div id="dropZone" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;">
+            <div style="color: #b7bdd1; margin-bottom: 8px;">Drag & drop an audio file here, or click to browse</div>
+            <input id="audio" name="audio" type="file" accept="audio/*" required style="display:none" />
+            <div id="fileName" style="color: #93c5fd; font-weight: 600; margin-top: 6px;"></div>
+          </div>
 
           <div class="row">
             <div>
@@ -129,6 +133,35 @@ INDEX_HTML = """\
         </form>
       </div>
     </div>
+    <script>
+      const dropZone = document.getElementById("dropZone");
+      const fileInput = document.getElementById("audio");
+      const fileNameEl = document.getElementById("fileName");
+
+      dropZone.addEventListener("click", () => fileInput.click());
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files.length) fileNameEl.textContent = fileInput.files[0].name;
+      });
+
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = "#3b82f6";
+        dropZone.style.background = "rgba(59,130,246,0.06)";
+      });
+      dropZone.addEventListener("dragleave", () => {
+        dropZone.style.borderColor = "rgba(255,255,255,0.2)";
+        dropZone.style.background = "transparent";
+      });
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = "rgba(255,255,255,0.2)";
+        dropZone.style.background = "transparent";
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          fileNameEl.textContent = e.dataTransfer.files[0].name;
+        }
+      });
+    </script>
   </body>
 </html>
 """
