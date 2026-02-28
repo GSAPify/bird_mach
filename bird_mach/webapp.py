@@ -310,6 +310,10 @@ LIVE_HTML = """\
 
       <div class="plots">
         <div class="card">
+          <div style="font-weight: 700; margin-bottom: 8px;">Frequency Bands</div>
+          <canvas id="bandsCanvas" width="1100" height="120"></canvas>
+        </div>
+        <div class="card">
           <div style="font-weight: 700; margin-bottom: 8px;">Waveform</div>
           <canvas id="waveCanvas" width="1100" height="160"></canvas>
         </div>
@@ -338,8 +342,10 @@ LIVE_HTML = """\
       const maxPointsEl = document.getElementById("maxPoints");
       const nBinsEl = document.getElementById("nBins");
 
+      const bandsCanvas = document.getElementById("bandsCanvas");
       const waveCanvas = document.getElementById("waveCanvas");
       const specCanvas = document.getElementById("specCanvas");
+      const bandsCtx = bandsCanvas.getContext("2d");
       const waveCtx = waveCanvas.getContext("2d");
       const specCtx = specCanvas.getContext("2d");
 
@@ -507,6 +513,51 @@ LIVE_HTML = """\
         smoothCentroid = 0;
       }
 
+      const BAND_RANGES = [
+        {name: "Sub",   from: 0,   to: 4,   color: "#ef4444"},
+        {name: "Bass",  from: 4,   to: 12,  color: "#f97316"},
+        {name: "Low",   from: 12,  to: 40,  color: "#eab308"},
+        {name: "Mid",   from: 40,  to: 100, color: "#22c55e"},
+        {name: "Hi-Mid",from: 100, to: 200, color: "#06b6d4"},
+        {name: "High",  from: 200, to: 400, color: "#8b5cf6"},
+        {name: "Air",   from: 400, to: 512, color: "#ec4899"},
+      ];
+      let smoothBands = new Float32Array(BAND_RANGES.length);
+
+      function drawBands() {
+        const w = bandsCanvas.width;
+        const h = bandsCanvas.height;
+        bandsCtx.clearRect(0, 0, w, h);
+
+        const barW = Math.floor(w / BAND_RANGES.length) - 4;
+        const gap = 4;
+
+        for (let b = 0; b < BAND_RANGES.length; b++) {
+          const band = BAND_RANGES[b];
+          let sum = 0, count = 0;
+          const lo = Math.min(band.from, freqData.length);
+          const hi = Math.min(band.to, freqData.length);
+          for (let i = lo; i < hi; i++) {
+            sum += freqData[i] / 255.0;
+            count++;
+          }
+          const raw = count > 0 ? sum / count : 0;
+          smoothBands[b] += (raw - smoothBands[b]) * 0.3;
+
+          const barH = smoothBands[b] * h * 0.92;
+          const x = b * (barW + gap) + gap;
+          bandsCtx.fillStyle = band.color;
+          bandsCtx.beginPath();
+          bandsCtx.roundRect(x, h - barH, barW, barH, 4);
+          bandsCtx.fill();
+
+          bandsCtx.fillStyle = "#b7bdd1";
+          bandsCtx.font = "11px sans-serif";
+          bandsCtx.textAlign = "center";
+          bandsCtx.fillText(band.name, x + barW / 2, h - 2);
+        }
+      }
+
       function drawWaveform() {
         const w = waveCanvas.width;
         const h = waveCanvas.height;
@@ -655,6 +706,7 @@ LIVE_HTML = """\
         analyser.getByteTimeDomainData(timeData);
         analyser.getByteFrequencyData(freqData);
 
+        drawBands();
         drawWaveform();
         drawSpectrogram();
         updateCloud();
