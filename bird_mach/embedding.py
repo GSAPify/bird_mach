@@ -29,6 +29,8 @@ __all__ = [
     "extract_log_mel_frames",
     "stride_downsample",
     "compute_umap_3d",
+    "compute_umap_2d",
+    "build_2d_figure",
     "build_multiview_figure",
     "build_singleview_figure",
     "build_waveform_figure",
@@ -140,6 +142,67 @@ def compute_umap_3d(X: np.ndarray, cfg: UmapConfig) -> np.ndarray:
     )
     emb = reducer.fit_transform(X)
     return emb.astype(np.float32, copy=False)
+
+
+def compute_umap_2d(X: np.ndarray, cfg: UmapConfig) -> np.ndarray:
+    """Project high-dimensional feature matrix into 2D via UMAP."""
+    if X.ndim != 2:
+        raise ValueError(f"Expected 2D feature matrix, got shape {X.shape}")
+    if X.shape[0] < cfg.n_neighbors:
+        raise ValueError(
+            f"Too few frames ({X.shape[0]}) for n_neighbors={cfg.n_neighbors}. "
+            "Increase stride or provide a longer recording."
+        )
+    reducer = umap.UMAP(
+        n_components=2,
+        n_neighbors=cfg.n_neighbors,
+        min_dist=cfg.min_dist,
+        metric=cfg.metric,
+        random_state=cfg.random_state,
+    )
+    emb = reducer.fit_transform(X)
+    return emb.astype(np.float32, copy=False)
+
+
+def build_2d_figure(
+    emb: np.ndarray,
+    *,
+    times_s: np.ndarray,
+    energy: np.ndarray,
+    color_by: ColorBy,
+    connect: bool,
+    title: str,
+    colorscale: str = "Turbo",
+) -> go.Figure:
+    """Build a 2D scatter plot of the UMAP embedding."""
+    color_values = _marker_values(color_by, times_s=times_s, energy=energy)
+    colorbar_title = "time (s)" if color_by == "time" else "energy"
+    mode = "markers+lines" if connect else "markers"
+
+    trace = go.Scatter(
+        x=emb[:, 0],
+        y=emb[:, 1],
+        mode=mode,
+        marker={
+            "size": 5,
+            "color": color_values,
+            "colorscale": colorscale,
+            "opacity": 0.85,
+            "showscale": True,
+            "colorbar": {"title": colorbar_title},
+        },
+        line={"width": 1, "color": "rgba(255,255,255,0.15)"} if connect else None,
+    )
+
+    fig = go.Figure(data=[trace])
+    fig.update_layout(
+        title=title,
+        margin={"l": 40, "r": 10, "t": 40, "b": 40},
+        height=600,
+        xaxis={"title": "D1"},
+        yaxis={"title": "D2"},
+    )
+    return fig
 
 
 def _camera_presets() -> list[dict]:
