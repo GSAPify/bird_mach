@@ -299,6 +299,7 @@ LIVE_HTML = """\
             <div class="btns">
               <button id="startFileBtn">Start (file)</button>
               <button id="startMicBtn">Start (mic)</button>
+              <button id="startScreenBtn">Start (tab audio)</button>
               <button id="stopBtn" class="secondary" disabled>Stop</button>
               <button id="clearBtn" class="secondary">Clear points</button>
             </div>
@@ -339,6 +340,7 @@ LIVE_HTML = """\
       const player = document.getElementById("player");
       const startFileBtn = document.getElementById("startFileBtn");
       const startMicBtn = document.getElementById("startMicBtn");
+      const startScreenBtn = document.getElementById("startScreenBtn");
       const stopBtn = document.getElementById("stopBtn");
       const clearBtn = document.getElementById("clearBtn");
       const motionEl = document.getElementById("motion");
@@ -788,6 +790,35 @@ LIVE_HTML = """\
         loop();
       }
 
+      async function startFromScreen() {
+        teardownSource();
+        initAnalyser();
+        initProjection();
+        initCloud();
+
+        const ctx = ensureAudioContext();
+        await ctx.resume();
+
+        mediaStream = await navigator.mediaDevices.getDisplayMedia({audio: true, video: true});
+        const audioTracks = mediaStream.getAudioTracks();
+        if (!audioTracks.length) {
+          mediaStream.getTracks().forEach(t => t.stop());
+          setStatus("No audio track found — make sure you check 'Share tab audio'.");
+          return;
+        }
+        mediaStream.getVideoTracks().forEach(t => t.stop());
+
+        sourceNode = ctx.createMediaStreamSource(new MediaStream(audioTracks));
+        sourceNode.connect(analyser);
+
+        startedAt = ctx.currentTime;
+        frameCount = 0;
+        stopBtn.disabled = false;
+        statsPanel.style.display = "block";
+        setStatus("Running (tab audio). Play audio in the shared tab.");
+        loop();
+      }
+
       function stop() {
         teardownSource();
         stopBtn.disabled = true;
@@ -819,6 +850,14 @@ LIVE_HTML = """\
           await startFromMic();
         } catch (e) {
           setStatus(`Failed to start (mic): ${e}`);
+        }
+      });
+
+      startScreenBtn.addEventListener("click", async () => {
+        try {
+          await startFromScreen();
+        } catch (e) {
+          setStatus(`Failed to start (screen): ${e}`);
         }
       });
 
