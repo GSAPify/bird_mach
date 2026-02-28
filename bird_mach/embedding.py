@@ -164,6 +164,7 @@ def build_multiview_figure(
     color_by: ColorBy,
     connect: bool,
     title: str,
+    colorscale: str = "Turbo",
 ) -> go.Figure:
     """Build a 3-row stacked Plotly figure showing the embedding from three camera angles."""
     cameras = _camera_presets()
@@ -189,7 +190,7 @@ def build_multiview_figure(
             marker={
                 "size": 3,
                 "color": color_values,
-                "colorscale": "Turbo",
+                "colorscale": colorscale,
                 "opacity": 0.95,
                 "showscale": show_scale,
                 "colorbar": {"title": colorbar_title} if show_scale else None,
@@ -219,6 +220,7 @@ def build_singleview_figure(
     color_by: ColorBy,
     connect: bool,
     title: str,
+    colorscale: str = "Turbo",
 ) -> go.Figure:
     """Build a single interactive 3D scatter plot of the embedding."""
     color_values = _marker_values(color_by, times_s=times_s, energy=energy)
@@ -233,7 +235,7 @@ def build_singleview_figure(
         marker={
             "size": 3,
             "color": color_values,
-            "colorscale": "Turbo",
+            "colorscale": colorscale,
             "opacity": 0.95,
             "showscale": True,
             "colorbar": {"title": colorbar_title},

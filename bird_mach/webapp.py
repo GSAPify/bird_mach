@@ -127,9 +127,24 @@ INDEX_HTML = """\
             </div>
           </div>
 
-          <div class="checks">
-            <label><input type="checkbox" name="multi_view" value="1" checked /> Multi-view (stacked)</label>
-            <label><input type="checkbox" name="connect" value="1" /> Connect points</label>
+          <div class="row">
+            <div>
+              <label for="colorscale">Colorscale</label>
+              <select id="colorscale" name="colorscale">
+                <option value="Turbo" selected>Turbo</option>
+                <option value="Viridis">Viridis</option>
+                <option value="Plasma">Plasma</option>
+                <option value="Inferno">Inferno</option>
+                <option value="Magma">Magma</option>
+                <option value="Cividis">Cividis</option>
+                <option value="Hot">Hot</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+            <div style="display:flex; flex-direction:column; justify-content:end; gap:10px; padding-bottom:2px;">
+              <label style="display:inline-flex; align-items:center; gap:8px; font-weight:500; margin:0;"><input type="checkbox" name="multi_view" value="1" checked /> Multi-view</label>
+              <label style="display:inline-flex; align-items:center; gap:8px; font-weight:500; margin:0;"><input type="checkbox" name="connect" value="1" /> Connect points</label>
+            </div>
           </div>
 
           <button type="submit">Generate 3D visualization</button>
@@ -835,6 +850,7 @@ async def visualize(
     audio: UploadFile = File(None),
     audio_url: str = Form(""),
     color_by: str = Form("time"),
+    colorscale: str = Form("Turbo"),
     stride: int = Form(2),
     n_neighbors: int = Form(DEFAULT_UMAP_CONFIG.n_neighbors),
     min_dist: float = Form(DEFAULT_UMAP_CONFIG.min_dist),
@@ -910,6 +926,7 @@ async def visualize(
                 color_by=chosen_color_by,
                 connect=connect,
                 title=title,
+                colorscale=colorscale,
             )
         else:
             fig = build_singleview_figure(
@@ -919,6 +936,7 @@ async def visualize(
                 color_by=chosen_color_by,
                 connect=connect,
                 title=title,
+                colorscale=colorscale,
             )
 
         embedding_html = fig.to_html(include_plotlyjs=True, full_html=False)
