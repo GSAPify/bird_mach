@@ -41,3 +41,5 @@ TRANSLATIONS = {
 "upload": "オーディオをアップロード",
 
 "app_name": "Mach",
+
+"export": "エクスポート",
