@@ -1,11 +1,13 @@
-"""FastAPI web application for Bird Mach audio visualization."""
+"""FastAPI web application for Mach audio visualization."""
 
 from __future__ import annotations
 
 import html
 import logging
 import tempfile
+import urllib.request
 from pathlib import Path
+from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 
@@ -20,11 +22,13 @@ from bird_mach.embedding import (
     AudioFeatureConfig,
     ColorBy,
     UmapConfig,
+    build_2d_figure,
     build_energy_figure,
     build_multiview_figure,
     build_mel_spectrogram_figure,
     build_singleview_figure,
     build_waveform_figure,
+    compute_umap_2d,
     compute_umap_3d,
     extract_log_mel_frames,
     load_audio_mono_from_path,
@@ -37,9 +41,9 @@ INDEX_HTML = """\
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Upload audio and generate interactive 3D UMAP embeddings of bird sounds" />
+    <meta name="description" content="Upload any audio and generate interactive 3D UMAP embeddings — music, speech, field recordings, anything" />
     <meta name="theme-color" content="#0b0f19" />
-    <title>Bird Mach — 3D Sound Map</title>
+    <title>Mach — 3D Audio Map</title>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -86,12 +90,19 @@ INDEX_HTML = """\
   </head>
   <body>
     <div class="wrap">
-      <h1>Bird Mach — 3D Sound Map</h1>
-      <p>Upload an audio clip and generate a 3D embedding (UMAP) where each point represents a short-time frame of the recording. For real-time visuals while audio plays, try <a href="/live">Live mode</a>.</p>
+      <h1>Mach — 3D Audio Map</h1>
+      <p>Upload any audio — music, speech, bird calls, field recordings — and generate a 3D embedding (UMAP) where each point represents a short-time frame. For real-time visuals while audio plays, try <a href="/live">Live mode</a>.</p>
       <div class="card">
-        <form action="/visualize" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" action="/visualize" method="post" enctype="multipart/form-data">
           <label for="audio">Audio file</label>
-          <input id="audio" name="audio" type="file" accept="audio/*" required />
+          <div id="dropZone" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;">
+            <div style="color: #b7bdd1; margin-bottom: 8px;">Drag & drop an audio file here, or click to browse</div>
+            <input id="audio" name="audio" type="file" accept="audio/*" style="display:none" />
+            <div id="fileName" style="color: #93c5fd; font-weight: 600; margin-top: 6px;"></div>
+          </div>
+
+          <div style="text-align: center; color: #b7bdd1; margin: 10px 0 6px; font-size: 13px;">— or paste a URL —</div>
+          <input id="audioUrl" name="audio_url" type="url" placeholder="https://example.com/audio.wav" style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.14); background:#0e1526; color:#e6e8ef;" />
 
           <div class="row">
             <div>
@@ -118,9 +129,31 @@ INDEX_HTML = """\
             </div>
           </div>
 
-          <div class="checks">
-            <label><input type="checkbox" name="multi_view" value="1" checked /> Multi-view (stacked)</label>
-            <label><input type="checkbox" name="connect" value="1" /> Connect points</label>
+          <div class="row">
+            <div>
+              <label for="dimensions">Dimensions</label>
+              <select id="dimensions" name="dimensions">
+                <option value="3d" selected>3D (UMAP)</option>
+                <option value="2d">2D (UMAP)</option>
+              </select>
+            </div>
+            <div>
+              <label for="colorscale">Colorscale</label>
+              <select id="colorscale" name="colorscale">
+                <option value="Turbo" selected>Turbo</option>
+                <option value="Viridis">Viridis</option>
+                <option value="Plasma">Plasma</option>
+                <option value="Inferno">Inferno</option>
+                <option value="Magma">Magma</option>
+                <option value="Cividis">Cividis</option>
+                <option value="Hot">Hot</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+            <div style="display:flex; flex-direction:column; justify-content:end; gap:10px; padding-bottom:2px;">
+              <label style="display:inline-flex; align-items:center; gap:8px; font-weight:500; margin:0;"><input type="checkbox" name="multi_view" value="1" checked /> Multi-view</label>
+              <label style="display:inline-flex; align-items:center; gap:8px; font-weight:500; margin:0;"><input type="checkbox" name="connect" value="1" /> Connect points</label>
+            </div>
           </div>
 
           <button type="submit">Generate 3D visualization</button>
@@ -129,6 +162,35 @@ INDEX_HTML = """\
         </form>
       </div>
     </div>
+    <script>
+      const dropZone = document.getElementById("dropZone");
+      const fileInput = document.getElementById("audio");
+      const fileNameEl = document.getElementById("fileName");
+
+      dropZone.addEventListener("click", () => fileInput.click());
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files.length) fileNameEl.textContent = fileInput.files[0].name;
+      });
+
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = "#3b82f6";
+        dropZone.style.background = "rgba(59,130,246,0.06)";
+      });
+      dropZone.addEventListener("dragleave", () => {
+        dropZone.style.borderColor = "rgba(255,255,255,0.2)";
+        dropZone.style.background = "transparent";
+      });
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = "rgba(255,255,255,0.2)";
+        dropZone.style.background = "transparent";
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          fileNameEl.textContent = e.dataTransfer.files[0].name;
+        }
+      });
+    </script>
   </body>
 </html>
 """
@@ -141,7 +203,7 @@ LIVE_HTML = """\
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Real-time audio visualization with waveform, spectrogram, and 3D point cloud" />
     <meta name="theme-color" content="#0b0f19" />
-    <title>Bird Mach — Live</title>
+    <title>Mach — Live Audio</title>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -237,16 +299,26 @@ LIVE_HTML = """\
             <div class="btns">
               <button id="startFileBtn">Start (file)</button>
               <button id="startMicBtn">Start (mic)</button>
+              <button id="startScreenBtn">Start (tab audio)</button>
               <button id="stopBtn" class="secondary" disabled>Stop</button>
               <button id="clearBtn" class="secondary">Clear points</button>
             </div>
             <div class="status" id="status">Idle.</div>
+
+            <div id="stats" style="margin-top: 10px; padding: 8px 10px; background: rgba(255,255,255,0.04); border-radius: 8px; font-family: monospace; font-size: 12px; color: #b7bdd1; display: none;">
+              <div>RMS: <span id="statRms">—</span> | Peak: <span id="statPeak">—</span> | Centroid: <span id="statCentroid">—</span> | Time: <span id="statTime">—</span>s</div>
+            </div>
+
             <div class="note">Tip: If it gets slow, lower <code>max points</code> or <code>bins</code>.</div>
           </div>
         </div>
       </div>
 
       <div class="plots">
+        <div class="card">
+          <div style="font-weight: 700; margin-bottom: 8px;">Frequency Bands</div>
+          <canvas id="bandsCanvas" width="1100" height="120"></canvas>
+        </div>
         <div class="card">
           <div style="font-weight: 700; margin-bottom: 8px;">Waveform</div>
           <canvas id="waveCanvas" width="1100" height="160"></canvas>
@@ -255,8 +327,11 @@ LIVE_HTML = """\
           <div style="font-weight: 700; margin-bottom: 8px;">Spectrogram (scrolling)</div>
           <canvas id="specCanvas" width="1100" height="280"></canvas>
         </div>
-        <div class="card">
-          <div style="font-weight: 700; margin-bottom: 8px;">3D bubbles (loop / cloud)</div>
+        <div class="card" id="cloudCard">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+            <div style="font-weight: 700;">3D bubbles (loop / cloud)</div>
+            <button id="fullscreenBtn" class="secondary" style="padding:6px 10px; font-size:12px;">Fullscreen</button>
+          </div>
           <div id="cloud3d" class="plot3d" style="height: 520px;"></div>
         </div>
       </div>
@@ -268,6 +343,7 @@ LIVE_HTML = """\
       const player = document.getElementById("player");
       const startFileBtn = document.getElementById("startFileBtn");
       const startMicBtn = document.getElementById("startMicBtn");
+      const startScreenBtn = document.getElementById("startScreenBtn");
       const stopBtn = document.getElementById("stopBtn");
       const clearBtn = document.getElementById("clearBtn");
       const motionEl = document.getElementById("motion");
@@ -276,8 +352,10 @@ LIVE_HTML = """\
       const maxPointsEl = document.getElementById("maxPoints");
       const nBinsEl = document.getElementById("nBins");
 
+      const bandsCanvas = document.getElementById("bandsCanvas");
       const waveCanvas = document.getElementById("waveCanvas");
       const specCanvas = document.getElementById("specCanvas");
+      const bandsCtx = bandsCanvas.getContext("2d");
       const waveCtx = waveCanvas.getContext("2d");
       const specCtx = specCanvas.getContext("2d");
 
@@ -294,6 +372,13 @@ LIVE_HTML = """\
       let startedAt = 0;
       let smoothEnergy = 0;
       let smoothCentroid = 0;
+      let frameCount = 0;
+
+      const statsPanel = document.getElementById("stats");
+      const statRms = document.getElementById("statRms");
+      const statPeak = document.getElementById("statPeak");
+      const statCentroid = document.getElementById("statCentroid");
+      const statTime = document.getElementById("statTime");
 
       function mulberry32(seed) {
         return function() {
@@ -445,6 +530,51 @@ LIVE_HTML = """\
         smoothCentroid = 0;
       }
 
+      const BAND_RANGES = [
+        {name: "Sub",   from: 0,   to: 4,   color: "#ef4444"},
+        {name: "Bass",  from: 4,   to: 12,  color: "#f97316"},
+        {name: "Low",   from: 12,  to: 40,  color: "#eab308"},
+        {name: "Mid",   from: 40,  to: 100, color: "#22c55e"},
+        {name: "Hi-Mid",from: 100, to: 200, color: "#06b6d4"},
+        {name: "High",  from: 200, to: 400, color: "#8b5cf6"},
+        {name: "Air",   from: 400, to: 512, color: "#ec4899"},
+      ];
+      let smoothBands = new Float32Array(BAND_RANGES.length);
+
+      function drawBands() {
+        const w = bandsCanvas.width;
+        const h = bandsCanvas.height;
+        bandsCtx.clearRect(0, 0, w, h);
+
+        const barW = Math.floor(w / BAND_RANGES.length) - 4;
+        const gap = 4;
+
+        for (let b = 0; b < BAND_RANGES.length; b++) {
+          const band = BAND_RANGES[b];
+          let sum = 0, count = 0;
+          const lo = Math.min(band.from, freqData.length);
+          const hi = Math.min(band.to, freqData.length);
+          for (let i = lo; i < hi; i++) {
+            sum += freqData[i] / 255.0;
+            count++;
+          }
+          const raw = count > 0 ? sum / count : 0;
+          smoothBands[b] += (raw - smoothBands[b]) * 0.3;
+
+          const barH = smoothBands[b] * h * 0.92;
+          const x = b * (barW + gap) + gap;
+          bandsCtx.fillStyle = band.color;
+          bandsCtx.beginPath();
+          bandsCtx.roundRect(x, h - barH, barW, barH, 4);
+          bandsCtx.fill();
+
+          bandsCtx.fillStyle = "#b7bdd1";
+          bandsCtx.font = "11px sans-serif";
+          bandsCtx.textAlign = "center";
+          bandsCtx.fillText(band.name, x + barW / 2, h - 2);
+        }
+      }
+
       function drawWaveform() {
         const w = waveCanvas.width;
         const h = waveCanvas.height;
@@ -589,13 +719,34 @@ LIVE_HTML = """\
         );
       }
 
+      function updateStats() {
+        if (frameCount % 8 !== 0) return;
+        const t = audioCtx ? (audioCtx.currentTime - startedAt) : 0;
+        const rms = rmsEnergyFromTimeDomain();
+        let peak = 0;
+        for (let i = 0; i < timeData.length; i++) {
+          const v = Math.abs((timeData[i] - 128) / 128.0);
+          if (v > peak) peak = v;
+        }
+        const nBins = Math.min(128, freqData.length);
+        const cent = spectralCentroidNorm(nBins);
+
+        statRms.textContent = rms.toFixed(3);
+        statPeak.textContent = peak.toFixed(3);
+        statCentroid.textContent = cent.toFixed(3);
+        statTime.textContent = t.toFixed(1);
+      }
+
       function loop() {
         analyser.getByteTimeDomainData(timeData);
         analyser.getByteFrequencyData(freqData);
 
+        drawBands();
         drawWaveform();
         drawSpectrogram();
         updateCloud();
+        updateStats();
+        frameCount++;
 
         rafId = requestAnimationFrame(loop);
       }
@@ -614,7 +765,9 @@ LIVE_HTML = """\
         analyser.connect(ctx.destination);
 
         startedAt = ctx.currentTime;
+        frameCount = 0;
         stopBtn.disabled = false;
+        statsPanel.style.display = "block";
         setStatus("Running (file). Press play on the audio control if needed.");
         loop();
       }
@@ -633,8 +786,39 @@ LIVE_HTML = """\
         sourceNode.connect(analyser);
 
         startedAt = ctx.currentTime;
+        frameCount = 0;
         stopBtn.disabled = false;
+        statsPanel.style.display = "block";
         setStatus("Running (mic).");
+        loop();
+      }
+
+      async function startFromScreen() {
+        teardownSource();
+        initAnalyser();
+        initProjection();
+        initCloud();
+
+        const ctx = ensureAudioContext();
+        await ctx.resume();
+
+        mediaStream = await navigator.mediaDevices.getDisplayMedia({audio: true, video: true});
+        const audioTracks = mediaStream.getAudioTracks();
+        if (!audioTracks.length) {
+          mediaStream.getTracks().forEach(t => t.stop());
+          setStatus("No audio track found — make sure you check 'Share tab audio'.");
+          return;
+        }
+        mediaStream.getVideoTracks().forEach(t => t.stop());
+
+        sourceNode = ctx.createMediaStreamSource(new MediaStream(audioTracks));
+        sourceNode.connect(analyser);
+
+        startedAt = ctx.currentTime;
+        frameCount = 0;
+        stopBtn.disabled = false;
+        statsPanel.style.display = "block";
+        setStatus("Running (tab audio). Play audio in the shared tab.");
         loop();
       }
 
@@ -672,14 +856,55 @@ LIVE_HTML = """\
         }
       });
 
+      startScreenBtn.addEventListener("click", async () => {
+        try {
+          await startFromScreen();
+        } catch (e) {
+          setStatus(`Failed to start (screen): ${e}`);
+        }
+      });
+
       stopBtn.addEventListener("click", () => stop());
       clearBtn.addEventListener("click", () => clearCloud());
 
-      // Initialize visuals immediately
+      document.getElementById("fullscreenBtn").addEventListener("click", () => {
+        const card = document.getElementById("cloudCard");
+        if (!document.fullscreenElement) {
+          card.requestFullscreen().then(() => {
+            document.getElementById("cloud3d").style.height = "100vh";
+            if (window.Plotly) Plotly.Plots.resize(document.getElementById("cloud3d"));
+          }).catch(() => {});
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+          document.getElementById("cloud3d").style.height = "520px";
+          if (window.Plotly) Plotly.Plots.resize(document.getElementById("cloud3d"));
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+        switch (e.key.toLowerCase()) {
+          case " ":
+            e.preventDefault();
+            if (rafId) stop(); else if (player.src) startFromFile().catch(() => {});
+            break;
+          case "c":
+            clearCloud();
+            break;
+          case "m":
+            startFromMic().catch(() => {});
+            break;
+        }
+      });
+
       (function init() {
         specCtx.fillStyle = "#070a12";
         specCtx.fillRect(0, 0, specCanvas.width, specCanvas.height);
-        setStatus("Idle. Load a file or start mic.");
+        setStatus("Idle. Load a file or start mic. Keys: Space=play/stop, C=clear, M=mic");
       })();
     </script>
   </body>
@@ -780,28 +1005,55 @@ def live() -> HTMLResponse:
     return HTMLResponse(LIVE_HTML)
 
 
+def _fetch_audio_from_url(url: str) -> tuple[bytes, str]:
+    """Download audio from a URL, return (bytes, filename)."""
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError("Only http/https URLs are supported")
+    filename = Path(parsed.path).name or "remote_audio.wav"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mach/0.2"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        data = resp.read(50 * 1024 * 1024)  # 50 MB limit
+    return data, filename
+
+
 @app.post("/visualize", response_class=HTMLResponse)
 async def visualize(
-    audio: UploadFile = File(...),
+    audio: UploadFile = File(None),
+    audio_url: str = Form(""),
     color_by: str = Form("time"),
+    colorscale: str = Form("Turbo"),
+    dimensions: str = Form("3d"),
     stride: int = Form(2),
     n_neighbors: int = Form(DEFAULT_UMAP_CONFIG.n_neighbors),
     min_dist: float = Form(DEFAULT_UMAP_CONFIG.min_dist),
     multi_view: bool = Form(False),
     connect: bool = Form(False),
 ) -> HTMLResponse:
-    raw = await audio.read()
-    if not raw:
-        logger.warning("Received empty audio upload")
-        return HTMLResponse("No audio received.", status_code=400)
+    raw: bytes = b""
+    filename = "audio"
 
-    logger.info("Processing upload: %s (%d bytes)", audio.filename, len(raw))
+    if audio and audio.filename:
+        raw = await audio.read()
+        filename = audio.filename
+    elif audio_url.strip():
+        try:
+            raw, filename = _fetch_audio_from_url(audio_url.strip())
+        except Exception as e:
+            logger.warning("URL fetch failed: %s", e)
+            return HTMLResponse(f"Failed to fetch audio from URL: {html.escape(str(e))}", status_code=400)
+
+    if not raw:
+        logger.warning("No audio provided (neither file nor URL)")
+        return HTMLResponse("No audio received. Upload a file or provide a URL.", status_code=400)
+
+    logger.info("Processing: %s (%d bytes)", filename, len(raw))
 
     stride = max(1, min(stride, 50))
     n_neighbors = max(2, min(n_neighbors, 200))
     min_dist = max(0.0, min(min_dist, 1.0))
 
-    suffix = Path(audio.filename or "audio.wav").suffix
+    suffix = Path(filename).suffix
     if not suffix:
         suffix = ".wav"
 
@@ -829,34 +1081,50 @@ async def visualize(
         y, sr = load_audio_mono_from_path(tmp_path, sr=audio_cfg.sr)
         X, times_s, energy = extract_log_mel_frames(y, sr, audio_cfg)
         X, times_s, energy = stride_downsample(X, times_s, energy, stride=stride)
-        emb = compute_umap_3d(X, umap_cfg)
 
+        use_2d = dimensions.strip().lower() == "2d"
         chosen_color_by = normalize_color_by(color_by)
-        title = f"{audio.filename or 'audio'} — 3D embedding"
+        dim_label = "2D" if use_2d else "3D"
+        title = f"{filename} — {dim_label} embedding"
         duration_s = float(y.shape[0]) / float(sr)
         summary = (
             f"duration={duration_s:.2f}s frames={X.shape[0]} stride={stride} "
-            f"color_by={chosen_color_by} connect={connect} multi_view={multi_view}"
+            f"color_by={chosen_color_by} dim={dim_label} connect={connect}"
         )
 
-        if multi_view:
-            fig = build_multiview_figure(
+        if use_2d:
+            emb = compute_umap_2d(X, umap_cfg)
+            fig = build_2d_figure(
                 emb,
                 times_s=times_s,
                 energy=energy,
                 color_by=chosen_color_by,
                 connect=connect,
                 title=title,
+                colorscale=colorscale,
             )
         else:
-            fig = build_singleview_figure(
-                emb,
-                times_s=times_s,
-                energy=energy,
-                color_by=chosen_color_by,
-                connect=connect,
-                title=title,
-            )
+            emb = compute_umap_3d(X, umap_cfg)
+            if multi_view:
+                fig = build_multiview_figure(
+                    emb,
+                    times_s=times_s,
+                    energy=energy,
+                    color_by=chosen_color_by,
+                    connect=connect,
+                    title=title,
+                    colorscale=colorscale,
+                )
+            else:
+                fig = build_singleview_figure(
+                    emb,
+                    times_s=times_s,
+                    energy=energy,
+                    color_by=chosen_color_by,
+                    connect=connect,
+                    title=title,
+                    colorscale=colorscale,
+                )
 
         embedding_html = fig.to_html(include_plotlyjs=True, full_html=False)
 
@@ -878,7 +1146,7 @@ async def visualize(
 
         return HTMLResponse(build_result_page(title=title, summary=summary, sections=sections))
     except Exception as e:
-        logger.exception("Visualization failed for %s", audio.filename)
+        logger.exception("Visualization failed for %s", filename)
         msg = html.escape(str(e))
         return HTMLResponse(f"<pre>Failed to visualize audio:\n{msg}</pre>", status_code=500)
     finally:
