@@ -327,8 +327,11 @@ LIVE_HTML = """\
           <div style="font-weight: 700; margin-bottom: 8px;">Spectrogram (scrolling)</div>
           <canvas id="specCanvas" width="1100" height="280"></canvas>
         </div>
-        <div class="card">
-          <div style="font-weight: 700; margin-bottom: 8px;">3D bubbles (loop / cloud)</div>
+        <div class="card" id="cloudCard">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+            <div style="font-weight: 700;">3D bubbles (loop / cloud)</div>
+            <button id="fullscreenBtn" class="secondary" style="padding:6px 10px; font-size:12px;">Fullscreen</button>
+          </div>
           <div id="cloud3d" class="plot3d" style="height: 520px;"></div>
         </div>
       </div>
@@ -863,6 +866,24 @@ LIVE_HTML = """\
 
       stopBtn.addEventListener("click", () => stop());
       clearBtn.addEventListener("click", () => clearCloud());
+
+      document.getElementById("fullscreenBtn").addEventListener("click", () => {
+        const card = document.getElementById("cloudCard");
+        if (!document.fullscreenElement) {
+          card.requestFullscreen().then(() => {
+            document.getElementById("cloud3d").style.height = "100vh";
+            if (window.Plotly) Plotly.Plots.resize(document.getElementById("cloud3d"));
+          }).catch(() => {});
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+          document.getElementById("cloud3d").style.height = "520px";
+          if (window.Plotly) Plotly.Plots.resize(document.getElementById("cloud3d"));
+        }
+      });
 
       document.addEventListener("keydown", (e) => {
         if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
