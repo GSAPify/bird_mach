@@ -303,6 +303,11 @@ LIVE_HTML = """\
               <button id="clearBtn" class="secondary">Clear points</button>
             </div>
             <div class="status" id="status">Idle.</div>
+
+            <div id="stats" style="margin-top: 10px; padding: 8px 10px; background: rgba(255,255,255,0.04); border-radius: 8px; font-family: monospace; font-size: 12px; color: #b7bdd1; display: none;">
+              <div>RMS: <span id="statRms">—</span> | Peak: <span id="statPeak">—</span> | Centroid: <span id="statCentroid">—</span> | Time: <span id="statTime">—</span>s</div>
+            </div>
+
             <div class="note">Tip: If it gets slow, lower <code>max points</code> or <code>bins</code>.</div>
           </div>
         </div>
@@ -362,6 +367,13 @@ LIVE_HTML = """\
       let startedAt = 0;
       let smoothEnergy = 0;
       let smoothCentroid = 0;
+      let frameCount = 0;
+
+      const statsPanel = document.getElementById("stats");
+      const statRms = document.getElementById("statRms");
+      const statPeak = document.getElementById("statPeak");
+      const statCentroid = document.getElementById("statCentroid");
+      const statTime = document.getElementById("statTime");
 
       function mulberry32(seed) {
         return function() {
@@ -702,6 +714,24 @@ LIVE_HTML = """\
         );
       }
 
+      function updateStats() {
+        if (frameCount % 8 !== 0) return;
+        const t = audioCtx ? (audioCtx.currentTime - startedAt) : 0;
+        const rms = rmsEnergyFromTimeDomain();
+        let peak = 0;
+        for (let i = 0; i < timeData.length; i++) {
+          const v = Math.abs((timeData[i] - 128) / 128.0);
+          if (v > peak) peak = v;
+        }
+        const nBins = Math.min(128, freqData.length);
+        const cent = spectralCentroidNorm(nBins);
+
+        statRms.textContent = rms.toFixed(3);
+        statPeak.textContent = peak.toFixed(3);
+        statCentroid.textContent = cent.toFixed(3);
+        statTime.textContent = t.toFixed(1);
+      }
+
       function loop() {
         analyser.getByteTimeDomainData(timeData);
         analyser.getByteFrequencyData(freqData);
@@ -710,6 +740,8 @@ LIVE_HTML = """\
         drawWaveform();
         drawSpectrogram();
         updateCloud();
+        updateStats();
+        frameCount++;
 
         rafId = requestAnimationFrame(loop);
       }
@@ -728,7 +760,9 @@ LIVE_HTML = """\
         analyser.connect(ctx.destination);
 
         startedAt = ctx.currentTime;
+        frameCount = 0;
         stopBtn.disabled = false;
+        statsPanel.style.display = "block";
         setStatus("Running (file). Press play on the audio control if needed.");
         loop();
       }
@@ -747,7 +781,9 @@ LIVE_HTML = """\
         sourceNode.connect(analyser);
 
         startedAt = ctx.currentTime;
+        frameCount = 0;
         stopBtn.disabled = false;
+        statsPanel.style.display = "block";
         setStatus("Running (mic).");
         loop();
       }
