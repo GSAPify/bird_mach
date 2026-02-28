@@ -1,18 +1,14 @@
-# Bird Mach — 3D Bird Sound Visualization (Prototype)
+# Mach — 3D Audio Visualization
 
-This repo contains a small prototype to create **3D “sound maps”** like the screenshot you shared: a point cloud/trajectory where each point represents a short-time slice of audio embedded into 3D (UMAP).
+Visualize **any audio** — music, speech, bird calls, field recordings — as interactive 3D point clouds. Each point represents a short-time frame of the recording, embedded into 2D or 3D space via UMAP on log-mel spectrogram features.
 
-## What this visualization is
+## What it does
 
-- **Input**: a `.wav` recording
-- **Process**:
-  - compute a log-mel spectrogram (one feature vector per time frame)
-  - embed the per-frame feature vectors into 3D with UMAP
-- **Output**: interactive Plotly HTML with stacked multi-view 3D plots
+- **Input**: any audio file (WAV, MP3, FLAC, OGG, M4A) or a URL to one
+- **Process**: compute a log-mel spectrogram, then embed per-frame vectors with UMAP
+- **Output**: interactive Plotly visualizations (2D scatter or 3D multi-view point cloud)
 
 ## Setup
-
-Create a virtual environment and install dependencies:
 
 ```bash
 python -m venv .venv
@@ -20,53 +16,60 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Run
+## CLI
 
-Generate an interactive HTML:
+Generate a standalone HTML visualization:
 
 ```bash
-python scripts/bird_sound_3d.py --input /path/to/audio.wav --output /path/to/out.html --multi-view --connect
+python scripts/bird_sound_3d.py --input recording.wav --output viz.html --multi-view --connect
 ```
 
-## Local web app
+Options: `--color-by time|energy`, `--stride N`, `--n-neighbors`, `--min-dist`
 
-Run the local server:
+## Web app
 
 ```bash
 uvicorn bird_mach.webapp:app --reload --port 8000
 ```
 
-Then open `http://127.0.0.1:8000` in your browser.
+Open `http://127.0.0.1:8000` in your browser.
 
-Routes:
+### Upload mode (`/`)
 
-- `/`: upload a clip and generate the UMAP 3D embedding + extra plots (waveform, spectrogram, energy)
-- `/live`: real-time visuals while audio plays (waveform + scrolling spectrogram + 3D point cloud)
+- **Drag & drop** or click to upload any audio file
+- **Paste a URL** to a remote audio file
+- Choose between **2D** or **3D** UMAP projections
+- Pick from **8 colorscales** (Turbo, Viridis, Plasma, etc.)
+- Toggle multi-view (3 camera angles) and point connections
 
-Notes:
+### Live mode (`/live`)
 
-- Live mode uses the browser’s WebAudio API. For microphone mode you’ll be prompted for mic permission.
-- If live mode feels slow, lower `max points` or `bins`.
+Real-time audio visualization with **4 sources**:
 
-Common options:
+| Source | Description |
+|--------|-------------|
+| **File** | Load a local audio file and play it |
+| **Mic** | Capture from your microphone |
+| **Tab audio** | Capture audio from another browser tab (Spotify, YouTube, etc.) |
 
-- `--color-by time|energy` (default: `time`)
-- `--stride N` (downsample frames; useful for long recordings)
+Live mode includes:
+
+- **Frequency band bars** — 7 color-coded bands (Sub through Air)
+- **Waveform** — real-time amplitude display
+- **Scrolling spectrogram** — frequency content over time
+- **3D point cloud** — audio-reactive with loop or cloud motion
+- **Live stats** — RMS energy, peak, spectral centroid, elapsed time
+- **Fullscreen** — expand the 3D view to fill the screen
+- **Keyboard shortcuts** — Space (play/stop), C (clear), M (mic)
 
 ## API endpoints
 
 | Route | Method | Description |
 |-------|--------|-------------|
-| `/` | GET | Upload form for batch UMAP visualization |
-| `/live` | GET | Real-time audio visualization (mic or file) |
-| `/visualize` | POST | Process uploaded audio and return results |
-| `/health` | GET | Health check (returns `{"status": "ok"}`) |
-
-## Notes
-
-- Works best with relatively clean clips (a few seconds to a couple minutes).
-- For very long recordings, increase `--stride` to keep the plot responsive.
-- The `/health` endpoint can be used by load balancers and uptime monitors.
+| `/` | GET | Upload form with drag-drop, URL input, 2D/3D toggle |
+| `/live` | GET | Real-time visualization (file, mic, or tab audio) |
+| `/visualize` | POST | Process audio and return interactive plots |
+| `/health` | GET | Health check (`{"status": "ok"}`) |
 
 ## n8n Workflows
 
