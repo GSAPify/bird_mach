@@ -22,11 +22,13 @@ from bird_mach.embedding import (
     AudioFeatureConfig,
     ColorBy,
     UmapConfig,
+    build_2d_figure,
     build_energy_figure,
     build_multiview_figure,
     build_mel_spectrogram_figure,
     build_singleview_figure,
     build_waveform_figure,
+    compute_umap_2d,
     compute_umap_3d,
     extract_log_mel_frames,
     load_audio_mono_from_path,
@@ -128,6 +130,13 @@ INDEX_HTML = """\
           </div>
 
           <div class="row">
+            <div>
+              <label for="dimensions">Dimensions</label>
+              <select id="dimensions" name="dimensions">
+                <option value="3d" selected>3D (UMAP)</option>
+                <option value="2d">2D (UMAP)</option>
+              </select>
+            </div>
             <div>
               <label for="colorscale">Colorscale</label>
               <select id="colorscale" name="colorscale">
@@ -851,6 +860,7 @@ async def visualize(
     audio_url: str = Form(""),
     color_by: str = Form("time"),
     colorscale: str = Form("Turbo"),
+    dimensions: str = Form("3d"),
     stride: int = Form(2),
     n_neighbors: int = Form(DEFAULT_UMAP_CONFIG.n_neighbors),
     min_dist: float = Form(DEFAULT_UMAP_CONFIG.min_dist),
@@ -908,18 +918,20 @@ async def visualize(
         y, sr = load_audio_mono_from_path(tmp_path, sr=audio_cfg.sr)
         X, times_s, energy = extract_log_mel_frames(y, sr, audio_cfg)
         X, times_s, energy = stride_downsample(X, times_s, energy, stride=stride)
-        emb = compute_umap_3d(X, umap_cfg)
 
+        use_2d = dimensions.strip().lower() == "2d"
         chosen_color_by = normalize_color_by(color_by)
-        title = f"{filename} — 3D embedding"
+        dim_label = "2D" if use_2d else "3D"
+        title = f"{filename} — {dim_label} embedding"
         duration_s = float(y.shape[0]) / float(sr)
         summary = (
             f"duration={duration_s:.2f}s frames={X.shape[0]} stride={stride} "
-            f"color_by={chosen_color_by} connect={connect} multi_view={multi_view}"
+            f"color_by={chosen_color_by} dim={dim_label} connect={connect}"
         )
 
-        if multi_view:
-            fig = build_multiview_figure(
+        if use_2d:
+            emb = compute_umap_2d(X, umap_cfg)
+            fig = build_2d_figure(
                 emb,
                 times_s=times_s,
                 energy=energy,
@@ -929,15 +941,27 @@ async def visualize(
                 colorscale=colorscale,
             )
         else:
-            fig = build_singleview_figure(
-                emb,
-                times_s=times_s,
-                energy=energy,
-                color_by=chosen_color_by,
-                connect=connect,
-                title=title,
-                colorscale=colorscale,
-            )
+            emb = compute_umap_3d(X, umap_cfg)
+            if multi_view:
+                fig = build_multiview_figure(
+                    emb,
+                    times_s=times_s,
+                    energy=energy,
+                    color_by=chosen_color_by,
+                    connect=connect,
+                    title=title,
+                    colorscale=colorscale,
+                )
+            else:
+                fig = build_singleview_figure(
+                    emb,
+                    times_s=times_s,
+                    energy=energy,
+                    color_by=chosen_color_by,
+                    connect=connect,
+                    title=title,
+                    colorscale=colorscale,
+                )
 
         embedding_html = fig.to_html(include_plotlyjs=True, full_html=False)
 
