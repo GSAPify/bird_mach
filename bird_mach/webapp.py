@@ -825,11 +825,26 @@ LIVE_HTML = """\
       stopBtn.addEventListener("click", () => stop());
       clearBtn.addEventListener("click", () => clearCloud());
 
-      // Initialize visuals immediately
+      document.addEventListener("keydown", (e) => {
+        if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+        switch (e.key.toLowerCase()) {
+          case " ":
+            e.preventDefault();
+            if (rafId) stop(); else if (player.src) startFromFile().catch(() => {});
+            break;
+          case "c":
+            clearCloud();
+            break;
+          case "m":
+            startFromMic().catch(() => {});
+            break;
+        }
+      });
+
       (function init() {
         specCtx.fillStyle = "#070a12";
         specCtx.fillRect(0, 0, specCanvas.width, specCanvas.height);
-        setStatus("Idle. Load a file or start mic.");
+        setStatus("Idle. Load a file or start mic. Keys: Space=play/stop, C=clear, M=mic");
       })();
     </script>
   </body>
