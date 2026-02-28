@@ -1,10 +1,11 @@
 """Shared constants for the Mach audio visualization application."""
 
 APP_NAME = "Mach"
-APP_VERSION = "0.2.0"
+APP_VERSION = "0.3.0"
 APP_DESCRIPTION = "3D audio visualization using UMAP embeddings — any sound, any source"
 
 MAX_UPLOAD_SIZE_MB = 50
+MAX_AUDIO_DURATION_S = 600
 MAX_URL_FETCH_BYTES = 50 * 1024 * 1024
 URL_FETCH_TIMEOUT_S = 30
 
@@ -26,3 +27,7 @@ DEFAULT_ENERGY_HEIGHT = 240
 DEFAULT_BANDS_HEIGHT = 120
 
 LIVE_AUDIO_SOURCES = ("file", "mic", "tab")
+
+DEFAULT_DARK_BG = "#0f172a"
+DEFAULT_PLOT_TEMPLATE = "plotly_dark"
+MIN_UMAP_POINTS = 15
