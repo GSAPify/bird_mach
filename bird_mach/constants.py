@@ -1,8 +1,8 @@
-"""Shared constants for the Bird Mach application."""
+"""Shared constants for the Mach audio visualization application."""
 
-APP_NAME = "Bird Mach"
-APP_VERSION = "0.1.0"
-APP_DESCRIPTION = "3D bird sound visualization using UMAP embeddings"
+APP_NAME = "Mach"
+APP_VERSION = "0.2.0"
+APP_DESCRIPTION = "3D audio visualization using UMAP embeddings — any sound, any source"
 
 MAX_UPLOAD_SIZE_MB = 50
 SUPPORTED_AUDIO_EXTENSIONS = frozenset({

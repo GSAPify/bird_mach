@@ -1,4 +1,4 @@
-"""FastAPI web application for Bird Mach audio visualization."""
+"""FastAPI web application for Mach audio visualization."""
 
 from __future__ import annotations
 
@@ -37,9 +37,9 @@ INDEX_HTML = """\
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Upload audio and generate interactive 3D UMAP embeddings of bird sounds" />
+    <meta name="description" content="Upload any audio and generate interactive 3D UMAP embeddings — music, speech, field recordings, anything" />
     <meta name="theme-color" content="#0b0f19" />
-    <title>Bird Mach — 3D Sound Map</title>
+    <title>Mach — 3D Audio Map</title>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -86,8 +86,8 @@ INDEX_HTML = """\
   </head>
   <body>
     <div class="wrap">
-      <h1>Bird Mach — 3D Sound Map</h1>
-      <p>Upload an audio clip and generate a 3D embedding (UMAP) where each point represents a short-time frame of the recording. For real-time visuals while audio plays, try <a href="/live">Live mode</a>.</p>
+      <h1>Mach — 3D Audio Map</h1>
+      <p>Upload any audio — music, speech, bird calls, field recordings — and generate a 3D embedding (UMAP) where each point represents a short-time frame. For real-time visuals while audio plays, try <a href="/live">Live mode</a>.</p>
       <div class="card">
         <form action="/visualize" method="post" enctype="multipart/form-data">
           <label for="audio">Audio file</label>
@@ -141,7 +141,7 @@ LIVE_HTML = """\
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Real-time audio visualization with waveform, spectrogram, and 3D point cloud" />
     <meta name="theme-color" content="#0b0f19" />
-    <title>Bird Mach — Live</title>
+    <title>Mach — Live Audio</title>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
