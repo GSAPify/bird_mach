@@ -36,3 +36,8 @@ def subscribe_channel(self, *args, **kwargs):
     """Handle subscribe channel operation."""
     logger.info("PushController.subscribe_channel called")
     return {"status": "ok", "method": "subscribe_channel"}
+
+def apply_filter(self, *args, **kwargs):
+    """Handle apply filter operation."""
+    logger.info("PushController.apply_filter called")
+    return {"status": "ok", "method": "apply_filter"}
