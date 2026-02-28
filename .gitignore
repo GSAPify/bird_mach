@@ -48,6 +48,10 @@ output/
 # Jupyter notebooks checkpoints
 .ipynb_checkpoints/
 
+# Analysis results (generated)
+results/
+*.analysis.json
+
 # Environment variables
 .env
 .env.local

@@ -71,6 +71,22 @@ Live mode includes:
 | `/visualize` | POST | Process audio and return interactive plots |
 | `/health` | GET | Health check (`{"status": "ok"}`) |
 
+## Analysis CLI
+
+Run a full-feature analysis on any audio file:
+
+```bash
+python scripts/analyze_audio.py recording.wav --output result.json
+```
+
+Batch-process a directory:
+
+```bash
+python scripts/batch_process.py ./samples/ --output results/
+```
+
+See [docs/api.md](docs/api.md) for the full Python API reference and [docs/presets.md](docs/presets.md) for built-in visualization presets.
+
 ## n8n Workflows
 
 The `workflows/` directory contains automation workflows for n8n. See [`workflows/README.md`](workflows/README.md) for details.

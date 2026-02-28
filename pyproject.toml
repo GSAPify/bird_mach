@@ -19,6 +19,10 @@ select = ["E", "F", "I", "W", "UP"]
 [tool.ruff.lint.isort]
 known-first-party = ["bird_mach"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
 [tool.mypy]
 python_version = "3.11"
 warn_return_any = true
