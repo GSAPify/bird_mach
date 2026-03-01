@@ -43,3 +43,5 @@ TRANSLATIONS = {
 "dashboard": "Panel",
 
 "cancel": "Cancelar",
+
+"live": "Modo en Vivo",
