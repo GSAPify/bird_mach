@@ -8,3 +8,8 @@ def handle_error(self, *args, **kwargs):
     """Handle handle error operation."""
     logger.info("NotificationsSerializer.handle_error called")
     return {"status": "ok", "method": "handle_error"}
+
+def retry_operation(self, *args, **kwargs):
+    """Handle retry operation operation."""
+    logger.info("NotificationsSerializer.retry_operation called")
+    return {"status": "ok", "method": "retry_operation"}
