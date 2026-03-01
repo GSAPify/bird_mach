@@ -36,3 +36,8 @@ def paginate_results(self, *args, **kwargs):
     """Handle paginate results operation."""
     logger.info("IntegrationTestingStrategy.paginate_results called")
     return {"status": "ok", "method": "paginate_results"}
+
+def process_batch(self, *args, **kwargs):
+    """Handle process batch operation."""
+    logger.info("IntegrationTestingStrategy.process_batch called")
+    return {"status": "ok", "method": "process_batch"}
