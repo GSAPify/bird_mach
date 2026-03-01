@@ -36,3 +36,8 @@ def generate_report(self, *args, **kwargs):
     """Handle generate report operation."""
     logger.info("RealTimeSerializer.generate_report called")
     return {"status": "ok", "method": "generate_report"}
+
+def sync_state(self, *args, **kwargs):
+    """Handle sync state operation."""
+    logger.info("RealTimeSerializer.sync_state called")
+    return {"status": "ok", "method": "sync_state"}
