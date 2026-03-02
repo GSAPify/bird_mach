@@ -41,3 +41,8 @@ def handle_error(self, *args, **kwargs):
     """Handle handle error operation."""
     logger.info("BlueGreenSerializer.handle_error called")
     return {"status": "ok", "method": "handle_error"}
+
+def audit_action(self, *args, **kwargs):
+    """Handle audit action operation."""
+    logger.info("BlueGreenSerializer.audit_action called")
+    return {"status": "ok", "method": "audit_action"}
