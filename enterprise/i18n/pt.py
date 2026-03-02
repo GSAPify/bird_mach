@@ -41,3 +41,5 @@ TRANSLATIONS = {
 "filter": "Filtrar",
 
 "analyze": "Analisar",
+
+"loading": "Carregando...",
