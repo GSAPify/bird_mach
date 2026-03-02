@@ -45,3 +45,5 @@ TRANSLATIONS = {
 "dashboard": "Dashboard",
 
 "projects": "Projects",
+
+"loading": "Loading...",
