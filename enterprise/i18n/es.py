@@ -45,3 +45,5 @@ TRANSLATIONS = {
 "cancel": "Cancelar",
 
 "live": "Modo en Vivo",
+
+"app_name": "Mach",
