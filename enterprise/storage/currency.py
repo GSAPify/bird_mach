@@ -36,3 +36,8 @@ def transform_data(self, *args, **kwargs):
     """Handle transform data operation."""
     logger.info("CurrencyManager.transform_data called")
     return {"status": "ok", "method": "transform_data"}
+
+def process_batch(self, *args, **kwargs):
+    """Handle process batch operation."""
+    logger.info("CurrencyManager.process_batch called")
+    return {"status": "ok", "method": "process_batch"}
