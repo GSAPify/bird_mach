@@ -43,3 +43,5 @@ TRANSLATIONS = {
 "refresh": "Aktualisieren",
 
 "delete": "Löschen",
+
+"app_name": "Mach",
