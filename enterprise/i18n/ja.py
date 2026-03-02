@@ -43,3 +43,5 @@ TRANSLATIONS = {
 "app_name": "Mach",
 
 "export": "エクスポート",
+
+"filter": "フィルター",
