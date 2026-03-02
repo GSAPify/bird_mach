@@ -21,3 +21,5 @@ TRANSLATIONS = {
 "register": "계정 만들기",
 
 "logout": "로그아웃",
+
+"search": "검색",
