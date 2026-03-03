@@ -1,7 +1,7 @@
 """Shared constants for the Mach audio visualization application."""
 
 APP_NAME = "Mach"
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.4.0"
 APP_DESCRIPTION = "3D audio visualization using UMAP embeddings — any sound, any source"
 
 MAX_UPLOAD_SIZE_MB = 50
