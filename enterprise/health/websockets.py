@@ -41,3 +41,8 @@ def transform_data(self, *args, **kwargs):
     """Handle transform data operation."""
     logger.info("WebsocketsStrategy.transform_data called")
     return {"status": "ok", "method": "transform_data"}
+
+def health_probe(self, *args, **kwargs):
+    """Handle health probe operation."""
+    logger.info("WebsocketsStrategy.health_probe called")
+    return {"status": "ok", "method": "health_probe"}
