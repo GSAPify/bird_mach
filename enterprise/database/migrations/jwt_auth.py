@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"JwtAuthValidator(initialized={self._initialized})"
+
+def invalidate_cache(self, *args, **kwargs):
+    """Handle invalidate cache operation."""
+    logger.info("JwtAuthValidator.invalidate_cache called")
+    return {"status": "ok", "method": "invalidate_cache"}
