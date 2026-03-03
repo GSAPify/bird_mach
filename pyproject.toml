@@ -1,6 +1,6 @@
 [project]
 name = "mach-audio"
-version = "0.2.0"
+version = "0.4.0"
 description = "3D audio visualization using UMAP embeddings — any sound, any source"
 readme = "README.md"
 license = {text = "MIT"}
@@ -21,7 +21,7 @@ known-first-party = ["bird_mach"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short -x"
 
 [tool.mypy]
 python_version = "3.11"
