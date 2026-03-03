@@ -43,3 +43,5 @@ TRANSLATIONS = {
 "analyze": "Analisar",
 
 "loading": "Carregando...",
+
+"save": "Salvar",
