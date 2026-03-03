@@ -1,15 +1,33 @@
+"""
+    FullTextSearchSerializer for full_text_search in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def generate_report(self, *args, **kwargs):
-    """Handle generate report operation."""
-    logger.info("FullTextSearchSerializer.generate_report called")
-    return {"status": "ok", "method": "generate_report"}
+    class FullTextSearchSerializer:
+        """Full Text Search fulltextsearchserializer."""
 
-def broadcast_event(self, *args, **kwargs):
-    """Handle broadcast event operation."""
-    logger.info("FullTextSearchSerializer.broadcast_event called")
-    return {"status": "ok", "method": "broadcast_event"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("FullTextSearchSerializer initialized")
 
-def emit_metric(self, *args, **kwargs):
-    """Handle emit metric operation."""
-    logger.info("FullTextSearchSerializer.emit_metric called")
-    return {"status": "ok", "method": "emit_metric"}
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("FullTextSearchSerializer not configured")
+            logger.info("FullTextSearchSerializer.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"FullTextSearchSerializer(initialized={self._initialized})"
