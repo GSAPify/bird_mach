@@ -8,3 +8,4 @@
 | [live-mode.md](live-mode.md) | Real-time visualization guide |
 | [clustering.md](clustering.md) | Frame clustering with K-Means/DBSCAN |
 | [deployment.md](deployment.md) | Docker deployment and env-var config |
+| [api-v1.md](api-v1.md) | REST API v1 reference |
