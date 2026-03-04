@@ -23,3 +23,5 @@ TRANSLATIONS = {
 "logout": "로그아웃",
 
 "search": "검색",
+
+"cancel": "취소",
