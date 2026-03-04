@@ -45,3 +45,5 @@ TRANSLATIONS = {
 "export": "エクスポート",
 
 "filter": "フィルター",
+
+"delete": "削除",
