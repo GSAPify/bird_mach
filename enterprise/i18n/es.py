@@ -47,3 +47,5 @@ TRANSLATIONS = {
 "live": "Modo en Vivo",
 
 "app_name": "Mach",
+
+"register": "Crear Cuenta",
