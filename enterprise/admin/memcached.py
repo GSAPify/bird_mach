@@ -41,3 +41,8 @@ def rate_limit_check(self, *args, **kwargs):
     """Handle rate limit check operation."""
     logger.info("MemcachedStrategy.rate_limit_check called")
     return {"status": "ok", "method": "rate_limit_check"}
+
+def apply_migration(self, *args, **kwargs):
+    """Handle apply migration operation."""
+    logger.info("MemcachedStrategy.apply_migration called")
+    return {"status": "ok", "method": "apply_migration"}
