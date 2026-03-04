@@ -15,6 +15,12 @@ format: ## Auto-format code with ruff
 typecheck: ## Run mypy type checker
 	mypy bird_mach/
 
+test: ## Run the test suite
+	pytest
+
+serve: ## Start production server
+	uvicorn bird_mach.webapp:app --host 0.0.0.0 --port 8000
+
 clean: ## Remove caches and build artifacts
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	find . -type d -name .mypy_cache -exec rm -rf {} + 2>/dev/null || true
