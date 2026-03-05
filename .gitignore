@@ -56,5 +56,8 @@ results/
 .env
 .env.local
 
+# Exported audio segments
+segments/
+
 # OpenMemory - IDE/Assistant specific rules
 .cursor/rules/openmemory.mdc

@@ -70,6 +70,8 @@ Live mode includes:
 | `/live` | GET | Real-time visualization (file, mic, or tab audio) |
 | `/visualize` | POST | Process audio and return interactive plots |
 | `/health` | GET | Health check (`{"status": "ok"}`) |
+| `/api/v1/health` | GET | API health (JSON) |
+| `/api/v1/analyze` | POST | Analyze audio file (JSON response) |
 
 ## Analysis CLI
 
@@ -85,7 +87,14 @@ Batch-process a directory:
 python scripts/batch_process.py ./samples/ --output results/
 ```
 
-See [docs/api.md](docs/api.md) for the full Python API reference and [docs/presets.md](docs/presets.md) for built-in visualization presets.
+Or use the unified CLI:
+
+```bash
+python -m bird_mach analyze recording.wav
+python -m bird_mach serve --port 8000
+```
+
+See [docs/](docs/README.md) for the full documentation including API reference, presets, clustering, effects, and deployment guides.
 
 ## n8n Workflows
 
