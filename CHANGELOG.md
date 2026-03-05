@@ -2,6 +2,35 @@
 
 All notable changes to Mach are documented here.
 
+## [0.4.0] - 2026-03-05
+
+### Added
+- REST API v1 with `/api/v1/analyze` and `/api/v1/health` endpoints.
+- Pydantic request/response schemas for API validation.
+- Audio I/O package with validated loaders and WAV writers.
+- Audio effects module (time stretch, pitch shift, fade, mix).
+- K-Means and DBSCAN clustering for audio frame grouping.
+- Cosine, Euclidean, and Manhattan distance metrics.
+- Audio segmentation by silence and fixed-length windows.
+- Pitch estimation using pYIN algorithm with Hz-to-note conversion.
+- Genre hinting heuristics based on feature statistics.
+- Waveform time-domain statistics (peak, crest factor, DC offset).
+- Feature concatenation for multi-feature UMAP input.
+- LRU analysis cache keyed by content hash.
+- App configuration from environment variables.
+- Request timing and request-id middleware.
+- In-memory app metrics for monitoring.
+- Visualization package with color utilities and dark/light themes.
+- Unified CLI with analyze, serve, compare, and version commands.
+- `python -m bird_mach` entry point.
+- HTML template helpers.
+- Comprehensive test suite for all new modules.
+- Documentation for clustering, deployment, API, effects, and pitch.
+
+### Changed
+- Bumped version to 0.4.0.
+- Added pydantic, test, and serve targets to Makefile.
+
 ## [0.3.0] - 2026-02-20
 
 ### Added
