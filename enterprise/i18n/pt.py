@@ -45,3 +45,5 @@ TRANSLATIONS = {
 "loading": "Carregando...",
 
 "save": "Salvar",
+
+"settings": "Configurações",
