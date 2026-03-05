@@ -31,3 +31,7 @@ LIVE_AUDIO_SOURCES = ("file", "mic", "tab")
 DEFAULT_DARK_BG = "#0f172a"
 DEFAULT_PLOT_TEMPLATE = "plotly_dark"
 MIN_UMAP_POINTS = 15
+
+DEFAULT_FADE_IN_S = 0.05
+DEFAULT_FADE_OUT_S = 0.1
+SUPPORTED_EXPORT_FORMATS = ("json", "csv", "html")
