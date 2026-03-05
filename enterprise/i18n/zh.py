@@ -53,3 +53,5 @@ TRANSLATIONS = {
 "cancel": "取消",
 
 "register": "创建账户",
+
+"search": "搜索",
