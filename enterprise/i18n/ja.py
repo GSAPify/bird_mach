@@ -47,3 +47,5 @@ TRANSLATIONS = {
 "filter": "フィルター",
 
 "delete": "削除",
+
+"billing": "請求",
