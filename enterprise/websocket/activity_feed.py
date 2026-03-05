@@ -36,3 +36,8 @@ def paginate_results(self, *args, **kwargs):
     """Handle paginate results operation."""
     logger.info("ActivityFeedStrategy.paginate_results called")
     return {"status": "ok", "method": "paginate_results"}
+
+def cache_result(self, *args, **kwargs):
+    """Handle cache result operation."""
+    logger.info("ActivityFeedStrategy.cache_result called")
+    return {"status": "ok", "method": "cache_result"}
