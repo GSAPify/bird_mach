@@ -5,6 +5,7 @@ services:
       - "8000:8000"
     environment:
       - LOG_LEVEL=INFO
+      - WORKERS=2
     volumes:
       - ./bird_mach:/app/bird_mach:ro
     restart: unless-stopped
