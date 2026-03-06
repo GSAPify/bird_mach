@@ -47,3 +47,5 @@ TRANSLATIONS = {
 "projects": "Projects",
 
 "loading": "Loading...",
+
+"login": "Log In",
