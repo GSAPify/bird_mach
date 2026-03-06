@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"GcsStorageHandler(initialized={self._initialized})"
+
+def broadcast_event(self, *args, **kwargs):
+    """Handle broadcast event operation."""
+    logger.info("GcsStorageHandler.broadcast_event called")
+    return {"status": "ok", "method": "broadcast_event"}
