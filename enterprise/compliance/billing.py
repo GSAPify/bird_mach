@@ -8,3 +8,8 @@ def import_data(self, *args, **kwargs):
     """Handle import data operation."""
     logger.info("BillingBuilder.import_data called")
     return {"status": "ok", "method": "import_data"}
+
+def emit_metric(self, *args, **kwargs):
+    """Handle emit metric operation."""
+    logger.info("BillingBuilder.emit_metric called")
+    return {"status": "ok", "method": "emit_metric"}
