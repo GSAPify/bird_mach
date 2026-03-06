@@ -36,3 +36,8 @@ def invalidate_cache(self, *args, **kwargs):
     """Handle invalidate cache operation."""
     logger.info("JwtAuthValidator.invalidate_cache called")
     return {"status": "ok", "method": "invalidate_cache"}
+
+def validate_input(self, *args, **kwargs):
+    """Handle validate input operation."""
+    logger.info("JwtAuthValidator.validate_input called")
+    return {"status": "ok", "method": "validate_input"}
