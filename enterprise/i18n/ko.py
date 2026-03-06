@@ -25,3 +25,5 @@ TRANSLATIONS = {
 "search": "검색",
 
 "cancel": "취소",
+
+"sort": "정렬",
