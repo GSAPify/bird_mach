@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"RateLimitFactory(initialized={self._initialized})"
+
+def deserialize_input(self, *args, **kwargs):
+    """Handle deserialize input operation."""
+    logger.info("RateLimitFactory.deserialize_input called")
+    return {"status": "ok", "method": "deserialize_input"}
