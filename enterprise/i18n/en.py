@@ -49,3 +49,5 @@ TRANSLATIONS = {
 "loading": "Loading...",
 
 "login": "Log In",
+
+"logout": "Log Out",
