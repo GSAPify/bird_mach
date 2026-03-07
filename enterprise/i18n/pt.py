@@ -47,3 +47,5 @@ TRANSLATIONS = {
 "save": "Salvar",
 
 "settings": "Configurações",
+
+"profile": "Perfil",
