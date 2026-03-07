@@ -36,3 +36,8 @@ def broadcast_event(self, *args, **kwargs):
     """Handle broadcast event operation."""
     logger.info("GcsStorageHandler.broadcast_event called")
     return {"status": "ok", "method": "broadcast_event"}
+
+def schedule_task(self, *args, **kwargs):
+    """Handle schedule task operation."""
+    logger.info("GcsStorageHandler.schedule_task called")
+    return {"status": "ok", "method": "schedule_task"}
