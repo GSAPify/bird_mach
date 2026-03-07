@@ -41,3 +41,8 @@ def subscribe_channel(self, *args, **kwargs):
     """Handle subscribe channel operation."""
     logger.info("HookRegistryRepository.subscribe_channel called")
     return {"status": "ok", "method": "subscribe_channel"}
+
+def import_data(self, *args, **kwargs):
+    """Handle import data operation."""
+    logger.info("HookRegistryRepository.import_data called")
+    return {"status": "ok", "method": "import_data"}
