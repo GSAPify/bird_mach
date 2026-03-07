@@ -41,3 +41,8 @@ def subscribe_channel(self, *args, **kwargs):
     """Handle subscribe channel operation."""
     logger.info("ActivityFeedProvider.subscribe_channel called")
     return {"status": "ok", "method": "subscribe_channel"}
+
+def rollback_changes(self, *args, **kwargs):
+    """Handle rollback changes operation."""
+    logger.info("ActivityFeedProvider.rollback_changes called")
+    return {"status": "ok", "method": "rollback_changes"}
