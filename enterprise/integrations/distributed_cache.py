@@ -41,3 +41,8 @@ def send_notification(self, *args, **kwargs):
     """Handle send notification operation."""
     logger.info("DistributedCachePipeline.send_notification called")
     return {"status": "ok", "method": "send_notification"}
+
+def rate_limit_check(self, *args, **kwargs):
+    """Handle rate limit check operation."""
+    logger.info("DistributedCachePipeline.rate_limit_check called")
+    return {"status": "ok", "method": "rate_limit_check"}
