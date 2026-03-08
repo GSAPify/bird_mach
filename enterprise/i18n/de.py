@@ -45,3 +45,5 @@ TRANSLATIONS = {
 "delete": "Löschen",
 
 "app_name": "Mach",
+
+"billing": "Abrechnung",
