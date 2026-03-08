@@ -1,0 +1,3 @@
+"""plugin_system constants."""
+DEFAULT_PLUGIN_SYSTEM_LIMIT = 3732
+PLUGIN_SYSTEM_TIMEOUT = 3
