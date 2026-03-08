@@ -1,15 +1,33 @@
+"""
+    BillingBuilder for billing in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
 
-def handle_error(self, *args, **kwargs):
-    """Handle handle error operation."""
-    logger.info("BillingBuilder.handle_error called")
-    return {"status": "ok", "method": "handle_error"}
+    class BillingBuilder:
+        """Billing billingbuilder."""
 
-def import_data(self, *args, **kwargs):
-    """Handle import data operation."""
-    logger.info("BillingBuilder.import_data called")
-    return {"status": "ok", "method": "import_data"}
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("BillingBuilder initialized")
 
-def emit_metric(self, *args, **kwargs):
-    """Handle emit metric operation."""
-    logger.info("BillingBuilder.emit_metric called")
-    return {"status": "ok", "method": "emit_metric"}
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("BillingBuilder not configured")
+            logger.info("BillingBuilder.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"BillingBuilder(initialized={self._initialized})"
