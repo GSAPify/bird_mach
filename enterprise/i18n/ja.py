@@ -49,3 +49,5 @@ TRANSLATIONS = {
 "delete": "削除",
 
 "billing": "請求",
+
+"success": "成功",
