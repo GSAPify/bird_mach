@@ -1,0 +1,33 @@
+"""
+    VideoThumbStrategy for video_thumb in the Mach platform.
+    """
+    from __future__ import annotations
+    import logging
+    logger = logging.getLogger(__name__)
+
+    class VideoThumbStrategy:
+        """Video Thumb videothumbstrategy."""
+
+        def __init__(self) -> None:
+            self._initialized = False
+            logger.info("VideoThumbStrategy initialized")
+
+        def configure(self, **kwargs) -> None:
+            for k, v in kwargs.items():
+                setattr(self, f"_{k}", v)
+            self._initialized = True
+
+        def validate(self) -> bool:
+            return self._initialized
+
+        def execute(self, *args, **kwargs):
+            if not self._initialized:
+                raise RuntimeError("VideoThumbStrategy not configured")
+            logger.info("VideoThumbStrategy.execute called")
+            return self._process(*args, **kwargs)
+
+        def _process(self, *args, **kwargs):
+            raise NotImplementedError
+
+        def __repr__(self) -> str:
+            return f"VideoThumbStrategy(initialized={self._initialized})"
