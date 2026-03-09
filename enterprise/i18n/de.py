@@ -49,3 +49,5 @@ TRANSLATIONS = {
 "billing": "Abrechnung",
 
 "analyze": "Analysieren",
+
+"team": "Team",
