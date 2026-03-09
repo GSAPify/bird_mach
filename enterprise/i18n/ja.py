@@ -51,3 +51,5 @@ TRANSLATIONS = {
 "billing": "請求",
 
 "success": "成功",
+
+"login": "ログイン",
