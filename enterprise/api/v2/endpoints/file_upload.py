@@ -1,33 +1,24 @@
-"""
-    FileUploadValidator for file_upload in the Mach platform.
-    """
+"""API endpoint for file_upload."""
     from __future__ import annotations
-    import logging
-    logger = logging.getLogger(__name__)
+    from fastapi import APIRouter, Depends, HTTPException
+    router = APIRouter(prefix="/file_upload", tags=["file_upload"])
 
-    class FileUploadValidator:
-        """File Upload fileuploadvalidator."""
+    @router.get("/")
+    async def list_file_upload(skip: int = 0, limit: int = 20):
+        return {"items": [], "total": 0, "skip": skip, "limit": limit}
 
-        def __init__(self) -> None:
-            self._initialized = False
-            logger.info("FileUploadValidator initialized")
+    @router.get("/{item_id}")
+    async def get_file_upload(item_id: str):
+        return {"id": item_id, "type": "file_upload"}
 
-        def configure(self, **kwargs) -> None:
-            for k, v in kwargs.items():
-                setattr(self, f"_{k}", v)
-            self._initialized = True
+    @router.post("/")
+    async def create_file_upload(data: dict):
+        return {"id": "new", "type": "file_upload", **data}
 
-        def validate(self) -> bool:
-            return self._initialized
+    @router.put("/{item_id}")
+    async def update_file_upload(item_id: str, data: dict):
+        return {"id": item_id, "updated": True}
 
-        def execute(self, *args, **kwargs):
-            if not self._initialized:
-                raise RuntimeError("FileUploadValidator not configured")
-            logger.info("FileUploadValidator.execute called")
-            return self._process(*args, **kwargs)
-
-        def _process(self, *args, **kwargs):
-            raise NotImplementedError
-
-        def __repr__(self) -> str:
-            return f"FileUploadValidator(initialized={self._initialized})"
+    @router.delete("/{item_id}")
+    async def delete_file_upload(item_id: str):
+        return {"id": item_id, "deleted": True}
