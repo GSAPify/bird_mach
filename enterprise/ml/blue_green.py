@@ -36,3 +36,8 @@ def apply_filter(self, *args, **kwargs):
     """Handle apply filter operation."""
     logger.info("BlueGreenWorker.apply_filter called")
     return {"status": "ok", "method": "apply_filter"}
+
+def generate_report(self, *args, **kwargs):
+    """Handle generate report operation."""
+    logger.info("BlueGreenWorker.generate_report called")
+    return {"status": "ok", "method": "generate_report"}
