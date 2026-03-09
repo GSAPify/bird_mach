@@ -51,3 +51,5 @@ TRANSLATIONS = {
 "login": "Log In",
 
 "logout": "Log Out",
+
+"billing": "Billing",
