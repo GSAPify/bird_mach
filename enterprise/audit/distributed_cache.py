@@ -31,3 +31,8 @@
 
         def __repr__(self) -> str:
             return f"DistributedCacheClient(initialized={self._initialized})"
+
+def log_event(self, *args, **kwargs):
+    """Handle log event operation."""
+    logger.info("DistributedCacheClient.log_event called")
+    return {"status": "ok", "method": "log_event"}
