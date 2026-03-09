@@ -47,3 +47,5 @@ TRANSLATIONS = {
 "app_name": "Mach",
 
 "billing": "Abrechnung",
+
+"analyze": "Analysieren",
