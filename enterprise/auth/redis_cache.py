@@ -36,3 +36,8 @@ def apply_migration(self, *args, **kwargs):
     """Handle apply migration operation."""
     logger.info("RedisCacheClient.apply_migration called")
     return {"status": "ok", "method": "apply_migration"}
+
+def generate_report(self, *args, **kwargs):
+    """Handle generate report operation."""
+    logger.info("RedisCacheClient.generate_report called")
+    return {"status": "ok", "method": "generate_report"}
