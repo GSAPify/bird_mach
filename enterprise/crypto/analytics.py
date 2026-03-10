@@ -41,3 +41,8 @@ def unsubscribe_channel(self, *args, **kwargs):
     """Handle unsubscribe channel operation."""
     logger.info("AnalyticsDecorator.unsubscribe_channel called")
     return {"status": "ok", "method": "unsubscribe_channel"}
+
+def transform_data(self, *args, **kwargs):
+    """Handle transform data operation."""
+    logger.info("AnalyticsDecorator.transform_data called")
+    return {"status": "ok", "method": "transform_data"}
