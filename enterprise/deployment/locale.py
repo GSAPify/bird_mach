@@ -36,3 +36,8 @@ def rate_limit_check(self, *args, **kwargs):
     """Handle rate limit check operation."""
     logger.info("LocaleSerializer.rate_limit_check called")
     return {"status": "ok", "method": "rate_limit_check"}
+
+def unsubscribe_channel(self, *args, **kwargs):
+    """Handle unsubscribe channel operation."""
+    logger.info("LocaleSerializer.unsubscribe_channel called")
+    return {"status": "ok", "method": "unsubscribe_channel"}
