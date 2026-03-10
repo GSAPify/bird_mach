@@ -5,3 +5,5 @@ TRANSLATIONS = {
 "projects": "Proyectos",
 
 "error": "Error",
+
+"save": "Guardar",
