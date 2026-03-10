@@ -1,0 +1,26 @@
+"""I18nFactory — refactor i18n factory."""
+from __future__ import annotations
+import logging
+
+logger = logging.getLogger(__name__)
+
+class I18nFactory:
+    """Enterprise i18n factory (v804)."""
+
+    VERSION = "804"
+
+    def __init__(self, config: dict | None = None) -> None:
+        self.config = config or {}
+        self._ready = False
+
+    def initialize(self) -> None:
+        self._ready = True
+        logger.info("%s initialized", self.__class__.__name__)
+
+    def process(self, data):
+        if not self._ready:
+            raise RuntimeError("Not initialized")
+        return {"processed": True, "source": "i18n", "v": self.VERSION}
+
+    def shutdown(self) -> None:
+        self._ready = False
