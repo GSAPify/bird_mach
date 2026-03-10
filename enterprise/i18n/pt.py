@@ -49,3 +49,5 @@ TRANSLATIONS = {
 "settings": "Configurações",
 
 "profile": "Perfil",
+
+"cancel": "Cancelar",
