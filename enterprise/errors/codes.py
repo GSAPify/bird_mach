@@ -135,3 +135,10 @@ class AuthenticationFailed(MachError):
     code = "E1001"
     message = "Invalid credentials provided"
     status_code = 595
+
+
+class FileTooBig(MachError):
+    """[E1011] Uploaded file exceeds size limit"""
+    code = "E1011"
+    message = "Uploaded file exceeds size limit"
+    status_code = 560
