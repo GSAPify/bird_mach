@@ -1,0 +1,3 @@
+"""feature_store constants."""
+DEFAULT_FEATURE_STORE_LIMIT = 6232
+FEATURE_STORE_TIMEOUT = 2

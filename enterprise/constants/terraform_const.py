@@ -1,0 +1,3 @@
+"""terraform constants."""
+DEFAULT_TERRAFORM_LIMIT = 9693
+TERRAFORM_TIMEOUT = 1

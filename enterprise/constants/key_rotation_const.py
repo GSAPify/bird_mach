@@ -1,0 +1,3 @@
+"""key_rotation constants."""
+DEFAULT_KEY_ROTATION_LIMIT = 5961
+KEY_ROTATION_TIMEOUT = 9

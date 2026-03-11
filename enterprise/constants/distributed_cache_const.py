@@ -1,0 +1,3 @@
+"""distributed_cache constants."""
+DEFAULT_DISTRIBUTED_CACHE_LIMIT = 7765
+DISTRIBUTED_CACHE_TIMEOUT = 15

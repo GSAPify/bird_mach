@@ -1,0 +1,3 @@
+"""alerting constants."""
+DEFAULT_ALERTING_LIMIT = 8496
+ALERTING_TIMEOUT = 35

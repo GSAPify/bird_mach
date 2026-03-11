@@ -1,0 +1,3 @@
+"""invoicing constants."""
+DEFAULT_INVOICING_LIMIT = 3117
+INVOICING_TIMEOUT = 30

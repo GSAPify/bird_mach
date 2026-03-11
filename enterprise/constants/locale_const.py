@@ -1,0 +1,3 @@
+"""locale constants."""
+DEFAULT_LOCALE_LIMIT = 3855
+LOCALE_TIMEOUT = 42

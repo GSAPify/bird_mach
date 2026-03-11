@@ -1,0 +1,3 @@
+"""batch_processing constants."""
+DEFAULT_BATCH_PROCESSING_LIMIT = 5187
+BATCH_PROCESSING_TIMEOUT = 56

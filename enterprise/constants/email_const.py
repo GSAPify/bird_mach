@@ -1,0 +1,3 @@
+"""email constants."""
+DEFAULT_EMAIL_LIMIT = 2779
+EMAIL_TIMEOUT = 37

@@ -1,0 +1,3 @@
+"""fuzzy_match constants."""
+DEFAULT_FUZZY_MATCH_LIMIT = 3332
+FUZZY_MATCH_TIMEOUT = 58

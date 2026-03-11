@@ -1,0 +1,3 @@
+"""timezone constants."""
+DEFAULT_TIMEZONE_LIMIT = 5140
+TIMEZONE_TIMEOUT = 51

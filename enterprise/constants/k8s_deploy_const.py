@@ -1,0 +1,3 @@
+"""k8s_deploy constants."""
+DEFAULT_K8S_DEPLOY_LIMIT = 7299
+K8S_DEPLOY_TIMEOUT = 49

@@ -1,0 +1,3 @@
+"""redis_cache constants."""
+DEFAULT_REDIS_CACHE_LIMIT = 1015
+REDIS_CACHE_TIMEOUT = 28

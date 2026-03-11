@@ -1,0 +1,3 @@
+"""search constants."""
+DEFAULT_SEARCH_LIMIT = 9752
+SEARCH_TIMEOUT = 26

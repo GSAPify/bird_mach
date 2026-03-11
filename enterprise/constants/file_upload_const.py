@@ -1,0 +1,3 @@
+"""file_upload constants."""
+DEFAULT_FILE_UPLOAD_LIMIT = 6208
+FILE_UPLOAD_TIMEOUT = 49

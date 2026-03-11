@@ -1,0 +1,3 @@
+"""docker_compose constants."""
+DEFAULT_DOCKER_COMPOSE_LIMIT = 8144
+DOCKER_COMPOSE_TIMEOUT = 18

@@ -1,0 +1,3 @@
+"""image_resize constants."""
+DEFAULT_IMAGE_RESIZE_LIMIT = 2240
+IMAGE_RESIZE_TIMEOUT = 40

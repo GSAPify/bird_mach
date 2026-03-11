@@ -1,0 +1,3 @@
+"""ci_pipeline constants."""
+DEFAULT_CI_PIPELINE_LIMIT = 6669
+CI_PIPELINE_TIMEOUT = 30

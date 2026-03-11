@@ -1,0 +1,3 @@
+"""dashboard constants."""
+DEFAULT_DASHBOARD_LIMIT = 2400
+DASHBOARD_TIMEOUT = 1

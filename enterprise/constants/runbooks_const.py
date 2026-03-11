@@ -1,0 +1,3 @@
+"""runbooks constants."""
+DEFAULT_RUNBOOKS_LIMIT = 7053
+RUNBOOKS_TIMEOUT = 24

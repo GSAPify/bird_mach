@@ -1,0 +1,3 @@
+"""long_polling constants."""
+DEFAULT_LONG_POLLING_LIMIT = 3375
+LONG_POLLING_TIMEOUT = 10

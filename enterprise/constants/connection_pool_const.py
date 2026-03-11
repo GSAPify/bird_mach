@@ -1,0 +1,3 @@
+"""connection_pool constants."""
+DEFAULT_CONNECTION_POOL_LIMIT = 5869
+CONNECTION_POOL_TIMEOUT = 34

@@ -1,0 +1,3 @@
+"""video_thumb constants."""
+DEFAULT_VIDEO_THUMB_LIMIT = 9002
+VIDEO_THUMB_TIMEOUT = 53

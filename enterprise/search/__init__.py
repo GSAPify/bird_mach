@@ -1,0 +1,1 @@
+"""Mach Platform — Search module."""

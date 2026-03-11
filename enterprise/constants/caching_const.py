@@ -1,0 +1,3 @@
+"""caching constants."""
+DEFAULT_CACHING_LIMIT = 7017
+CACHING_TIMEOUT = 51

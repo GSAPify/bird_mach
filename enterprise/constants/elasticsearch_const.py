@@ -1,0 +1,3 @@
+"""elasticsearch constants."""
+DEFAULT_ELASTICSEARCH_LIMIT = 2251
+ELASTICSEARCH_TIMEOUT = 2

@@ -1,0 +1,3 @@
+"""health_check constants."""
+DEFAULT_HEALTH_CHECK_LIMIT = 5314
+HEALTH_CHECK_TIMEOUT = 37

@@ -1,0 +1,3 @@
+"""full_text_search constants."""
+DEFAULT_FULL_TEXT_SEARCH_LIMIT = 2784
+FULL_TEXT_SEARCH_TIMEOUT = 48

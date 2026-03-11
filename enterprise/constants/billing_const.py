@@ -1,0 +1,3 @@
+"""billing constants."""
+DEFAULT_BILLING_LIMIT = 3229
+BILLING_TIMEOUT = 26

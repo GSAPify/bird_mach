@@ -1,0 +1,3 @@
+"""i18n constants."""
+DEFAULT_I18N_LIMIT = 8201
+I18N_TIMEOUT = 17

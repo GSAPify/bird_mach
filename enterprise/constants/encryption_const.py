@@ -1,0 +1,3 @@
+"""encryption constants."""
+DEFAULT_ENCRYPTION_LIMIT = 9189
+ENCRYPTION_TIMEOUT = 9

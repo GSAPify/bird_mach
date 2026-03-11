@@ -1,0 +1,3 @@
+"""real_time constants."""
+DEFAULT_REAL_TIME_LIMIT = 8511
+REAL_TIME_TIMEOUT = 38

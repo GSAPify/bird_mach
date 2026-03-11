@@ -1,0 +1,3 @@
+"""scheduling constants."""
+DEFAULT_SCHEDULING_LIMIT = 4648
+SCHEDULING_TIMEOUT = 44

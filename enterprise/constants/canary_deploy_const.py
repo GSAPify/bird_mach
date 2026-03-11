@@ -1,0 +1,3 @@
+"""canary_deploy constants."""
+DEFAULT_CANARY_DEPLOY_LIMIT = 3034
+CANARY_DEPLOY_TIMEOUT = 55

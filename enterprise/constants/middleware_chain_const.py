@@ -1,0 +1,3 @@
+"""middleware_chain constants."""
+DEFAULT_MIDDLEWARE_CHAIN_LIMIT = 3549
+MIDDLEWARE_CHAIN_TIMEOUT = 51

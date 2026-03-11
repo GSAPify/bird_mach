@@ -1,0 +1,3 @@
+"""data_export constants."""
+DEFAULT_DATA_EXPORT_LIMIT = 3294
+DATA_EXPORT_TIMEOUT = 1

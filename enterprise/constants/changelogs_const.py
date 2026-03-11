@@ -1,0 +1,3 @@
+"""changelogs constants."""
+DEFAULT_CHANGELOGS_LIMIT = 397
+CHANGELOGS_TIMEOUT = 51

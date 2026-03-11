@@ -1,0 +1,3 @@
+"""integration_testing constants."""
+DEFAULT_INTEGRATION_TESTING_LIMIT = 9797
+INTEGRATION_TESTING_TIMEOUT = 2

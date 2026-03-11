@@ -1,0 +1,3 @@
+"""rate_limit constants."""
+DEFAULT_RATE_LIMIT_LIMIT = 7392
+RATE_LIMIT_TIMEOUT = 8

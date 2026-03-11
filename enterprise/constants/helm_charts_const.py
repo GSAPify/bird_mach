@@ -1,0 +1,3 @@
+"""helm_charts constants."""
+DEFAULT_HELM_CHARTS_LIMIT = 9420
+HELM_CHARTS_TIMEOUT = 15

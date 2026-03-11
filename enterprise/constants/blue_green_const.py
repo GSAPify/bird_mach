@@ -1,0 +1,3 @@
+"""blue_green constants."""
+DEFAULT_BLUE_GREEN_LIMIT = 1496
+BLUE_GREEN_TIMEOUT = 30

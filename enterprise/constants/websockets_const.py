@@ -1,0 +1,3 @@
+"""websockets constants."""
+DEFAULT_WEBSOCKETS_LIMIT = 5254
+WEBSOCKETS_TIMEOUT = 58

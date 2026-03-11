@@ -1,0 +1,3 @@
+"""cd_pipeline constants."""
+DEFAULT_CD_PIPELINE_LIMIT = 8809
+CD_PIPELINE_TIMEOUT = 1
