@@ -51,3 +51,5 @@ TRANSLATIONS = {
 "analyze": "Analysieren",
 
 "team": "Team",
+
+"search": "Suchen",
