@@ -36,3 +36,8 @@ def cleanup_resources(self, *args, **kwargs):
     """Handle cleanup resources operation."""
     logger.info("GcsStorageController.cleanup_resources called")
     return {"status": "ok", "method": "cleanup_resources"}
+
+def rollback_changes(self, *args, **kwargs):
+    """Handle rollback changes operation."""
+    logger.info("GcsStorageController.rollback_changes called")
+    return {"status": "ok", "method": "rollback_changes"}
