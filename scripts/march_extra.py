@@ -1112,7 +1112,7 @@ class TestColorBlind:
 ''',
      "test(a11y): add color-blind palette tests"),
 
-    (15, 24, 0, "bird_mach/accessibility/keyboard_shortcuts.py",
+    (15, 23, 0, "bird_mach/accessibility/keyboard_shortcuts.py",
      '''"""Keyboard shortcut registry and documentation."""
 from __future__ import annotations
 from dataclasses import dataclass
@@ -1168,7 +1168,7 @@ class ShortcutRegistry:
 ''',
      "feat(a11y): add keyboard shortcut registry with help text"),
 
-    (15, 24, 15, "tests/accessibility/test_shortcuts.py",
+    (15, 23, 15, "tests/accessibility/test_shortcuts.py",
      '''"""Tests for keyboard shortcuts."""
 from bird_mach.accessibility.keyboard_shortcuts import ShortcutRegistry, Shortcut
 
@@ -1195,7 +1195,7 @@ class TestShortcutRegistry:
 ''',
      "test(a11y): add keyboard shortcut registry tests"),
 
-    (15, 24, 30, "docs/enterprise/accessibility.md",
+    (15, 23, 30, "docs/enterprise/accessibility.md",
      '''# Accessibility
 
 ## Screen Reader Support
@@ -1219,7 +1219,7 @@ Dark and light high-contrast themes available.
 ''',
      "docs: add accessibility features documentation"),
 
-    (15, 24, 45, "docs/enterprise/batch-processing.md",
+    (15, 23, 45, "docs/enterprise/batch-processing.md",
      '''# Batch Processing
 
 ## Pipeline
