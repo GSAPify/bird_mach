@@ -1,32 +1,16 @@
-# Dashboard
+# Dashboard & Analytics
 
-    ## Overview
+## Stats Aggregator
+Track analyses, audio hours processed, and format distribution.
 
-    The dashboard module provides enterprise-grade functionality
-    for the Mach audio visualization platform.
+## Usage Tracker
+Per-user API quota monitoring and enforcement.
 
-    ## Configuration
+## Activity Feed
+Real-time feed of user actions (uploads, analyses, shares).
 
-    ```python
-    from enterprise.config.settings import DASHBOARD_ENABLED
-    ```
+## Alerts
+Threshold-based alerting for metrics like CPU, memory, error rate.
 
-    ## Usage
-
-    ```python
-    from enterprise.dashboard import DashboardService
-
-    service = DashboardService()
-    service.configure(timeout=30)
-    result = service.execute()
-    ```
-
-    ## API Endpoints
-
-    | Method | Path | Description |
-    |--------|------|-------------|
-    | GET | `/api/v2/dashboard/` | List all |
-    | GET | `/api/v2/dashboard/{id}` | Get by ID |
-    | POST | `/api/v2/dashboard/` | Create new |
-    | PUT | `/api/v2/dashboard/{id}` | Update |
-    | DELETE | `/api/v2/dashboard/{id}` | Delete |
+## Leaderboard
+Gamified usage tracking with points and rankings.

@@ -1,105 +1,56 @@
-# Mach — 3D Audio Visualization
+# Mach — Audio Intelligence Platform
 
-Visualize **any audio** — music, speech, bird calls, field recordings — as interactive 3D point clouds. Each point represents a short-time frame of the recording, embedded into 2D or 3D space via UMAP on log-mel spectrogram features.
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)]
+[![Python](https://img.shields.io/badge/python-3.11+-blue)]
+[![License](https://img.shields.io/badge/license-MIT-green)]
 
-## What it does
+**Mach** is an enterprise-grade audio analysis and visualization platform.
 
-- **Input**: any audio file (WAV, MP3, FLAC, OGG, M4A) or a URL to one
-- **Process**: compute a log-mel spectrogram, then embed per-frame vectors with UMAP
-- **Output**: interactive Plotly visualizations (2D scatter or 3D multi-view point cloud)
+## Features
 
-## Setup
+- **Real-time Engine** — Low-latency audio processing with WebSocket streaming
+- **Audio Fingerprinting** — Chromaprint and constellation-based matching
+- **Collaboration** — Rooms, annotations, comments, presence, sharing
+- **Plugin System** — Extensible effects chain with built-in DSP
+- **Analysis** — Spectral, temporal, harmonic analysis with UMAP visualization
+- **Reporting** — Markdown, HTML, CSV, JSONL export with scheduled reports
+- **Dashboard** — Usage analytics, alerts, leaderboard
+- **API** — RESTful API v1 with Pydantic validation
+
+## Quick Start
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
+python -m bird_mach serve
 ```
 
 ## CLI
 
-Generate a standalone HTML visualization:
-
 ```bash
-python scripts/bird_sound_3d.py --input recording.wav --output viz.html --multi-view --connect
+python -m bird_mach analyze audio.wav
+python -m bird_mach compare a.wav b.wav
+python -m bird_mach version
 ```
 
-Options: `--color-by time|energy`, `--stride N`, `--n-neighbors`, `--min-dist`
-
-## Web app
+## Docker
 
 ```bash
-uvicorn bird_mach.webapp:app --reload --port 8000
+docker compose up
 ```
 
-Open `http://127.0.0.1:8000` in your browser.
+## Documentation
 
-### Upload mode (`/`)
-
-- **Drag & drop** or click to upload any audio file
-- **Paste a URL** to a remote audio file
-- Choose between **2D** or **3D** UMAP projections
-- Pick from **8 colorscales** (Turbo, Viridis, Plasma, etc.)
-- Toggle multi-view (3 camera angles) and point connections
-
-### Live mode (`/live`)
-
-Real-time audio visualization with **4 sources**:
-
-| Source | Description |
-|--------|-------------|
-| **File** | Load a local audio file and play it |
-| **Mic** | Capture from your microphone |
-| **Tab audio** | Capture audio from another browser tab (Spotify, YouTube, etc.) |
-
-Live mode includes:
-
-- **Frequency band bars** — 7 color-coded bands (Sub through Air)
-- **Waveform** — real-time amplitude display
-- **Scrolling spectrogram** — frequency content over time
-- **3D point cloud** — audio-reactive with loop or cloud motion
-- **Live stats** — RMS energy, peak, spectral centroid, elapsed time
-- **Fullscreen** — expand the 3D view to fill the screen
-- **Keyboard shortcuts** — Space (play/stop), C (clear), M (mic)
-
-## API endpoints
-
-| Route | Method | Description |
-|-------|--------|-------------|
-| `/` | GET | Upload form with drag-drop, URL input, 2D/3D toggle |
-| `/live` | GET | Real-time visualization (file, mic, or tab audio) |
-| `/visualize` | POST | Process audio and return interactive plots |
-| `/health` | GET | Health check (`{"status": "ok"}`) |
-| `/api/v1/health` | GET | API health (JSON) |
-| `/api/v1/analyze` | POST | Analyze audio file (JSON response) |
-
-## Analysis CLI
-
-Run a full-feature analysis on any audio file:
-
-```bash
-python scripts/analyze_audio.py recording.wav --output result.json
-```
-
-Batch-process a directory:
-
-```bash
-python scripts/batch_process.py ./samples/ --output results/
-```
-
-Or use the unified CLI:
-
-```bash
-python -m bird_mach analyze recording.wav
-python -m bird_mach serve --port 8000
-```
-
-See [docs/](docs/README.md) for the full documentation including API reference, presets, clustering, effects, and deployment guides.
-
-## n8n Workflows
-
-The `workflows/` directory contains automation workflows for n8n. See [`workflows/README.md`](workflows/README.md) for details.
+See [docs/](docs/) for guides on:
+- [Architecture](docs/architecture.md)
+- [API Reference](docs/api-v1.md)
+- [Real-time Engine](docs/enterprise/realtime.md)
+- [Fingerprinting](docs/enterprise/fingerprinting.md)
+- [Collaboration](docs/enterprise/collaboration.md)
+- [Plugin System](docs/enterprise/plugins.md)
+- [Dashboard](docs/enterprise/dashboard.md)
+- [Reporting](docs/enterprise/reporting.md)
+- [Deployment](docs/deployment.md)
 
 ## License
 
-MIT. See `LICENSE`.
+MIT
