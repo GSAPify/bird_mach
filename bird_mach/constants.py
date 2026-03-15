@@ -1,37 +1,18 @@
-"""Shared constants for the Mach audio visualization application."""
+"""Application constants for Mach."""
 
 APP_NAME = "Mach"
-APP_VERSION = "0.4.0"
-APP_DESCRIPTION = "3D audio visualization using UMAP embeddings — any sound, any source"
-
-MAX_UPLOAD_SIZE_MB = 50
+APP_VERSION = "0.5.0"
 MAX_AUDIO_DURATION_S = 600
-MAX_URL_FETCH_BYTES = 50 * 1024 * 1024
-URL_FETCH_TIMEOUT_S = 30
-
-SUPPORTED_AUDIO_EXTENSIONS = frozenset({
-    ".wav", ".mp3", ".flac", ".ogg", ".m4a", ".aac", ".wma",
-})
-
-SUPPORTED_COLORSCALES = (
-    "Turbo", "Viridis", "Plasma", "Inferno",
-    "Magma", "Cividis", "Hot", "Electric",
-)
-
-DEFAULT_PLOT_HEIGHT_MULTIVIEW = 900
-DEFAULT_PLOT_HEIGHT_SINGLE = 700
-DEFAULT_PLOT_HEIGHT_2D = 600
-DEFAULT_WAVEFORM_HEIGHT = 260
-DEFAULT_SPECTROGRAM_HEIGHT = 320
-DEFAULT_ENERGY_HEIGHT = 240
-DEFAULT_BANDS_HEIGHT = 120
-
-LIVE_AUDIO_SOURCES = ("file", "mic", "tab")
-
-DEFAULT_DARK_BG = "#0f172a"
-DEFAULT_PLOT_TEMPLATE = "plotly_dark"
-MIN_UMAP_POINTS = 15
-
-DEFAULT_FADE_IN_S = 0.05
-DEFAULT_FADE_OUT_S = 0.1
-SUPPORTED_EXPORT_FORMATS = ("json", "csv", "html")
+MAX_UPLOAD_SIZE_MB = 100
+SUPPORTED_FORMATS = {".wav", ".mp3", ".flac", ".ogg", ".m4a", ".aac"}
+DEFAULT_SAMPLE_RATE = 22050
+DEFAULT_HOP_LENGTH = 512
+DEFAULT_N_MELS = 128
+DEFAULT_N_FFT = 2048
+DEFAULT_FADE_IN_S = 0.01
+DEFAULT_FADE_OUT_S = 0.05
+SUPPORTED_EXPORT_FORMATS = {"json", "csv", "tsv", "html", "md"}
+MAX_COLLAB_PARTICIPANTS = 50
+MAX_ANNOTATIONS_PER_ROOM = 500
+DEFAULT_SHARE_EXPIRY_HOURS = 168
+MAX_EFFECTS_CHAIN_LENGTH = 20
