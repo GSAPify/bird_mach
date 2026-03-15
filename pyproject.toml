@@ -1,34 +1,30 @@
 [project]
-name = "mach-audio"
-version = "0.4.0"
-description = "3D audio visualization using UMAP embeddings — any sound, any source"
-readme = "README.md"
-license = {text = "MIT"}
+name = "mach"
+version = "0.5.0"
+description = "Enterprise audio intelligence platform"
 requires-python = ">=3.11"
-authors = [
-    {name = "Akhil Singh"},
-]
-
-[tool.ruff]
-target-version = "py311"
-line-length = 120
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "W", "UP"]
-
-[tool.ruff.lint.isort]
-known-first-party = ["bird_mach"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --tb=short -x"
+addopts = "-x --tb=short -q"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["E501", "F841"]
 
 [tool.mypy]
 python_version = "3.11"
 warn_return_any = true
 warn_unused_configs = true
-disallow_untyped_defs = false
 ignore_missing_imports = true
 
-[tool.ruff.lint.per-file-ignores]
-"tests/*" = ["E501"]
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
