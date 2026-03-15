@@ -1,93 +1,59 @@
 # Changelog
 
-All notable changes to Mach are documented here.
-
-## [0.4.0] - 2026-03-05
+## v0.5.0 (2026-03-15)
 
 ### Added
-- REST API v1 with `/api/v1/analyze` and `/api/v1/health` endpoints.
-- Pydantic request/response schemas for API validation.
-- Audio I/O package with validated loaders and WAV writers.
-- Audio effects module (time stretch, pitch shift, fade, mix).
-- K-Means and DBSCAN clustering for audio frame grouping.
-- Cosine, Euclidean, and Manhattan distance metrics.
-- Audio segmentation by silence and fixed-length windows.
-- Pitch estimation using pYIN algorithm with Hz-to-note conversion.
-- Genre hinting heuristics based on feature statistics.
-- Waveform time-domain statistics (peak, crest factor, DC offset).
-- Feature concatenation for multi-feature UMAP input.
-- LRU analysis cache keyed by content hash.
-- App configuration from environment variables.
-- Request timing and request-id middleware.
-- In-memory app metrics for monitoring.
-- Visualization package with color utilities and dark/light themes.
-- Unified CLI with analyze, serve, compare, and version commands.
-- `python -m bird_mach` entry point.
-- HTML template helpers.
-- Comprehensive test suite for all new modules.
-- Documentation for clustering, deployment, API, effects, and pitch.
+- Real-time audio engine with WebSocket streaming
+- Ring buffer, DSP utilities, mel filterbank
+- Beat tracker, pitch tracker, loudness meter
+- Audio fingerprinting (chromaprint + constellation)
+- Fingerprint database with search and matching
+- Collaboration rooms with presence tracking
+- Time-stamped annotations with reactions
+- Threaded comments and cursor sync
+- Secure share links with password/expiry
+- Plugin system with registry and hooks
+- Effects chain with wet/dry mixing
+- Built-in effects: gain, filters, compressor, reverb
+- Preset effect chains (vocal, master, ambient)
+- Analysis reports (markdown, HTML, batch)
+- Comparison reports for A/B analysis
+- JSONL/CSV/TSV export formats
+- Dashboard stats, usage tracking, activity feed
+- Alert rules and leaderboard
+- Project manager, notifications, search engine
+- Audio tagging, favorites, history tracking
+- Token bucket rate limiter
+- Stereo analysis (width, correlation, pan)
+- Musical key detection, chromatic tuner
+- Dynamic range analyzer, noise gate, level meter
+- Tempo estimator, analyzer chain, audio router
+- Config versioning with diff
+- Plugin loader and sandbox
+- Fine-grained collaboration permissions
 
-### Changed
-- Bumped version to 0.4.0.
-- Added pydantic, test, and serve targets to Makefile.
+## v0.4.0 (2026-03-05)
+- REST API v1 with Pydantic schemas
+- Clustering (K-Means, DBSCAN)
+- Audio segmentation and pitch detection
+- Effects (speed, pitch, fade, mix)
+- Visualization package with themes
+- Unified CLI
+- Docker + CI/CD
 
-## [0.3.0] - 2026-02-20
+## v0.3.0 (2026-02-21)
+- Audio utilities and error handling
+- Spectral flatness analysis
+- Type aliases, constants, editorconfig
 
-### Added
-- Audio comparison module for side-by-side summary diffing.
-- Per-frame RMS energy computation in analysis pipeline.
-- Onset strength bar chart visualization.
-- Audio comparison CLI script (`scripts/compare_audio.py`).
-- Dockerfile and docker-compose.yml for containerized deployment.
-- Centralized logging configuration with JSON output option.
-- Visualization presets for music, speech, nature, and percussive audio.
-- Input validators module (URL, file size, extension checks).
-- Batch processing CLI for analyzing entire directories.
-- Analysis pipeline with onset detection, beat tracking, MFCC, chromagram.
-- JSON and CSV exporters with numpy-aware serialization.
-- Comprehensive test suite (embedding, analysis, exporters, presets, validators, compare).
-- GitHub issue templates, PR template, and test CI workflow.
-- Architecture docs, API reference, live mode guide, and preset docs.
+## v0.2.0 (2026-02-20)
+- Audio comparison module
+- RMS energy computation
+- Onset visualization
+- Docker and logging config
 
-### Changed
-- Bumped version to 0.3.0.
-- Package now exports all new modules (compare, logging_config, etc.).
-
-## [0.2.0] - 2026-02-21
-
-### Added
-- Universal audio visualization — any sound, any source (not just bird calls).
-- Live mode with microphone, file, and screen/tab capture.
-- Frequency band bars (bass / mid / treble) in live view.
-- Real-time audio stats overlay (RMS, peak, centroid).
-- Drag-and-drop file upload.
-- URL-based audio loading.
-- 2D / 3D dimension toggle for UMAP embeddings.
-- Multiple colorscale options (Turbo, Viridis, Plasma, etc.).
-- Spectral flatness computation and chart.
-- Custom exception hierarchy for structured error handling.
-- Audio utilities module (probe, normalize, silence trim).
-- Type aliases for numpy arrays.
-- Keyboard shortcuts in live mode (Space, C, M).
-- Fullscreen toggle for 3D point cloud.
-- `/health` endpoint for uptime monitoring.
-- CORS middleware.
-
-### Changed
-- Rebranded from "Bird Mach" to "Mach".
-- Lowered default `fmin` from 150 Hz to 20 Hz for general audio.
-- Added upper-bound version pins to requirements.txt.
-
-### Fixed
-- Feature matrix shape validation before UMAP projection.
-- Safe parameter clamping on user-supplied values.
-
-## [0.1.0] - 2026-01-07
-
-### Added
-- Initial 3D bird sound visualization with UMAP embeddings.
-- Log-mel spectrogram feature extraction.
-- Multi-view and single-view 3D Plotly figures.
-- Waveform and spectrogram charts.
-- FastAPI web application with upload form.
-- CLI script for batch processing.
+## v0.1.0 (2026-01-01)
+- Initial release
+- Log-mel feature extraction
+- UMAP embedding (2D/3D)
+- Live audio capture
