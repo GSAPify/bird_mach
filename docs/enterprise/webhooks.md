@@ -1,32 +1,23 @@
 # Webhooks
 
-    ## Overview
+## Event Types
+- `audio.uploaded` — New audio file uploaded
+- `audio.analyzed` — Analysis completed
+- `audio.deleted` — Audio file deleted
+- `room.created` — Collaboration room created
+- `annotation.created` — New annotation added
+- `quota.exceeded` — API quota exceeded
 
-    The webhooks module provides enterprise-grade functionality
-    for the Mach audio visualization platform.
+## Security
+All webhook payloads are signed with HMAC-SHA256.
 
-    ## Configuration
+## Retry Policy
+Failed deliveries retry with exponential backoff (max 5 retries).
 
-    ```python
-    from enterprise.config.settings import WEBHOOKS_ENABLED
-    ```
-
-    ## Usage
-
-    ```python
-    from enterprise.webhooks import WebhooksService
-
-    service = WebhooksService()
-    service.configure(timeout=30)
-    result = service.execute()
-    ```
-
-    ## API Endpoints
-
-    | Method | Path | Description |
-    |--------|------|-------------|
-    | GET | `/api/v2/webhooks/` | List all |
-    | GET | `/api/v2/webhooks/{id}` | Get by ID |
-    | POST | `/api/v2/webhooks/` | Create new |
-    | PUT | `/api/v2/webhooks/{id}` | Update |
-    | DELETE | `/api/v2/webhooks/{id}` | Delete |
+## Configuration
+```python
+from bird_mach.webhooks.dispatcher import WebhookDispatcher, WebhookEvent
+dispatcher = WebhookDispatcher()
+dispatcher.register("https://your-app.com/hook", "your-secret", {"audio.analyzed"})
+dispatcher.dispatch(WebhookEvent("audio.analyzed", {"id": "abc"}))
+```
