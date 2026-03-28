@@ -1,32 +1,21 @@
-# Caching
+# Caching Architecture
 
-    ## Overview
+## Layers
+- **L1 (Memory)**: LRU cache with TTL, sub-millisecond access
+- **L2 (Disk)**: JSON-based, survives restarts, larger capacity
 
-    The caching module provides enterprise-grade functionality
-    for the Mach audio visualization platform.
+## Tiered Cache
+Reads check L1 first, then L2. L2 hits promote to L1.
 
-    ## Configuration
+```python
+from bird_mach.caching.tiered_cache import TieredCache
+cache = TieredCache(Path("/tmp/mach-cache"))
+cache.set("analysis:abc", {"rms": 0.3, "tempo": 120})
+result = cache.get("analysis:abc")
+```
 
-    ```python
-    from enterprise.config.settings import CACHING_ENABLED
-    ```
+## Cache Keys
+Deterministic key generation based on file content hash + parameters.
 
-    ## Usage
-
-    ```python
-    from enterprise.caching import CachingService
-
-    service = CachingService()
-    service.configure(timeout=30)
-    result = service.execute()
-    ```
-
-    ## API Endpoints
-
-    | Method | Path | Description |
-    |--------|------|-------------|
-    | GET | `/api/v2/caching/` | List all |
-    | GET | `/api/v2/caching/{id}` | Get by ID |
-    | POST | `/api/v2/caching/` | Create new |
-    | PUT | `/api/v2/caching/{id}` | Update |
-    | DELETE | `/api/v2/caching/{id}` | Delete |
+## Warming
+Pre-populate cache on startup with frequently accessed analyses.
