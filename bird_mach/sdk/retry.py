@@ -1,0 +1,28 @@
+"""SDK retry logic with jitter."""
+from __future__ import annotations
+import random
+import time
+
+class RetryConfig:
+    def __init__(self, max_retries: int = 3, base_delay: float = 0.5, jitter: bool = True):
+        self.max_retries = max_retries
+        self.base_delay = base_delay
+        self.jitter = jitter
+
+    def delay_for(self, attempt: int) -> float:
+        delay = self.base_delay * (2 ** attempt)
+        if self.jitter:
+            delay *= (0.5 + random.random())
+        return min(delay, 30.0)
+
+def with_retry(fn, config: RetryConfig | None = None):
+    cfg = config or RetryConfig()
+    last_err = None
+    for attempt in range(cfg.max_retries + 1):
+        try:
+            return fn()
+        except Exception as e:
+            last_err = e
+            if attempt < cfg.max_retries:
+                time.sleep(cfg.delay_for(attempt))
+    raise last_err

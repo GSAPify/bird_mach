@@ -10,7 +10,7 @@ TZ = "+0530"
 random.seed(2026)
 commit_count = 0
 
-def w(rel, content):dfo
+def w(rel, content):
     p = BASE / rel
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(textwrap.dedent(content).lstrip(), encoding="utf-8")
