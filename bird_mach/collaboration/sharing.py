@@ -20,7 +20,7 @@ class ShareLink:
     def is_expired(self) -> bool:
         if self.expires_at and datetime.now() > self.expires_at:
             return True
-        if self.max_views and self.view_count >= self.max_views:
+        if self.max_views is not None and self.view_count >= self.max_views:
             return True
         return False
 
@@ -36,9 +36,13 @@ class SharingService:
     ) -> ShareLink:
         token = secrets.token_urlsafe(16)
         expires = None
-        if expires_in_hours:
+        if expires_in_hours is not None:
             expires = datetime.now() + timedelta(hours=expires_in_hours)
-        pw_hash = hashlib.sha256(password.encode()).hexdigest() if password else None
+        pw_hash = (
+            hashlib.sha256(password.encode()).hexdigest()
+            if password is not None
+            else None
+        )
         link = ShareLink(
             token=token, audio_id=audio_id, created_by=user_id,
             expires_at=expires, max_views=max_views, password_hash=pw_hash,
