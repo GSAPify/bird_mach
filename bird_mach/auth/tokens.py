@@ -14,6 +14,7 @@ a refresh token can never be replayed as an access token (and vice versa):
 from __future__ import annotations
 
 import hashlib
+import hmac
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -36,7 +37,7 @@ def _hash_fingerprint(password_hash: str) -> str:
     password changes — making reset tokens effectively single-use without a
     server-side token store.
     """
-    return hashlib.sha256(password_hash.encode("utf-8")).hexdigest()[:16]
+    return hashlib.sha256(password_hash.encode("utf-8")).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -177,7 +178,10 @@ class TokenService:
             raise TokenError(str(exc)) from exc
         if payload.get("type") != PASSWORD_RESET:
             raise TokenError("not a password-reset token")
-        if payload.get("pwf") != _hash_fingerprint(current_password_hash):
+        presented = payload.get("pwf")
+        if not isinstance(presented, str) or not hmac.compare_digest(
+            presented, _hash_fingerprint(current_password_hash)
+        ):
             raise TokenError("reset token has already been used or is stale")
         return payload["sub"]
 
