@@ -18,13 +18,18 @@ class PipelineGraph:
 
     def _topo_sort(self) -> list[str]:
         visited = set()
+        in_progress = set()
         order = []
         def dfs(n):
             if n in visited:
                 return
-            visited.add(n)
+            if n in in_progress:
+                raise ValueError(f"cycle detected at node {n!r}")
+            in_progress.add(n)
             for dep in self._edges.get(n, []):
                 dfs(dep)
+            in_progress.discard(n)
+            visited.add(n)
             order.append(n)
         for n in self._nodes:
             dfs(n)
