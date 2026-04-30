@@ -18,6 +18,8 @@ class CommentThread:
         self._comments: dict[str, Comment] = {}
 
     def add(self, user_id: str, text: str, parent_id: str | None = None) -> Comment:
+        if parent_id is not None and parent_id not in self._comments:
+            raise ValueError(f"unknown parent comment {parent_id!r}")
         c = Comment(id=str(uuid.uuid4())[:8], user_id=user_id, text=text, parent_id=parent_id)
         self._comments[c.id] = c
         return c
