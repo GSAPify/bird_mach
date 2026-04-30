@@ -23,11 +23,16 @@ class DiskCache:
         if time.time() > data.get("_expires_at", 0):
             path.unlink(missing_ok=True)
             return None
+        # The filename is a truncated hash, so confirm the stored key really is
+        # the one asked for rather than a collision.
+        if data.get("_key") != key:
+            return None
         return data.get("value")
 
     def set(self, key: str, value: dict, ttl_s: float | None = None) -> None:
         path = self._key_path(key)
-        data = {"value": value, "_expires_at": time.time() + (ttl_s or self._ttl),
+        data = {"value": value,
+                "_expires_at": time.time() + (self._ttl if ttl_s is None else ttl_s),
                 "_key": key}
         path.write_text(json.dumps(data, default=str))
 
