@@ -6,6 +6,10 @@ class SpectrogramBuffer:
     """Maintain a rolling 2D spectrogram for real-time display."""
 
     def __init__(self, n_frames: int = 200, n_bins: int = 128):
+        if n_frames < 1:
+            raise ValueError("n_frames must be at least 1")
+        if n_bins < 1:
+            raise ValueError("n_bins must be at least 1")
         self._buffer = np.full((n_bins, n_frames), -80.0, dtype=np.float32)
         self._n_frames = n_frames
         self._n_bins = n_bins
