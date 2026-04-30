@@ -59,9 +59,11 @@ class InMemorySubscriptionRepository(SubscriptionRepository):
         return self._by_id.get(sub_id)
 
     def get_by_user(self, user_id: str) -> Subscription | None:
-        # Most recent subscription for the user.
+        # Prefer an entitling subscription: a newer incomplete/canceled row
+        # must not hide the active one and silently drop access.
         subs = [s for s in self._by_id.values() if s.user_id == user_id]
-        return max(subs, key=lambda s: s.created_at, default=None)
+        active = [s for s in subs if s.is_active]
+        return max(active or subs, key=lambda s: s.created_at, default=None)
 
     def get_by_stripe_id(self, stripe_subscription_id: str) -> Subscription | None:
         return next(
