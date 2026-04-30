@@ -27,7 +27,9 @@ class ConfigVersioning:
 
     def get(self, version: int) -> ConfigVersion | None:
         if 1 <= version <= len(self._versions):
-            return self._versions[version - 1]
+            # Deep-copy on the way out too, so a caller mutating the returned
+            # config cannot rewrite committed history.
+            return copy.deepcopy(self._versions[version - 1])
         return None
 
     @property
