@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import numpy as np
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
@@ -46,13 +46,16 @@ class RealtimeEngine:
         self._callbacks.append(callback)
 
     async def process_frame(self, frame: AudioFrame) -> dict:
+        if frame.samples.size == 0:
+            raise ValueError("cannot process an empty audio frame")
         self._frame_count += 1
         spectrum = np.abs(np.fft.rfft(frame.samples, n=self.config.fft_size))
         spectrum_db = 20 * np.log10(spectrum + 1e-10)
         peak = float(np.max(np.abs(frame.samples)))
         rms = frame.rms
-        centroid = float(np.sum(np.arange(len(spectrum)) * spectrum) /
-                       (np.sum(spectrum) + 1e-10))
+        centroid_bin = float(np.sum(np.arange(len(spectrum)) * spectrum) /
+                             (np.sum(spectrum) + 1e-10))
+        centroid = centroid_bin * (frame.sample_rate / 2.0) / max(len(spectrum) - 1, 1)
 
         result = {
             "frame_id": self._frame_count,
