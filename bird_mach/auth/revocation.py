@@ -48,7 +48,12 @@ class InMemoryRevokedTokenStore(RevokedTokenStore):
             self._revoked[jti] = expires_at
 
     def is_revoked(self, jti: str) -> bool:
-        return bool(jti) and jti in self._revoked
+        if not jti:
+            return False
+        with self._lock:
+            expires_at = self._revoked.get(jti)
+        # An entry past its own expiry is dead weight, not an active denial.
+        return expires_at is not None and expires_at > datetime.now(timezone.utc)
 
     def purge_expired(self, *, now: datetime | None = None) -> int:
         cutoff = now or datetime.now(timezone.utc)
