@@ -32,8 +32,10 @@ def apply_window(samples: np.ndarray, window: str = "hann") -> np.ndarray:
         w = np.hamming(n)
     elif window == "blackman":
         w = np.blackman(n)
-    else:
+    elif window in {"rect", "rectangular", "boxcar"}:
         w = np.ones(n)
+    else:
+        raise ValueError(f"unknown window {window!r}")
     return samples * w
 
 def compute_spectral_flux(prev: np.ndarray, curr: np.ndarray) -> float:
