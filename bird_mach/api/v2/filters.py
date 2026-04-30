@@ -38,4 +38,7 @@ def apply_filters(items: list[dict], filters: list[Filter]) -> list[dict]:
             result = [i for i in result if float(i.get(f.field, 0)) <= float(f.value)]
         elif f.operator == "contains":
             result = [i for i in result if str(f.value).lower() in str(i.get(f.field, "")).lower()]
+        elif f.operator == "in":
+            wanted = {v.strip() for v in str(f.value).split(",") if v.strip()}
+            result = [i for i in result if str(i.get(f.field)) in wanted]
     return result
