@@ -7,6 +7,8 @@ NOTE_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
 class ChromaticTuner:
     """Detect the closest musical note and cents deviation."""
     def __init__(self, a4_hz: float = 440.0):
+        if a4_hz <= 0:
+            raise ValueError("a4_hz must be positive")
         self._a4 = a4_hz
 
     def tune(self, freq_hz: float) -> dict:
