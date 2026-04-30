@@ -75,7 +75,11 @@ class Subscription:
 
     @property
     def is_active(self) -> bool:
-        return self.status.grants_access
+        # A stale row can still say "active" if the renewal webhook never
+        # arrived, so the period end is authoritative when we have one.
+        if not self.status.grants_access:
+            return False
+        return self.current_period_end is None or _now() < self.current_period_end
 
     def public_dict(self) -> dict:
         return {
