@@ -4,6 +4,8 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 
+from bird_mach.constants import MAX_COLLAB_PARTICIPANTS
+
 @dataclass
 class Participant:
     user_id: str
@@ -21,10 +23,15 @@ class CollabRoom:
     participants: dict[str, Participant] = field(default_factory=dict)
     audio_file_id: str | None = None
     is_locked: bool = False
+    max_participants: int = MAX_COLLAB_PARTICIPANTS
 
     def add_participant(self, user_id: str, name: str, role: str = "viewer") -> Participant:
-        if self.is_locked and role != "admin":
+        # The caller-supplied role is self-declared, so it cannot authorize a
+        # bypass; only the owner may join a locked room.
+        if self.is_locked and user_id != self.owner_id:
             raise PermissionError("Room is locked")
+        if user_id not in self.participants and len(self.participants) >= self.max_participants:
+            raise PermissionError(f"Room is full ({self.max_participants} participants)")
         p = Participant(user_id=user_id, display_name=name, role=role)
         self.participants[user_id] = p
         return p
