@@ -12,13 +12,17 @@ class PhaseVocoder:
 
     def time_stretch(self, y: np.ndarray, rate: float) -> np.ndarray:
         """Stretch audio by `rate` (>1 = faster, <1 = slower)."""
+        if rate <= 0:
+            raise ValueError("rate must be positive")
         stft = self._stft(y)
+        if stft.shape[1] == 0:
+            return y.astype(np.float32, copy=True)
         stretched = self._stretch_stft(stft, rate)
         return self._istft(stretched)
 
     def _stft(self, y: np.ndarray) -> np.ndarray:
         window = np.hanning(self._n_fft)
-        n_frames = (len(y) - self._n_fft) // self._hop + 1
+        n_frames = max(0, (len(y) - self._n_fft) // self._hop + 1)
         result = np.zeros((self._n_fft // 2 + 1, n_frames), dtype=complex)
         for i in range(n_frames):
             start = i * self._hop
