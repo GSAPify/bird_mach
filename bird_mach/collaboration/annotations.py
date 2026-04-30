@@ -26,6 +26,8 @@ class AnnotationStore:
 
     def add(self, room_id: str, user_id: str, timestamp_s: float,
             duration_s: float, text: str, color: str = "#38bdf8") -> Annotation:
+        if timestamp_s < 0 or duration_s < 0:
+            raise ValueError("timestamp_s and duration_s must not be negative")
         ann = Annotation(
             id=str(uuid.uuid4())[:8], user_id=user_id,
             timestamp_s=timestamp_s, duration_s=duration_s,
