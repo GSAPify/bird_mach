@@ -7,6 +7,10 @@ class SessionRecorder:
     """Record live audio frames for later analysis or export."""
 
     def __init__(self, max_duration_s: float = 300.0, sr: int = 44100) -> None:
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if max_duration_s <= 0:
+            raise ValueError("max_duration_s must be positive")
         self._sr = sr
         self._max_samples = int(max_duration_s * sr)
         self._chunks: list[np.ndarray] = []
@@ -41,4 +45,6 @@ class SessionRecorder:
     def stop(self) -> np.ndarray:
         recording = self.get_recording()
         self._started_at = None
+        self._chunks.clear()
+        self._total_samples = 0
         return recording
