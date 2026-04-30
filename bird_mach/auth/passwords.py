@@ -20,6 +20,8 @@ import secrets
 _ALGORITHM = "pbkdf2_sha256"
 # OWASP's 2023 floor for PBKDF2-HMAC-SHA256 is 600k iterations.
 _DEFAULT_ITERATIONS = 600_000
+# Upper bound so a corrupt stored cost cannot turn a login into a DoS.
+_MAX_ITERATIONS = 10_000_000
 _SALT_BYTES = 16
 
 
@@ -27,6 +29,8 @@ def hash_password(password: str, *, iterations: int = _DEFAULT_ITERATIONS) -> st
     """Return an encoded PBKDF2 hash of ``password``."""
     if not password:
         raise ValueError("password must not be empty")
+    if not 1 <= iterations <= _MAX_ITERATIONS:
+        raise ValueError(f"iterations must be between 1 and {_MAX_ITERATIONS}")
     salt = secrets.token_bytes(_SALT_BYTES)
     derived = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, iterations)
     return f"{_ALGORITHM}${iterations}${salt.hex()}${derived.hex()}"
@@ -46,6 +50,8 @@ def verify_password(password: str, encoded: str) -> bool:
         salt = bytes.fromhex(salt_hex)
         expected = bytes.fromhex(hash_hex)
     except (ValueError, AttributeError):
+        return False
+    if not 1 <= iterations <= _MAX_ITERATIONS:
         return False
     derived = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, iterations)
     # Constant-time comparison to avoid leaking equality timing.
