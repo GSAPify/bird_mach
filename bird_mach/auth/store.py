@@ -109,6 +109,8 @@ class InMemoryUserRepository(UserRepository):
         return len(self._by_id)
 
     def list_all(self, *, limit: int = 100, offset: int = 0) -> list[User]:
+        if limit < 1 or offset < 0:
+            raise ValueError("limit must be >= 1 and offset must be >= 0")
         ordered = sorted(self._by_id.values(), key=lambda u: u.created_at)
         return ordered[offset : offset + limit]
 
