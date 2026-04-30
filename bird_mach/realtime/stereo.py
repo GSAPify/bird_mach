@@ -3,6 +3,8 @@ from __future__ import annotations
 import numpy as np
 
 def compute_stereo_width(left: np.ndarray, right: np.ndarray) -> float:
+    if len(left) == 0 or len(left) != len(right):
+        return 0.0
     mid = (left + right) / 2
     side = (left - right) / 2
     mid_rms = np.sqrt(np.mean(mid**2)) + 1e-10
@@ -16,6 +18,8 @@ def compute_correlation(left: np.ndarray, right: np.ndarray) -> float:
     return float(corr) if not np.isnan(corr) else 0.0
 
 def pan_position(left: np.ndarray, right: np.ndarray) -> float:
+    if len(left) == 0 or len(right) == 0:
+        return 0.0
     l_rms = np.sqrt(np.mean(left**2))
     r_rms = np.sqrt(np.mean(right**2))
     total = l_rms + r_rms + 1e-10
