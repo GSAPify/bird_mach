@@ -15,6 +15,7 @@ class AudioRouter:
     def disconnect(self, source: str, dest: str) -> None:
         if source in self._routes:
             self._routes[source] = [d for d in self._routes[source] if d != dest]
+        self._gains.pop(f"{source}->{dest}", None)
 
     def get_destinations(self, source: str) -> list[str]:
         return self._routes.get(source, [])
