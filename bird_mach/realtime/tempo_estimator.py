@@ -6,6 +6,10 @@ from collections import deque
 class TempoEstimator:
     """Estimate tempo from streaming onset strength values."""
     def __init__(self, sr: int = 44100, hop: int = 512):
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if hop <= 0:
+            raise ValueError("hop must be positive")
         self._sr = sr
         self._hop = hop
         self._onset_buf = deque(maxlen=500)
@@ -21,7 +25,7 @@ class TempoEstimator:
         corr = np.correlate(data, data, mode="full")
         corr = corr[len(corr)//2:]
         bpm_min, bpm_max = 60, 200
-        min_lag = int(60 * self._sr / (self._hop * bpm_max))
+        min_lag = max(1, int(60 * self._sr / (self._hop * bpm_max)))
         max_lag = int(60 * self._sr / (self._hop * bpm_min))
         search = corr[min_lag:max_lag]
         if len(search) == 0:
