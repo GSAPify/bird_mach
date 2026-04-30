@@ -11,8 +11,10 @@ class KeyDetector:
     """Detect musical key using Krumhansl-Schmuckler algorithm."""
     def detect(self, chroma: np.ndarray) -> dict:
         if chroma.ndim == 2:
-            chroma = np.mean(chroma, axis=1)
-        chroma = chroma[:12]
+            chroma = np.mean(chroma, axis=1 if chroma.shape[0] == 12 else 0)
+        chroma = np.asarray(chroma, dtype=float)[:12]
+        if chroma.size < 12:
+            chroma = np.pad(chroma, (0, 12 - chroma.size))
         best_key, best_corr, best_mode = "C", -1.0, "major"
         notes = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
         for mode, profile in KEY_PROFILES.items():
