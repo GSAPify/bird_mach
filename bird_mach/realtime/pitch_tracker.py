@@ -7,8 +7,12 @@ class RealtimePitchTracker:
     """Estimate pitch in real-time via autocorrelation."""
 
     def __init__(self, sr: int = 44100, fmin: float = 65.0, fmax: float = 2000.0):
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if fmin <= 0 or fmax <= fmin:
+            raise ValueError("require 0 < fmin < fmax")
         self._sr = sr
-        self._min_lag = int(sr / fmax)
+        self._min_lag = max(1, int(sr / fmax))
         self._max_lag = int(sr / fmin)
         self._history = deque(maxlen=30)
 
