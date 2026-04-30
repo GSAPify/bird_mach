@@ -14,6 +14,13 @@ class LoudnessMeter:
         self._integrated_count = 0
 
     def process(self, samples: np.ndarray) -> dict[str, float]:
+        if samples.size == 0:
+            return {
+                "momentary_lufs": -70.0,
+                "short_term_lufs": -70.0,
+                "integrated_lufs": self._integrated_sum / max(self._integrated_count, 1),
+                "peak_dbfs": -200.0,
+            }
         rms = float(np.sqrt(np.mean(samples ** 2)))
         lufs_approx = 20 * np.log10(rms + 1e-10) - 0.691
         self._history.append(lufs_approx)
