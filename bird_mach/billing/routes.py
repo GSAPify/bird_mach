@@ -147,4 +147,9 @@ async def stripe_webhook(
         # for investigation instead of asking Stripe to keep retrying.
         logger.error("webhook references unknown customer, acknowledging: %s", exc)
         result = "ignored:unknown_customer"
+    except BillingError as exc:
+        # Signed but malformed (missing ids, unmapped price). Retrying will not
+        # change the payload, so acknowledge rather than trigger a retry storm.
+        logger.error("webhook payload rejected, acknowledging: %s", exc)
+        result = "ignored:bad_payload"
     return Response(content=result, media_type="text/plain")
