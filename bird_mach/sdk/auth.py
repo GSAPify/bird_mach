@@ -1,6 +1,7 @@
 """SDK authentication helpers."""
 from __future__ import annotations
 import hashlib
+import hmac
 import time
 
 class APIKeyAuth:
@@ -24,7 +25,9 @@ class HMACAuth:
     def sign(self, body: str) -> dict[str, str]:
         timestamp = str(int(time.time()))
         payload = f"{timestamp}.{body}"
-        signature = hashlib.sha256(f"{self._secret}{payload}".encode()).hexdigest()
+        signature = hmac.new(
+            self._secret.encode(), payload.encode(), hashlib.sha256
+        ).hexdigest()
         return {
             "X-Key-Id": self._key_id,
             "X-Timestamp": timestamp,
