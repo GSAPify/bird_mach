@@ -9,7 +9,9 @@ class DynamicsAnalyzer:
         self._peaks = deque(maxlen=window_size)
         self._rms_vals = deque(maxlen=window_size)
 
-    def update(self, samples: np.ndarray) -> dict:
+    def update(self, samples: np.ndarray) -> dict[str, float]:
+        if samples.size == 0:
+            return {"peak": 0.0, "rms": 0.0, "crest_factor": 0.0, "dynamic_range_db": 0.0}
         peak = float(np.max(np.abs(samples)))
         rms = float(np.sqrt(np.mean(samples**2)))
         self._peaks.append(peak)
