@@ -119,6 +119,9 @@ class AuthService:
             raise UserNotFoundError(claims.subject)
         if not user.is_active:
             raise InactiveUserError(user.id)
+        # Rotate: the presented refresh token is spent, so a stolen copy cannot
+        # be exchanged a second time.
+        self._revoked.revoke(claims.jti, claims.expires_at)
         return self._issue_pair(user)
 
     def logout(self, refresh_token: str) -> None:
