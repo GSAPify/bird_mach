@@ -1,5 +1,6 @@
 """Monitor audio processing latency."""
 from __future__ import annotations
+import math
 import time
 from collections import deque
 
@@ -27,8 +28,8 @@ class LatencyMonitor:
         if len(self._latencies) < 2:
             return self.max_ms
         sorted_lat = sorted(self._latencies)
-        idx = int(len(sorted_lat) * 0.99)
-        return sorted_lat[min(idx, len(sorted_lat) - 1)]
+        idx = math.ceil(0.99 * len(sorted_lat)) - 1
+        return sorted_lat[max(0, min(idx, len(sorted_lat) - 1))]
 
     @property
     def is_healthy(self) -> bool:
