@@ -16,9 +16,11 @@ class LevelMeter:
         self._peak_hold = -100.0
 
     def read(self, samples: np.ndarray) -> LevelReading:
+        if samples.size == 0:
+            return LevelReading(rms_db=-100.0, peak_db=self._peak_hold, clip=False)
         rms = float(np.sqrt(np.mean(samples ** 2)))
         peak = float(np.max(np.abs(samples)))
         rms_db = 20 * np.log10(rms + 1e-10)
         peak_db = 20 * np.log10(peak + 1e-10)
         self._peak_hold = max(self._peak_hold * 0.995, peak_db)
-        return LevelReading(rms_db=rms_db, peak_db=peak_db, clip=peak_db > self._clip_db)
+        return LevelReading(rms_db=rms_db, peak_db=self._peak_hold, clip=peak_db > self._clip_db)
