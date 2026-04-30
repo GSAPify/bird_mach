@@ -15,9 +15,11 @@ class AsyncMachClient:
     async def analyze(self, audio_path: str, **params) -> dict:
         if not self._connected:
             raise ConnectionError("Not connected")
-        return {"status": "queued", "path": audio_path}
+        return {"status": "queued", "path": audio_path, "params": params}
 
     async def batch_analyze(self, paths: list[str]) -> list[dict]:
+        if not self._connected:
+            raise ConnectionError("Not connected")
         return [{"path": p, "status": "queued"} for p in paths]
 
     async def close(self) -> None:
