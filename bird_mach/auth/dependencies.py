@@ -108,7 +108,13 @@ def get_current_user(
             raise UserNotFoundError(claims.subject)
         if not user.is_active:
             raise InactiveUserError(user.id)
-    except (TokenError, UserNotFoundError, InactiveUserError) as exc:
+    except InactiveUserError as exc:
+        # Distinct from a bad token: the credential is valid, the account is not.
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account is deactivated",
+        ) from exc
+    except (TokenError, UserNotFoundError) as exc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
