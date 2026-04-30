@@ -34,7 +34,7 @@ class RegisterRequest(BaseModel):
 
 class LoginRequest(BaseModel):
     email: str
-    password: str
+    password: str = Field(max_length=128)
 
 
 class RefreshRequest(BaseModel):
