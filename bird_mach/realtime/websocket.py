@@ -2,7 +2,6 @@
 from __future__ import annotations
 import json
 import logging
-import asyncio
 from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
@@ -28,6 +27,8 @@ class AudioWebSocketManager:
         return len(self._clients)
 
     def register(self, client_id: str, timestamp: float) -> WSClient:
+        if client_id in self._clients:
+            self.unregister(client_id)
         if len(self._clients) >= self._max_clients:
             raise ConnectionError("Max clients reached")
         client = WSClient(client_id=client_id, connected_at=timestamp)
