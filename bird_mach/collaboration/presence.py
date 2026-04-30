@@ -1,7 +1,9 @@
 """Real-time presence tracking for collaboration rooms."""
 from __future__ import annotations
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
+
+ONLINE_TTL = timedelta(seconds=60)
 
 @dataclass
 class UserPresence:
@@ -28,7 +30,13 @@ class PresenceTracker:
         self._users.pop(user_id, None)
 
     def get_online(self) -> list[UserPresence]:
-        return [p for p in self._users.values() if p.status == "online"]
+        # A client that disconnects without saying so never updates last_seen,
+        # so status alone would keep it online forever.
+        cutoff = datetime.now() - ONLINE_TTL
+        return [
+            p for p in self._users.values()
+            if p.status == "online" and p.last_seen >= cutoff
+        ]
 
     @property
     def online_count(self) -> int:
