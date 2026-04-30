@@ -170,12 +170,16 @@ class BillingService:
             return SubscriptionStatus.INCOMPLETE
 
     def _plan_from_object(self, obj: dict) -> str:
-        items = obj.get("items", {}).get("data", [])
-        if items:
-            price_id = items[0].get("price", {}).get("id")
-            if price_id in self._price_to_plan:
-                return self._price_to_plan[price_id]
-        return "pro"  # default paid tier when the price is unmapped
+        items = (obj.get("items") or {}).get("data") or []
+        if not items:
+            raise BillingError("subscription object has no line items")
+        price = items[0].get("price")
+        price_id = price.get("id") if isinstance(price, dict) else None
+        if price_id not in self._price_to_plan:
+            # Guessing "pro" here would write the wrong plan_id and hide a
+            # catalog/config mismatch until a customer complains.
+            raise BillingError(f"unmapped Stripe price {price_id!r}")
+        return self._price_to_plan[price_id]
 
     @staticmethod
     def _parse_period_end(raw: int | None) -> datetime | None:
