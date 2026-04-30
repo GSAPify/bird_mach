@@ -38,7 +38,9 @@ def enforce_analysis_quota(
     Entitled (subscribed) users are never blocked. Free users are blocked once
     they hit the daily limit, with a message pointing at the upgrade path.
     """
-    if not billing.is_entitled(user) and usage.free_tier_exhausted(user.id):
+    if billing.is_entitled(user):
+        return user
+    if usage.free_tier_exhausted(user.id):
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail=(
