@@ -49,6 +49,11 @@ def analyze_bytes(contents: bytes, sr: int = 22050) -> AnalysisSummaryResponse:
     Shared by the anonymous endpoint and the authenticated/metered routes so
     the load-and-summarize logic lives in exactly one place.
     """
+    if not contents:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Empty audio upload.",
+        )
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmp:
         tmp.write(contents)
         tmp.flush()
