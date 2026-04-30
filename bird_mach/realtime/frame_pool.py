@@ -23,6 +23,8 @@ class FramePool:
         return np.zeros(self._frame_size, dtype=np.float32)
 
     def release(self, frame: np.ndarray) -> None:
+        if frame.shape != (self._frame_size,):
+            return
         frame[:] = 0
         if len(self._pool) < self._pool.maxlen:
             self._pool.append(frame)
