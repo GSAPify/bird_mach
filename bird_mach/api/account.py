@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, File, UploadFile
 
-from bird_mach.api.routes import analyze_bytes
+from bird_mach.api.routes import analyze_bytes, read_capped
 from bird_mach.api.schemas import AnalysisSummaryResponse
 from bird_mach.auth.dependencies import get_current_user
 from bird_mach.auth.models import User
@@ -32,7 +32,7 @@ async def metered_analyze(
     user: User = Depends(enforce_analysis_quota),
 ):
     """Analyze one file, counting against the caller's daily quota."""
-    contents = await file.read()
+    contents = await read_capped(file)
     return analyze_bytes(contents, sr)
 
 
@@ -45,7 +45,7 @@ async def batch_analyze(
     """Premium: analyze multiple files in one request. Requires a subscription."""
     results = []
     for f in files:
-        results.append(analyze_bytes(await f.read(), sr))
+        results.append(analyze_bytes(await read_capped(f), sr))
     return results
 
 
