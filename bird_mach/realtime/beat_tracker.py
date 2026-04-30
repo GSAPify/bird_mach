@@ -10,7 +10,7 @@ class RealtimeBeatTracker:
         self._sr = sr
         self._hop = hop_length
         self._onset_history = deque(maxlen=200)
-        self._beat_times: list[float] = []
+        self._beat_times: deque[float] = deque(maxlen=200)
         self._threshold = 0.0
         self._cooldown = 0
 
@@ -37,7 +37,7 @@ class RealtimeBeatTracker:
     def bpm(self) -> float:
         if len(self._beat_times) < 3:
             return 0.0
-        intervals = np.diff(self._beat_times[-20:])
+        intervals = np.diff(list(self._beat_times)[-20:])
         mean_interval = float(np.median(intervals))
         if mean_interval <= 0:
             return 0.0
