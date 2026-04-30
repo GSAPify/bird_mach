@@ -13,6 +13,7 @@ than a hand-rolled HMAC check, which is where signature bugs tend to live.
 
 from __future__ import annotations
 
+import hmac
 import itertools
 import json
 from abc import ABC, abstractmethod
@@ -109,13 +110,13 @@ class FakePaymentProvider(PaymentProvider):
         return self.invoices.get(customer_id, [])[:limit]
 
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
-        if signature != "valid":
+        if not hmac.compare_digest(signature, "valid"):
             raise WebhookVerificationError("invalid fake signature")
         try:
             event = json.loads(payload)
         except (ValueError, TypeError) as exc:
             raise WebhookVerificationError("payload is not valid JSON") from exc
-        return WebhookEvent(type=event.get("type", ""), data=event.get("data", {}))
+        return WebhookEvent(type=event.get("type") or "", data=event.get("data") or {})
 
 
 class StripePaymentProvider(PaymentProvider):
