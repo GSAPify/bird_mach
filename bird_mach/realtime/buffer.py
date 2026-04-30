@@ -6,6 +6,8 @@ class RingBuffer:
     """Fixed-size circular buffer for audio samples."""
 
     def __init__(self, capacity: int, dtype=np.float32) -> None:
+        if capacity < 1:
+            raise ValueError("capacity must be at least 1")
         self._buf = np.zeros(capacity, dtype=dtype)
         self._capacity = capacity
         self._write_pos = 0
