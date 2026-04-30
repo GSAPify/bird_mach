@@ -14,6 +14,10 @@ class RateLimitInfo:
 class SlidingWindowLimiter:
     """Sliding window rate limiter for API endpoints."""
     def __init__(self, window_s: float = 60.0, max_requests: int = 100):
+        if window_s <= 0:
+            raise ValueError("window_s must be positive")
+        if max_requests < 1:
+            raise ValueError("max_requests must be at least 1")
         self._window = window_s
         self._max = max_requests
         self._requests: dict[str, list[float]] = {}
