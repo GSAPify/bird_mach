@@ -13,6 +13,8 @@ class Page:
     cursor: str | None = None
 
 def paginate_offset(items: list, offset: int = 0, limit: int = 20) -> Page:
+    if offset < 0 or limit < 1:
+        raise ValueError("offset must be >= 0 and limit must be >= 1")
     total = len(items)
     page_items = items[offset:offset + limit]
     return Page(
