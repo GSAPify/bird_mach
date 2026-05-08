@@ -24,6 +24,9 @@ pip install -r requirements.txt
 python -m bird_mach serve
 ```
 
+Open http://localhost:8000 for the upload-based 3D audio map, or
+http://localhost:8000/live for real-time file, mic, and tab-audio visuals.
+
 ## CLI
 
 ```bash
@@ -37,6 +40,12 @@ python -m bird_mach version
 ```bash
 docker compose up
 ```
+
+## Free Hosting
+
+This repo includes `render.yaml` for Render's free web-service plan. Connect
+the GitHub repository in Render, create a Blueprint from the repo, and Render
+will build the Docker image, serve `bird_mach.webapp:app`, and check `/health`.
 
 ## Documentation
 

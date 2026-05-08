@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: bird-mach
+    runtime: docker
+    plan: free
+    autoDeployTrigger: commit
+    healthCheckPath: /health

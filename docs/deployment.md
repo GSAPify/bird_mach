@@ -9,6 +9,9 @@ docker build -t mach .
 docker run -p 8000:8000 mach
 ```
 
+The image honors the platform-provided `PORT` variable, defaulting to `8000`
+when it is not set.
+
 Or use Docker Compose:
 
 ```bash
@@ -33,6 +36,24 @@ docker compose up
 ```bash
 curl http://localhost:8000/health
 ```
+
+## Render Free Plan
+
+The repository includes a `render.yaml` Blueprint:
+
+```yaml
+services:
+  - type: web
+    name: bird-mach
+    runtime: docker
+    plan: free
+    autoDeployTrigger: commit
+    healthCheckPath: /health
+```
+
+To deploy it, connect the GitHub repository to Render and create a new
+Blueprint from the repo. Render provides HTTPS, which is required by browser
+microphone and tab-audio capture outside `localhost`.
 
 ## Production Tips
 
