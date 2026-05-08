@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Mach - 3D audio map{% endblock %}
+{% block meta_description %}Upload any audio and generate an interactive 3D UMAP embedding for music, speech, field recordings, and more.{% endblock %}
+{% block nav_index %}active{% endblock %}
+
+{% block content %}
+<section class="hero hero-grid">
+  <div>
+    <span class="eyebrow">UMAP / 3D embedding</span>
+    <h1>See what your audio looks like.</h1>
+    <p class="lede">Drop an audio file, get an interactive 3D map where every point is a short slice of sound. For real-time visuals while audio plays, jump to <a href="/live">Live mode</a>.</p>
+    <div class="hero-actions">
+      <a class="btn" href="/live">Open live mode</a>
+      <a class="btn ghost" href="#uploadForm">Analyze a file</a>
+    </div>
+  </div>
+  <div class="audio-preview" aria-hidden="true">
+    <div class="preview-orbit"></div>
+    <div class="preview-bars">
+      <span style="--h: 42%"></span>
+      <span style="--h: 78%"></span>
+      <span style="--h: 58%"></span>
+      <span style="--h: 92%"></span>
+      <span style="--h: 64%"></span>
+      <span style="--h: 36%"></span>
+      <span style="--h: 72%"></span>
+      <span style="--h: 48%"></span>
+    </div>
+    <div class="preview-points">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<div class="card">
+  <form id="uploadForm" action="/visualize" method="post" enctype="multipart/form-data">
+    <label for="audio">Audio source</label>
+    <div id="dropZone" class="dropzone">
+      <div class="dz-title">Drag &amp; drop an audio file</div>
+      <div class="dz-hint">or click to browse \xb7 wav, mp3, flac, ogg, m4a, aac</div>
+      <input id="audio" name="audio" type="file" accept="audio/*" hidden />
+      <div id="fileName" class="dz-file"></div>
+    </div>
+
+    <div class="dropzone-sep">\u2014 or paste a URL \u2014</div>
+    <input id="audioUrl" name="audio_url" type="url" placeholder="https://example.com/audio.wav" />
+
+    <div class="grid-2" style="margin-top: 6px;">
+      <div>
+        <label for="color_by">Color by</label>
+        <select id="color_by" name="color_by">
+          <option value="time" selected>Time</option>
+          <option value="energy">Energy</option>
+        </select>
+      </div>
+      <div>
+        <label for="stride">Stride (downsample frames)</label>
+        <input id="stride" name="stride" type="number" min="1" max="50" step="1" value="2" />
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <label for="n_neighbors">UMAP n_neighbors</label>
+        <input id="n_neighbors" name="n_neighbors" type="number" min="2" max="200" step="1" value="15" />
+      </div>
+      <div>
+        <label for="min_dist">UMAP min_dist</label>
+        <input id="min_dist" name="min_dist" type="number" min="0" max="1" step="0.01" value="0.10" />
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div>
+        <label for="dimensions">Dimensions</label>
+        <select id="dimensions" name="dimensions">
+          <option value="3d" selected>3D (UMAP)</option>
+          <option value="2d">2D (UMAP)</option>
+        </select>
+      </div>
+      <div>
+        <label for="colorscale">Colorscale</label>
+        <select id="colorscale" name="colorscale">
+          <option value="Turbo" selected>Turbo</option>
+          <option value="Viridis">Viridis</option>
+          <option value="Plasma">Plasma</option>
+          <option value="Inferno">Inferno</option>
+          <option value="Magma">Magma</option>
+          <option value="Cividis">Cividis</option>
+          <option value="Hot">Hot</option>
+          <option value="Electric">Electric</option>
+        </select>
+      </div>
+      <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:10px; padding-bottom:2px;">
+        <label class="checkline"><input type="checkbox" name="multi_view" value="1" checked /> Multi-view</label>
+        <label class="checkline"><input type="checkbox" name="connect" value="1" /> Connect points</label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button type="submit" class="btn full">Generate visualization</button>
+    </div>
+
+    <p class="note">Tip: if the plot feels slow, increase <code>stride</code> or drop <code>n_neighbors</code>.</p>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/index.js" defer></script>
+{% endblock %}

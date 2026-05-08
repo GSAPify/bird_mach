@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0d18" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="{% block meta_description %}Mach: interactive 3D audio embeddings and live spectral visualization.{% endblock %}" />
+    <title>{% block title %}Mach{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg" />
+    <link rel="stylesheet" href="/static/css/theme.css" />
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Mach</span>
+      </a>
+      <nav class="topnav">
+        <a href="/" class="{% block nav_index %}{% endblock %}">Embed</a>
+        <a href="/live" class="{% block nav_live %}{% endblock %}">Live</a>
+        <a href="https://github.com/GSAPify/bird_mach" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="foot">
+      <span>Mach &middot; audio intelligence</span>
+      <span class="foot-sep">&middot;</span>
+      <a href="/health">health</a>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

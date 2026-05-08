@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Mach &mdash; Live audio{% endblock %}
+{% block meta_description %}Real-time waveform, spectrogram, and 3D point cloud driven by your audio.{% endblock %}
+{% block nav_live %}active{% endblock %}
+
+{% block head %}
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<section class="hero hero-live">
+  <span class="eyebrow">Live spectral</span>
+  <h1>Hear it. See it. In real time.</h1>
+  <p class="lede">Visualize a file, your microphone, or another browser tab as it plays. Waveform, frequency bands, scrolling spectrogram, and an audio-reactive 3D cloud, all in one view.</p>
+</section>
+
+<div class="workbench live-workbench">
+  <section class="card control-panel live-controls">
+    <div class="panel-kicker">Input</div>
+    <label for="fileInput">Audio file</label>
+    <div id="fileDrop" class="dropzone">
+      <div class="dz-title">Drop or pick an audio file</div>
+      <div class="dz-hint">wav, mp3, flac, ogg, m4a, aac</div>
+      <input id="fileInput" type="file" accept="audio/*" hidden />
+      <div id="fileLabel" class="dz-file"></div>
+    </div>
+    <audio id="player" class="player" controls preload="metadata"></audio>
+
+    <div class="btn-row">
+      <button id="startFileBtn" class="btn">Play file</button>
+      <button id="startMicBtn" class="btn warm">Mic</button>
+      <button id="startScreenBtn" class="btn ghost">Tab audio</button>
+      <button id="stopBtn" class="btn danger" disabled>Stop</button>
+      <button id="clearBtn" class="btn ghost">Clear</button>
+    </div>
+    <div style="margin-top: 12px;">
+      <span id="status" class="status"><span class="dot"></span><span id="statusText">Idle. Load a file or hit Mic to begin.</span></span>
+    </div>
+    <div class="level-meter" aria-hidden="true"><div id="levelFill" class="level-fill"></div></div>
+
+    <div class="panel-kicker settings-kicker">Motion</div>
+    <label for="motion">Motion model</label>
+    <select id="motion">
+      <option value="loop" selected>Loop (lissajous)</option>
+      <option value="cloud">Cloud (spectral projection)</option>
+    </select>
+
+    <div class="grid-2 compact-grid">
+      <div>
+        <label for="loopSpeed">Loop speed (Hz)</label>
+        <input id="loopSpeed" type="number" min="0.05" max="2" step="0.05" value="0.35" />
+      </div>
+      <div>
+        <label for="colorBy">Color by</label>
+        <select id="colorBy">
+          <option value="time" selected>Time</option>
+          <option value="energy">Energy</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-2 compact-grid">
+      <div>
+        <label for="maxPoints">Max trail points</label>
+        <input id="maxPoints" type="number" min="200" max="10000" step="100" value="2500" />
+      </div>
+      <div>
+        <label for="nBins">Bins for cloud</label>
+        <input id="nBins" type="number" min="32" max="512" step="16" value="128" />
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="label">RMS</div><div class="value" id="statRms">--</div></div>
+      <div class="metric"><div class="label">Peak</div><div class="value" id="statPeak">--</div></div>
+      <div class="metric"><div class="label">Centroid</div><div class="value" id="statCentroid">--</div></div>
+      <div class="metric"><div class="label">Time</div><div class="value" id="statTime">--</div></div>
+    </div>
+
+    <p class="note">Tip: lower <code>max points</code> or <code>bins</code> if it gets choppy. Mic and tab audio require <code>https</code> or <code>localhost</code>.</p>
+  </section>
+
+  <section class="visual-stack">
+    <div class="card cloud-card" id="cloudCard">
+      <div class="card-title">
+        <span>3D bubbles <small>loop / cloud</small></span>
+        <button id="fullscreenBtn" class="btn ghost" style="padding: 6px 12px; font-size: 12px;">Fullscreen</button>
+      </div>
+      <div id="cloud3d" class="plot3d" style="height: 560px;"></div>
+    </div>
+
+    <div class="canvas-grid">
+      <div class="card">
+        <div class="card-title">Frequency bands <small>7 logarithmic bands</small></div>
+        <canvas id="bandsCanvas" class="viz-canvas" width="1100" height="120"></canvas>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Waveform <small>time domain</small></div>
+        <canvas id="waveCanvas" class="viz-canvas" width="1100" height="160"></canvas>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Spectrogram <small>scrolling</small></div>
+        <canvas id="specCanvas" class="viz-canvas" width="1100" height="280"></canvas>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/live.js" defer></script>
+{% endblock %}

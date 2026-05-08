@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block meta_description %}Mach analysis result.{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="result-head">
+    <div>
+      <h2 style="font-size: 22px;">{{ title }}</h2>
+      <div class="result-meta">{{ summary }}</div>
+    </div>
+    <div class="btn-row" style="margin-top: 0;">
+      <a class="btn ghost" href="/">New analysis</a>
+      <a class="btn" href="/live">Live mode</a>
+    </div>
+  </div>
+</div>
+
+{% for section_title, section_html in sections %}
+<div class="result-section">
+  <div class="section-title">{{ section_title }}</div>
+  <div class="plot">{{ section_html | safe }}</div>
+</div>
+{% endfor %}
+{% endblock %}
