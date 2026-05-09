@@ -126,6 +126,12 @@ async def visualize(
         logger.warning("No audio provided (neither file nor URL)")
         return visualization_error("No audio received. Upload a file or provide a URL.")
 
+    if not audio_extension_allowed(filename):
+        logger.warning("Unsupported audio extension: %s", filename)
+        return visualization_error(
+            f"Unsupported audio format. Supported formats: {supported_formats_label()}."
+        )
+
     logger.info("Processing: %s (%d bytes)", filename, len(raw))
 
     stride = max(1, min(stride, 50))
