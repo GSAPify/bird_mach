@@ -57,6 +57,18 @@ def supported_formats_label() -> str:
     return ", ".join(ext.lstrip(".") for ext in sorted(SUPPORTED_AUDIO_EXTENSIONS))
 
 
+def upload_limit_bytes(cfg: AppConfig) -> int:
+    return cfg.max_upload_mb * 1024 * 1024
+
+
+def audio_extension_allowed(filename: str) -> bool:
+    return Path(filename).suffix.lower() in SUPPORTED_AUDIO_EXTENSIONS
+
+
+def visualization_error(message: str, status_code: int = 400) -> HTMLResponse:
+    return HTMLResponse(html.escape(message), status_code=status_code)
+
+
 def upload_page_context(request: Request) -> dict:
     cfg = current_config()
     return {
@@ -108,17 +120,11 @@ async def visualize(
             raw, filename = fetch_audio_from_url(audio_url.strip())
         except Exception as e:
             logger.warning("URL fetch failed: %s", e)
-            return HTMLResponse(
-                f"Failed to fetch audio from URL: {html.escape(str(e))}",
-                status_code=400,
-            )
+            return visualization_error(f"Failed to fetch audio from URL: {e}")
 
     if not raw:
         logger.warning("No audio provided (neither file nor URL)")
-        return HTMLResponse(
-            "No audio received. Upload a file or provide a URL.",
-            status_code=400,
-        )
+        return visualization_error("No audio received. Upload a file or provide a URL.")
 
     logger.info("Processing: %s (%d bytes)", filename, len(raw))
 
