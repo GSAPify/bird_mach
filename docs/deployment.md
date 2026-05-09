@@ -22,6 +22,7 @@ docker compose up
 
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `ENVIRONMENT` | `development` | Runtime environment label exposed by `/health` |
 | `HOST` | `0.0.0.0` | Bind address |
 | `PORT` | `8000` | Server port |
 | `LOG_LEVEL` | `INFO` | Logging level |
