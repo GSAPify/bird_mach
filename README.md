@@ -46,6 +46,11 @@ docker compose up
 This repo includes `render.yaml` for Render's free web-service plan. Connect
 the GitHub repository in Render, create a Blueprint from the repo, and Render
 will build the Docker image, serve `bird_mach.webapp:app`, and check `/health`.
+Once the service is live, verify it with:
+
+```bash
+BASE_URL=https://your-render-service.onrender.com make smoke
+```
 
 ## Documentation
 
