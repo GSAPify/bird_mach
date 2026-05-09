@@ -40,4 +40,10 @@ app.include_router(web_router)
 @app.get("/health")
 def health() -> dict:
     """Lightweight health-check for uptime monitors and load balancers."""
-    return {"status": "ok", "version": app.version}
+    return {
+        "status": "ok",
+        "service": APP_NAME,
+        "version": app.version,
+        "environment": config.environment,
+        "max_upload_mb": config.max_upload_mb,
+    }
