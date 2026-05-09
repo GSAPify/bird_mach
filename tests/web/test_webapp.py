@@ -69,6 +69,21 @@ def test_visualize_rejects_unsupported_upload_extension(client: TestClient) -> N
     assert "Unsupported audio format" in response.text
 
 
+def test_visualize_rejects_oversized_upload(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("MAX_UPLOAD_MB", "1")
+    payload = b"0" * (1024 * 1024 + 1)
+
+    response = client.post(
+        "/visualize",
+        files={"audio": ("large.wav", payload, "audio/wav")},
+    )
+
+    assert response.status_code == 413
+    assert "exceeds the 1 MB limit" in response.text
+
+
 def test_favicon_is_served(client: TestClient) -> None:
     response = client.get("/static/img/favicon.svg")
 
