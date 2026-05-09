@@ -59,6 +59,16 @@ def test_visualize_rejects_empty_submission(client: TestClient) -> None:
     assert "No audio received" in response.text
 
 
+def test_visualize_rejects_unsupported_upload_extension(client: TestClient) -> None:
+    response = client.post(
+        "/visualize",
+        files={"audio": ("notes.txt", b"not audio", "text/plain")},
+    )
+
+    assert response.status_code == 400
+    assert "Unsupported audio format" in response.text
+
+
 def test_favicon_is_served(client: TestClient) -> None:
     response = client.get("/static/img/favicon.svg")
 
