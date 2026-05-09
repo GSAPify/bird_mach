@@ -10,8 +10,10 @@ import urllib.request
 from pathlib import Path
 from urllib.parse import urlparse
 
+from bird_mach.constants import APP_VERSION
+
 MAX_REMOTE_BYTES = 50 * 1024 * 1024  # 50 MB
-USER_AGENT = "Mach/0.6 (+https://github.com/GSAPify/bird_mach)"
+USER_AGENT = f"Mach/{APP_VERSION} (+https://github.com/GSAPify/bird_mach)"
 REQUEST_TIMEOUT_S = 30
 
 
