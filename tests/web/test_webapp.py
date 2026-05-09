@@ -17,6 +17,9 @@ def test_health_endpoint(client: TestClient) -> None:
 
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
+    assert response.json()["service"] == "Mach"
+    assert response.json()["version"]
+    assert response.json()["max_upload_mb"] == 50
 
 
 def test_home_page_links_static_assets(client: TestClient) -> None:
