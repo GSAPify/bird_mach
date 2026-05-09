@@ -52,6 +52,15 @@ def test_live_static_script_contains_audio_lifecycle_guards(client: TestClient) 
     assert "disconnectCurrentSource" in response.text
 
 
+def test_upload_static_script_contains_preflight_guards(client: TestClient) -> None:
+    response = client.get("/static/js/index.js")
+
+    assert response.status_code == 200
+    assert "maxUploadMb" in response.text
+    assert "supportedFormats" in response.text
+    assert "is-invalid" in response.text
+
+
 def test_visualize_rejects_empty_submission(client: TestClient) -> None:
     response = client.post("/visualize", data={})
 
