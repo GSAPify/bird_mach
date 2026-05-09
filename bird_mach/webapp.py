@@ -15,17 +15,19 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from bird_mach.config import AppConfig
 from bird_mach.constants import APP_NAME, APP_VERSION
 from bird_mach.web import router as web_router
 from bird_mach.web import static_dir
 
 logger = logging.getLogger(__name__)
 
+config = AppConfig.from_env()
 app = FastAPI(title=APP_NAME, version=APP_VERSION)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=list(config.cors_origins),
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
