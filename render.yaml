@@ -5,3 +5,12 @@ services:
     plan: free
     autoDeployTrigger: commit
     healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: MAX_UPLOAD_MB
+        value: "50"
+      - key: CORS_ORIGINS
+        value: "*"
