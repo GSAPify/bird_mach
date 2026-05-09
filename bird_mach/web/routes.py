@@ -15,6 +15,8 @@ from fastapi import APIRouter, File, Form, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+from bird_mach.config import AppConfig
+from bird_mach.constants import SUPPORTED_AUDIO_EXTENSIONS
 from bird_mach.embedding import (
     DEFAULT_AUDIO_FEATURE_CONFIG,
     DEFAULT_UMAP_CONFIG,
@@ -46,6 +48,24 @@ templates = Jinja2Templates(directory=str(templates_dir))
 router = APIRouter()
 
 
+def current_config() -> AppConfig:
+    """Resolve request-time configuration so tests and deploy env stay aligned."""
+    return AppConfig.from_env()
+
+
+def supported_formats_label() -> str:
+    return ", ".join(ext.lstrip(".") for ext in sorted(SUPPORTED_AUDIO_EXTENSIONS))
+
+
+def upload_page_context(request: Request) -> dict:
+    cfg = current_config()
+    return {
+        "request": request,
+        "max_upload_mb": cfg.max_upload_mb,
+        "supported_formats": supported_formats_label(),
+    }
+
+
 def normalize_color_by(value: str) -> ColorBy:
     """Coerce free-form form input to the supported color-by values."""
     if value == "energy":
@@ -55,7 +75,7 @@ def normalize_color_by(value: str) -> ColorBy:
 
 @router.get("/", response_class=HTMLResponse)
 def index(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse(request, "index.html")
+    return templates.TemplateResponse(request, "index.html", upload_page_context(request))
 
 
 @router.get("/live", response_class=HTMLResponse)
