@@ -1,4 +1,4 @@
-.PHONY: dev lint format typecheck clean help
+.PHONY: dev lint format typecheck smoke clean help
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -20,6 +20,9 @@ test: ## Run the test suite
 
 serve: ## Start production server
 	uvicorn bird_mach.webapp:app --host 0.0.0.0 --port 8000
+
+smoke: ## Check a running app health endpoint
+	./scripts/health_check.sh
 
 clean: ## Remove caches and build artifacts
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
