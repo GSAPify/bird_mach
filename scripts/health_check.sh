@@ -1,2 +1,5 @@
 #!/bin/bash
-curl -sf http://localhost:8000/health || exit 1
+set -euo pipefail
+
+BASE_URL="${BASE_URL:-http://localhost:8000}"
+curl -sf "${BASE_URL%/}/health" >/dev/null
