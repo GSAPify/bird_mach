@@ -39,6 +39,7 @@ class AppConfig:
 
     host: str = "0.0.0.0"
     port: int = 8000
+    environment: str = "development"
     log_level: str = "INFO"
     log_json: bool = False
     max_upload_mb: int = 50
@@ -51,6 +52,7 @@ class AppConfig:
         return cls(
             host=os.getenv("HOST", "0.0.0.0"),
             port=_env_int("PORT", 8000, minimum=1),
+            environment=os.getenv("ENVIRONMENT", "development"),
             log_level=os.getenv("LOG_LEVEL", "INFO"),
             log_json=_env_bool("LOG_JSON"),
             max_upload_mb=_env_int("MAX_UPLOAD_MB", 50, minimum=1),
