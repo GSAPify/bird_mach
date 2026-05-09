@@ -29,6 +29,8 @@ def test_home_page_links_static_assets(client: TestClient) -> None:
     assert 'href="/static/css/theme.css"' in response.text
     assert 'src="/static/js/index.js"' in response.text
     assert 'action="/visualize"' in response.text
+    assert "up to 50 MB" in response.text
+    assert "aac, flac, m4a, mp3, ogg, wav" in response.text
 
 
 def test_live_page_has_browser_audio_controls(client: TestClient) -> None:
