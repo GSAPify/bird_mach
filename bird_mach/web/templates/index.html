@@ -39,7 +39,7 @@
     <label for="audio">Audio source</label>
     <div id="dropZone" class="dropzone">
       <div class="dz-title">Drag &amp; drop an audio file</div>
-      <div class="dz-hint">or click to browse \xb7 wav, mp3, flac, ogg, m4a, aac</div>
+      <div class="dz-hint">or click to browse &middot; {{ supported_formats }} &middot; up to {{ max_upload_mb }} MB</div>
       <input id="audio" name="audio" type="file" accept="audio/*" hidden />
       <div id="fileName" class="dz-file"></div>
     </div>
@@ -103,7 +103,7 @@
       <button type="submit" class="btn full">Generate visualization</button>
     </div>
 
-    <p class="note">Tip: if the plot feels slow, increase <code>stride</code> or drop <code>n_neighbors</code>.</p>
+    <p class="note">Tip: if the plot feels slow, increase <code>stride</code> or drop <code>n_neighbors</code>. Hosted uploads are capped at {{ max_upload_mb }} MB.</p>
   </form>
 </div>
 {% endblock %}
