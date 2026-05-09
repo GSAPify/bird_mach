@@ -126,6 +126,14 @@ async def visualize(
         logger.warning("No audio provided (neither file nor URL)")
         return visualization_error("No audio received. Upload a file or provide a URL.")
 
+    cfg = current_config()
+    if len(raw) > upload_limit_bytes(cfg):
+        logger.warning("Upload too large: %s (%d bytes)", filename, len(raw))
+        return visualization_error(
+            f"Audio upload exceeds the {cfg.max_upload_mb} MB limit.",
+            status_code=413,
+        )
+
     if not audio_extension_allowed(filename):
         logger.warning("Unsupported audio extension: %s", filename)
         return visualization_error(
