@@ -50,11 +50,24 @@ services:
     plan: free
     autoDeployTrigger: commit
     healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: MAX_UPLOAD_MB
+        value: "50"
 ```
 
 To deploy it, connect the GitHub repository to Render and create a new
 Blueprint from the repo. Render provides HTTPS, which is required by browser
 microphone and tab-audio capture outside `localhost`.
+
+After Render marks the service live, point the smoke check at the public URL:
+
+```bash
+BASE_URL=https://your-render-service.onrender.com make smoke
+```
 
 ## Production Tips
 
