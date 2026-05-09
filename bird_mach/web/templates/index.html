@@ -35,7 +35,14 @@
 </section>
 
 <div class="card">
-  <form id="uploadForm" action="/visualize" method="post" enctype="multipart/form-data">
+  <form
+    id="uploadForm"
+    action="/visualize"
+    method="post"
+    enctype="multipart/form-data"
+    data-max-upload-mb="{{ max_upload_mb }}"
+    data-supported-formats="{{ supported_formats }}"
+  >
     <label for="audio">Audio source</label>
     <div id="dropZone" class="dropzone">
       <div class="dz-title">Drag &amp; drop an audio file</div>
