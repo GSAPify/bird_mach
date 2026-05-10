@@ -32,6 +32,11 @@
       <span>Mach &middot; audio intelligence</span>
       <span class="foot-sep">&middot;</span>
       <a href="/health">health</a>
+      {% set live_url = render_external_url() %}
+      {% if live_url %}
+      <span class="foot-sep">&middot;</span>
+      <a href="{{ live_url }}" target="_blank" rel="noopener">live site</a>
+      {% endif %}
     </footer>
 
     {% block scripts %}{% endblock %}

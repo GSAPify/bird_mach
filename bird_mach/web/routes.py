@@ -53,6 +53,13 @@ def current_config() -> AppConfig:
     return AppConfig.from_env()
 
 
+def render_external_url() -> str:
+    return current_config().render_external_url
+
+
+templates.env.globals["render_external_url"] = render_external_url
+
+
 def supported_formats_label() -> str:
     return ", ".join(ext.lstrip(".") for ext in sorted(SUPPORTED_AUDIO_EXTENSIONS))
 
