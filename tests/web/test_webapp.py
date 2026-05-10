@@ -41,6 +41,18 @@ def test_home_page_links_static_assets(client: TestClient) -> None:
     assert "aac, flac, m4a, mp3, ogg, wav" in response.text
 
 
+def test_home_page_links_configured_live_site(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("RENDER_EXTERNAL_URL", "https://bird-mach.onrender.com/")
+
+    response = client.get("/")
+
+    assert response.status_code == 200
+    assert 'href="https://bird-mach.onrender.com"' in response.text
+    assert "live site" in response.text
+
+
 def test_live_page_has_browser_audio_controls(client: TestClient) -> None:
     response = client.get("/live")
 
