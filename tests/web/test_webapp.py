@@ -22,6 +22,14 @@ def test_health_endpoint(client: TestClient) -> None:
     assert response.json()["max_upload_mb"] == 50
 
 
+def test_security_headers_are_set(client: TestClient) -> None:
+    response = client.get("/")
+
+    assert response.headers["X-Content-Type-Options"] == "nosniff"
+    assert response.headers["Referrer-Policy"] == "strict-origin-when-cross-origin"
+    assert response.headers["X-Frame-Options"] == "DENY"
+
+
 def test_home_page_links_static_assets(client: TestClient) -> None:
     response = client.get("/")
 
