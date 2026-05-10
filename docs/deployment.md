@@ -31,6 +31,7 @@ docker compose up
 | `MAX_AUDIO_DURATION_S` | `600` | Max audio duration |
 | `CORS_ORIGINS` | `*` | Comma-separated allowed origins |
 | `WORKERS` | `1` | Uvicorn worker count |
+| `RENDER_EXTERNAL_URL` | empty | Public Render URL shown in the footer when configured |
 
 ## Health Check
 
@@ -68,6 +69,8 @@ After Render marks the service live, point the smoke check at the public URL:
 ```bash
 BASE_URL=https://your-render-service.onrender.com make smoke
 ```
+
+For ongoing operations, see the [Render runbook](runbooks/render.md).
 
 ## Production Tips
 

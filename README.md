@@ -64,6 +64,7 @@ See [docs/](docs/) for guides on:
 - [Dashboard](docs/enterprise/dashboard.md)
 - [Reporting](docs/enterprise/reporting.md)
 - [Deployment](docs/deployment.md)
+- [Render Runbook](docs/runbooks/render.md)
 
 ## License
 
