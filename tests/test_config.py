@@ -10,17 +10,20 @@ class TestAppConfig:
         assert cfg.environment == "development"
         assert cfg.log_level == "INFO"
         assert cfg.max_upload_mb == 50
+        assert cfg.render_external_url == ""
 
     def test_from_env(self, monkeypatch):
         monkeypatch.setenv("PORT", "9000")
         monkeypatch.setenv("ENVIRONMENT", "production")
         monkeypatch.setenv("LOG_LEVEL", "DEBUG")
         monkeypatch.setenv("LOG_JSON", "true")
+        monkeypatch.setenv("RENDER_EXTERNAL_URL", " https://bird-mach.onrender.com/ ")
         cfg = AppConfig.from_env()
         assert cfg.port == 9000
         assert cfg.environment == "production"
         assert cfg.log_level == "DEBUG"
         assert cfg.log_json is True
+        assert cfg.render_external_url == "https://bird-mach.onrender.com"
 
     def test_cors_origins_split(self, monkeypatch):
         monkeypatch.setenv("CORS_ORIGINS", "http://a.com, http://b.com")
