@@ -76,6 +76,10 @@ def visualization_error(message: str, status_code: int = 400) -> HTMLResponse:
     return HTMLResponse(html.escape(message), status_code=status_code)
 
 
+def embedding_section_title(use_2d: bool) -> str:
+    return "2D embedding (UMAP)" if use_2d else "3D embedding (UMAP)"
+
+
 def upload_page_context(request: Request) -> dict:
     cfg = current_config()
     return {
@@ -236,7 +240,7 @@ async def visualize(
         )
 
         sections = [
-            ("3D embedding (UMAP)", embedding_html),
+            (embedding_section_title(use_2d), embedding_html),
             ("Waveform", waveform_html),
             ("Log-mel spectrogram", mel_html),
             ("Energy", energy_html),
