@@ -4,6 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from bird_mach.web.audio_fetch import fetch_audio_from_url
+from bird_mach.web.routes import embedding_section_title
 from bird_mach.webapp import app
 
 
@@ -79,6 +80,11 @@ def test_upload_static_script_contains_preflight_guards(client: TestClient) -> N
     assert "maxUploadMb" in response.text
     assert "supportedFormats" in response.text
     assert "is-invalid" in response.text
+
+
+def test_embedding_section_title_matches_dimension() -> None:
+    assert embedding_section_title(use_2d=True) == "2D embedding (UMAP)"
+    assert embedding_section_title(use_2d=False) == "3D embedding (UMAP)"
 
 
 def test_visualize_rejects_empty_submission(client: TestClient) -> None:
