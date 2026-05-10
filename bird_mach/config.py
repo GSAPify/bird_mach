@@ -46,6 +46,7 @@ class AppConfig:
     max_audio_duration_s: int = 600
     cors_origins: tuple[str, ...] = ("*",)
     workers: int = 1
+    render_external_url: str = ""
 
     @classmethod
     def from_env(cls) -> AppConfig:
@@ -59,4 +60,5 @@ class AppConfig:
             max_audio_duration_s=_env_int("MAX_AUDIO_DURATION_S", 600, minimum=1),
             cors_origins=_env_csv("CORS_ORIGINS", "*"),
             workers=_env_int("WORKERS", 1, minimum=1),
+            render_external_url=os.getenv("RENDER_EXTERNAL_URL", "").strip().rstrip("/"),
         )
