@@ -783,7 +783,24 @@ a:focus-visible,
   overflow: hidden;
   isolation: isolate;
 }
-.dropzone:hover { border-color: rgba(52, 211, 153, 0.55); background: rgba(52, 211, 153, 0.05); }
+.dropzone:hover {
+  border-color: rgba(52, 211, 153, 0.7);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(52, 211, 153, 0.16), transparent 60%),
+    var(--glass-bg-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--glass-highlight-strong), 0 18px 40px rgba(52, 211, 153, 0.18);
+}
+.dropzone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.06) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform .8s ease;
+  pointer-events: none;
+}
+.dropzone:hover::after { transform: translateX(100%); }
 .dropzone.is-active { border-color: var(--accent-2); background: rgba(246, 211, 101, 0.08); transform: translateY(-1px); }
 .dropzone.is-invalid { border-color: rgba(251, 113, 133, 0.7); background: rgba(251, 113, 133, 0.08); }
 .dropzone .dz-title { color: var(--text); font-weight: 600; }
