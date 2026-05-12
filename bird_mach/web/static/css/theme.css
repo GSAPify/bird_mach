@@ -140,6 +140,25 @@ p { margin: 0 0 12px; color: var(--text-dim); }
   backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
   -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
   border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight-strong), 0 14px 30px rgba(0, 0, 0, 0.32);
+}
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(52, 211, 153, 0.45),
+    rgba(56, 189, 248, 0.45),
+    rgba(246, 211, 101, 0.45),
+    transparent
+  );
+  opacity: 0.55;
+  pointer-events: none;
 }
 
 .brand {
