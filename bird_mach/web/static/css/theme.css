@@ -723,11 +723,21 @@ select {
 .btn.full { width: 100%; }
 .btn.warm { background: var(--gradient-warm); box-shadow: 0 8px 24px rgba(255, 159, 122, 0.22); }
 .btn.ghost {
-  background: rgba(255, 255, 255, 0.06);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    var(--glass-bg);
   color: var(--text);
-  box-shadow: inset 0 0 0 1px var(--border-strong);
+  border-color: var(--glass-border-strong);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-highlight), 0 6px 16px rgba(0, 0, 0, 0.22);
 }
-.btn.ghost:hover { background: rgba(255, 255, 255, 0.10); color: var(--text); }
+.btn.ghost:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
+    var(--glass-bg-strong);
+  color: var(--text);
+}
 .btn.danger {
   background: linear-gradient(135deg, #ff5577 0%, #ff8a4d 100%);
   color: #1a0a14;
