@@ -60,6 +60,7 @@ html, body {
 }
 
 body {
+  position: relative;
   min-height: 100vh;
   background:
     linear-gradient(135deg, rgba(52, 211, 153, 0.12), transparent 35%),
@@ -68,6 +69,22 @@ body {
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 84px),
     var(--bg);
   background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Floating ambient orbs that the frosted surfaces refract through. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -10vmax;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(38vmax 32vmax at 12% 18%, rgba(52, 211, 153, 0.32), transparent 60%),
+    radial-gradient(32vmax 28vmax at 88% 24%, rgba(56, 189, 248, 0.26), transparent 62%),
+    radial-gradient(36vmax 30vmax at 72% 86%, rgba(246, 211, 101, 0.22), transparent 64%),
+    radial-gradient(28vmax 24vmax at 18% 88%, rgba(251, 113, 133, 0.20), transparent 66%);
+  filter: blur(8px);
 }
 
 a {
