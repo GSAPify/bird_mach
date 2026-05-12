@@ -419,14 +419,37 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 }
 
 .foot {
+  position: relative;
   text-align: center;
   color: var(--text-mute);
   font-size: 12px;
-  padding: 24px 16px 36px;
+  padding: 22px 16px 34px;
+  margin-top: 20px;
+  background: var(--glass-bg-soft);
+  border-top: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-highlight);
+}
+.foot::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: -1px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(52, 211, 153, 0.45),
+    rgba(56, 189, 248, 0.45),
+    transparent
+  );
+  opacity: 0.6;
 }
 .foot-sep { margin: 0 6px; }
-.foot a { color: var(--text-mute); }
-.foot a:hover { color: var(--text-dim); }
+.foot a { color: var(--text-mute); transition: color .15s ease; }
+.foot a:hover { color: var(--text); }
 
 /* ── Glass utilities ─────────────────────────────────────── */
 
