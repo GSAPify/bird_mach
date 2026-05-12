@@ -922,10 +922,16 @@ a:focus-visible,
   margin-top: 12px;
 }
 .note code {
-  background: rgba(255, 255, 255, 0.06);
-  padding: 1px 6px;
-  border-radius: 6px;
-  color: var(--text-dim);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+    var(--glass-bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 11.5px;
+  box-shadow: var(--glass-highlight);
 }
 
 /* ── Live page bits ──────────────────────────────────────── */
