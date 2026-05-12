@@ -809,7 +809,13 @@ a:focus-visible,
   transform: translateY(-1px);
   box-shadow: var(--glass-highlight-strong), 0 22px 50px rgba(246, 211, 101, 0.24);
 }
-.dropzone.is-invalid { border-color: rgba(251, 113, 133, 0.7); background: rgba(251, 113, 133, 0.08); }
+.dropzone.is-invalid {
+  border-color: rgba(251, 113, 133, 0.7);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(251, 113, 133, 0.18), transparent 60%),
+    var(--glass-bg-strong);
+  box-shadow: var(--glass-highlight), 0 12px 28px rgba(251, 113, 133, 0.22);
+}
 .dropzone .dz-title { color: var(--text); font-weight: 600; }
 .dropzone .dz-hint { color: var(--text-mute); font-size: 13px; margin-top: 4px; }
 .dropzone .dz-file { margin-top: 10px; color: var(--accent-2); font-weight: 600; word-break: break-all; }
