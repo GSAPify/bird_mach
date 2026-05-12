@@ -29,6 +29,10 @@
   --glass-bg: rgba(20, 32, 30, 0.42);
   --glass-bg-strong: rgba(24, 38, 36, 0.62);
   --glass-bg-soft: rgba(20, 32, 30, 0.24);
+  --glass-blur: 18px;
+  --glass-blur-strong: 28px;
+  --glass-saturate: 130%;
+  --glass-saturate-strong: 160%;
 }
 
 * { box-sizing: border-box; }
