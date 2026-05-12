@@ -421,6 +421,14 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 }
 .card > * { position: relative; z-index: 1; }
 .card + .card { margin-top: 14px; }
+.card {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--glass-shadow), var(--glass-highlight-strong), 0 0 0 1px var(--glass-border-strong) inset;
+  border-color: var(--glass-border-strong);
+}
 .card-title {
   font-weight: 700;
   font-size: 14px;
