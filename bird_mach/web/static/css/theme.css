@@ -221,6 +221,18 @@ p { margin: 0 0 12px; color: var(--text-dim); }
   border-color: rgba(255, 255, 255, 0.35);
   box-shadow: 0 6px 18px rgba(246, 211, 101, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
+.topnav a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.18) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity .25s ease, transform .6s ease;
+  transform: translateX(-30%);
+  pointer-events: none;
+}
+.topnav a:hover::after { opacity: 1; transform: translateX(30%); }
 
 /* ── Layout ──────────────────────────────────────────────── */
 
