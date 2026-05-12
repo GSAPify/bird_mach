@@ -951,10 +951,17 @@ a:focus-visible,
 }
 
 .plot3d {
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: #030611;
+  position: relative;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border-strong);
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(56, 189, 248, 0.10), transparent 60%),
+    #030611;
   overflow: hidden;
+  box-shadow:
+    var(--glass-highlight-strong),
+    inset 0 0 30px rgba(52, 211, 153, 0.06),
+    0 18px 40px rgba(0, 0, 0, 0.4);
 }
 .plot-fallback {
   min-height: 180px;
