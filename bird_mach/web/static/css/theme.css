@@ -371,6 +371,17 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 .foot a { color: var(--text-mute); }
 .foot a:hover { color: var(--text-dim); }
 
+/* ── Glass utilities ─────────────────────────────────────── */
+
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow-soft), var(--glass-highlight);
+}
+
 /* ── Cards ───────────────────────────────────────────────── */
 
 .card {
