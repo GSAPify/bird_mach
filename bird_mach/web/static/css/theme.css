@@ -362,12 +362,24 @@ p { margin: 0 0 12px; color: var(--text-dim); }
   align-items: end;
 }
 .preview-bars span {
+  position: relative;
   display: block;
   min-height: 18px;
   height: var(--h);
-  border-radius: 5px 5px 0 0;
+  border-radius: 6px 6px 0 0;
   background: linear-gradient(180deg, #f6d365, #34d399 54%, #38bdf8);
-  box-shadow: 0 0 20px rgba(52, 211, 153, 0.16);
+  box-shadow:
+    0 0 20px rgba(52, 211, 153, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -10px 14px rgba(0, 0, 0, 0.18);
+}
+.preview-bars span::after {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 40%;
+  border-radius: 5px 5px 4px 4px / 5px 5px 8px 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0));
 }
 .preview-points span {
   position: absolute;
