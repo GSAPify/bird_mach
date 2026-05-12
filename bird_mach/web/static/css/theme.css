@@ -848,10 +848,15 @@ a:focus-visible,
   gap: 8px;
   font-size: 13px;
   color: var(--text-dim);
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+    var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-highlight);
 }
 .status.is-live { color: #ffe1ec; border-color: rgba(255, 107, 138, 0.40); background: rgba(255, 107, 138, 0.10); }
 .status.is-ok { color: #d6ffe6; border-color: rgba(74, 222, 128, 0.35); background: rgba(74, 222, 128, 0.10); }
