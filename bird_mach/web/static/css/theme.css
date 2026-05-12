@@ -556,8 +556,11 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 }
 .live-controls {
   background:
-    linear-gradient(180deg, rgba(52, 211, 153, 0.07), transparent 38%),
-    var(--panel-strong);
+    linear-gradient(180deg, rgba(52, 211, 153, 0.10), transparent 42%),
+    linear-gradient(160deg, var(--glass-tint-cool), transparent 60%),
+    var(--glass-bg-strong);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-shadow-glow), var(--glass-highlight-strong);
 }
 .visual-stack {
   display: grid;
