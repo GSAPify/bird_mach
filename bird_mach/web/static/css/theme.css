@@ -133,11 +133,13 @@ p { margin: 0 0 12px; color: var(--text-dim); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 22px;
-  background: rgba(7, 16, 15, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  padding: 12px 22px;
+  background:
+    linear-gradient(180deg, rgba(20, 32, 30, 0.55), rgba(8, 14, 16, 0.42)),
+    var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .brand {
