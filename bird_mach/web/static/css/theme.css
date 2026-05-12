@@ -33,6 +33,10 @@
   --glass-blur-strong: 28px;
   --glass-saturate: 130%;
   --glass-saturate-strong: 160%;
+  --glass-border: rgba(238, 246, 239, 0.16);
+  --glass-border-strong: rgba(238, 246, 239, 0.28);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --glass-highlight-strong: inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 * { box-sizing: border-box; }
