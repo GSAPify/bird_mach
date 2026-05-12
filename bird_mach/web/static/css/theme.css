@@ -646,12 +646,15 @@ input:focus, select:focus, textarea:focus {
 }
 select {
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--text-dim) 50%),
-                    linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
-  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
-  background-size: 5px 5px, 5px 5px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--accent-2) 50%),
+    linear-gradient(135deg, var(--accent-2) 50%, transparent 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    linear-gradient(0deg, rgba(8, 14, 18, 0.55), rgba(8, 14, 18, 0.55));
+  background-position: calc(100% - 16px) 52%, calc(100% - 11px) 52%, 0 0, 0 0;
+  background-size: 6px 6px, 6px 6px, auto, auto;
   background-repeat: no-repeat;
-  padding-right: 32px;
+  padding-right: 34px;
 }
 .checkline {
   display: inline-flex;
