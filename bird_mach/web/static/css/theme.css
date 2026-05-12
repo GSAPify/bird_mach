@@ -988,8 +988,24 @@ a:focus-visible,
   isolation: isolate;
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.metric .label { font-size: 11px; color: var(--text-mute); letter-spacing: 0; text-transform: uppercase; }
-.metric .value { font-family: "Cascadia Code", "SF Mono", Menlo, monospace; font-size: 16px; color: var(--text); margin-top: 4px; }
+.metric::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: radial-gradient(120% 80% at 0% 0%, rgba(56, 189, 248, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+.metric:hover {
+  transform: translateY(-1px);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-highlight-strong), 0 12px 28px rgba(0, 0, 0, 0.32);
+}
+.metric:hover::before { opacity: 1; }
+.metric > * { position: relative; z-index: 1; }
+.metric .label { font-size: 11px; color: var(--text-mute); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; }
+.metric .value { font-family: "Cascadia Code", "SF Mono", Menlo, monospace; font-size: 17px; color: var(--text); margin-top: 4px; }
 
 .level-meter {
   position: relative;
