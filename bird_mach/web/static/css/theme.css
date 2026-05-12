@@ -1,11 +1,11 @@
 /* Mach UI theme: compact audio workbench, responsive from phone to desktop. */
 
 :root {
-  --bg: #07100f;
-  --bg-2: #101716;
-  --surface: #111a19;
-  --surface-2: #15211f;
-  --surface-3: #192826;
+  --bg: #050a0d;
+  --bg-2: #0b1416;
+  --surface: #0f1a1c;
+  --surface-2: #142225;
+  --surface-3: #182b2e;
   --panel: rgba(17, 26, 25, 0.9);
   --panel-strong: rgba(21, 33, 31, 0.98);
   --border: rgba(206, 226, 215, 0.13);
