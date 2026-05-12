@@ -24,6 +24,11 @@
   --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   --gradient-accent: linear-gradient(135deg, #34d399 0%, #f6d365 100%);
   --gradient-warm: linear-gradient(135deg, #fb7185 0%, #f59e0b 100%);
+
+  /* Glass surface tokens (frosted layers stacked on the page). */
+  --glass-bg: rgba(20, 32, 30, 0.42);
+  --glass-bg-strong: rgba(24, 38, 36, 0.62);
+  --glass-bg-soft: rgba(20, 32, 30, 0.24);
 }
 
 * { box-sizing: border-box; }
