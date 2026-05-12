@@ -974,8 +974,14 @@ a:focus-visible,
 .player {
   width: 100%;
   margin-top: 12px;
-  border-radius: var(--radius-sm);
-  filter: saturate(0.9);
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight), 0 8px 22px rgba(0, 0, 0, 0.30);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  filter: saturate(0.95);
 }
 
 .metrics {
