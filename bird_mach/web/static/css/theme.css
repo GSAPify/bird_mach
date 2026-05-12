@@ -98,6 +98,36 @@ body::before {
   body::before { animation: none; }
 }
 
+/* Fallback for users who reduce transparency: drop blur, raise opacity. */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-bg: rgba(15, 26, 28, 0.96);
+    --glass-bg-strong: rgba(20, 34, 36, 0.98);
+    --glass-bg-soft: rgba(15, 26, 28, 0.88);
+  }
+  .topbar,
+  .card,
+  .audio-preview,
+  .live-controls,
+  .foot,
+  .dropzone,
+  .glass-panel,
+  .glass-strong,
+  .metric,
+  .player,
+  .checkline,
+  .chip,
+  .status,
+  .panel-kicker,
+  .topnav a,
+  .result-section .plot {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  body::before { display: none; }
+  body::after { display: none; }
+}
+
 /* Subtle film grain to keep gradients from looking plasticky. */
 body::after {
   content: "";
