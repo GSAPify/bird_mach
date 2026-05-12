@@ -1002,6 +1002,9 @@ a:focus-visible,
   background: linear-gradient(90deg, #4ade80 0%, #fde68a 60%, #ff6b8a 90%);
   border-radius: 999px;
   transition: width 80ms linear;
+  box-shadow:
+    0 0 12px rgba(74, 222, 128, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 .inline-actions {
