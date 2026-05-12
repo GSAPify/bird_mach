@@ -394,13 +394,18 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 /* ── Cards ───────────────────────────────────────────────── */
 
 .card {
-  background: var(--panel);
-  border: 1px solid var(--border);
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0)) ,
+    var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  padding: 18px;
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
+  isolation: isolate;
+  overflow: hidden;
 }
 .card + .card { margin-top: 14px; }
 .card-title {
