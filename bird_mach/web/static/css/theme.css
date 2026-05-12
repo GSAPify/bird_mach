@@ -683,13 +683,14 @@ select {
 /* ── Buttons ─────────────────────────────────────────────── */
 
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   min-height: 42px;
-  padding: 10px 15px;
-  border: 0;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-sm);
   background: var(--gradient-accent);
   color: #0a0d1f;
@@ -697,8 +698,13 @@ select {
   font-size: 13.5px;
   letter-spacing: 0;
   cursor: pointer;
-  transition: transform .08s ease, filter .15s ease, box-shadow .15s ease;
-  box-shadow: 0 12px 24px rgba(52, 211, 153, 0.16);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .12s ease, filter .15s ease, box-shadow .2s ease;
+  box-shadow:
+    0 12px 26px rgba(52, 211, 153, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -10px 14px rgba(0, 0, 0, 0.14);
 }
 .btn:hover { filter: brightness(1.06); color: #0a0d1f; }
 .btn:active { transform: translateY(1px); }
