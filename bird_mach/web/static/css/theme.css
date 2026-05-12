@@ -820,7 +820,25 @@ a:focus-visible,
 .dropzone .dz-hint { color: var(--text-mute); font-size: 13px; margin-top: 4px; }
 .dropzone .dz-file { margin-top: 10px; color: var(--accent-2); font-weight: 600; word-break: break-all; }
 .dropzone.is-invalid .dz-file { color: #fecdd3; }
-.dropzone-sep { text-align: center; color: var(--text-mute); font-size: 12px; margin: 14px 0 6px; letter-spacing: 0; }
+.dropzone-sep {
+  position: relative;
+  text-align: center;
+  color: var(--text-mute);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 18px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dropzone-sep::before,
+.dropzone-sep::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass-border-strong), transparent);
+}
 
 /* ── Status / chips ──────────────────────────────────────── */
 
