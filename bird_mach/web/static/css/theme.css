@@ -239,9 +239,11 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 /* ── Layout ──────────────────────────────────────────────── */
 
 .page {
+  position: relative;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 22px 22px 56px;
+  padding: 28px 22px 64px;
+  z-index: 1;
 }
 
 .hero {
