@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- Web UI redesigned around a glassmorphism system: frosted topbar,
+  cards, dropzones, status pills, and metric tiles backed by a shared
+  set of glass tokens (background, blur, border, shadow, tint).
+- Ambient gradient orbs and a subtle film grain now sit behind the
+  page so the frosted surfaces refract real colour.
+- Buttons, chips, and the audio player picked up matching glass
+  chrome with hover sheen sweeps and a unified focus-visible ring.
+- Added accessible fallbacks: `prefers-reduced-motion` pauses orb
+  drift, `prefers-reduced-transparency` switches to opaque surfaces,
+  and the print stylesheet strips effects for legible reports.
+
 ## v0.5.0 (2026-03-15)
 
 ### Added
