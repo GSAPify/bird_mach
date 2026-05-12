@@ -85,6 +85,13 @@ body::before {
     radial-gradient(36vmax 30vmax at 72% 86%, rgba(246, 211, 101, 0.22), transparent 64%),
     radial-gradient(28vmax 24vmax at 18% 88%, rgba(251, 113, 133, 0.20), transparent 66%);
   filter: blur(8px);
+  animation: orb-drift 28s ease-in-out infinite alternate;
+}
+
+@keyframes orb-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-2.5%, 1.8%, 0) scale(1.04); }
+  100% { transform: translate3d(2%, -2%, 0) scale(1.02); }
 }
 
 /* Subtle film grain to keep gradients from looking plasticky. */
