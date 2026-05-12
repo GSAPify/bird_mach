@@ -858,8 +858,22 @@ a:focus-visible,
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   box-shadow: var(--glass-highlight);
 }
-.status.is-live { color: #ffe1ec; border-color: rgba(255, 107, 138, 0.40); background: rgba(255, 107, 138, 0.10); }
-.status.is-ok { color: #d6ffe6; border-color: rgba(74, 222, 128, 0.35); background: rgba(74, 222, 128, 0.10); }
+.status.is-live {
+  color: #ffe1ec;
+  border-color: rgba(255, 107, 138, 0.45);
+  background:
+    linear-gradient(180deg, rgba(255, 107, 138, 0.20), rgba(255, 107, 138, 0.05)),
+    var(--glass-bg);
+  box-shadow: var(--glass-highlight), 0 6px 18px rgba(255, 107, 138, 0.22);
+}
+.status.is-ok {
+  color: #d6ffe6;
+  border-color: rgba(74, 222, 128, 0.40);
+  background:
+    linear-gradient(180deg, rgba(74, 222, 128, 0.20), rgba(74, 222, 128, 0.05)),
+    var(--glass-bg);
+  box-shadow: var(--glass-highlight), 0 6px 18px rgba(74, 222, 128, 0.18);
+}
 .dot {
   width: 8px;
   height: 8px;
