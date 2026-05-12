@@ -209,6 +209,8 @@ p { margin: 0 0 12px; color: var(--text-dim); }
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: color .18s ease, background .18s ease, border-color .18s ease;
+  overflow: hidden;
+  isolation: isolate;
 }
 .topnav a:hover {
   color: var(--text);
