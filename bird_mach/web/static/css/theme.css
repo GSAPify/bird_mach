@@ -314,14 +314,16 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 .audio-preview {
   position: relative;
   min-height: 270px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border-strong);
   border-radius: var(--radius);
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(56, 189, 248, 0.14), transparent 36%),
-    linear-gradient(315deg, rgba(246, 211, 101, 0.12), transparent 40%),
-    rgba(17, 26, 25, 0.78);
-  box-shadow: var(--shadow);
+    linear-gradient(135deg, rgba(56, 189, 248, 0.18), transparent 38%),
+    linear-gradient(315deg, rgba(246, 211, 101, 0.14), transparent 42%),
+    var(--glass-bg-strong);
+  box-shadow: var(--glass-shadow), var(--glass-highlight-strong);
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
 }
 .audio-preview::before {
   content: "";
