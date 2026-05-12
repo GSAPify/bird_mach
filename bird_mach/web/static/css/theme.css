@@ -721,7 +721,13 @@ select {
 .btn:disabled { opacity: 0.45; cursor: not-allowed; filter: none; box-shadow: none; }
 .btn:disabled::after { display: none; }
 .btn.full { width: 100%; }
-.btn.warm { background: var(--gradient-warm); box-shadow: 0 8px 24px rgba(255, 159, 122, 0.22); }
+.btn.warm {
+  background: var(--gradient-warm);
+  box-shadow:
+    0 12px 26px rgba(251, 113, 133, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -10px 14px rgba(0, 0, 0, 0.16);
+}
 .btn.ghost {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
@@ -741,7 +747,10 @@ select {
 .btn.danger {
   background: linear-gradient(135deg, #ff5577 0%, #ff8a4d 100%);
   color: #1a0a14;
-  box-shadow: 0 8px 24px rgba(255, 85, 119, 0.20);
+  box-shadow:
+    0 12px 26px rgba(255, 85, 119, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.40),
+    inset 0 -10px 14px rgba(0, 0, 0, 0.16);
 }
 
 /* ── Drop zone ───────────────────────────────────────────── */
