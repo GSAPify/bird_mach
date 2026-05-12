@@ -382,6 +382,15 @@ p { margin: 0 0 12px; color: var(--text-dim); }
   box-shadow: var(--glass-shadow-soft), var(--glass-highlight);
 }
 
+.glass-strong {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius);
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate-strong));
+  box-shadow: var(--glass-shadow), var(--glass-highlight-strong);
+}
+
 /* ── Cards ───────────────────────────────────────────────── */
 
 .card {
