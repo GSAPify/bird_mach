@@ -720,6 +720,17 @@ select {
 .btn:active { transform: translateY(1px); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; filter: none; box-shadow: none; }
 .btn:disabled::after { display: none; }
+
+.btn:focus-visible,
+a:focus-visible,
+.checkline:focus-within,
+.dropzone:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px rgba(56, 189, 248, 0.7),
+    0 0 24px rgba(56, 189, 248, 0.35);
+}
 .btn.full { width: 100%; }
 .btn.warm {
   background: var(--gradient-warm);
