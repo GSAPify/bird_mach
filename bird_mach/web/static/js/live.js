@@ -30,6 +30,26 @@
     return;
   }
 
+  const PREFS_KEY = "mach.live.prefs.v1";
+
+  function loadPrefs() {
+    try {
+      const raw = window.localStorage.getItem(PREFS_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function savePrefs(patch) {
+    try {
+      const next = Object.assign({}, loadPrefs(), patch);
+      window.localStorage.setItem(PREFS_KEY, JSON.stringify(next));
+    } catch (e) {
+      // localStorage may be disabled (private mode, quota); silently ignore.
+    }
+  }
+
   const bandsCtx = bandsCanvas.getContext("2d");
   const waveCtx = waveCanvas.getContext("2d");
   const specCtx = specCanvas.getContext("2d");
