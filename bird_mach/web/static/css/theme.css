@@ -902,7 +902,9 @@ a:focus-visible,
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   box-shadow: var(--glass-highlight);
+  transition: transform .15s ease, border-color .15s ease;
 }
+.status:hover { transform: translateY(-1px); border-color: var(--glass-border-strong); }
 .status.is-live {
   color: #ffe1ec;
   border-color: rgba(255, 107, 138, 0.45);
