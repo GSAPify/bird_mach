@@ -10,7 +10,8 @@ Fly.io, k8s).
 from __future__ import annotations
 
 import logging
-from collections.abc import Awaitable, Callable
+from collections.abc import AsyncIterator, Awaitable, Callable
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,7 +25,23 @@ from bird_mach.web import static_dir
 logger = logging.getLogger(__name__)
 
 config = AppConfig.from_env()
-app = FastAPI(title=APP_NAME, version=APP_VERSION)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    """Log a single human-friendly line so deploys are easy to spot in tail."""
+    logger.info(
+        "%s %s ready (env=%s, cors=%s, max_upload_mb=%s)",
+        APP_NAME,
+        APP_VERSION,
+        config.environment,
+        ",".join(config.cors_origins) or "none",
+        config.max_upload_mb,
+    )
+    yield
+
+
+app = FastAPI(title=APP_NAME, version=APP_VERSION, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -36,19 +53,6 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 app.include_router(web_router)
-
-
-@app.on_event("startup")
-async def log_startup_banner() -> None:
-    """Log a single human-friendly line so deploys are easy to spot in tail."""
-    logger.info(
-        "%s %s ready (env=%s, cors=%s, max_upload_mb=%s)",
-        APP_NAME,
-        APP_VERSION,
-        config.environment,
-        ",".join(config.cors_origins) or "none",
-        config.max_upload_mb,
-    )
 
 
 @app.middleware("http")
