@@ -18,6 +18,11 @@
   }
 
   function showFileName() {
+    if (!fileInput.files || !fileInput.files.length) {
+      fileNameEl.textContent = "";
+      dropZone.classList.remove("is-invalid");
+      return true;
+    }
     if (fileInput.files && fileInput.files.length) {
       const file = fileInput.files[0];
       const ext = fileExtension(file);
