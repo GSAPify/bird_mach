@@ -73,4 +73,13 @@
       showFileName();
     }
   });
+
+  const audioUrlInput = document.getElementById("audioUrl");
+  if (audioUrlInput) {
+    function reflectUrlState() {
+      audioUrlInput.classList.toggle("has-value", audioUrlInput.value.trim().length > 0);
+    }
+    audioUrlInput.addEventListener("input", reflectUrlState);
+    reflectUrlState();
+  }
 })();
