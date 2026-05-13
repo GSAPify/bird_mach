@@ -40,6 +40,12 @@
   }
 
   dropZone.addEventListener("click", function () { fileInput.click(); });
+  dropZone.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      fileInput.click();
+    }
+  });
   fileInput.addEventListener("change", showFileName);
   uploadForm.addEventListener("submit", function (e) {
     if (fileInput.files && fileInput.files.length && !showFileName()) {

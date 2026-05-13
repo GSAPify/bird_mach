@@ -606,6 +606,12 @@
   function wireDropZone() {
     if (!fileDrop) return;
     fileDrop.addEventListener("click", function () { fileInput.click(); });
+    fileDrop.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        fileInput.click();
+      }
+    });
     fileDrop.addEventListener("dragover", function (event) {
       event.preventDefault();
       fileDrop.classList.add("is-active");
