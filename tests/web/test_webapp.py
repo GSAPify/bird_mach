@@ -42,6 +42,25 @@ def test_home_page_links_static_assets(client: TestClient) -> None:
     assert "aac, flac, m4a, mp3, ogg, wav" in response.text
 
 
+def test_home_page_includes_skip_link_and_landmarks(client: TestClient) -> None:
+    response = client.get("/")
+
+    assert response.status_code == 200
+    assert 'class="skip-link"' in response.text
+    assert 'href="#main-content"' in response.text
+    assert 'id="main-content"' in response.text
+    assert 'aria-label="Primary"' in response.text
+
+
+def test_home_page_includes_open_graph_meta(client: TestClient) -> None:
+    response = client.get("/")
+
+    assert response.status_code == 200
+    assert 'property="og:type"' in response.text
+    assert 'property="og:title"' in response.text
+    assert 'name="twitter:card"' in response.text
+
+
 def test_home_page_links_configured_live_site(
     client: TestClient, monkeypatch: pytest.MonkeyPatch
 ) -> None:
