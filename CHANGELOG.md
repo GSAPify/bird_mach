@@ -1,6 +1,17 @@
 # Changelog
 
-## Unreleased
+## v0.5.1 (2026-05-13)
+
+### Added
+- Skip-to-content link, named main and nav landmarks, and aria-labelled
+  drop zones / status region for keyboard and screen-reader users.
+- Open Graph + Twitter card meta tags, canonical link, mask-icon and
+  apple-touch-icon hints, and per-scheme `theme-color` entries.
+- Live page now persists motion model, color-by, loop speed, max
+  trail points, and bin count in `localStorage`.
+- Webkit / Firefox custom scrollbars styled to match the glass theme.
+- New `--radius-lg` and `--radius-pill` design tokens; existing pills
+  and capsules refactored onto `--radius-pill`.
 
 ### Changed
 - Web UI redesigned around a glassmorphism system: frosted topbar,
@@ -10,9 +21,16 @@
   page so the frosted surfaces refract real colour.
 - Buttons, chips, and the audio player picked up matching glass
   chrome with hover sheen sweeps and a unified focus-visible ring.
-- Added accessible fallbacks: `prefers-reduced-motion` pauses orb
-  drift, `prefers-reduced-transparency` switches to opaque surfaces,
-  and the print stylesheet strips effects for legible reports.
+- Startup banner moved to a `lifespan` handler so the FastAPI
+  deprecation warning goes away.
+
+### Fixed
+- Object URLs are now released through a single `releaseObjectUrl`
+  helper, so live mode no longer leaks blob URLs across reloads.
+- Upload page clears the file label and removes the invalid state
+  when the file input is reset.
+- Live page `setStatus` and `resetMeters` no longer crash when their
+  target elements are missing.
 
 ## v0.5.0 (2026-03-15)
 
