@@ -16,8 +16,14 @@
     <meta name="twitter:title" content="{{ self.title() }}" />
     <meta name="twitter:description" content="{{ self.meta_description() }}" />
     <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg" />
-    <link rel="mask-icon" href="/static/img/favicon.svg" color="#34d399" />
+    <link rel="mask-icon" href="/static/img/favicon.svg" color="#ffb454" />
     <link rel="apple-touch-icon" href="/static/img/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
     {% set live_url = render_external_url() %}
     {% if live_url %}
     <link rel="canonical" href="{{ live_url }}{{ request.url.path }}" />
