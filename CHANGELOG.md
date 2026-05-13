@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- Web UI overhauled into a near-black instrument-panel theme.
+  Palette swung from green/yellow glass to amber primary
+  (`#ffb454`) with cyan secondary (`#5fb6ff`) on a `#05070b`
+  backdrop, with a faint grid + scanline texture and a single
+  warm corner wash replacing the animated ambient orbs.
+- Typography moved to JetBrains Mono throughout, with Space
+  Grotesk reserved for the hero heading and brand mark. Labels,
+  buttons, kickers, and metric values are now uppercase mono
+  with letter-spacing for that telemetry-readout feel.
+- Surfaces and controls were squared up: `--radius` dropped from
+  8px to 4px, `--radius-pill` collapsed to 2px, glass blur
+  halved, drop shadows removed, and the gradient/sheen sweeps on
+  buttons and nav pills were stripped.
+- Buttons are now flat amber chips (primary), or outline chips
+  (ghost / warm / danger) with hover fills instead of gradients.
+- Audio preview block redesigned as a TLM "spectrum" panel with
+  grid background, square spectrum bars, and pixel-style points.
+- Metric tiles, status pills, and the level meter are flat with
+  a left amber accent bar; the level meter itself is now a 6px
+  hairline with a solid amber fill.
+
 ## v0.5.1 (2026-05-13)
 
 ### Added
