@@ -21,6 +21,8 @@
   --ok: #4ade80;
   --radius: 8px;
   --radius-sm: 6px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
   --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   --gradient-accent: linear-gradient(135deg, #34d399 0%, #f6d365 100%);
   --gradient-warm: linear-gradient(135deg, #fb7185 0%, #f59e0b 100%);
