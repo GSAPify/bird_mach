@@ -83,6 +83,15 @@ def test_live_page_has_browser_audio_controls(client: TestClient) -> None:
     assert 'src="/static/js/live.js"' in response.text
 
 
+def test_live_page_announces_status_and_compact_button(client: TestClient) -> None:
+    response = client.get("/live")
+
+    assert response.status_code == 200
+    assert 'role="status"' in response.text
+    assert 'aria-live="polite"' in response.text
+    assert "btn-compact" in response.text
+
+
 def test_live_static_script_contains_audio_lifecycle_guards(client: TestClient) -> None:
     response = client.get("/static/js/live.js")
 
