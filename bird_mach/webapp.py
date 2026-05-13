@@ -38,6 +38,19 @@ app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 app.include_router(web_router)
 
 
+@app.on_event("startup")
+async def log_startup_banner() -> None:
+    """Log a single human-friendly line so deploys are easy to spot in tail."""
+    logger.info(
+        "%s %s ready (env=%s, cors=%s, max_upload_mb=%s)",
+        APP_NAME,
+        APP_VERSION,
+        config.environment,
+        ",".join(config.cors_origins) or "none",
+        config.max_upload_mb,
+    )
+
+
 @app.middleware("http")
 async def security_headers(
     request: Request, call_next: Callable[[Request], Awaitable[Response]]
