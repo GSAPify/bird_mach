@@ -1,7 +1,7 @@
 """Application constants for Mach."""
 
 APP_NAME = "Mach"
-APP_VERSION = "0.5.0"
+APP_VERSION = "0.5.1"
 MAX_AUDIO_DURATION_S = 600
 MAX_UPLOAD_SIZE_MB = 50
 SUPPORTED_AUDIO_EXTENSIONS = {".wav", ".mp3", ".flac", ".ogg", ".m4a", ".aac"}
