@@ -44,11 +44,12 @@
     data-supported-formats="{{ supported_formats }}"
   >
     <label for="audio">Audio source</label>
-    <div id="dropZone" class="dropzone">
+    <div id="dropZone" class="dropzone" role="button" tabindex="0"
+         aria-label="Audio file drop zone. Activate to choose a file, or drag a file onto it.">
       <div class="dz-title">Drag &amp; drop an audio file</div>
       <div class="dz-hint">or click to browse &middot; {{ supported_formats }} &middot; up to {{ max_upload_mb }} MB</div>
       <input id="audio" name="audio" type="file" accept="audio/*" hidden />
-      <div id="fileName" class="dz-file"></div>
+      <div id="fileName" class="dz-file" aria-live="polite"></div>
     </div>
 
     <div class="dropzone-sep">\u2014 or paste a URL \u2014</div>
