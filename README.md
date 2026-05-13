@@ -27,6 +27,14 @@ python -m bird_mach serve
 Open http://localhost:8000 for the upload-based 3D audio map, or
 http://localhost:8000/live for real-time file, mic, and tab-audio visuals.
 
+### Keyboard shortcuts on /live
+
+| Key       | Action                              |
+| --------- | ----------------------------------- |
+| `space`   | Start playback / stop the visualizer |
+| `c`       | Clear the 3D cloud                  |
+| `m`       | Switch to microphone capture        |
+
 ## CLI
 
 ```bash
