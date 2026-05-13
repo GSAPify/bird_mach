@@ -74,6 +74,7 @@
   let frameCount = 0;
 
   function setStatus(text, state) {
+    if (!statusText || !statusEl) return;
     statusText.textContent = text;
     statusEl.classList.remove("is-live", "is-ok");
     if (state) statusEl.classList.add(state);
