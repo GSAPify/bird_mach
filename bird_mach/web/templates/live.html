@@ -19,11 +19,12 @@
   <section class="card control-panel live-controls">
     <div class="panel-kicker">Input</div>
     <label for="fileInput">Audio file</label>
-    <div id="fileDrop" class="dropzone">
+    <div id="fileDrop" class="dropzone" role="button" tabindex="0"
+         aria-label="Audio file picker. Activate to choose a file or drop one onto it.">
       <div class="dz-title">Drop or pick an audio file</div>
       <div class="dz-hint">wav, mp3, flac, ogg, m4a, aac</div>
       <input id="fileInput" type="file" accept="audio/*" hidden />
-      <div id="fileLabel" class="dz-file"></div>
+      <div id="fileLabel" class="dz-file" aria-live="polite"></div>
     </div>
     <audio id="player" class="player" controls preload="metadata"></audio>
 
