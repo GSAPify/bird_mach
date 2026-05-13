@@ -88,6 +88,12 @@ html, body {
   background-clip: padding-box;
 }
 
+/* Firefox: match webkit treatment. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--glass-border-strong) transparent;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
