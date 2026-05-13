@@ -15,6 +15,11 @@
     <meta name="twitter:title" content="{{ self.title() }}" />
     <meta name="twitter:description" content="{{ self.meta_description() }}" />
     <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg" />
+    {% set live_url = render_external_url() %}
+    {% if live_url %}
+    <link rel="canonical" href="{{ live_url }}{{ request.url.path }}" />
+    <meta property="og:url" content="{{ live_url }}{{ request.url.path }}" />
+    {% endif %}
     <link rel="stylesheet" href="/static/css/theme.css" />
     {% block head %}{% endblock %}
   </head>
