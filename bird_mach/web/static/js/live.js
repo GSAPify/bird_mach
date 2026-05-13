@@ -149,11 +149,11 @@
   }
 
   function resetMeters() {
-    levelFill.style.width = "0%";
-    statRms.textContent = "--";
-    statPeak.textContent = "--";
-    statCentroid.textContent = "--";
-    statTime.textContent = "--";
+    if (levelFill) levelFill.style.width = "0%";
+    if (statRms) statRms.textContent = "--";
+    if (statPeak) statPeak.textContent = "--";
+    if (statCentroid) statCentroid.textContent = "--";
+    if (statTime) statTime.textContent = "--";
   }
 
   function mulberry32(seed) {
