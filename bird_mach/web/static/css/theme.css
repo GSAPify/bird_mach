@@ -801,6 +801,13 @@ a:focus-visible,
     0 0 0 4px rgba(56, 189, 248, 0.7),
     0 0 24px rgba(56, 189, 248, 0.35);
 }
+/* Use a warm ring on red surfaces so the focus halo stays visible. */
+.btn.danger:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px rgba(255, 220, 200, 0.95),
+    0 0 28px rgba(255, 138, 77, 0.55);
+}
 .btn.full { width: 100%; }
 .btn.warm {
   background: var(--gradient-warm);
