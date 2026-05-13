@@ -16,6 +16,8 @@
 - **Reporting** — Markdown, HTML, CSV, JSONL export with scheduled reports
 - **Dashboard** — Usage analytics, alerts, leaderboard
 - **API** — RESTful API v1 with Pydantic validation
+- **Glassmorphism UI** — Frosted surfaces, ambient gradient backdrop, and
+  fully accessible fallbacks for reduced-motion / reduced-transparency users
 
 ## Quick Start
 
