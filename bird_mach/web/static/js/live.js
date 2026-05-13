@@ -583,6 +583,13 @@
     beginVisualization("Live from shared tab audio.");
   }
 
+  function releaseObjectUrl() {
+    if (objectUrl) {
+      URL.revokeObjectURL(objectUrl);
+      objectUrl = null;
+    }
+  }
+
   function stop() {
     isStopping = true;
     disconnectCurrentSource();
@@ -595,7 +602,7 @@
 
   function handleFile(file) {
     if (!file) return;
-    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    releaseObjectUrl();
     objectUrl = URL.createObjectURL(file);
     player.src = objectUrl;
     player.load();
@@ -708,7 +715,7 @@
 
     window.addEventListener("beforeunload", function () {
       disconnectCurrentSource();
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      releaseObjectUrl();
     });
   }
 
