@@ -110,16 +110,14 @@ body {
   position: relative;
   min-height: 100vh;
   background:
-    linear-gradient(135deg, rgba(52, 211, 153, 0.12), transparent 35%),
-    linear-gradient(225deg, rgba(246, 211, 101, 0.11), transparent 38%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 84px),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 84px),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 96px),
     var(--bg);
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
-/* Floating ambient orbs that the frosted surfaces refract through. */
+/* Single low-key amber wash like a warm console light, plus a cool corner. */
 body::before {
   content: "";
   position: fixed;
@@ -127,22 +125,8 @@ body::before {
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(38vmax 32vmax at 12% 18%, rgba(52, 211, 153, 0.32), transparent 60%),
-    radial-gradient(32vmax 28vmax at 88% 24%, rgba(56, 189, 248, 0.26), transparent 62%),
-    radial-gradient(36vmax 30vmax at 72% 86%, rgba(246, 211, 101, 0.22), transparent 64%),
-    radial-gradient(28vmax 24vmax at 18% 88%, rgba(251, 113, 133, 0.20), transparent 66%);
-  filter: blur(8px);
-  animation: orb-drift 28s ease-in-out infinite alternate;
-}
-
-@keyframes orb-drift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  50%  { transform: translate3d(-2.5%, 1.8%, 0) scale(1.04); }
-  100% { transform: translate3d(2%, -2%, 0) scale(1.02); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::before { animation: none; }
+    radial-gradient(40vmax 30vmax at 88% -10%, rgba(255, 180, 84, 0.06), transparent 65%),
+    radial-gradient(40vmax 30vmax at 0% 110%, rgba(95, 182, 255, 0.04), transparent 65%);
 }
 
 /* Fallback for users who reduce transparency: drop blur, raise opacity. */
@@ -175,20 +159,19 @@ body::before {
   body::after { display: none; }
 }
 
-/* Subtle film grain to keep gradients from looking plasticky. */
+/* Faint horizontal scanlines so the matte black does not look dead. */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.35;
-  mix-blend-mode: overlay;
-  background-image:
-    radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 3px 3px, 7px 7px;
-  background-position: 0 0, 1px 2px;
+  opacity: 0.5;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.018) 0 1px,
+    transparent 1px 3px
+  );
 }
 
 a {
