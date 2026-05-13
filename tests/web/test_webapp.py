@@ -4,7 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from bird_mach.web.audio_fetch import fetch_audio_from_url
-from bird_mach.web.routes import embedding_section_title
+from bird_mach.web.routes import embedding_section_title, visualization_error
 from bird_mach.webapp import app
 
 
@@ -104,6 +104,15 @@ def test_upload_static_script_contains_preflight_guards(client: TestClient) -> N
 def test_embedding_section_title_matches_dimension() -> None:
     assert embedding_section_title(use_2d=True) == "2D embedding (UMAP)"
     assert embedding_section_title(use_2d=False) == "3D embedding (UMAP)"
+
+
+def test_visualization_error_escapes_html() -> None:
+    response = visualization_error("<script>alert(1)</script>")
+
+    assert response.status_code == 400
+    body = bytes(response.body).decode("utf-8")
+    assert "<script>" not in body
+    assert "&lt;script&gt;" in body
 
 
 def test_visualize_rejects_empty_submission(client: TestClient) -> None:
