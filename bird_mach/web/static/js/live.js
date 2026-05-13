@@ -676,7 +676,22 @@
     });
     stopBtn.addEventListener("click", stop);
     clearBtn.addEventListener("click", clearCloud);
-    nBinsEl.addEventListener("change", initProjection);
+    nBinsEl.addEventListener("change", function () {
+      initProjection();
+      savePrefs({ nBins: nBinsEl.value });
+    });
+    motionEl.addEventListener("change", function () {
+      savePrefs({ motion: motionEl.value });
+    });
+    colorByEl.addEventListener("change", function () {
+      savePrefs({ colorBy: colorByEl.value });
+    });
+    loopSpeedEl.addEventListener("change", function () {
+      savePrefs({ loopSpeed: loopSpeedEl.value });
+    });
+    maxPointsEl.addEventListener("change", function () {
+      savePrefs({ maxPoints: maxPointsEl.value });
+    });
     player.addEventListener("play", function () {
       if (isStartingFile || rafId || !player.src) return;
       startFromFile().catch(function (error) {
@@ -739,7 +754,17 @@
     });
   }
 
+  function applyStoredPrefs() {
+    const prefs = loadPrefs();
+    if (prefs.motion && motionEl) motionEl.value = prefs.motion;
+    if (prefs.colorBy && colorByEl) colorByEl.value = prefs.colorBy;
+    if (prefs.loopSpeed != null && loopSpeedEl) loopSpeedEl.value = prefs.loopSpeed;
+    if (prefs.maxPoints != null && maxPointsEl) maxPointsEl.value = prefs.maxPoints;
+    if (prefs.nBins != null && nBinsEl) nBinsEl.value = prefs.nBins;
+  }
+
   function init() {
+    applyStoredPrefs();
     initCanvases();
     initCloud();
     wireDropZone();
