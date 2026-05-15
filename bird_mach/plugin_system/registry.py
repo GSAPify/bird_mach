@@ -28,6 +28,10 @@ class PluginRegistry:
         self._hooks: dict[str, list] = {}
 
     def register(self, plugin: PluginInterface, description: str = "", author: str = "") -> None:
+        if not plugin.name:
+            raise ValueError("plugin name must not be empty")
+        if plugin.name in self._plugins:
+            raise ValueError(f"plugin {plugin.name!r} is already registered")
         info = PluginInfo(
             name=plugin.name, version=plugin.version,
             description=description, author=author,
