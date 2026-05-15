@@ -7,7 +7,9 @@ def describe_waveform(rms: float, peak: float, duration_s: float) -> str:
     return f"A {loudness} audio waveform lasting {duration_s:.1f} seconds{clip}."
 
 def describe_spectrum(bands: dict[str, float]) -> str:
-    dominant = max(bands, key=bands.get) if bands else "unknown"
+    # A band with a None value would make max() raise on the comparison.
+    usable = {k: v for k, v in bands.items() if isinstance(v, (int, float))}
+    dominant = max(usable, key=usable.get) if usable else "unknown"
     return f"Frequency spectrum dominated by {dominant.replace('_', ' ')} frequencies."
 
 def describe_tempo(bpm: float) -> str:
