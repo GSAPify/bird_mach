@@ -10,7 +10,8 @@ PALETTES = {
 }
 
 def get_palette(mode: str = "default") -> list[str]:
-    return PALETTES.get(mode, PALETTES["default"])
+    # Copy: the live list would otherwise be mutable through the return value.
+    return list(PALETTES.get(mode, PALETTES["default"]))
 
 def get_high_contrast(bg: str = "dark") -> dict[str, str]:
     if bg == "dark":
