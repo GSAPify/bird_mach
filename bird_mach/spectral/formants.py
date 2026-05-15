@@ -3,7 +3,8 @@ from __future__ import annotations
 import numpy as np
 
 def estimate_formants(y: np.ndarray, sr: int, n_formants: int = 4) -> list[float]:
-    from numpy.polynomial import polynomial as P
+    if len(y) == 0:
+        return []
     order = 2 + n_formants * 2
     pre_emph = np.append(y[0], y[1:] - 0.97 * y[:-1])
     windowed = pre_emph[:2048] * np.hamming(min(len(pre_emph), 2048))
