@@ -26,7 +26,7 @@ class StatsAggregator:
 
     def compute(self) -> DashboardStats:
         now = datetime.now()
-        today = now.replace(hour=0, minute=0, second=0)
+        today = now.replace(hour=0, minute=0, second=0, microsecond=0)
         week_ago = now - timedelta(days=7)
 
         formats: dict[str, int] = {}
