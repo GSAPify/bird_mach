@@ -4,7 +4,7 @@ import numpy as np
 
 def compute_onset_pattern(onset_times: np.ndarray, window_s: float = 4.0) -> dict:
     if len(onset_times) < 3:
-        return {"regularity": 0.0, "density": 0.0, "intervals": []}
+        return {"regularity": 0.0, "density": 0.0, "mean_interval_s": 0.0, "intervals": []}
     intervals = np.diff(onset_times)
     mean_int = float(np.mean(intervals))
     std_int = float(np.std(intervals))
