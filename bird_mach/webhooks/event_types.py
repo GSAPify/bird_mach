@@ -27,7 +27,8 @@ def describe_event(event_type: str) -> str:
     return ALL_EVENTS.get(event_type, "Unknown event type")
 
 def list_events(category: str = "all") -> dict[str, str]:
-    if category == "audio": return AUDIO_EVENTS
-    if category == "collab": return COLLAB_EVENTS
-    if category == "system": return SYSTEM_EVENTS
-    return ALL_EVENTS
+    # Copy: returning the live registries lets a caller mutate them globally.
+    if category == "audio": return dict(AUDIO_EVENTS)
+    if category == "collab": return dict(COLLAB_EVENTS)
+    if category == "system": return dict(SYSTEM_EVENTS)
+    return dict(ALL_EVENTS)
