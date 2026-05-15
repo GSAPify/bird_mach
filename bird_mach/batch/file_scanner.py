@@ -7,12 +7,11 @@ AUDIO_EXTENSIONS = {".wav", ".mp3", ".flac", ".ogg", ".m4a", ".aac", ".wma", ".a
 def scan_directory(
     root: Path, recursive: bool = True, extensions: set[str] | None = None,
 ) -> list[Path]:
-    exts = extensions or AUDIO_EXTENSIONS
-    if recursive:
-        files = [f for f in root.rglob("*") if f.suffix.lower() in exts]
-    else:
-        files = [f for f in root.iterdir() if f.suffix.lower() in exts]
-    return sorted(files)
+    # Suffixes are compared lowercased, so the caller's set must be too, or
+    # {".WAV"} would match nothing.
+    exts = {e.lower() for e in (extensions or AUDIO_EXTENSIONS)}
+    entries = root.rglob("*") if recursive else root.iterdir()
+    return sorted(f for f in entries if f.is_file() and f.suffix.lower() in exts)
 
 def group_by_format(files: list[Path]) -> dict[str, list[Path]]:
     groups: dict[str, list[Path]] = {}
