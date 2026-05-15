@@ -17,7 +17,7 @@ class BatchProgress:
     @property
     def percent(self) -> float:
         if self.total == 0:
-            return 100.0
+            return 0.0
         return (self.completed + self.failed) / self.total * 100
 
     @property
