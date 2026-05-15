@@ -1,22 +1,24 @@
 """Configurable batch processing pipeline."""
 from __future__ import annotations
 import logging
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 @dataclass
 class PipelineStep:
     name: str
-    func: callable
+    func: Callable[[Path, dict], Any]
     enabled: bool = True
 
 @dataclass
 class PipelineResult:
     path: Path
     success: bool
-    outputs: dict = field(default_factory=dict)
+    outputs: dict[str, Any] = field(default_factory=dict)
     error: str | None = None
 
 class BatchPipeline:
@@ -25,7 +27,9 @@ class BatchPipeline:
     def __init__(self):
         self._steps: list[PipelineStep] = []
 
-    def add_step(self, name: str, func, enabled: bool = True) -> None:
+    def add_step(
+        self, name: str, func: Callable[[Path, dict], Any], enabled: bool = True
+    ) -> None:
         self._steps.append(PipelineStep(name=name, func=func, enabled=enabled))
 
     def process_file(self, path: Path) -> PipelineResult:
