@@ -23,11 +23,17 @@ class FeatureSet:
 class AudioFeatureExtractor:
     """Extract ML-ready features from audio."""
     def __init__(self, sr: int = 22050, n_mfcc: int = 13, n_chroma: int = 12):
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if n_mfcc < 1 or n_chroma < 1:
+            raise ValueError("n_mfcc and n_chroma must be at least 1")
         self._sr = sr
         self._n_mfcc = n_mfcc
         self._n_chroma = n_chroma
 
     def extract(self, y: np.ndarray) -> FeatureSet:
+        if len(y) == 0:
+            raise ValueError("cannot extract features from empty audio")
         spectrum = np.abs(np.fft.rfft(y[:self._sr]))
         freqs = np.fft.rfftfreq(min(len(y), self._sr), 1.0 / self._sr)
         centroid = float(np.sum(freqs * spectrum) / (np.sum(spectrum) + 1e-10))
