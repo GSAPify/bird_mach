@@ -12,6 +12,8 @@ class Prediction:
 class AudioClassifier:
     """Simple k-NN classifier for audio features."""
     def __init__(self, k: int = 5):
+        if k < 1:
+            raise ValueError("k must be at least 1")
         self._k = k
         self._features: list[np.ndarray] = []
         self._labels: list[str] = []
@@ -30,7 +32,10 @@ class AudioClassifier:
             label = self._labels[idx]
             votes[label] = votes.get(label, 0) + 1
         best = max(votes, key=votes.get)
-        scores = {k: v / self._k for k, v in votes.items()}
+        # Divide by the neighbours actually found: with fewer samples than k
+        # the confidences would otherwise never sum to 1.
+        neighbours = max(len(indices), 1)
+        scores = {k: v / neighbours for k, v in votes.items()}
         return Prediction(label=best, confidence=scores[best], all_scores=scores)
 
     @property
