@@ -18,7 +18,13 @@ class FingerprintHash:
 
     @property
     def hash_value(self) -> int:
-        return (self.anchor_freq << 20) | (self.target_freq << 10) | self.delta_time
+        # Mask each field to 10 bits: an out-of-range freq or delta would
+        # otherwise bleed into the neighbouring field and collide.
+        return (
+            ((self.anchor_freq & 0x3FF) << 20)
+            | ((self.target_freq & 0x3FF) << 10)
+            | (self.delta_time & 0x3FF)
+        )
 
 class ConstellationFingerprinter:
     """Extract spectral peaks and create hash pairs for matching."""
@@ -41,7 +47,7 @@ class ConstellationFingerprinter:
         return peaks
 
     def generate_hashes(self, peaks: list[Peak]) -> list[FingerprintHash]:
-        peaks.sort(key=lambda p: p.time_idx)
+        peaks = sorted(peaks, key=lambda p: p.time_idx)
         hashes = []
         for i, anchor in enumerate(peaks):
             targets = [p for p in peaks[i+1:i+1+self._target_zone]
