@@ -13,6 +13,10 @@ class HLSSegment:
 class HLSGenerator:
     """Generate HLS-compatible audio segments for streaming."""
     def __init__(self, segment_duration_s: float = 6.0, sr: int = 44100):
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if segment_duration_s <= 0:
+            raise ValueError("segment_duration_s must be positive")
         self._seg_dur = segment_duration_s
         self._sr = sr
         self._seg_samples = int(segment_duration_s * sr)
