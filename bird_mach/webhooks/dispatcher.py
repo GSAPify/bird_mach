@@ -4,6 +4,7 @@ import hashlib
 import hmac
 import json
 import logging
+from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
 
@@ -30,13 +31,25 @@ class WebhookEvent:
     timestamp: datetime = field(default_factory=datetime.now)
 
     def sign(self, secret: str) -> str:
-        body = json.dumps(self.payload, sort_keys=True, default=str)
+        # The event type is part of the signed body: otherwise two events with
+        # identical payloads but different types share a signature, so one can
+        # be replayed as the other.
+        body = json.dumps(
+            {"event_type": self.event_type,
+             "timestamp": self.timestamp.isoformat(),
+             "payload": self.payload},
+            sort_keys=True, default=str,
+        )
         return hmac.new(secret.encode(), body.encode(), hashlib.sha256).hexdigest()
 
+    def verify(self, secret: str, signature: str) -> bool:
+        return hmac.compare_digest(self.sign(secret), signature)
+
 class WebhookDispatcher:
-    def __init__(self):
+    def __init__(self, max_log_entries: int = 1000):
         self._endpoints: list[WebhookEndpoint] = []
-        self._event_log: list[dict] = []
+        self._max_log_entries = max_log_entries
+        self._event_log: deque[dict] = deque(maxlen=max_log_entries)
 
     def register(self, url: str, secret: str, events: set[str] | None = None) -> WebhookEndpoint:
         ep = WebhookEndpoint(url=url, secret=secret, events=events or {"*"})
