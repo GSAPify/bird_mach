@@ -14,7 +14,9 @@ class AdaptiveBuffer:
 
     def push(self, chunk: bytes) -> bool:
         total = sum(len(c) for c in self._data) + len(chunk)
-        if total > self._max:
+        # The adapted size is the working target and _max is the hard ceiling;
+        # honouring only _max meant adapt() never changed what is buffered.
+        if total > min(self._current_size, self._max):
             self._overflows += 1
             return False
         self._data.append(chunk)
@@ -24,10 +26,16 @@ class AdaptiveBuffer:
         result = b""
         while self._data and len(result) < size:
             chunk = self._data.popleft()
+            needed = size - len(result)
+            if len(chunk) > needed:
+                # Put the unread tail back rather than discarding it.
+                result += chunk[:needed]
+                self._data.appendleft(chunk[needed:])
+                break
             result += chunk
         if len(result) < size:
             self._underruns += 1
-        return result[:size]
+        return result
 
     def adapt(self, latency_ms: float) -> None:
         if latency_ms > 200:
