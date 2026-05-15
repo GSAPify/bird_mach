@@ -2,16 +2,20 @@
 
 from __future__ import annotations
 
+import html
+
 from bird_mach.constants import APP_NAME, APP_VERSION, DEFAULT_DARK_BG
 
 
 def base_meta(*, title: str = APP_NAME, description: str = "") -> str:
     """Return common <head> meta tags."""
+    safe_title = html.escape(title)
+    safe_description = html.escape(description or f"{APP_NAME} audio visualization")
     return f"""<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="{DEFAULT_DARK_BG}">
-<meta name="description" content="{description or f'{APP_NAME} audio visualization'}">
-<title>{title}</title>"""
+<meta name="description" content="{safe_description}">
+<title>{safe_title}</title>"""
 
 
 def error_page(*, title: str = "Error", message: str = "Something went wrong") -> str:
@@ -19,8 +23,8 @@ def error_page(*, title: str = "Error", message: str = "Something went wrong") -
     return f"""<!DOCTYPE html>
 <html lang="en"><head>{base_meta(title=f"{title} — {APP_NAME}")}</head>
 <body style="background:{DEFAULT_DARK_BG};color:#e2e8f0;font-family:system-ui;padding:2rem;text-align:center">
-<h1 style="color:#f87171">{title}</h1>
-<p>{message}</p>
+<h1 style="color:#f87171">{html.escape(title)}</h1>
+<p>{html.escape(message)}</p>
 <a href="/" style="color:#38bdf8">Back to home</a>
 </body></html>"""
 
