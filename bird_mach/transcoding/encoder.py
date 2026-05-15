@@ -20,6 +20,14 @@ class EncoderConfig:
     vbr: bool = False
     quality: int = 5
 
+    def __post_init__(self) -> None:
+        if self.sample_rate <= 0:
+            raise ValueError("sample_rate must be positive")
+        if self.channels < 1:
+            raise ValueError("channels must be at least 1")
+        if self.bitrate_kbps <= 0:
+            raise ValueError("bitrate_kbps must be positive")
+
     def to_ffmpeg_args(self) -> list[str]:
         args = ["-ar", str(self.sample_rate), "-ac", str(self.channels)]
         codec_map = {Codec.MP3: "libmp3lame", Codec.AAC: "aac",
