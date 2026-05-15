@@ -3,8 +3,13 @@ from __future__ import annotations
 import numpy as np
 
 def harmonic_noise_ratio(y: np.ndarray, sr: int, frame_size: int = 2048) -> float:
-    spectrum = np.abs(np.fft.rfft(y[:frame_size]))
-    freqs = np.fft.rfftfreq(frame_size, 1.0 / sr)
+    if sr <= 0:
+        raise ValueError("sr must be positive")
+    # Audio shorter than frame_size yields a shorter transform, so the bin
+    # frequencies must be derived from the same length or f0 lands far off.
+    n = min(len(y), frame_size)
+    spectrum = np.abs(np.fft.rfft(y[:n]))
+    freqs = np.fft.rfftfreq(n, 1.0 / sr)
     if len(spectrum) < 10:
         return 0.0
     peak_idx = np.argmax(spectrum[1:]) + 1
