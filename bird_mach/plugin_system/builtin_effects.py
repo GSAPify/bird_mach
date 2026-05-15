@@ -16,6 +16,10 @@ class LowPassFilter:
     def __init__(self, cutoff_hz: float = 5000.0):
         self._cutoff = cutoff_hz
     def process(self, samples: np.ndarray, sr: int) -> np.ndarray:
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if samples.size == 0:
+            return samples.copy()
         rc = 1.0 / (2 * np.pi * self._cutoff)
         dt = 1.0 / sr
         alpha = dt / (rc + dt)
@@ -32,6 +36,10 @@ class HighPassFilter:
     def __init__(self, cutoff_hz: float = 100.0):
         self._cutoff = cutoff_hz
     def process(self, samples: np.ndarray, sr: int) -> np.ndarray:
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if samples.size == 0:
+            return samples.copy()
         rc = 1.0 / (2 * np.pi * self._cutoff)
         dt = 1.0 / sr
         alpha = rc / (rc + dt)
@@ -46,6 +54,8 @@ class HighPassFilter:
 class CompressorEffect:
     name = "compressor"
     def __init__(self, threshold_db: float = -20.0, ratio: float = 4.0):
+        if ratio < 1.0:
+            raise ValueError("ratio must be at least 1.0")
         self._threshold = threshold_db
         self._ratio = ratio
     def process(self, samples: np.ndarray, sr: int) -> np.ndarray:
@@ -67,6 +77,8 @@ class ReverbEffect:
         self._delay_ms = delay_ms
     def process(self, samples: np.ndarray, sr: int) -> np.ndarray:
         delay_samples = int(self._delay_ms / 1000 * sr)
+        if samples.size == 0 or delay_samples < 1:
+            return samples.copy()
         out = samples.copy()
         for d in [delay_samples, delay_samples * 2, delay_samples * 3]:
             if d < len(out):
