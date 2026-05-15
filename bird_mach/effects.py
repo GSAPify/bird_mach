@@ -8,11 +8,15 @@ import librosa
 
 def change_speed(y: np.ndarray, *, rate: float) -> np.ndarray:
     """Time-stretch audio without changing pitch."""
+    if rate <= 0:
+        raise ValueError(f"rate must be positive, got {rate}")
     return librosa.effects.time_stretch(y, rate=rate)
 
 
 def change_pitch(y: np.ndarray, *, sr: int, n_steps: float) -> np.ndarray:
     """Shift pitch by n semitones without changing tempo."""
+    if sr <= 0:
+        raise ValueError(f"sr must be positive, got {sr}")
     return librosa.effects.pitch_shift(y, sr=sr, n_steps=n_steps)
 
 
@@ -24,6 +28,8 @@ def apply_fade(
     fade_out_s: float = 0.0,
 ) -> np.ndarray:
     """Apply linear fade-in and/or fade-out."""
+    if sr <= 0:
+        raise ValueError(f"sr must be positive, got {sr}")
     y = y.copy()
     if fade_in_s > 0:
         n = min(int(fade_in_s * sr), len(y))
