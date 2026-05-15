@@ -25,7 +25,10 @@ class JSONFormatter(logging.Formatter):
         return json.dumps(log_data, default=str)
 
 def configure_json_logging(level: str = "INFO") -> None:
+    resolved = logging.getLevelName(level.upper())
+    if not isinstance(resolved, int):
+        raise ValueError(f"Invalid log level: {level}")
     handler = logging.StreamHandler()
     handler.setFormatter(JSONFormatter())
     logging.root.handlers = [handler]
-    logging.root.setLevel(getattr(logging, level.upper()))
+    logging.root.setLevel(resolved)
