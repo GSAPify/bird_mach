@@ -16,15 +16,18 @@ class AnalysisCacheWarmer:
         self._warmed = 0
 
     def warm(self, keys: list[str]) -> int:
+        """Populate any cold keys. Returns how many this call warmed."""
+        warmed = 0
         for key in keys:
             if self._cache.get(key) is None:
                 try:
                     result = self._analyzer(key)
                     self._cache.set(key, result)
-                    self._warmed += 1
+                    warmed += 1
                 except Exception as e:
                     logger.warning("Failed to warm key %s: %s", key, e)
-        return self._warmed
+        self._warmed += warmed
+        return warmed
 
     @property
     def total_warmed(self) -> int:
