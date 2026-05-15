@@ -16,6 +16,7 @@ def save_wav(
     subtype: str = "PCM_16",
 ) -> Path:
     """Write a waveform to a WAV file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(path), y, sr, subtype=subtype)
     return path
 
@@ -29,6 +30,10 @@ def save_segment(
     prefix: str = "segment",
 ) -> Path:
     """Save a waveform segment with an indexed filename."""
+    # A prefix containing separators or ".." would escape output_dir.
+    safe_prefix = Path(prefix).name
+    if not safe_prefix or safe_prefix in {".", ".."}:
+        raise ValueError(f"invalid segment prefix: {prefix!r}")
     output_dir.mkdir(parents=True, exist_ok=True)
-    path = output_dir / f"{prefix}_{index:04d}.wav"
+    path = output_dir / f"{safe_prefix}_{index:04d}.wav"
     return save_wav(y, path, sr=sr)
