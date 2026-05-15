@@ -1,6 +1,5 @@
 """Prometheus-style metrics collection."""
 from __future__ import annotations
-import time
 from collections import defaultdict
 from dataclasses import dataclass
 
@@ -49,7 +48,7 @@ class MetricsCollector:
         return "\n".join(lines)
 
     @staticmethod
-    def _key(name: str, labels: dict) -> str:
+    def _key(name: str, labels: dict[str, str]) -> str:
         if not labels:
             return name
         label_str = ",".join(f'{k}="{v}"' for k, v in sorted(labels.items()))
