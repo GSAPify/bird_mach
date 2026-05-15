@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import tempfile
 from pathlib import Path
 
 import librosa
@@ -38,7 +39,7 @@ def load_audio(
     except Exception as exc:
         raise AudioLoadError(f"Cannot read audio metadata: {exc}") from exc
 
-    limit = max_duration_s or MAX_AUDIO_DURATION_S
+    limit = MAX_AUDIO_DURATION_S if max_duration_s is None else max_duration_s
     if duration > limit:
         raise AudioTooLongError(duration, limit)
 
@@ -54,7 +55,8 @@ def load_audio_bytes(
     sr: int = 22050,
 ) -> tuple[np.ndarray, int]:
     """Load audio from raw bytes via a temp file."""
-    import tempfile
+    if suffix.lower() not in SUPPORTED_AUDIO_EXTENSIONS:
+        raise AudioLoadError(f"Unsupported format: {suffix}")
 
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=True) as tmp:
         tmp.write(data)
