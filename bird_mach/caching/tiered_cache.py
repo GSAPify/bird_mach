@@ -20,9 +20,12 @@ class TieredCache:
         return val
 
     def set(self, key: str, value, ttl_s: float | None = None) -> None:
+        # L2 is JSON-backed, so only dicts survive a round trip. Anything else
+        # would live in L1 only and vanish silently on eviction.
+        if not isinstance(value, dict):
+            raise TypeError("TieredCache values must be dicts to persist to disk")
         self._l1.set(key, value, ttl_s)
-        if isinstance(value, dict):
-            self._l2.set(key, value, ttl_s)
+        self._l2.set(key, value, ttl_s)
 
     def invalidate(self, key: str) -> None:
         self._l1.delete(key)
