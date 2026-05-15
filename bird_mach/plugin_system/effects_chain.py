@@ -4,6 +4,8 @@ import numpy as np
 from dataclasses import dataclass
 from typing import Protocol
 
+from bird_mach.constants import MAX_EFFECTS_CHAIN_LENGTH
+
 class AudioEffect(Protocol):
     name: str
     def process(self, samples: np.ndarray, sr: int) -> np.ndarray: ...
@@ -22,6 +24,10 @@ class EffectsChain:
         self._nodes: list[ChainNode] = []
 
     def add(self, effect: AudioEffect, wet_mix: float = 1.0) -> int:
+        if len(self._nodes) >= MAX_EFFECTS_CHAIN_LENGTH:
+            raise ValueError(f"chain is limited to {MAX_EFFECTS_CHAIN_LENGTH} effects")
+        # Outside [0, 1] the mix amplifies instead of blending.
+        wet_mix = min(1.0, max(0.0, wet_mix))
         node = ChainNode(effect=effect, wet_mix=wet_mix)
         self._nodes.append(node)
         return len(self._nodes) - 1
