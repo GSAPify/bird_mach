@@ -11,7 +11,7 @@ class FrequencyTracker:
         self._history = deque(maxlen=history_size)
 
     def update(self, spectrum: np.ndarray) -> float:
-        if len(spectrum) == 0:
+        if len(spectrum) < 2:
             return 0.0
         peak_bin = int(np.argmax(spectrum[1:])) + 1
         freq = peak_bin * self._sr / (2 * (len(spectrum) - 1))
