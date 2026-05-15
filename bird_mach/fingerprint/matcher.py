@@ -1,6 +1,6 @@
 """Audio fingerprint matching and search."""
 from __future__ import annotations
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 
 @dataclass
@@ -33,7 +33,6 @@ class FingerprintDB:
         for track_id, offsets in candidates.items():
             if len(offsets) < min_matches:
                 continue
-            from collections import Counter
             offset_counts = Counter(offsets)
             best_offset, best_count = offset_counts.most_common(1)[0]
             confidence = best_count / max(len(query_hashes), 1)
