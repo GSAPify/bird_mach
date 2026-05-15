@@ -2,6 +2,7 @@
 from __future__ import annotations
 import logging
 from collections import defaultdict
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 
@@ -20,11 +21,19 @@ class EventBus:
         self._history: list[Event] = []
         self._max_history = 1000
 
-    def on(self, event_name: str, handler) -> None:
+    def on(self, event_name: str, handler: Callable[[Event], None]) -> None:
         self._handlers[event_name].append(handler)
 
-    def off(self, event_name: str, handler) -> None:
-        self._handlers[event_name] = [h for h in self._handlers[event_name] if h != handler]
+    def off(self, event_name: str, handler: Callable[[Event], None]) -> None:
+        # Indexing the defaultdict would create a permanent empty entry for an
+        # event nobody ever subscribed to.
+        if event_name not in self._handlers:
+            return
+        remaining = [h for h in self._handlers[event_name] if h != handler]
+        if remaining:
+            self._handlers[event_name] = remaining
+        else:
+            del self._handlers[event_name]
 
     def emit(self, event: Event) -> int:
         self._history.append(event)
@@ -39,6 +48,9 @@ class EventBus:
         return len(handlers)
 
     def recent_events(self, n: int = 20) -> list[Event]:
+        # -0 == 0, so a plain [-n:] would return the whole history for n=0.
+        if n <= 0:
+            return []
         return list(reversed(self._history[-n:]))
 
     @property
