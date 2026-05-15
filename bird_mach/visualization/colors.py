@@ -4,11 +4,17 @@ from __future__ import annotations
 
 
 def hex_to_rgba(hex_color: str, alpha: float = 1.0) -> str:
-    """Convert #RRGGBB to rgba(r, g, b, a)."""
-    hex_color = hex_color.lstrip("#")
-    r = int(hex_color[0:2], 16)
-    g = int(hex_color[2:4], 16)
-    b = int(hex_color[4:6], 16)
+    """Convert #RGB or #RRGGBB to rgba(r, g, b, a)."""
+    value = hex_color.lstrip("#")
+    if len(value) == 3:
+        value = "".join(c * 2 for c in value)
+    if len(value) != 6:
+        raise ValueError(f"expected a 3- or 6-digit hex color, got {hex_color!r}")
+    try:
+        r, g, b = (int(value[i:i + 2], 16) for i in (0, 2, 4))
+    except ValueError as exc:
+        raise ValueError(f"invalid hex color: {hex_color!r}") from exc
+    alpha = max(0.0, min(1.0, alpha))
     return f"rgba({r},{g},{b},{alpha})"
 
 
