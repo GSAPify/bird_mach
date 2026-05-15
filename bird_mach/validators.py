@@ -23,11 +23,15 @@ def validate_file_size(size_bytes: int) -> bool:
 
 def clamp(value: float, low: float, high: float) -> float:
     """Clamp a numeric value to [low, high]."""
+    if low > high:
+        raise ValueError(f"low ({low}) must not exceed high ({high})")
     return max(low, min(high, value))
 
 
 def clamp_int(value: int, low: int, high: int) -> int:
     """Clamp an integer value to [low, high]."""
+    if low > high:
+        raise ValueError(f"low ({low}) must not exceed high ({high})")
     return max(low, min(high, value))
 
 
@@ -35,6 +39,9 @@ def sanitize_url(url: str) -> str | None:
     """Basic URL sanitization — only allow http(s) schemes."""
     url = url.strip()
     if not url:
+        return None
+    # CR/LF/NUL in a URL that later reaches a header enables header injection.
+    if any(c in url for c in "\r\n\x00"):
         return None
     if not url.lower().startswith(("http://", "https://")):
         return None
