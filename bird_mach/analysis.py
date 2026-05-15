@@ -53,6 +53,10 @@ def track_beats(y: np.ndarray, *, sr: int) -> BeatResult:
     signal's periodicity rather than the presence of detected beats.
     """
     _check_sr(sr)
+    # Without this, the tempo fallback below reports a plausible mid-range BPM
+    # for silence, so callers cannot tell an empty buffer from real audio.
+    if y.size == 0:
+        return BeatResult(tempo_bpm=0.0, beat_times_s=np.array([]), beat_count=0)
     tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
     tempo_bpm = float(np.atleast_1d(tempo)[0])
     if tempo_bpm <= 0.0:
