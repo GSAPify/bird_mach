@@ -56,7 +56,10 @@ def main(argv: list[str] | None = None) -> None:
         parser.print_help()
         sys.exit(1)
     else:
+        # Non-zero exit: a shell or CI step must not read an unimplemented
+        # command as success.
         print(f"Command '{args.command}' — use the standalone scripts for now.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
