@@ -25,10 +25,17 @@ class Job:
 
 class JobQueue:
     def __init__(self, max_size: int = 1000):
+        if max_size < 1:
+            raise ValueError("max_size must be at least 1")
+        self._max_size = max_size
         self._queue: deque[Job] = deque(maxlen=max_size)
         self._jobs: dict[str, Job] = {}
 
     def submit(self, file_path: str) -> Job:
+        # deque(maxlen=...) would silently evict the oldest job while _jobs
+        # still reported it pending, so it could never be dispatched.
+        if len(self._queue) >= self._max_size:
+            raise RuntimeError(f"queue is full ({self._max_size} jobs)")
         job = Job(id=str(uuid.uuid4())[:8], file_path=file_path)
         self._queue.append(job)
         self._jobs[job.id] = job
@@ -53,6 +60,7 @@ class JobQueue:
         job = self._jobs.get(job_id)
         if job:
             job.status = JobStatus.FAILED
+            job.completed_at = datetime.now()
             job.error = error
 
     @property
