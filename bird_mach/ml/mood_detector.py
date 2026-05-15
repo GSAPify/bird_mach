@@ -34,7 +34,7 @@ def detect_mood(tempo: float, energy: float, zcr: float = 0.0, mode: str = "majo
             if zcr >= rules["zcr_min"]: score += 1
         if checks > 0:
             confidence = score / checks
-            if confidence > 0.5:
+            if confidence >= 0.5:
                 matches.append({"mood": mood, "confidence": round(confidence, 2)})
     matches.sort(key=lambda m: -m["confidence"])
     return matches
