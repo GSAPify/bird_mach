@@ -6,6 +6,10 @@ class AudioFingerprinter:
     """Generate compact fingerprints from audio for similarity matching."""
 
     def __init__(self, sr: int = 22050, frame_size: int = 4096, hop: int = 2048):
+        if sr <= 0:
+            raise ValueError("sr must be positive")
+        if frame_size < 1 or hop < 1:
+            raise ValueError("frame_size and hop must be at least 1")
         self._sr = sr
         self._frame_size = frame_size
         self._hop = hop
