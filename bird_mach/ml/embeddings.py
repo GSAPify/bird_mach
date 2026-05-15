@@ -1,11 +1,14 @@
 """Audio embedding generation for similarity search."""
 from __future__ import annotations
 import numpy as np
-import hashlib
 
 class AudioEmbedding:
     """Generate fixed-length embeddings from audio for vector search."""
     def __init__(self, dim: int = 128, sr: int = 22050):
+        if dim < 1:
+            raise ValueError("dim must be at least 1")
+        if sr <= 0:
+            raise ValueError("sr must be positive")
         self._dim = dim
         self._sr = sr
 
@@ -23,6 +26,8 @@ class AudioEmbedding:
         return (embedding / norm).astype(np.float32)
 
     def similarity(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
+        if emb1.shape != emb2.shape:
+            raise ValueError("embeddings must have the same shape")
         return float(np.dot(emb1, emb2))
 
 class EmbeddingIndex:
