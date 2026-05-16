@@ -8,3 +8,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 02. anchor the worklog around current project documentation.
 - 03. note architecture review coverage.
 - 04. note API reference review coverage.
+- 05. note REST API v1 review coverage.
