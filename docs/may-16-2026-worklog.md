@@ -18,3 +18,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 12. note storage runbook coverage.
 - 13. note API runbook coverage.
 - 14. note websocket runbook coverage.
+- 15. note scheduler runbook coverage.
