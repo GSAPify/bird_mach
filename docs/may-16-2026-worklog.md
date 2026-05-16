@@ -49,3 +49,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 43. note enterprise realtime API docs.
 - 44. note enterprise RBAC docs.
 - 45. note enterprise OAuth2 docs.
+- 46. note enterprise SMS docs.
