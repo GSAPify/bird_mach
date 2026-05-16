@@ -73,3 +73,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 67. note enterprise plugins docs.
 - 68. note enterprise reporting docs.
 - 69. note enterprise subscriptions docs.
+- 70. close the May 16 worklog with release-history alignment.
