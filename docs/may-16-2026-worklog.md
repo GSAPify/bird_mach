@@ -52,3 +52,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 46. note enterprise SMS docs.
 - 47. note enterprise metrics docs.
 - 48. note enterprise billing docs.
+- 49. note enterprise observability docs.
