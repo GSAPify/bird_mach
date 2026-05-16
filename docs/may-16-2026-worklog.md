@@ -13,3 +13,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 07. note visualization preset guide coverage.
 - 08. note clustering guide coverage.
 - 09. note deployment guide coverage.
+- 10. note effects documentation coverage.
