@@ -30,3 +30,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 24. note cache runbook coverage.
 - 25. note render runbook coverage.
 - 26. note database runbook coverage.
+- 27. note enterprise project management docs.
