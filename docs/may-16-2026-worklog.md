@@ -23,3 +23,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 17. note auth runbook coverage.
 - 18. note monitoring runbook coverage.
 - 19. note search runbook coverage.
+- 20. note proxy runbook coverage.
