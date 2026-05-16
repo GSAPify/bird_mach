@@ -5,3 +5,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 ## Checkpoints
 
 - 01. start the May 16 documentation worklog.
+- 02. anchor the worklog around current project documentation.
