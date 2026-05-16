@@ -62,3 +62,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 56. note enterprise pagination docs.
 - 57. note enterprise image resize docs.
 - 58. note enterprise file upload docs.
+- 59. note enterprise rate limit docs.
