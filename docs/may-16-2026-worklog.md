@@ -11,3 +11,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 05. note REST API v1 review coverage.
 - 06. note live mode guide coverage.
 - 07. note visualization preset guide coverage.
+- 08. note clustering guide coverage.
