@@ -17,3 +17,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 11. note pitch detection documentation coverage.
 - 12. note storage runbook coverage.
 - 13. note API runbook coverage.
+- 14. note websocket runbook coverage.
