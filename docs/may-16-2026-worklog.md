@@ -16,3 +16,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 10. note effects documentation coverage.
 - 11. note pitch detection documentation coverage.
 - 12. note storage runbook coverage.
+- 13. note API runbook coverage.
