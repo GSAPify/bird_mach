@@ -71,3 +71,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 65. note enterprise analytics docs.
 - 66. note enterprise email docs.
 - 67. note enterprise plugins docs.
+- 68. note enterprise reporting docs.
