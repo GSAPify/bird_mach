@@ -34,3 +34,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 28. note enterprise report generation docs.
 - 29. note enterprise user preferences docs.
 - 30. note enterprise team management docs.
+- 31. note enterprise signing docs.
