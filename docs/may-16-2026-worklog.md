@@ -55,3 +55,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 49. note enterprise observability docs.
 - 50. note enterprise server-sent events docs.
 - 51. note enterprise notifications docs.
+- 52. note enterprise collaboration docs.
