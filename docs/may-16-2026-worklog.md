@@ -20,3 +20,4 @@ This file records documentation review checkpoints created for the May 16, 2026 
 - 14. note websocket runbook coverage.
 - 15. note scheduler runbook coverage.
 - 16. note notifications runbook coverage.
+- 17. note auth runbook coverage.
