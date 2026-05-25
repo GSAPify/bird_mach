@@ -121,3 +121,4 @@
 | [runbooks/monitoring.md](runbooks/monitoring.md) | Runbook: Monitoring |
 | [runbooks/notifications.md](runbooks/notifications.md) | Runbook: Notifications |
 | [runbooks/proxy.md](runbooks/proxy.md) | Runbook: Proxy |
+| [runbooks/render.md](runbooks/render.md) | Render Runbook |
