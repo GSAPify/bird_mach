@@ -112,3 +112,4 @@
 | [live-mode.md](live-mode.md) | Live Mode Guide |
 | [pitch.md](pitch.md) | Pitch Detection |
 | [presets.md](presets.md) | Visualization Presets |
+| [runbooks/analytics.md](runbooks/analytics.md) | Runbook: Analytics |
