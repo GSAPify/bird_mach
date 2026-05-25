@@ -46,3 +46,4 @@
 | [architecture.md](architecture.md) | Architecture |
 | [clustering.md](clustering.md) | Clustering Audio Frames |
 | [deployment.md](deployment.md) | Deployment Guide |
+| [effects.md](effects.md) | Audio Effects |
