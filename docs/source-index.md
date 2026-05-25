@@ -41,3 +41,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/collaboration/comments.py`](../bird_mach/collaboration/comments.py) | Threaded comments for audio analysis discussions |
 | [`bird_mach/collaboration/cursor_sync.py`](../bird_mach/collaboration/cursor_sync.py) | Cursor synchronization for collaborative audio review |
 | [`bird_mach/collaboration/export_session.py`](../bird_mach/collaboration/export_session.py) | Export collaboration sessions for archival |
+| [`bird_mach/collaboration/permissions.py`](../bird_mach/collaboration/permissions.py) | Fine-grained permissions for collaboration |
