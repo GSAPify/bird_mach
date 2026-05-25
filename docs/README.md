@@ -91,3 +91,4 @@
 | [enterprise/real_time.md](enterprise/real_time.md) | Real Time |
 | [enterprise/realtime-api.md](enterprise/realtime-api.md) | Real-Time API Reference |
 | [enterprise/realtime.md](enterprise/realtime.md) | Real-Time Audio Engine |
+| [enterprise/report_generation.md](enterprise/report_generation.md) | Report Generation |
