@@ -50,3 +50,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/config.py`](../bird_mach/config.py) | Application configuration loaded from environment variables |
 | [`bird_mach/constants.py`](../bird_mach/constants.py) | Application constants for Mach |
 | [`bird_mach/dashboard/activity_feed.py`](../bird_mach/dashboard/activity_feed.py) | Activity feed for tracking user actions |
+| [`bird_mach/dashboard/alerts.py`](../bird_mach/dashboard/alerts.py) | Alert rules and notification triggers |
