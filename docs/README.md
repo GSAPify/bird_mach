@@ -21,3 +21,4 @@
 | [adr/0008-github-actions-for-ci/cd.md](adr/0008-github-actions-for-ci/cd.md) | ADR-0008: GitHub Actions for CI/CD |
 | [adr/0009-pydantic-for-data-validation.md](adr/0009-pydantic-for-data-validation.md) | ADR-0009: Pydantic for Data Validation |
 | [adr/0010-celery-for-background-tasks.md](adr/0010-celery-for-background-tasks.md) | ADR-0010: Celery for Background Tasks |
+| [adr/0011-websocket-for-real-time-updates.md](adr/0011-websocket-for-real-time-updates.md) | ADR-0011: WebSocket for Real-time Updates |
