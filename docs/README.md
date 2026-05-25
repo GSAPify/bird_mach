@@ -75,3 +75,4 @@
 | [enterprise/jwt_auth.md](enterprise/jwt_auth.md) | Jwt Auth |
 | [enterprise/key_rotation.md](enterprise/key_rotation.md) | Key Rotation |
 | [enterprise/logging.md](enterprise/logging.md) | Logging |
+| [enterprise/long_polling.md](enterprise/long_polling.md) | Long Polling |
