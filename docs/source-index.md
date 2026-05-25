@@ -5,3 +5,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | Module | Purpose |
 |--------|---------|
 | [`bird_mach/__main__.py`](../bird_mach/__main__.py) | Allow running Mach as: python -m bird_mach |
+| [`bird_mach/accessibility/color_blind.py`](../bird_mach/accessibility/color_blind.py) | Color-blind friendly palette generation |
