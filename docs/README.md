@@ -18,3 +18,4 @@
 | [adr/0005-s3-for-audio-file-storage.md](adr/0005-s3-for-audio-file-storage.md) | ADR-0005: S3 for Audio File Storage |
 | [adr/0006-umap-for-dimensionality-reduction.md](adr/0006-umap-for-dimensionality-reduction.md) | ADR-0006: UMAP for Dimensionality Reduction |
 | [adr/0007-kubernetes-for-container-orchestration.md](adr/0007-kubernetes-for-container-orchestration.md) | ADR-0007: Kubernetes for Container Orchestration |
+| [adr/0008-github-actions-for-ci/cd.md](adr/0008-github-actions-for-ci/cd.md) | ADR-0008: GitHub Actions for CI/CD |
