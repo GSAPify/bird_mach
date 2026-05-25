@@ -39,3 +39,4 @@
 | [adr/0026-data-retention-policy.md](adr/0026-data-retention-policy.md) | ADR-0026: Data Retention Policy |
 | [adr/0027-backup-and-recovery-strategy.md](adr/0027-backup-and-recovery-strategy.md) | ADR-0027: Backup and Recovery Strategy |
 | [adr/0028-security-audit-logging.md](adr/0028-security-audit-logging.md) | ADR-0028: Security Audit Logging |
+| [adr/0029-api-versioning-strategy.md](adr/0029-api-versioning-strategy.md) | ADR-0029: API Versioning Strategy |
