@@ -77,3 +77,4 @@
 | [enterprise/logging.md](enterprise/logging.md) | Logging |
 | [enterprise/long_polling.md](enterprise/long_polling.md) | Long Polling |
 | [enterprise/metrics.md](enterprise/metrics.md) | Metrics |
+| [enterprise/mfa.md](enterprise/mfa.md) | Mfa |
