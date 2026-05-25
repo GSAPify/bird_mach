@@ -52,3 +52,4 @@
 | [enterprise/alerting.md](enterprise/alerting.md) | Alerting |
 | [enterprise/analytics.md](enterprise/analytics.md) | Analytics |
 | [enterprise/api_keys.md](enterprise/api_keys.md) | Api Keys |
+| [enterprise/audio_transcode.md](enterprise/audio_transcode.md) | Audio Transcode |
