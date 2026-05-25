@@ -108,3 +108,4 @@
 | [enterprise/user_preferences.md](enterprise/user_preferences.md) | User Preferences |
 | [enterprise/video_thumb.md](enterprise/video_thumb.md) | Video Thumb |
 | [enterprise/webhooks.md](enterprise/webhooks.md) | Webhooks |
+| [enterprise/websockets.md](enterprise/websockets.md) | Websockets |
