@@ -13,3 +13,4 @@
 | [pitch.md](pitch.md) | Pitch detection with pYIN |
 | [adr/0001-use-fastapi-for-api-framework.md](adr/0001-use-fastapi-for-api-framework.md) | ADR-0001: Use FastAPI for API Framework |
 | [adr/0002-postgresql-as-primary-database.md](adr/0002-postgresql-as-primary-database.md) | ADR-0002: PostgreSQL as Primary Database |
+| [adr/0003-redis-for-caching-layer.md](adr/0003-redis-for-caching-layer.md) | ADR-0003: Redis for Caching Layer |
