@@ -37,3 +37,4 @@
 | [adr/0024-rate-limiting-strategy.md](adr/0024-rate-limiting-strategy.md) | ADR-0024: Rate Limiting Strategy |
 | [adr/0025-multi-tenancy-architecture.md](adr/0025-multi-tenancy-architecture.md) | ADR-0025: Multi-tenancy Architecture |
 | [adr/0026-data-retention-policy.md](adr/0026-data-retention-policy.md) | ADR-0026: Data Retention Policy |
+| [adr/0027-backup-and-recovery-strategy.md](adr/0027-backup-and-recovery-strategy.md) | ADR-0027: Backup and Recovery Strategy |
