@@ -74,3 +74,4 @@
 | [enterprise/invoicing.md](enterprise/invoicing.md) | Invoicing |
 | [enterprise/jwt_auth.md](enterprise/jwt_auth.md) | Jwt Auth |
 | [enterprise/key_rotation.md](enterprise/key_rotation.md) | Key Rotation |
+| [enterprise/logging.md](enterprise/logging.md) | Logging |
