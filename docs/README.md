@@ -63,3 +63,4 @@
 | [enterprise/dashboard.md](enterprise/dashboard.md) | Dashboard & Analytics |
 | [enterprise/data_export.md](enterprise/data_export.md) | Data Export |
 | [enterprise/email.md](enterprise/email.md) | Email |
+| [enterprise/encryption.md](enterprise/encryption.md) | Encryption |
