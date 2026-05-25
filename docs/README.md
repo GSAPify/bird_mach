@@ -45,3 +45,4 @@
 | [api.md](api.md) | API Reference |
 | [architecture.md](architecture.md) | Architecture |
 | [clustering.md](clustering.md) | Clustering Audio Frames |
+| [deployment.md](deployment.md) | Deployment Guide |
