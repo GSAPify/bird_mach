@@ -76,3 +76,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/ml/classifier.py`](../bird_mach/ml/classifier.py) | Audio genre/mood classifier |
 | [`bird_mach/ml/data_augmentation.py`](../bird_mach/ml/data_augmentation.py) | Audio data augmentation for ML training |
 | [`bird_mach/ml/embeddings.py`](../bird_mach/ml/embeddings.py) | Audio embedding generation for similarity search |
+| [`bird_mach/ml/feature_extractor.py`](../bird_mach/ml/feature_extractor.py) | Feature extraction pipeline for ML models |
