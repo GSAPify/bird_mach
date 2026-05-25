@@ -16,3 +16,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/api/v2/pagination.py`](../bird_mach/api/v2/pagination.py) | Cursor-based and offset pagination utilities |
 | [`bird_mach/api/v2/rate_limit.py`](../bird_mach/api/v2/rate_limit.py) | API v2 rate limiting middleware |
 | [`bird_mach/api/v2/versioning.py`](../bird_mach/api/v2/versioning.py) | Reference for api v2 versioning |
+| [`bird_mach/audio_formats/converter.py`](../bird_mach/audio_formats/converter.py) | Audio format conversion utilities |
