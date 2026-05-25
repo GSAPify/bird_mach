@@ -53,3 +53,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/dashboard/alerts.py`](../bird_mach/dashboard/alerts.py) | Alert rules and notification triggers |
 | [`bird_mach/dashboard/leaderboard.py`](../bird_mach/dashboard/leaderboard.py) | Usage leaderboard for gamification |
 | [`bird_mach/dashboard/stats.py`](../bird_mach/dashboard/stats.py) | Dashboard statistics aggregation |
+| [`bird_mach/dashboard/usage_tracker.py`](../bird_mach/dashboard/usage_tracker.py) | Track API usage and quotas |
