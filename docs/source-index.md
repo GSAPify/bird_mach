@@ -57,3 +57,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/effects.py`](../bird_mach/effects.py) | Audio effects and transformations |
 | [`bird_mach/embedding.py`](../bird_mach/embedding.py) | Audio feature extraction, UMAP dimensionality reduction, and Plotly visualization |
 | [`bird_mach/events/bus.py`](../bird_mach/events/bus.py) | Publish-subscribe event bus for decoupled communication |
+| [`bird_mach/exceptions.py`](../bird_mach/exceptions.py) | Custom exception hierarchy for Mach audio visualization |
