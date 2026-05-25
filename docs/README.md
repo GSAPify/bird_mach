@@ -117,3 +117,4 @@
 | [runbooks/auth.md](runbooks/auth.md) | Runbook: Auth |
 | [runbooks/billing.md](runbooks/billing.md) | Runbook: Billing |
 | [runbooks/cache.md](runbooks/cache.md) | Runbook: Cache |
+| [runbooks/database.md](runbooks/database.md) | Runbook: Database |
