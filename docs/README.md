@@ -43,3 +43,4 @@
 | [adr/0030-internationalization-approach.md](adr/0030-internationalization-approach.md) | ADR-0030: Internationalization Approach |
 | [api-v1.md](api-v1.md) | API v1 Reference |
 | [api.md](api.md) | API Reference |
+| [architecture.md](architecture.md) | Architecture |
