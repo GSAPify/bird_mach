@@ -64,3 +64,4 @@
 | [enterprise/data_export.md](enterprise/data_export.md) | Data Export |
 | [enterprise/email.md](enterprise/email.md) | Email |
 | [enterprise/encryption.md](enterprise/encryption.md) | Encryption |
+| [enterprise/file_upload.md](enterprise/file_upload.md) | File Upload |
