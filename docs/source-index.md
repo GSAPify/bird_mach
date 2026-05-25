@@ -43,3 +43,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/collaboration/export_session.py`](../bird_mach/collaboration/export_session.py) | Export collaboration sessions for archival |
 | [`bird_mach/collaboration/permissions.py`](../bird_mach/collaboration/permissions.py) | Fine-grained permissions for collaboration |
 | [`bird_mach/collaboration/presence.py`](../bird_mach/collaboration/presence.py) | Real-time presence tracking for collaboration rooms |
+| [`bird_mach/collaboration/rooms.py`](../bird_mach/collaboration/rooms.py) | Collaboration rooms for shared audio analysis sessions |
