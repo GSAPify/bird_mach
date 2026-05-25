@@ -84,3 +84,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/observability/health_check.py`](../bird_mach/observability/health_check.py) | Health check endpoints and system status |
 | [`bird_mach/observability/metrics_collector.py`](../bird_mach/observability/metrics_collector.py) | Prometheus-style metrics collection |
 | [`bird_mach/observability/sla_tracker.py`](../bird_mach/observability/sla_tracker.py) | SLA tracking and uptime monitoring |
+| [`bird_mach/observability/structured_logging.py`](../bird_mach/observability/structured_logging.py) | Structured JSON logging configuration |
