@@ -94,3 +94,4 @@
 | [enterprise/report_generation.md](enterprise/report_generation.md) | Report Generation |
 | [enterprise/reporting.md](enterprise/reporting.md) | Reporting |
 | [enterprise/scheduling.md](enterprise/scheduling.md) | Scheduling |
+| [enterprise/sdk.md](enterprise/sdk.md) | Mach SDK |
