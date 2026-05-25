@@ -83,3 +83,4 @@
 | [enterprise/observability.md](enterprise/observability.md) | Observability |
 | [enterprise/pagination.md](enterprise/pagination.md) | Pagination |
 | [enterprise/pipelines.md](enterprise/pipelines.md) | Processing Pipelines |
+| [enterprise/plugins.md](enterprise/plugins.md) | Plugin System |
