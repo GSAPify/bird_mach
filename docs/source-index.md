@@ -67,3 +67,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/fingerprint/matcher.py`](../bird_mach/fingerprint/matcher.py) | Audio fingerprint matching and search |
 | [`bird_mach/fingerprint/shazam_like.py`](../bird_mach/fingerprint/shazam_like.py) | Constellation-based fingerprinting (Shazam-inspired) |
 | [`bird_mach/genre.py`](../bird_mach/genre.py) | Lightweight genre hinting based on audio feature statistics |
+| [`bird_mach/history.py`](../bird_mach/history.py) | Analysis history tracking |
