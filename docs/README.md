@@ -110,3 +110,4 @@
 | [enterprise/webhooks.md](enterprise/webhooks.md) | Webhooks |
 | [enterprise/websockets.md](enterprise/websockets.md) | Websockets |
 | [live-mode.md](live-mode.md) | Live Mode Guide |
+| [pitch.md](pitch.md) | Pitch Detection |
