@@ -80,3 +80,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/ml/mood_detector.py`](../bird_mach/ml/mood_detector.py) | Audio mood detection from acoustic features |
 | [`bird_mach/notifications_service.py`](../bird_mach/notifications_service.py) | Notification dispatch service for Mach |
 | [`bird_mach/observability/audit_log.py`](../bird_mach/observability/audit_log.py) | Immutable audit log for security-sensitive operations |
+| [`bird_mach/observability/error_tracker.py`](../bird_mach/observability/error_tracker.py) | Centralized error tracking and aggregation |
