@@ -51,3 +51,4 @@
 | [enterprise/activity_feed.md](enterprise/activity_feed.md) | Activity Feed |
 | [enterprise/alerting.md](enterprise/alerting.md) | Alerting |
 | [enterprise/analytics.md](enterprise/analytics.md) | Analytics |
+| [enterprise/api_keys.md](enterprise/api_keys.md) | Api Keys |
