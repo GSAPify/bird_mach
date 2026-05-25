@@ -51,3 +51,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/constants.py`](../bird_mach/constants.py) | Application constants for Mach |
 | [`bird_mach/dashboard/activity_feed.py`](../bird_mach/dashboard/activity_feed.py) | Activity feed for tracking user actions |
 | [`bird_mach/dashboard/alerts.py`](../bird_mach/dashboard/alerts.py) | Alert rules and notification triggers |
+| [`bird_mach/dashboard/leaderboard.py`](../bird_mach/dashboard/leaderboard.py) | Usage leaderboard for gamification |
