@@ -119,3 +119,4 @@
 | [runbooks/cache.md](runbooks/cache.md) | Runbook: Cache |
 | [runbooks/database.md](runbooks/database.md) | Runbook: Database |
 | [runbooks/monitoring.md](runbooks/monitoring.md) | Runbook: Monitoring |
+| [runbooks/notifications.md](runbooks/notifications.md) | Runbook: Notifications |
