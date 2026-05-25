@@ -59,3 +59,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/events/bus.py`](../bird_mach/events/bus.py) | Publish-subscribe event bus for decoupled communication |
 | [`bird_mach/exceptions.py`](../bird_mach/exceptions.py) | Custom exception hierarchy for Mach audio visualization |
 | [`bird_mach/exporters.py`](../bird_mach/exporters.py) | Export audio analysis results to various formats |
+| [`bird_mach/favorites.py`](../bird_mach/favorites.py) | Favorites and bookmarks for audio files |
