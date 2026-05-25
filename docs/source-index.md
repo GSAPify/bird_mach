@@ -31,3 +31,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/caching/disk_cache.py`](../bird_mach/caching/disk_cache.py) | Disk-based cache for large analysis results |
 | [`bird_mach/caching/memory_cache.py`](../bird_mach/caching/memory_cache.py) | In-memory LRU cache with TTL support |
 | [`bird_mach/caching/strategy_v1.py`](../bird_mach/caching/strategy_v1.py) | Cache invalidation strategy variant 1 |
+| [`bird_mach/caching/strategy_v2.py`](../bird_mach/caching/strategy_v2.py) | Cache invalidation strategy variant 2 |
