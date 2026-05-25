@@ -69,3 +69,4 @@
 | [enterprise/fingerprinting.md](enterprise/fingerprinting.md) | Audio Fingerprinting |
 | [enterprise/hashing.md](enterprise/hashing.md) | Hashing |
 | [enterprise/health_check.md](enterprise/health_check.md) | Health Check |
+| [enterprise/i18n.md](enterprise/i18n.md) | I18N |
