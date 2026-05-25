@@ -42,3 +42,4 @@
 | [adr/0029-api-versioning-strategy.md](adr/0029-api-versioning-strategy.md) | ADR-0029: API Versioning Strategy |
 | [adr/0030-internationalization-approach.md](adr/0030-internationalization-approach.md) | ADR-0030: Internationalization Approach |
 | [api-v1.md](api-v1.md) | API v1 Reference |
+| [api.md](api.md) | API Reference |
