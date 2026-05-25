@@ -93,3 +93,4 @@
 | [enterprise/realtime.md](enterprise/realtime.md) | Real-Time Audio Engine |
 | [enterprise/report_generation.md](enterprise/report_generation.md) | Report Generation |
 | [enterprise/reporting.md](enterprise/reporting.md) | Reporting |
+| [enterprise/scheduling.md](enterprise/scheduling.md) | Scheduling |
