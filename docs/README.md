@@ -78,3 +78,4 @@
 | [enterprise/long_polling.md](enterprise/long_polling.md) | Long Polling |
 | [enterprise/metrics.md](enterprise/metrics.md) | Metrics |
 | [enterprise/mfa.md](enterprise/mfa.md) | Mfa |
+| [enterprise/notifications.md](enterprise/notifications.md) | Notifications |
