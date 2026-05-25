@@ -70,3 +70,4 @@
 | [enterprise/hashing.md](enterprise/hashing.md) | Hashing |
 | [enterprise/health_check.md](enterprise/health_check.md) | Health Check |
 | [enterprise/i18n.md](enterprise/i18n.md) | I18N |
+| [enterprise/image_resize.md](enterprise/image_resize.md) | Image Resize |
