@@ -29,3 +29,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/cache.py`](../bird_mach/cache.py) | Simple in-memory LRU cache for expensive audio computations |
 | [`bird_mach/caching/cache_key.py`](../bird_mach/caching/cache_key.py) | Cache key generation utilities |
 | [`bird_mach/caching/disk_cache.py`](../bird_mach/caching/disk_cache.py) | Disk-based cache for large analysis results |
+| [`bird_mach/caching/memory_cache.py`](../bird_mach/caching/memory_cache.py) | In-memory LRU cache with TTL support |
