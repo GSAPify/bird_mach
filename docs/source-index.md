@@ -20,7 +20,7 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/audio_formats/detector.py`](../bird_mach/audio_formats/detector.py) | Detect audio format from file headers |
 | [`bird_mach/audio_formats/metadata.py`](../bird_mach/audio_formats/metadata.py) | Audio file metadata extraction |
 | [`bird_mach/audio_formats/normalize.py`](../bird_mach/audio_formats/normalize.py) | Audio normalization utilities |
-| [`bird_mach/audio_utils.py`](../bird_mach/audio_utils.py) | Lightweight audio utility helpers — duration, format detection, normalization |
+| [`bird_mach/audio_utils.py`](../bird_mach/audio_utils.py) | Lightweight audio utility helpers - duration, format detection, normalization |
 | [`bird_mach/batch/file_scanner.py`](../bird_mach/batch/file_scanner.py) | Scan directories for audio files |
 | [`bird_mach/batch/pipeline.py`](../bird_mach/batch/pipeline.py) | Configurable batch processing pipeline |
 | [`bird_mach/batch/progress.py`](../bird_mach/batch/progress.py) | Progress tracking for batch operations |
@@ -85,3 +85,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/observability/metrics_collector.py`](../bird_mach/observability/metrics_collector.py) | Prometheus-style metrics collection |
 | [`bird_mach/observability/sla_tracker.py`](../bird_mach/observability/sla_tracker.py) | SLA tracking and uptime monitoring |
 | [`bird_mach/observability/structured_logging.py`](../bird_mach/observability/structured_logging.py) | Structured JSON logging configuration |
+| [`bird_mach/observability/tracing.py`](../bird_mach/observability/tracing.py) | Distributed tracing support |
