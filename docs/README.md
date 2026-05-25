@@ -62,3 +62,4 @@
 | [enterprise/collaboration.md](enterprise/collaboration.md) | Collaboration Features |
 | [enterprise/dashboard.md](enterprise/dashboard.md) | Dashboard & Analytics |
 | [enterprise/data_export.md](enterprise/data_export.md) | Data Export |
+| [enterprise/email.md](enterprise/email.md) | Email |
