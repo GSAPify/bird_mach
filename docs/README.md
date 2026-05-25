@@ -125,3 +125,4 @@
 | [runbooks/scheduler.md](runbooks/scheduler.md) | Runbook: Scheduler |
 | [runbooks/search.md](runbooks/search.md) | Runbook: Search |
 | [runbooks/storage.md](runbooks/storage.md) | Runbook: Storage |
+| [runbooks/transcoding.md](runbooks/transcoding.md) | Runbook: Transcoding |
