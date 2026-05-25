@@ -74,3 +74,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/metrics.py`](../bird_mach/metrics.py) | Application metrics and counters |
 | [`bird_mach/middleware.py`](../bird_mach/middleware.py) | Custom FastAPI middleware for the Mach application |
 | [`bird_mach/ml/classifier.py`](../bird_mach/ml/classifier.py) | Audio genre/mood classifier |
+| [`bird_mach/ml/data_augmentation.py`](../bird_mach/ml/data_augmentation.py) | Audio data augmentation for ML training |
