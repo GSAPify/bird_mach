@@ -68,3 +68,4 @@
 | [enterprise/filtering.md](enterprise/filtering.md) | Filtering |
 | [enterprise/fingerprinting.md](enterprise/fingerprinting.md) | Audio Fingerprinting |
 | [enterprise/hashing.md](enterprise/hashing.md) | Hashing |
+| [enterprise/health_check.md](enterprise/health_check.md) | Health Check |
