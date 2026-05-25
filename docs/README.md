@@ -57,3 +57,4 @@
 | [enterprise/batch-processing.md](enterprise/batch-processing.md) | Batch Processing |
 | [enterprise/batch_processing.md](enterprise/batch_processing.md) | Batch Processing |
 | [enterprise/billing.md](enterprise/billing.md) | Billing |
+| [enterprise/caching.md](enterprise/caching.md) | Caching Architecture |
