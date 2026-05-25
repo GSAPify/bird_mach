@@ -11,3 +11,4 @@
 | [api-v1.md](api-v1.md) | REST API v1 reference |
 | [effects.md](effects.md) | Audio effects and transformations |
 | [pitch.md](pitch.md) | Pitch detection with pYIN |
+| [adr/0001-use-fastapi-for-api-framework.md](adr/0001-use-fastapi-for-api-framework.md) | ADR-0001: Use FastAPI for API Framework |
