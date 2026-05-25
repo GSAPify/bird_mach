@@ -73,3 +73,4 @@
 | [enterprise/image_resize.md](enterprise/image_resize.md) | Image Resize |
 | [enterprise/invoicing.md](enterprise/invoicing.md) | Invoicing |
 | [enterprise/jwt_auth.md](enterprise/jwt_auth.md) | Jwt Auth |
+| [enterprise/key_rotation.md](enterprise/key_rotation.md) | Key Rotation |
