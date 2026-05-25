@@ -61,3 +61,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/exporters.py`](../bird_mach/exporters.py) | Export audio analysis results to various formats |
 | [`bird_mach/favorites.py`](../bird_mach/favorites.py) | Favorites and bookmarks for audio files |
 | [`bird_mach/feature_concat.py`](../bird_mach/feature_concat.py) | Concatenate multiple per-frame features into a single matrix |
+| [`bird_mach/fingerprint/chromaprint.py`](../bird_mach/fingerprint/chromaprint.py) | Simplified chromaprint-style audio fingerprinting |
