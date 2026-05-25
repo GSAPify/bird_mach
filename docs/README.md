@@ -48,3 +48,4 @@
 | [deployment.md](deployment.md) | Deployment Guide |
 | [effects.md](effects.md) | Audio Effects |
 | [enterprise/accessibility.md](enterprise/accessibility.md) | Accessibility |
+| [enterprise/activity_feed.md](enterprise/activity_feed.md) | Activity Feed |
