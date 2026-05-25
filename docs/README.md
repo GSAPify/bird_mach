@@ -56,3 +56,4 @@
 | [enterprise/audit_log.md](enterprise/audit_log.md) | Audit Log |
 | [enterprise/batch-processing.md](enterprise/batch-processing.md) | Batch Processing |
 | [enterprise/batch_processing.md](enterprise/batch_processing.md) | Batch Processing |
+| [enterprise/billing.md](enterprise/billing.md) | Billing |
