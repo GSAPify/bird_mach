@@ -47,3 +47,4 @@
 | [clustering.md](clustering.md) | Clustering Audio Frames |
 | [deployment.md](deployment.md) | Deployment Guide |
 | [effects.md](effects.md) | Audio Effects |
+| [enterprise/accessibility.md](enterprise/accessibility.md) | Accessibility |
