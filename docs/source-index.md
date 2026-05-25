@@ -65,3 +65,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/fingerprint/dedup.py`](../bird_mach/fingerprint/dedup.py) | Audio deduplication using fingerprint comparison |
 | [`bird_mach/fingerprint/feature_hash.py`](../bird_mach/fingerprint/feature_hash.py) | Feature-based audio hashing for near-duplicate detection |
 | [`bird_mach/fingerprint/matcher.py`](../bird_mach/fingerprint/matcher.py) | Audio fingerprint matching and search |
+| [`bird_mach/fingerprint/shazam_like.py`](../bird_mach/fingerprint/shazam_like.py) | Constellation-based fingerprinting (Shazam-inspired) |
