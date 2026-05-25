@@ -20,3 +20,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/audio_formats/detector.py`](../bird_mach/audio_formats/detector.py) | Detect audio format from file headers |
 | [`bird_mach/audio_formats/metadata.py`](../bird_mach/audio_formats/metadata.py) | Audio file metadata extraction |
 | [`bird_mach/audio_formats/normalize.py`](../bird_mach/audio_formats/normalize.py) | Audio normalization utilities |
+| [`bird_mach/audio_utils.py`](../bird_mach/audio_utils.py) | Lightweight audio utility helpers — duration, format detection, normalization |
