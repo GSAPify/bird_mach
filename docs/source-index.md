@@ -48,3 +48,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/collaboration/versioning.py`](../bird_mach/collaboration/versioning.py) | Version control for audio analysis configurations |
 | [`bird_mach/compare.py`](../bird_mach/compare.py) | Compare two audio analysis summaries side by side |
 | [`bird_mach/config.py`](../bird_mach/config.py) | Application configuration loaded from environment variables |
+| [`bird_mach/constants.py`](../bird_mach/constants.py) | Application constants for Mach |
