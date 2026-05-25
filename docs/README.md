@@ -54,3 +54,4 @@
 | [enterprise/api_keys.md](enterprise/api_keys.md) | Api Keys |
 | [enterprise/audio_transcode.md](enterprise/audio_transcode.md) | Audio Transcode |
 | [enterprise/audit_log.md](enterprise/audit_log.md) | Audit Log |
+| [enterprise/batch-processing.md](enterprise/batch-processing.md) | Batch Processing |
