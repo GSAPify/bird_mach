@@ -105,3 +105,4 @@
 | [enterprise/team_mgmt.md](enterprise/team_mgmt.md) | Team Mgmt |
 | [enterprise/tracing.md](enterprise/tracing.md) | Tracing |
 | [enterprise/usage_metering.md](enterprise/usage_metering.md) | Usage Metering |
+| [enterprise/user_preferences.md](enterprise/user_preferences.md) | User Preferences |
