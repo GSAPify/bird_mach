@@ -62,3 +62,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/favorites.py`](../bird_mach/favorites.py) | Favorites and bookmarks for audio files |
 | [`bird_mach/feature_concat.py`](../bird_mach/feature_concat.py) | Concatenate multiple per-frame features into a single matrix |
 | [`bird_mach/fingerprint/chromaprint.py`](../bird_mach/fingerprint/chromaprint.py) | Simplified chromaprint-style audio fingerprinting |
+| [`bird_mach/fingerprint/dedup.py`](../bird_mach/fingerprint/dedup.py) | Audio deduplication using fingerprint comparison |
