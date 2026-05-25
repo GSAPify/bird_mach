@@ -27,3 +27,4 @@
 | [adr/0014-sendgrid-for-email-delivery.md](adr/0014-sendgrid-for-email-delivery.md) | ADR-0014: SendGrid for Email Delivery |
 | [adr/0015-terraform-for-infrastructure-as-code.md](adr/0015-terraform-for-infrastructure-as-code.md) | ADR-0015: Terraform for Infrastructure as Code |
 | [adr/0016-prometheus-for-metrics.md](adr/0016-prometheus-for-metrics.md) | ADR-0016: Prometheus for Metrics |
+| [adr/0017-grafana-for-dashboards.md](adr/0017-grafana-for-dashboards.md) | ADR-0017: Grafana for Dashboards |
