@@ -69,3 +69,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/genre.py`](../bird_mach/genre.py) | Lightweight genre hinting based on audio feature statistics |
 | [`bird_mach/history.py`](../bird_mach/history.py) | Analysis history tracking |
 | [`bird_mach/io/loaders.py`](../bird_mach/io/loaders.py) | Audio file loading with format detection and validation |
+| [`bird_mach/io/writers.py`](../bird_mach/io/writers.py) | Audio writing utilities |
