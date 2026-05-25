@@ -29,3 +29,4 @@
 | [adr/0016-prometheus-for-metrics.md](adr/0016-prometheus-for-metrics.md) | ADR-0016: Prometheus for Metrics |
 | [adr/0017-grafana-for-dashboards.md](adr/0017-grafana-for-dashboards.md) | ADR-0017: Grafana for Dashboards |
 | [adr/0018-sentry-for-error-tracking.md](adr/0018-sentry-for-error-tracking.md) | ADR-0018: Sentry for Error Tracking |
+| [adr/0019-docker-multi-stage-builds.md](adr/0019-docker-multi-stage-builds.md) | ADR-0019: Docker Multi-stage Builds |
