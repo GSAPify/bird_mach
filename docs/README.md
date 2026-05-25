@@ -97,3 +97,4 @@
 | [enterprise/sdk.md](enterprise/sdk.md) | Mach SDK |
 | [enterprise/search.md](enterprise/search.md) | Search |
 | [enterprise/signing.md](enterprise/signing.md) | Signing |
+| [enterprise/sms.md](enterprise/sms.md) | Sms |
