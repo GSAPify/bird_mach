@@ -33,3 +33,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/caching/strategy_v1.py`](../bird_mach/caching/strategy_v1.py) | Cache invalidation strategy variant 1 |
 | [`bird_mach/caching/strategy_v2.py`](../bird_mach/caching/strategy_v2.py) | Cache invalidation strategy variant 2 |
 | [`bird_mach/caching/strategy_v3.py`](../bird_mach/caching/strategy_v3.py) | Cache invalidation strategy variant 3 |
+| [`bird_mach/caching/tiered_cache.py`](../bird_mach/caching/tiered_cache.py) | Two-tier cache combining memory and disk layers |
