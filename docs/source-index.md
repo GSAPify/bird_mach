@@ -55,3 +55,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/dashboard/stats.py`](../bird_mach/dashboard/stats.py) | Dashboard statistics aggregation |
 | [`bird_mach/dashboard/usage_tracker.py`](../bird_mach/dashboard/usage_tracker.py) | Track API usage and quotas |
 | [`bird_mach/effects.py`](../bird_mach/effects.py) | Audio effects and transformations |
+| [`bird_mach/embedding.py`](../bird_mach/embedding.py) | Audio feature extraction, UMAP dimensionality reduction, and Plotly visualization |
