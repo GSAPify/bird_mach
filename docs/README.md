@@ -86,3 +86,4 @@
 | [enterprise/plugins.md](enterprise/plugins.md) | Plugin System |
 | [enterprise/project_mgmt.md](enterprise/project_mgmt.md) | Project Mgmt |
 | [enterprise/push.md](enterprise/push.md) | Push |
+| [enterprise/rate_limit.md](enterprise/rate_limit.md) | Rate Limit |
