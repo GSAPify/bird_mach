@@ -81,3 +81,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/notifications_service.py`](../bird_mach/notifications_service.py) | Notification dispatch service for Mach |
 | [`bird_mach/observability/audit_log.py`](../bird_mach/observability/audit_log.py) | Immutable audit log for security-sensitive operations |
 | [`bird_mach/observability/error_tracker.py`](../bird_mach/observability/error_tracker.py) | Centralized error tracking and aggregation |
+| [`bird_mach/observability/health_check.py`](../bird_mach/observability/health_check.py) | Health check endpoints and system status |
