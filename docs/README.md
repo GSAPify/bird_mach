@@ -124,3 +124,4 @@
 | [runbooks/render.md](runbooks/render.md) | Render Runbook |
 | [runbooks/scheduler.md](runbooks/scheduler.md) | Runbook: Scheduler |
 | [runbooks/search.md](runbooks/search.md) | Runbook: Search |
+| [runbooks/storage.md](runbooks/storage.md) | Runbook: Storage |
