@@ -102,3 +102,4 @@
 | [enterprise/sse.md](enterprise/sse.md) | Sse |
 | [enterprise/subscriptions.md](enterprise/subscriptions.md) | Subscriptions |
 | [enterprise/task_queue.md](enterprise/task_queue.md) | Task Queue |
+| [enterprise/team_mgmt.md](enterprise/team_mgmt.md) | Team Mgmt |
