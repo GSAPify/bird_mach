@@ -113,3 +113,4 @@
 | [pitch.md](pitch.md) | Pitch Detection |
 | [presets.md](presets.md) | Visualization Presets |
 | [runbooks/analytics.md](runbooks/analytics.md) | Runbook: Analytics |
+| [runbooks/api.md](runbooks/api.md) | Runbook: Api |
