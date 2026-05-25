@@ -95,3 +95,4 @@
 | [enterprise/reporting.md](enterprise/reporting.md) | Reporting |
 | [enterprise/scheduling.md](enterprise/scheduling.md) | Scheduling |
 | [enterprise/sdk.md](enterprise/sdk.md) | Mach SDK |
+| [enterprise/search.md](enterprise/search.md) | Search |
