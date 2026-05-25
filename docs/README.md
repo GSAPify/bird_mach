@@ -50,3 +50,4 @@
 | [enterprise/accessibility.md](enterprise/accessibility.md) | Accessibility |
 | [enterprise/activity_feed.md](enterprise/activity_feed.md) | Activity Feed |
 | [enterprise/alerting.md](enterprise/alerting.md) | Alerting |
+| [enterprise/analytics.md](enterprise/analytics.md) | Analytics |
