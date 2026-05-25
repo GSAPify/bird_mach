@@ -12,3 +12,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/api/responses.py`](../bird_mach/api/responses.py) | Standardized API response helpers |
 | [`bird_mach/api/routes.py`](../bird_mach/api/routes.py) | API v1 routes for programmatic access to Mach analysis |
 | [`bird_mach/api/schemas.py`](../bird_mach/api/schemas.py) | Pydantic schemas for the Mach REST API |
+| [`bird_mach/api/v2/filters.py`](../bird_mach/api/v2/filters.py) | Query filter parsing and application for API v2 |
