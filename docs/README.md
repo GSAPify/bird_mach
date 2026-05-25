@@ -25,3 +25,4 @@
 | [adr/0012-elasticsearch-for-search.md](adr/0012-elasticsearch-for-search.md) | ADR-0012: Elasticsearch for Search |
 | [adr/0013-stripe-for-payment-processing.md](adr/0013-stripe-for-payment-processing.md) | ADR-0013: Stripe for Payment Processing |
 | [adr/0014-sendgrid-for-email-delivery.md](adr/0014-sendgrid-for-email-delivery.md) | ADR-0014: SendGrid for Email Delivery |
+| [adr/0015-terraform-for-infrastructure-as-code.md](adr/0015-terraform-for-infrastructure-as-code.md) | ADR-0015: Terraform for Infrastructure as Code |
