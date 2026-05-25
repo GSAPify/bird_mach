@@ -23,3 +23,4 @@
 | [adr/0010-celery-for-background-tasks.md](adr/0010-celery-for-background-tasks.md) | ADR-0010: Celery for Background Tasks |
 | [adr/0011-websocket-for-real-time-updates.md](adr/0011-websocket-for-real-time-updates.md) | ADR-0011: WebSocket for Real-time Updates |
 | [adr/0012-elasticsearch-for-search.md](adr/0012-elasticsearch-for-search.md) | ADR-0012: Elasticsearch for Search |
+| [adr/0013-stripe-for-payment-processing.md](adr/0013-stripe-for-payment-processing.md) | ADR-0013: Stripe for Payment Processing |
