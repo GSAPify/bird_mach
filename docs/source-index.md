@@ -25,3 +25,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/batch/pipeline.py`](../bird_mach/batch/pipeline.py) | Configurable batch processing pipeline |
 | [`bird_mach/batch/progress.py`](../bird_mach/batch/progress.py) | Progress tracking for batch operations |
 | [`bird_mach/batch/queue.py`](../bird_mach/batch/queue.py) | Job queue for background batch processing |
+| [`bird_mach/batch/result_aggregator.py`](../bird_mach/batch/result_aggregator.py) | Aggregate results from batch processing runs |
