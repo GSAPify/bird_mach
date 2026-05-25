@@ -35,3 +35,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/caching/strategy_v3.py`](../bird_mach/caching/strategy_v3.py) | Cache invalidation strategy variant 3 |
 | [`bird_mach/caching/tiered_cache.py`](../bird_mach/caching/tiered_cache.py) | Two-tier cache combining memory and disk layers |
 | [`bird_mach/caching/warming.py`](../bird_mach/caching/warming.py) | Cache warming strategies |
+| [`bird_mach/cli/main.py`](../bird_mach/cli/main.py) | Unified CLI entry point for Mach audio tools |
