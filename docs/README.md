@@ -34,3 +34,4 @@
 | [adr/0021-event-driven-architecture.md](adr/0021-event-driven-architecture.md) | ADR-0021: Event-Driven Architecture |
 | [adr/0022-cqrs-pattern-for-read/write-separation.md](adr/0022-cqrs-pattern-for-read/write-separation.md) | ADR-0022: CQRS Pattern for Read/Write Separation |
 | [adr/0023-feature-flags-for-gradual-rollouts.md](adr/0023-feature-flags-for-gradual-rollouts.md) | ADR-0023: Feature Flags for Gradual Rollouts |
+| [adr/0024-rate-limiting-strategy.md](adr/0024-rate-limiting-strategy.md) | ADR-0024: Rate Limiting Strategy |
