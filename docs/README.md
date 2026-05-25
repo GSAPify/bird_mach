@@ -32,3 +32,4 @@
 | [adr/0019-docker-multi-stage-builds.md](adr/0019-docker-multi-stage-builds.md) | ADR-0019: Docker Multi-stage Builds |
 | [adr/0020-blue-green-deployment-strategy.md](adr/0020-blue-green-deployment-strategy.md) | ADR-0020: Blue-Green Deployment Strategy |
 | [adr/0021-event-driven-architecture.md](adr/0021-event-driven-architecture.md) | ADR-0021: Event-Driven Architecture |
+| [adr/0022-cqrs-pattern-for-read/write-separation.md](adr/0022-cqrs-pattern-for-read/write-separation.md) | ADR-0022: CQRS Pattern for Read/Write Separation |
