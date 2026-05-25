@@ -72,3 +72,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/io/writers.py`](../bird_mach/io/writers.py) | Audio writing utilities |
 | [`bird_mach/logging_config.py`](../bird_mach/logging_config.py) | Centralized logging configuration for the Mach application |
 | [`bird_mach/metrics.py`](../bird_mach/metrics.py) | Application metrics and counters |
+| [`bird_mach/middleware.py`](../bird_mach/middleware.py) | Custom FastAPI middleware for the Mach application |
