@@ -120,3 +120,4 @@
 | [runbooks/database.md](runbooks/database.md) | Runbook: Database |
 | [runbooks/monitoring.md](runbooks/monitoring.md) | Runbook: Monitoring |
 | [runbooks/notifications.md](runbooks/notifications.md) | Runbook: Notifications |
+| [runbooks/proxy.md](runbooks/proxy.md) | Runbook: Proxy |
