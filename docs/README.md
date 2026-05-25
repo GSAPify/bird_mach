@@ -59,3 +59,4 @@
 | [enterprise/billing.md](enterprise/billing.md) | Billing |
 | [enterprise/caching.md](enterprise/caching.md) | Caching Architecture |
 | [enterprise/collaboration-api.md](enterprise/collaboration-api.md) | Collaboration API |
+| [enterprise/collaboration.md](enterprise/collaboration.md) | Collaboration Features |
