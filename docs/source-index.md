@@ -18,3 +18,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/api/v2/versioning.py`](../bird_mach/api/v2/versioning.py) | Reference for api v2 versioning |
 | [`bird_mach/audio_formats/converter.py`](../bird_mach/audio_formats/converter.py) | Audio format conversion utilities |
 | [`bird_mach/audio_formats/detector.py`](../bird_mach/audio_formats/detector.py) | Detect audio format from file headers |
+| [`bird_mach/audio_formats/metadata.py`](../bird_mach/audio_formats/metadata.py) | Audio file metadata extraction |
