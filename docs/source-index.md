@@ -47,3 +47,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/collaboration/sharing.py`](../bird_mach/collaboration/sharing.py) | Audio sharing and link generation |
 | [`bird_mach/collaboration/versioning.py`](../bird_mach/collaboration/versioning.py) | Version control for audio analysis configurations |
 | [`bird_mach/compare.py`](../bird_mach/compare.py) | Compare two audio analysis summaries side by side |
+| [`bird_mach/config.py`](../bird_mach/config.py) | Application configuration loaded from environment variables |
