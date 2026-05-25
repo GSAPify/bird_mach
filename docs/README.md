@@ -22,3 +22,4 @@
 | [adr/0009-pydantic-for-data-validation.md](adr/0009-pydantic-for-data-validation.md) | ADR-0009: Pydantic for Data Validation |
 | [adr/0010-celery-for-background-tasks.md](adr/0010-celery-for-background-tasks.md) | ADR-0010: Celery for Background Tasks |
 | [adr/0011-websocket-for-real-time-updates.md](adr/0011-websocket-for-real-time-updates.md) | ADR-0011: WebSocket for Real-time Updates |
+| [adr/0012-elasticsearch-for-search.md](adr/0012-elasticsearch-for-search.md) | ADR-0012: Elasticsearch for Search |
