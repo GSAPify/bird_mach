@@ -81,3 +81,4 @@
 | [enterprise/notifications.md](enterprise/notifications.md) | Notifications |
 | [enterprise/oauth2.md](enterprise/oauth2.md) | Oauth2 |
 | [enterprise/observability.md](enterprise/observability.md) | Observability |
+| [enterprise/pagination.md](enterprise/pagination.md) | Pagination |
