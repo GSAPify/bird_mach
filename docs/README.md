@@ -126,3 +126,4 @@
 | [runbooks/search.md](runbooks/search.md) | Runbook: Search |
 | [runbooks/storage.md](runbooks/storage.md) | Runbook: Storage |
 | [runbooks/transcoding.md](runbooks/transcoding.md) | Runbook: Transcoding |
+| [runbooks/websocket.md](runbooks/websocket.md) | Runbook: Websocket |
