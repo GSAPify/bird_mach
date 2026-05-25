@@ -46,3 +46,4 @@ This index maps notable runtime modules to their purpose so contributors can fin
 | [`bird_mach/collaboration/rooms.py`](../bird_mach/collaboration/rooms.py) | Collaboration rooms for shared audio analysis sessions |
 | [`bird_mach/collaboration/sharing.py`](../bird_mach/collaboration/sharing.py) | Audio sharing and link generation |
 | [`bird_mach/collaboration/versioning.py`](../bird_mach/collaboration/versioning.py) | Version control for audio analysis configurations |
+| [`bird_mach/compare.py`](../bird_mach/compare.py) | Compare two audio analysis summaries side by side |
