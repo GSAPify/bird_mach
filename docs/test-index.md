@@ -14,3 +14,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/audio_formats/test_detector.py`](../tests/audio_formats/test_detector.py) | Tests for format detection |
 | [`tests/audio_formats/test_normalize.py`](../tests/audio_formats/test_normalize.py) | Tests for normalization |
 | [`tests/batch/test_pipeline.py`](../tests/batch/test_pipeline.py) | Tests for batch pipeline |
+| [`tests/batch/test_progress.py`](../tests/batch/test_progress.py) | Tests for batch progress |
