@@ -56,3 +56,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/api_v2_endpoints/test_integration_testing.py`](../tests/enterprise/api_v2_endpoints/test_integration_testing.py) | Reference for tests/enterprise/api_v2_endpoints/test_integration_testing.py |
 | [`tests/enterprise/api_v2_endpoints/test_local_storage.py`](../tests/enterprise/api_v2_endpoints/test_local_storage.py) | Reference for tests/enterprise/api_v2_endpoints/test_local_storage.py |
 | [`tests/enterprise/api_v2_endpoints/test_video_thumb.py`](../tests/enterprise/api_v2_endpoints/test_video_thumb.py) | Reference for tests/enterprise/api_v2_endpoints/test_video_thumb.py |
+| [`tests/enterprise/api_v2_middleware/test_encryption.py`](../tests/enterprise/api_v2_middleware/test_encryption.py) | Reference for tests/enterprise/api_v2_middleware/test_encryption.py |
