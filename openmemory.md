@@ -34,3 +34,4 @@ contains the `bird_mach` package, a broad `tests` suite, project docs under
 - For large commit batches, keep changes real and reviewable; documentation
   index updates are lower risk than runtime changes when the goal is history
   maintenance.
+- `docs/test-index.md` maps representative test files to their coverage areas.

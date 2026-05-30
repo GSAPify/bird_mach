@@ -128,3 +128,4 @@
 | [runbooks/transcoding.md](runbooks/transcoding.md) | Runbook: Transcoding |
 | [runbooks/websocket.md](runbooks/websocket.md) | Runbook: Websocket |
 | [runbooks/worker.md](runbooks/worker.md) | Runbook: Worker |
+| [test-index.md](test-index.md) | Test coverage map for representative regression suites |
