@@ -37,3 +37,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/dashboard/test_usage.py`](../tests/dashboard/test_usage.py) | Tests for usage tracker |
 | [`tests/enterprise/admin/test_blue_green.py`](../tests/enterprise/admin/test_blue_green.py) | Reference for tests/enterprise/admin/test_blue_green.py |
 | [`tests/enterprise/admin/test_db_backup.py`](../tests/enterprise/admin/test_db_backup.py) | Reference for tests/enterprise/admin/test_db_backup.py |
+| [`tests/enterprise/admin/test_integration_testing.py`](../tests/enterprise/admin/test_integration_testing.py) | Reference for tests/enterprise/admin/test_integration_testing.py |
