@@ -39,3 +39,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/admin/test_db_backup.py`](../tests/enterprise/admin/test_db_backup.py) | Reference for tests/enterprise/admin/test_db_backup.py |
 | [`tests/enterprise/admin/test_integration_testing.py`](../tests/enterprise/admin/test_integration_testing.py) | Reference for tests/enterprise/admin/test_integration_testing.py |
 | [`tests/enterprise/admin/test_memcached.py`](../tests/enterprise/admin/test_memcached.py) | Reference for tests/enterprise/admin/test_memcached.py |
+| [`tests/enterprise/admin/test_rate_limit.py`](../tests/enterprise/admin/test_rate_limit.py) | Reference for tests/enterprise/admin/test_rate_limit.py |
