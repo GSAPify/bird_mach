@@ -28,3 +28,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/collaboration/test_rooms.py`](../tests/collaboration/test_rooms.py) | Tests for collaboration rooms |
 | [`tests/collaboration/test_sharing.py`](../tests/collaboration/test_sharing.py) | Tests for sharing service |
 | [`tests/collaboration/test_versioning.py`](../tests/collaboration/test_versioning.py) | Tests for config versioning |
+| [`tests/conftest.py`](../tests/conftest.py) | Shared fixtures for Mach test suite |
