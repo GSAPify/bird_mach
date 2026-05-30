@@ -50,3 +50,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/api_v2/test_websockets.py`](../tests/enterprise/api_v2/test_websockets.py) | Reference for tests/enterprise/api_v2/test_websockets.py |
 | [`tests/enterprise/api_v2_auth/test_api_keys.py`](../tests/enterprise/api_v2_auth/test_api_keys.py) | Reference for tests/enterprise/api_v2_auth/test_api_keys.py |
 | [`tests/enterprise/api_v2_auth/test_distributed_cache.py`](../tests/enterprise/api_v2_auth/test_distributed_cache.py) | Reference for tests/enterprise/api_v2_auth/test_distributed_cache.py |
+| [`tests/enterprise/api_v2_auth/test_unit_testing.py`](../tests/enterprise/api_v2_auth/test_unit_testing.py) | Reference for tests/enterprise/api_v2_auth/test_unit_testing.py |
