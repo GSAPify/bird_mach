@@ -18,3 +18,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/batch/test_queue.py`](../tests/batch/test_queue.py) | Tests for job queue |
 | [`tests/batch/test_scanner.py`](../tests/batch/test_scanner.py) | Tests for file scanner |
 | [`tests/caching/test_cache_key.py`](../tests/caching/test_cache_key.py) | Tests for cache key generation |
+| [`tests/caching/test_disk_cache.py`](../tests/caching/test_disk_cache.py) | Tests for disk cache |
