@@ -63,3 +63,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/audit/test_distributed_cache.py`](../tests/enterprise/audit/test_distributed_cache.py) | Reference for tests/enterprise/audit/test_distributed_cache.py |
 | [`tests/enterprise/auth/test_blue_green.py`](../tests/enterprise/auth/test_blue_green.py) | Reference for tests/enterprise/auth/test_blue_green.py |
 | [`tests/enterprise/auth/test_ci_pipeline.py`](../tests/enterprise/auth/test_ci_pipeline.py) | Reference for tests/enterprise/auth/test_ci_pipeline.py |
+| [`tests/enterprise/auth/test_ml_inference.py`](../tests/enterprise/auth/test_ml_inference.py) | Reference for tests/enterprise/auth/test_ml_inference.py |
