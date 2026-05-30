@@ -35,3 +35,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/dashboard/test_leaderboard.py`](../tests/dashboard/test_leaderboard.py) | Tests for leaderboard |
 | [`tests/dashboard/test_stats.py`](../tests/dashboard/test_stats.py) | Tests for stats aggregator |
 | [`tests/dashboard/test_usage.py`](../tests/dashboard/test_usage.py) | Tests for usage tracker |
+| [`tests/enterprise/admin/test_blue_green.py`](../tests/enterprise/admin/test_blue_green.py) | Reference for tests/enterprise/admin/test_blue_green.py |
