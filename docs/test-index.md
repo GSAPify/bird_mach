@@ -52,3 +52,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/api_v2_auth/test_distributed_cache.py`](../tests/enterprise/api_v2_auth/test_distributed_cache.py) | Reference for tests/enterprise/api_v2_auth/test_distributed_cache.py |
 | [`tests/enterprise/api_v2_auth/test_unit_testing.py`](../tests/enterprise/api_v2_auth/test_unit_testing.py) | Reference for tests/enterprise/api_v2_auth/test_unit_testing.py |
 | [`tests/enterprise/api_v2_endpoints/test_file_upload.py`](../tests/enterprise/api_v2_endpoints/test_file_upload.py) | Reference for tests/enterprise/api_v2_endpoints/test_file_upload.py |
+| [`tests/enterprise/api_v2_endpoints/test_hook_registry.py`](../tests/enterprise/api_v2_endpoints/test_hook_registry.py) | Reference for tests/enterprise/api_v2_endpoints/test_hook_registry.py |
