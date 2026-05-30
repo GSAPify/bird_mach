@@ -43,3 +43,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/analytics/test_audio_transcode.py`](../tests/enterprise/analytics/test_audio_transcode.py) | Reference for tests/enterprise/analytics/test_audio_transcode.py |
 | [`tests/enterprise/analytics/test_plugin_system.py`](../tests/enterprise/analytics/test_plugin_system.py) | Reference for tests/enterprise/analytics/test_plugin_system.py |
 | [`tests/enterprise/api_v2/test_caching.py`](../tests/enterprise/api_v2/test_caching.py) | Reference for tests/enterprise/api_v2/test_caching.py |
+| [`tests/enterprise/api_v2/test_gcs_storage.py`](../tests/enterprise/api_v2/test_gcs_storage.py) | Reference for tests/enterprise/api_v2/test_gcs_storage.py |
