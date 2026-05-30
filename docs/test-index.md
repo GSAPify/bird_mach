@@ -30,3 +30,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/collaboration/test_versioning.py`](../tests/collaboration/test_versioning.py) | Tests for config versioning |
 | [`tests/conftest.py`](../tests/conftest.py) | Shared fixtures for Mach test suite |
 | [`tests/conftest_enterprise.py`](../tests/conftest_enterprise.py) | Enterprise test configuration |
+| [`tests/dashboard/test_activity.py`](../tests/dashboard/test_activity.py) | Tests for activity feed |
