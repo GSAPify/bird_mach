@@ -8,11 +8,12 @@ from io import StringIO
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 
 def to_json(data: dict[str, Any], *, indent: int = 2) -> str:
     """Serialize analysis results to a JSON string."""
     def _default(obj: Any) -> Any:
-        import numpy as np
         if isinstance(obj, np.ndarray):
             return obj.tolist()
         if isinstance(obj, np.floating):
@@ -46,8 +47,6 @@ def features_to_csv(
     Returns:
         CSV string with header row.
     """
-    import numpy as np
-
     buf = StringIO()
     writer = csv.writer(buf)
     header = ["time_s", *columns.keys()]
