@@ -35,6 +35,15 @@ def estimate_pitch(
         fmin: Minimum expected frequency (default C2).
         fmax: Maximum expected frequency (default C7).
     """
+    if y.size == 0:
+        empty = np.array([], dtype=np.float32)
+        return PitchResult(
+            f0=empty,
+            voiced_flag=np.array([], dtype=np.bool_),
+            times_s=empty,
+            median_hz=0.0,
+            confidence=0.0,
+        )
     f0, voiced, _ = librosa.pyin(
         y, fmin=fmin, fmax=fmax, sr=sr, hop_length=hop_length
     )
