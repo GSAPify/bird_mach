@@ -20,6 +20,13 @@ class AppMetrics:
     def uptime_s(self) -> float:
         return time.time() - self._start_time
 
+    @property
+    def error_rate(self) -> float:
+        """Fraction of requests that resulted in an error (0.0–1.0)."""
+        if self.requests_total == 0:
+            return 0.0
+        return self.errors_total / self.requests_total
+
     def record_request(self) -> None:
         self.requests_total += 1
 
@@ -35,6 +42,7 @@ class AppMetrics:
             "requests_total": self.requests_total,
             "analyses_total": self.analyses_total,
             "errors_total": self.errors_total,
+            "error_rate": round(self.error_rate, 4),
             "audio_seconds_processed": round(self.total_audio_seconds_processed, 1),
             "uptime_s": round(self.uptime_s, 1),
         }
