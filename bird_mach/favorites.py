@@ -14,8 +14,8 @@ class FavoritesManager:
         self._favorites[user_id].pop(audio_id, None)
 
     def get(self, user_id: str) -> list[str]:
-        return sorted(self._favorites[user_id].keys(),
-                      key=lambda k: self._favorites[user_id][k], reverse=True)
+        stamps = self._favorites.get(user_id, {})
+        return sorted(stamps, key=lambda k: stamps[k], reverse=True)
 
     def is_favorite(self, user_id: str, audio_id: str) -> bool:
         return audio_id in self._favorites.get(user_id, {})
