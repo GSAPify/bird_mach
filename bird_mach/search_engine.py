@@ -1,7 +1,6 @@
 """Full-text search across audio metadata and analyses."""
 from __future__ import annotations
 from dataclasses import dataclass
-import re
 
 @dataclass
 class SearchResult:
@@ -27,6 +26,8 @@ class AudioSearchEngine:
 
     def search(self, query: str, limit: int = 20) -> list[SearchResult]:
         terms = query.lower().split()
+        if not terms:
+            return []
         results = []
         for doc_id, doc in self._documents.items():
             text = f"{doc['title']} {doc['content']}".lower()
