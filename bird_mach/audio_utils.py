@@ -37,6 +37,8 @@ def probe_audio(path: Path, *, sr: int | None = None) -> AudioInfo:
 
 def normalize_waveform(y: np.ndarray) -> np.ndarray:
     """Peak-normalize a waveform to [-1, 1]."""
+    if y.size == 0:
+        return y
     peak = np.max(np.abs(y))
     if peak < 1e-8:
         return y

@@ -18,6 +18,8 @@ def concat_features(*arrays: np.ndarray, align: str = "min") -> np.ndarray:
     Returns:
         Combined feature matrix of shape (n_frames, total_features).
     """
+    if not arrays:
+        raise ValueError("concat_features requires at least one array")
     normalized = []
     for arr in arrays:
         if arr.ndim == 1:

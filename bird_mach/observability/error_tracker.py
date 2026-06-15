@@ -1,6 +1,5 @@
 """Centralized error tracking and aggregation."""
 from __future__ import annotations
-from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime
 
@@ -31,6 +30,11 @@ class ErrorTracker:
 
     def top_errors(self, n: int = 10) -> list[TrackedError]:
         return sorted(self._errors.values(), key=lambda e: -e.count)[:n]
+
+    def reset(self) -> None:
+        """Clear all tracked errors and reset the total counter."""
+        self._errors.clear()
+        self._total = 0
 
     @property
     def total_errors(self) -> int:

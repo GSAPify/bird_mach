@@ -11,6 +11,10 @@ class RateLimitResult:
 
 class TokenBucketLimiter:
     def __init__(self, capacity: int = 100, refill_rate: float = 10.0):
+        if capacity < 1:
+            raise ValueError("capacity must be at least 1")
+        if refill_rate <= 0:
+            raise ValueError("refill_rate must be positive")
         self._capacity = capacity
         self._refill_rate = refill_rate
         self._buckets: dict[str, tuple[float, float]] = {}

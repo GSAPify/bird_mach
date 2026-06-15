@@ -24,6 +24,20 @@ class WaveformStats:
 
 def compute_waveform_stats(y: np.ndarray, *, sr: int) -> WaveformStats:
     """Compute time-domain statistics without spectral analysis."""
+    if sr <= 0:
+        raise ValueError("sr must be positive")
+    if y.size == 0:
+        return WaveformStats(
+            peak=0.0,
+            rms=0.0,
+            crest_factor=0.0,
+            dynamic_range_db=0.0,
+            dc_offset=0.0,
+            zero_crossings=0,
+            duration_s=0.0,
+            sample_rate=sr,
+            n_samples=0,
+        )
     peak = float(np.max(np.abs(y)))
     rms = float(np.sqrt(np.mean(y ** 2)))
     crest = peak / rms if rms > 1e-10 else 0.0

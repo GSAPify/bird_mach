@@ -62,6 +62,8 @@ def extract_segment_audio(
     y: np.ndarray, segment: Segment, *, sr: int
 ) -> np.ndarray:
     """Extract the waveform slice for a given segment."""
-    start = int(segment.start_s * sr)
-    end = int(segment.end_s * sr)
+    start = max(0, int(segment.start_s * sr))
+    end = min(len(y), int(segment.end_s * sr))
+    if end <= start:
+        return y[:0]
     return y[start:end]

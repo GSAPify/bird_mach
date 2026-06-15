@@ -31,13 +31,21 @@ class TimingMiddleware(BaseHTTPMiddleware):
 
 
 class RequestIdMiddleware(BaseHTTPMiddleware):
-    """Inject a unique request ID into each request for tracing."""
+    """Inject a unique request ID into each request for tracing.
+
+    Honors an inbound ``X-Request-Id`` header (e.g. from an upstream proxy)
+    so a single ID flows through the whole call chain, and exposes the ID on
+    ``request.state`` for downstream handlers and loggers.
+    """
 
     _counter: int = 0
 
     async def dispatch(self, request: Request, call_next) -> Response:
-        RequestIdMiddleware._counter += 1
-        request_id = f"req-{RequestIdMiddleware._counter:08d}"
+        request_id = request.headers.get("X-Request-Id")
+        if not request_id:
+            RequestIdMiddleware._counter += 1
+            request_id = f"req-{RequestIdMiddleware._counter:08d}"
+        request.state.request_id = request_id
         response = await call_next(request)
         response.headers["X-Request-Id"] = request_id
         return response

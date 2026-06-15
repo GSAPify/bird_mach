@@ -26,7 +26,9 @@ def cluster_kmeans(
     X: np.ndarray, *, n_clusters: int = 5, random_state: int = 42
 ) -> ClusterResult:
     """Cluster feature vectors using K-Means."""
-    n_clusters = min(n_clusters, X.shape[0])
+    if X.shape[0] == 0:
+        raise ValueError("cannot cluster an empty feature matrix")
+    n_clusters = max(1, min(n_clusters, X.shape[0]))
     model = KMeans(n_clusters=n_clusters, random_state=random_state, n_init=10)
     labels = model.fit_predict(X)
     return ClusterResult(

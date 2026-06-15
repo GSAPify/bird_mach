@@ -60,3 +60,9 @@ class NotificationService:
 
     def unread_count(self, user_id: str) -> int:
         return len(self.get_unread(user_id))
+
+    def clear(self, user_id: str) -> int:
+        """Remove all notifications for a user. Returns the number removed."""
+        removed = len(self._notifications.get(user_id, []))
+        self._notifications.pop(user_id, None)
+        return removed

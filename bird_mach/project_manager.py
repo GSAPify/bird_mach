@@ -48,8 +48,12 @@ class ProjectManager:
             return True
         return False
 
+    def delete(self, project_id: str) -> bool:
+        return self._projects.pop(project_id, None) is not None
+
     def search(self, query: str) -> list[AudioProject]:
         q = query.lower()
         return [p for p in self._projects.values()
-                if q in p.name.lower() or q in p.description.lower()
-                or any(q in t for t in p.tags)]
+                if not p.is_archived
+                and (q in p.name.lower() or q in p.description.lower()
+                     or any(q in t.lower() for t in p.tags))]

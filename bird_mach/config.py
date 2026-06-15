@@ -13,7 +13,16 @@ def _env_bool(name: str, default: bool = False) -> bool:
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
-def _env_int(name: str, default: int, *, minimum: int | None = None) -> int:
+_VALID_LOG_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
+
+
+def _env_int(
+    name: str,
+    default: int,
+    *,
+    minimum: int | None = None,
+    maximum: int | None = None,
+) -> int:
     raw = os.getenv(name)
     if raw is None:
         value = default
@@ -23,8 +32,15 @@ def _env_int(name: str, default: int, *, minimum: int | None = None) -> int:
         except ValueError:
             value = default
     if minimum is not None:
-        return max(minimum, value)
+        value = max(minimum, value)
+    if maximum is not None:
+        value = min(maximum, value)
     return value
+
+
+def _env_log_level(name: str, default: str) -> str:
+    raw = os.getenv(name, default).strip().upper()
+    return raw if raw in _VALID_LOG_LEVELS else default
 
 
 def _env_csv(name: str, default: str) -> tuple[str, ...]:
@@ -54,7 +70,7 @@ class AppConfig:
             host=os.getenv("HOST", "0.0.0.0"),
             port=_env_int("PORT", 8000, minimum=1),
             environment=os.getenv("ENVIRONMENT", "development"),
-            log_level=os.getenv("LOG_LEVEL", "INFO"),
+            log_level=_env_log_level("LOG_LEVEL", "INFO"),
             log_json=_env_bool("LOG_JSON"),
             max_upload_mb=_env_int("MAX_UPLOAD_MB", 50, minimum=1),
             max_audio_duration_s=_env_int("MAX_AUDIO_DURATION_S", 600, minimum=1),

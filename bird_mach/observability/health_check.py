@@ -2,6 +2,7 @@
 from __future__ import annotations
 import time
 import platform
+from collections.abc import Callable
 from dataclasses import dataclass
 
 @dataclass
@@ -20,9 +21,9 @@ class HealthChecker:
     def __init__(self, version: str = "0.5.0"):
         self._version = version
         self._start_time = time.time()
-        self._checks: dict[str, callable] = {}
+        self._checks: dict[str, Callable[[], bool]] = {}
 
-    def register_check(self, name: str, check_fn) -> None:
+    def register_check(self, name: str, check_fn: Callable[[], bool]) -> None:
         self._checks[name] = check_fn
 
     def run(self) -> HealthStatus:

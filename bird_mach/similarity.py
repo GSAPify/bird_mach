@@ -34,13 +34,19 @@ def feature_distance_matrix(X: np.ndarray, metric: str = "euclidean") -> np.ndar
     Returns:
         Symmetric distance matrix of shape (n_samples, n_samples).
     """
-    n = X.shape[0]
-    D = np.zeros((n, n), dtype=np.float32)
-    metric_fn = {
+    metric_fns = {
         "euclidean": euclidean_distance,
         "cosine": lambda a, b: 1.0 - cosine_similarity(a, b),
         "manhattan": manhattan_distance,
-    }.get(metric, euclidean_distance)
+    }
+    if metric not in metric_fns:
+        raise ValueError(
+            f"unknown metric {metric!r}; expected one of {sorted(metric_fns)}"
+        )
+    metric_fn = metric_fns[metric]
+
+    n = X.shape[0]
+    D = np.zeros((n, n), dtype=np.float32)
 
     for i in range(n):
         for j in range(i + 1, n):
