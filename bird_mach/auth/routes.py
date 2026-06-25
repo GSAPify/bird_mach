@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
 
@@ -10,6 +12,7 @@ from bird_mach.auth.dependencies import get_audit_log, get_auth_service, get_cur
 from bird_mach.auth.models import User
 from bird_mach.auth.ratelimit import login_rate_limit
 from bird_mach.auth.service import AuthService
+from bird_mach.config import AppConfig
 from bird_mach.exceptions import (
     EmailAlreadyRegisteredError,
     InactiveUserError,
@@ -17,6 +20,9 @@ from bird_mach.exceptions import (
     TokenError,
     UserNotFoundError,
 )
+
+logger = logging.getLogger(__name__)
+config = AppConfig.from_env()
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -44,6 +50,15 @@ class RefreshRequest(BaseModel):
 
 class ChangePasswordRequest(BaseModel):
     current_password: str
+    new_password: str = Field(min_length=8, max_length=128)
+
+
+class PasswordResetRequest(BaseModel):
+    email: str
+
+
+class PasswordResetConfirm(BaseModel):
+    token: str
     new_password: str = Field(min_length=8, max_length=128)
 
 
@@ -98,6 +113,43 @@ def refresh(body: RefreshRequest, service: AuthService = Depends(get_auth_servic
         return service.refresh(body.refresh_token).as_dict()
     except (TokenError, UserNotFoundError, InactiveUserError) as exc:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid refresh token") from exc
+
+
+@router.post(
+    "/password-reset/request",
+    status_code=status.HTTP_202_ACCEPTED,
+    dependencies=[Depends(login_rate_limit)],
+)
+def request_password_reset(
+    body: PasswordResetRequest,
+    service: AuthService = Depends(get_auth_service),
+) -> dict:
+    """Begin a password reset. Always 202, regardless of whether the email exists.
+
+    In production the token would be emailed to the user. There is no email
+    provider wired here, so the token is logged and (in non-production only)
+    returned in the response for local testing.
+    """
+    token = service.request_password_reset(body.email)
+    if token is not None:
+        logger.info("password reset requested for %s", body.email)
+    response: dict = {"status": "accepted"}
+    if token is not None and not config.is_production:
+        response["debug_reset_token"] = token
+    return response
+
+
+@router.post("/password-reset/confirm", status_code=status.HTTP_204_NO_CONTENT)
+def confirm_password_reset(
+    body: PasswordResetConfirm,
+    service: AuthService = Depends(get_auth_service),
+) -> None:
+    try:
+        service.reset_password(body.token, body.new_password)
+    except (TokenError, UserNotFoundError) as exc:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid or expired reset token") from exc
+    except ValueError as exc:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc)) from exc
 
 
 @router.get("/me")

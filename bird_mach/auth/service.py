@@ -103,6 +103,29 @@ class AuthService:
             raise InactiveUserError(user.id)
         return self._issue_pair(user)
 
+    def request_password_reset(self, email: str) -> str | None:
+        """Issue a reset token for an active account, else None.
+
+        Returns None for unknown/inactive accounts so the caller can respond
+        identically regardless of whether the email exists (no enumeration).
+        """
+        user = self._repo.get_by_email(email.strip().lower())
+        if user is None or not user.is_active:
+            return None
+        return self._tokens.issue_password_reset(user.id, user.password_hash)
+
+    def reset_password(self, token: str, new_password: str) -> None:
+        """Consume a reset token and set a new password."""
+        subject = self._tokens.password_reset_subject(token)
+        user = self._repo.get(subject)
+        if user is None:
+            raise UserNotFoundError(subject)
+        # Binds the token to the current hash → using it invalidates the token.
+        self._tokens.verify_password_reset(token, user.password_hash)
+        _validate_password(new_password)
+        user.password_hash = hash_password(new_password)
+        self._repo.update(user)
+
     def change_password(self, user_id: str, current: str, new: str) -> None:
         user = self._require_user(user_id)
         if not verify_password(current, user.password_hash):

@@ -107,6 +107,55 @@ class TestProtectedRoutes:
         assert client.delete("/auth/me", headers=headers).status_code == 204
 
 
+class TestPasswordReset:
+    def test_request_always_accepted(self, client):
+        # Unknown email still returns 202 (no enumeration) with no token.
+        resp = client.post("/auth/password-reset/request", json={"email": "ghost@x.com"})
+        assert resp.status_code == 202
+        assert "debug_reset_token" not in resp.json()
+
+    def test_full_reset_flow(self, client):
+        client.post("/auth/register", json={"email": "a@b.com", "password": "supersecret"})
+        req = client.post("/auth/password-reset/request", json={"email": "a@b.com"})
+        token = req.json()["debug_reset_token"]  # surfaced in non-prod
+
+        resp = client.post(
+            "/auth/password-reset/confirm",
+            json={"token": token, "new_password": "brandnewsecret"},
+        )
+        assert resp.status_code == 204
+        # New password works; old one no longer does.
+        assert client.post(
+            "/auth/login", json={"email": "a@b.com", "password": "brandnewsecret"}
+        ).status_code == 200
+        assert client.post(
+            "/auth/login", json={"email": "a@b.com", "password": "supersecret"}
+        ).status_code == 401
+
+    def test_reset_token_single_use(self, client):
+        client.post("/auth/register", json={"email": "a@b.com", "password": "supersecret"})
+        token = client.post(
+            "/auth/password-reset/request", json={"email": "a@b.com"}
+        ).json()["debug_reset_token"]
+        client.post(
+            "/auth/password-reset/confirm",
+            json={"token": token, "new_password": "brandnewsecret"},
+        )
+        # Reusing the same token after the password changed must fail.
+        resp = client.post(
+            "/auth/password-reset/confirm",
+            json={"token": token, "new_password": "anothersecret1"},
+        )
+        assert resp.status_code == 400
+
+    def test_invalid_token_rejected(self, client):
+        resp = client.post(
+            "/auth/password-reset/confirm",
+            json={"token": "garbage", "new_password": "brandnewsecret"},
+        )
+        assert resp.status_code == 400
+
+
 class TestAuditEvents:
     def test_login_recorded_in_events(self, client):
         tokens = _register_and_login(client)

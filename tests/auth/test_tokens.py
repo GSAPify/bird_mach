@@ -59,6 +59,22 @@ class TestTokenService:
         with pytest.raises(TokenError):
             svc.verify(token)
 
+    def test_password_reset_roundtrip(self, svc):
+        token = svc.issue_password_reset("user-1", "hash-v1")
+        assert svc.verify_password_reset(token, "hash-v1") == "user-1"
+        assert svc.password_reset_subject(token) == "user-1"
+
+    def test_password_reset_invalidated_when_hash_changes(self, svc):
+        token = svc.issue_password_reset("user-1", "hash-v1")
+        # After the password (hash) changes, the old reset token is dead.
+        with pytest.raises(TokenError):
+            svc.verify_password_reset(token, "hash-v2")
+
+    def test_access_token_not_accepted_as_reset(self, svc):
+        access = svc.issue_access("user-1", "user")
+        with pytest.raises(TokenError):
+            svc.password_reset_subject(access)
+
     def test_foreign_issuer_rejected(self, svc):
         token = jwt.encode(
             {"sub": "x", "iss": "evil", "type": "access", "exp": 9_999_999_999},
