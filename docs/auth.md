@@ -56,6 +56,29 @@ python -c "import secrets; print(secrets.token_urlsafe(48))"
 | `GET`  | `/auth/me` | Bearer | Current user. |
 | `POST` | `/auth/change-password` | Bearer | Change password (verifies the current one). |
 | `DELETE` | `/auth/me` | Bearer | Delete the current account. |
+| `GET`  | `/auth/events` | Bearer | The user's recent security events (audit log). |
+| `POST` | `/auth/password-reset/request` | — | Begin a reset. Always 202 (no enumeration). |
+| `POST` | `/auth/password-reset/confirm` | — | Complete a reset with a token. |
+| `POST` | `/auth/verify-email/request` | Bearer | Issue an email-verification token. |
+| `POST` | `/auth/verify-email/confirm` | — | Confirm verification with a token. |
+
+Login and registration are rate-limited per client IP (token bucket) to blunt
+brute-force and enumeration. Login/register/password-change/deletion are
+written to a durable audit log.
+
+### Admin (requires the `admin` role)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET`  | `/auth/admin/users` | List users (paginated). |
+| `GET`  | `/auth/admin/users/{id}` | Inspect one user. |
+| `POST` | `/auth/admin/users/{id}/deactivate` | Deactivate an account. |
+| `POST` | `/auth/admin/users/{id}/activate` | Reactivate an account. |
+| `PUT`  | `/auth/admin/users/{id}/role` | Change a user's role. |
+
+> Password-reset and email-verification tokens are emailed in production. With
+> no email provider wired here, the token is logged and returned in the
+> response **only when `ENVIRONMENT` is not production**, for local testing.
 
 ### Example
 

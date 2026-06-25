@@ -50,6 +50,20 @@ and `incomplete` do not (`SubscriptionStatus.grants_access`).
 | `STRIPE_WEBHOOK_SECRET` | _(empty)_ | `whsec_…`; required to verify webhooks. |
 | `STRIPE_PRICE_PRO` | _(empty)_ | The Stripe Price ID backing the Pro plan. |
 
+## Endpoints
+
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| `GET`  | `/billing/plans` | — | The plan catalog. |
+| `GET`  | `/billing/subscription` | Bearer | Current subscription + entitlement. |
+| `POST` | `/billing/checkout` | Bearer | Start a hosted checkout for a plan. |
+| `POST` | `/billing/portal` | Bearer | Open the self-service billing portal. |
+| `POST` | `/billing/cancel` | Bearer | Cancel at the end of the current period. |
+| `GET`  | `/billing/invoices` | Bearer | The caller's recent invoices. |
+| `POST` | `/billing/webhook` | signature | Stripe webhook (verified before any state change). |
+
+Metered analysis and the premium batch route live under `/api/v1` (see below).
+
 ## Gating a premium feature
 
 ```python
