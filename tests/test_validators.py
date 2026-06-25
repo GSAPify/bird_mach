@@ -73,3 +73,9 @@ class TestSanitizeUrl:
 
     def test_strips_whitespace(self):
         assert sanitize_url("  https://example.com  ") == "https://example.com"
+
+    def test_accepts_uppercase_scheme(self):
+        assert sanitize_url("HTTP://example.com") == "HTTP://example.com"
+
+    def test_accepts_mixed_case_scheme(self):
+        assert sanitize_url("Https://example.com") == "Https://example.com"

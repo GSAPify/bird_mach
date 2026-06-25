@@ -36,6 +36,6 @@ def sanitize_url(url: str) -> str | None:
     url = url.strip()
     if not url:
         return None
-    if not url.startswith(("http://", "https://")):
+    if not url.lower().startswith(("http://", "https://")):
         return None
     return url
