@@ -13,6 +13,16 @@ DEFAULT_N_FFT = 2048
 DEFAULT_FADE_IN_S = 0.01
 DEFAULT_FADE_OUT_S = 0.05
 SUPPORTED_EXPORT_FORMATS = {"json", "csv", "tsv", "html", "md"}
+SUPPORTED_COLORSCALES = {
+    "Turbo",
+    "Viridis",
+    "Plasma",
+    "Inferno",
+    "Magma",
+    "Cividis",
+    "Hot",
+    "Electric",
+}
 MAX_COLLAB_PARTICIPANTS = 50
 MAX_ANNOTATIONS_PER_ROOM = 500
 DEFAULT_SHARE_EXPIRY_HOURS = 168
