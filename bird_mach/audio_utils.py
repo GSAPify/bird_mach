@@ -7,6 +7,7 @@ from pathlib import Path
 
 import librosa
 import numpy as np
+import soundfile as sf
 
 
 @dataclass(frozen=True)
@@ -26,12 +27,12 @@ class AudioInfo:
 def probe_audio(path: Path, *, sr: int | None = None) -> AudioInfo:
     """Return basic metadata for an audio file."""
     duration = librosa.get_duration(path=str(path))
-    info = librosa.get_samplerate(str(path))
+    file_info = sf.info(str(path))
     return AudioInfo(
         path=path,
         duration_s=duration,
-        sample_rate=sr or info,
-        channels=1,
+        sample_rate=sr or file_info.samplerate,
+        channels=file_info.channels,
     )
 
 

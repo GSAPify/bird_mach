@@ -2,8 +2,9 @@
 
 import numpy as np
 import pytest
+import soundfile as sf
 
-from bird_mach.audio_utils import AudioInfo, normalize_waveform, trim_silence
+from bird_mach.audio_utils import AudioInfo, normalize_waveform, probe_audio, trim_silence
 
 
 class TestNormalizeWaveform:
@@ -58,6 +59,36 @@ class TestAudioInfoSizeMb:
         info = AudioInfo(path=f, duration_s=0.1, sample_rate=22050, channels=1)
         expected_mb = 1024 / (1024 * 1024)
         assert abs(info.size_mb - expected_mb) < 1e-9
+
+
+class TestProbeAudio:
+    def test_mono_channel_count(self, tmp_path):
+        wav = tmp_path / "mono.wav"
+        data = np.zeros(22050, dtype=np.float32)
+        sf.write(str(wav), data, 22050)
+        info = probe_audio(wav)
+        assert info.channels == 1
+
+    def test_stereo_channel_count(self, tmp_path):
+        wav = tmp_path / "stereo.wav"
+        data = np.zeros((22050, 2), dtype=np.float32)
+        sf.write(str(wav), data, 22050)
+        info = probe_audio(wav)
+        assert info.channels == 2
+
+    def test_sample_rate_passthrough(self, tmp_path):
+        wav = tmp_path / "sr.wav"
+        data = np.zeros(16000, dtype=np.float32)
+        sf.write(str(wav), data, 16000)
+        info = probe_audio(wav, sr=8000)
+        assert info.sample_rate == 8000  # explicit sr overrides file sr
+
+    def test_sample_rate_from_file(self, tmp_path):
+        wav = tmp_path / "sr44.wav"
+        data = np.zeros(44100, dtype=np.float32)
+        sf.write(str(wav), data, 44100)
+        info = probe_audio(wav)
+        assert info.sample_rate == 44100
 
 
 class TestTrimSilence:
