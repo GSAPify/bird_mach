@@ -17,6 +17,8 @@ def to_json(data: dict[str, Any], *, indent: int = 2) -> str:
     def _default(obj: Any) -> Any:
         if isinstance(obj, np.ndarray):
             return obj.tolist()
+        if isinstance(obj, np.bool_):
+            return bool(obj)
         if isinstance(obj, np.floating):
             return float(obj)
         if isinstance(obj, np.integer):

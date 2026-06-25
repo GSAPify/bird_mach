@@ -27,6 +27,12 @@ class TestToJson:
         result = json.loads(to_json(original))
         assert result == original
 
+    def test_serializes_numpy_bool(self):
+        data = {"is_silent": np.bool_(False), "has_onset": np.bool_(True)}
+        result = json.loads(to_json(data))
+        assert result["is_silent"] is False
+        assert result["has_onset"] is True
+
 
 class TestFeaturesToCsv:
     def test_header_and_rows(self):
