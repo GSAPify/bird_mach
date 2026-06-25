@@ -17,5 +17,5 @@ def is_deprecated(version: str) -> bool:
 def deprecation_header(version: str) -> dict[str, str]:
     if is_deprecated(version):
         return {"Deprecation": "true", "Sunset": "2026-09-01",
-                "Link": "</api/v2>; rel="successor-version""}
+                "Link": '</api/v2>; rel="successor-version"'}
     return {}
