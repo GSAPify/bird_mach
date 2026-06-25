@@ -51,3 +51,4 @@ TRANSLATIONS = {
 "profile": "Perfil",
 
 "cancel": "Cancelar",
+}

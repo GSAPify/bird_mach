@@ -1,3 +1,4 @@
 """ZH translations."""
 
 TRANSLATIONS = {
+}

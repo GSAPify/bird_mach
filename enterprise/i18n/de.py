@@ -53,3 +53,4 @@ TRANSLATIONS = {
 "team": "Team",
 
 "search": "Suchen",
+}
