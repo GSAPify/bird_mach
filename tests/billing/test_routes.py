@@ -95,6 +95,23 @@ class TestCheckoutAndSubscription:
         assert resp.json()["entitled"] is False
 
 
+class TestInvoices:
+    def test_empty_without_customer(self, ctx):
+        client, headers, *_ = ctx
+        resp = client.get("/billing/invoices", headers=headers)
+        assert resp.status_code == 200
+        assert resp.json()["invoices"] == []
+
+    def test_lists_seeded_invoices(self, ctx):
+        client, headers, billing, users = ctx
+        client.post("/billing/checkout", json={"plan_id": "pro"}, headers=headers)
+        customer_id = users.get_by_email("a@b.com").stripe_customer_id
+        billing._provider.add_invoice(customer_id, {"id": "in_1", "amount_paid": 1900})
+        resp = client.get("/billing/invoices", headers=headers)
+        assert resp.status_code == 200
+        assert resp.json()["invoices"][0]["id"] == "in_1"
+
+
 class TestCancel:
     def test_cancel_requires_active_subscription(self, ctx):
         client, headers, *_ = ctx

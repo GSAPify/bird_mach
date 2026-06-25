@@ -78,6 +78,20 @@ def create_checkout(
     return {"checkout_url": session.url, "session_id": session.id}
 
 
+@router.get("/invoices")
+def list_invoices(
+    user: User = Depends(get_current_user),
+    billing: BillingService = Depends(get_billing_service),
+) -> dict:
+    """Return the caller's recent invoices."""
+    try:
+        invoices = billing.invoice_history(user)
+    except PaymentProviderError as exc:
+        logger.error("invoice history failed: %s", exc)
+        raise HTTPException(status.HTTP_502_BAD_GATEWAY, "Payment provider error") from exc
+    return {"invoices": invoices}
+
+
 @router.post("/cancel")
 def cancel_subscription(
     user: User = Depends(get_current_user),

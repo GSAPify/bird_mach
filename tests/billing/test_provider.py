@@ -57,3 +57,10 @@ class TestFakeProvider:
     def test_cancel_subscription_records_call(self, provider):
         provider.cancel_subscription("sub_1", at_period_end=True)
         assert provider.cancellations == [{"id": "sub_1", "at_period_end": True}]
+
+    def test_list_invoices_returns_seeded(self, provider):
+        assert provider.list_invoices("cus_1") == []
+        provider.add_invoice("cus_1", {"id": "in_1", "amount_paid": 1900})
+        provider.add_invoice("cus_1", {"id": "in_2", "amount_paid": 1900})
+        invoices = provider.list_invoices("cus_1")
+        assert [i["id"] for i in invoices] == ["in_2", "in_1"]  # newest first

@@ -54,6 +54,10 @@ class PaymentProvider(ABC):
         """Cancel a subscription, by default at the end of the paid period."""
 
     @abstractmethod
+    def list_invoices(self, customer_id: str, *, limit: int = 20) -> list[dict]:
+        """Return the customer's recent invoices, newest first."""
+
+    @abstractmethod
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
         """Verify a webhook signature and return the parsed event."""
 
@@ -72,6 +76,8 @@ class FakePaymentProvider(PaymentProvider):
         self.checkouts: list[dict] = []
         self.portal_sessions: list[dict] = []
         self.cancellations: list[dict] = []
+        # Pre-seeded by tests via add_invoice(); keyed by customer id.
+        self.invoices: dict[str, list[dict]] = {}
 
     def create_customer(self, email: str, *, metadata: dict | None = None) -> str:
         cid = f"cus_fake_{next(self._ids)}"
@@ -94,6 +100,13 @@ class FakePaymentProvider(PaymentProvider):
 
     def cancel_subscription(self, subscription_id: str, *, at_period_end: bool = True) -> None:
         self.cancellations.append({"id": subscription_id, "at_period_end": at_period_end})
+
+    def add_invoice(self, customer_id: str, invoice: dict) -> None:
+        """Test helper: seed an invoice for a customer."""
+        self.invoices.setdefault(customer_id, []).insert(0, invoice)
+
+    def list_invoices(self, customer_id: str, *, limit: int = 20) -> list[dict]:
+        return self.invoices.get(customer_id, [])[:limit]
 
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
         if signature != "valid":
@@ -155,6 +168,23 @@ class StripePaymentProvider(PaymentProvider):
                 self._stripe.Subscription.delete(subscription_id)
         except self._stripe.error.StripeError as exc:
             raise PaymentProviderError(f"cancel_subscription failed: {exc}") from exc
+
+    def list_invoices(self, customer_id: str, *, limit: int = 20) -> list[dict]:
+        try:
+            result = self._stripe.Invoice.list(customer=customer_id, limit=limit)
+        except self._stripe.error.StripeError as exc:
+            raise PaymentProviderError(f"list_invoices failed: {exc}") from exc
+        return [
+            {
+                "id": inv.id,
+                "amount_paid": inv.amount_paid,
+                "currency": inv.currency,
+                "status": inv.status,
+                "created": inv.created,
+                "hosted_invoice_url": getattr(inv, "hosted_invoice_url", None),
+            }
+            for inv in result.data
+        ]
 
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
         try:
