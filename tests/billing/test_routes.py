@@ -118,3 +118,15 @@ class TestWebhook:
             headers={"stripe-signature": "wrong"},
         )
         assert resp.status_code == 400
+
+    def test_webhook_unknown_customer_is_acknowledged(self, ctx):
+        # A valid-signature event for a customer with no local user is acked
+        # (200) and logged, not 4xx — otherwise Stripe retries forever.
+        client, *_ = ctx
+        resp = client.post(
+            "/billing/webhook",
+            content=_sub_event("cus_does_not_exist"),
+            headers={"stripe-signature": "valid"},
+        )
+        assert resp.status_code == 200
+        assert resp.text == "ignored:unknown_customer"

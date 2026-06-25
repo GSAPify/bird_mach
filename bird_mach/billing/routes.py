@@ -111,6 +111,10 @@ async def stripe_webhook(
         # 400 tells Stripe the event was rejected (bad signature / payload).
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid signature") from exc
     except UserNotFoundError as exc:
-        logger.error("webhook references unknown customer: %s", exc)
-        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "Unknown customer") from exc
+        # The signature is valid but no local user maps to this customer. That
+        # won't resolve on retry, and a non-2xx makes Stripe retry on a
+        # schedule (retry storm + dashboard alerts). Acknowledge (200) and log
+        # for investigation instead of asking Stripe to keep retrying.
+        logger.error("webhook references unknown customer, acknowledging: %s", exc)
+        result = "ignored:unknown_customer"
     return Response(content=result, media_type="text/plain")
