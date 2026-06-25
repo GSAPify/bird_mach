@@ -6,7 +6,8 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from bird_mach.auth.dependencies import get_auth_service
+from bird_mach.auth.audit import InMemoryAuditLog
+from bird_mach.auth.dependencies import get_audit_log, get_auth_service
 from bird_mach.auth.ratelimit import get_login_limiter
 from bird_mach.auth.routes import router
 from bird_mach.auth.service import AuthService
@@ -30,6 +31,8 @@ def client():
     app.dependency_overrides[get_login_limiter] = lambda: TokenBucketLimiter(
         capacity=1000, refill_rate=1000
     )
+    audit = InMemoryAuditLog()
+    app.dependency_overrides[get_audit_log] = lambda: audit
     return TestClient(app)
 
 
@@ -102,3 +105,24 @@ class TestProtectedRoutes:
         tokens = _register_and_login(client)
         headers = {"Authorization": f"Bearer {tokens['access_token']}"}
         assert client.delete("/auth/me", headers=headers).status_code == 204
+
+
+class TestAuditEvents:
+    def test_login_recorded_in_events(self, client):
+        tokens = _register_and_login(client)
+        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+        events = client.get("/auth/events", headers=headers).json()["events"]
+        kinds = {e["event_type"] for e in events}
+        assert "registered" in kinds
+        assert "login_success" in kinds
+
+    def test_password_change_recorded(self, client):
+        tokens = _register_and_login(client)
+        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+        client.post(
+            "/auth/change-password",
+            json={"current_password": "supersecret", "new_password": "newsupersecret"},
+            headers=headers,
+        )
+        events = client.get("/auth/events", headers=headers).json()["events"]
+        assert "password_changed" in {e["event_type"] for e in events}

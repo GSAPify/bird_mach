@@ -14,6 +14,7 @@ import secrets
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
+from bird_mach.auth.audit import AuditLog, SqliteAuditLog
 from bird_mach.auth.models import Role, User
 from bird_mach.auth.service import AuthService
 from bird_mach.auth.store import SqliteUserRepository, UserRepository
@@ -68,6 +69,16 @@ def get_user_repository() -> UserRepository:
     if _repo is None:
         _repo = SqliteUserRepository(Database(AppConfig.from_env().auth_db_path))
     return _repo
+
+
+_audit: SqliteAuditLog | None = None
+
+
+def get_audit_log() -> AuditLog:
+    global _audit
+    if _audit is None:
+        _audit = SqliteAuditLog(Database(AppConfig.from_env().auth_db_path))
+    return _audit
 
 
 def get_auth_service() -> AuthService:
