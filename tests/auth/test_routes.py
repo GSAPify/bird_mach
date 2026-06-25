@@ -88,6 +88,24 @@ class TestProtectedRoutes:
         assert resp.status_code == 200
         assert resp.json()["access_token"]
 
+    def test_logout_revokes_refresh(self, client):
+        tokens = _register_and_login(client)
+        assert client.post(
+            "/auth/logout", json={"refresh_token": tokens["refresh_token"]}
+        ).status_code == 204
+        # The refresh token can no longer be exchanged after logout.
+        assert client.post(
+            "/auth/refresh", json={"refresh_token": tokens["refresh_token"]}
+        ).status_code == 401
+
+    def test_logout_is_idempotent(self, client):
+        tokens = _register_and_login(client)
+        client.post("/auth/logout", json={"refresh_token": tokens["refresh_token"]})
+        # Logging out an already-revoked/garbage token is still 204.
+        assert client.post(
+            "/auth/logout", json={"refresh_token": "garbage"}
+        ).status_code == 204
+
     def test_change_password(self, client):
         tokens = _register_and_login(client)
         headers = {"Authorization": f"Bearer {tokens['access_token']}"}

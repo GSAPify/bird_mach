@@ -188,6 +188,19 @@ def confirm_email_verification(
     return {"status": "verified", "email": user.email, "is_verified": user.is_verified}
 
 
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+def logout(body: RefreshRequest, service: AuthService = Depends(get_auth_service)) -> None:
+    """Revoke a refresh token so it can no longer be exchanged.
+
+    Idempotent: an already-invalid token is treated as a successful logout
+    rather than an error.
+    """
+    try:
+        service.logout(body.refresh_token)
+    except TokenError:
+        return  # already expired/invalid — nothing to revoke
+
+
 @router.get("/me")
 def me(user: User = Depends(get_current_user)) -> dict:
     return user.public_dict()

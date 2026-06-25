@@ -14,6 +14,7 @@ a refresh token can never be replayed as an access token (and vice versa):
 from __future__ import annotations
 
 import hashlib
+import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 
@@ -46,6 +47,8 @@ class TokenClaims:
     role: str
     token_type: str
     expires_at: datetime
+    # Unique token id, used to revoke a specific token (e.g. on logout).
+    jti: str = ""
 
 
 class TokenService:
@@ -80,6 +83,7 @@ class TokenService:
             "sub": subject,
             "role": role,
             "type": token_type,
+            "jti": uuid.uuid4().hex,
             "iss": self._issuer,
             "iat": now,
             "exp": now + timedelta(seconds=ttl_s),
@@ -203,4 +207,5 @@ class TokenService:
             role=payload.get("role", "user"),
             token_type=payload["type"],
             expires_at=datetime.fromtimestamp(payload["exp"], tz=timezone.utc),
+            jti=payload.get("jti", ""),
         )

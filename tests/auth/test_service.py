@@ -84,6 +84,25 @@ class TestRefresh:
         with pytest.raises(TokenError):
             svc.refresh(pair.access_token)
 
+    def test_logout_revokes_refresh_token(self, svc):
+        from bird_mach.exceptions import TokenError
+
+        svc.register("a@b.com", "supersecret")
+        pair = svc.login("a@b.com", "supersecret")
+        # Works before logout.
+        svc.refresh(pair.refresh_token)
+        svc.logout(pair.refresh_token)
+        with pytest.raises(TokenError):
+            svc.refresh(pair.refresh_token)
+
+    def test_logout_does_not_affect_other_tokens(self, svc):
+        svc.register("a@b.com", "supersecret")
+        pair1 = svc.login("a@b.com", "supersecret")
+        pair2 = svc.login("a@b.com", "supersecret")
+        svc.logout(pair1.refresh_token)
+        # The second session's refresh token still works.
+        assert svc.refresh(pair2.refresh_token).access_token
+
 
 class TestAccountManagement:
     def test_change_password(self, svc):

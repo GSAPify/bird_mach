@@ -16,6 +16,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from bird_mach.auth.audit import AuditLog, SqliteAuditLog
 from bird_mach.auth.models import Role, User
+from bird_mach.auth.revocation import SqliteRevokedTokenStore
 from bird_mach.auth.service import AuthService
 from bird_mach.auth.store import SqliteUserRepository, UserRepository
 from bird_mach.auth.tokens import TokenService
@@ -54,7 +55,8 @@ def build_auth_service(config: AppConfig, repo: UserRepository | None = None) ->
         access_ttl_s=config.access_token_ttl_s,
         refresh_ttl_s=config.refresh_token_ttl_s,
     )
-    return AuthService(repo, tokens)
+    revoked = SqliteRevokedTokenStore(Database(config.auth_db_path))
+    return AuthService(repo, tokens, revoked)
 
 
 # Shared singletons for the running app. The user repository is shared with the

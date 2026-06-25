@@ -13,12 +13,14 @@ from dataclasses import dataclass
 
 from bird_mach.auth.models import Role, User
 from bird_mach.auth.passwords import hash_password, needs_rehash, verify_password
+from bird_mach.auth.revocation import InMemoryRevokedTokenStore, RevokedTokenStore
 from bird_mach.auth.store import UserRepository
 from bird_mach.auth.tokens import REFRESH_TOKEN, TokenService
 from bird_mach.exceptions import (
     EmailAlreadyRegisteredError,
     InactiveUserError,
     InvalidCredentialsError,
+    TokenError,
     UserNotFoundError,
 )
 
@@ -55,9 +57,16 @@ def _validate_password(password: str) -> None:
 
 
 class AuthService:
-    def __init__(self, repo: UserRepository, tokens: TokenService) -> None:
+    def __init__(
+        self,
+        repo: UserRepository,
+        tokens: TokenService,
+        revoked: RevokedTokenStore | None = None,
+    ) -> None:
         self._repo = repo
         self._tokens = tokens
+        # Default to a process-local denylist; deployments inject a durable one.
+        self._revoked = revoked if revoked is not None else InMemoryRevokedTokenStore()
 
     def register(self, email: str, password: str, *, role: Role = Role.USER) -> User:
         email = _validate_email(email)
@@ -96,12 +105,23 @@ class AuthService:
 
     def refresh(self, refresh_token: str) -> TokenPair:
         claims = self._tokens.verify(refresh_token, expected_type=REFRESH_TOKEN)
+        if self._revoked.is_revoked(claims.jti):
+            raise TokenError("refresh token has been revoked")
         user = self._repo.get(claims.subject)
         if user is None:
             raise UserNotFoundError(claims.subject)
         if not user.is_active:
             raise InactiveUserError(user.id)
         return self._issue_pair(user)
+
+    def logout(self, refresh_token: str) -> None:
+        """Revoke a refresh token so it can no longer be exchanged.
+
+        Verifying the token first means a malformed/expired token is a no-op
+        rather than polluting the denylist.
+        """
+        claims = self._tokens.verify(refresh_token, expected_type=REFRESH_TOKEN)
+        self._revoked.revoke(claims.jti, claims.expires_at)
 
     def request_password_reset(self, email: str) -> str | None:
         """Issue a reset token for an active account, else None.
