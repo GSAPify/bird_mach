@@ -17,6 +17,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from bird_mach.api.routes import router as api_router
 from bird_mach.auth.routes import router as auth_router
 from bird_mach.billing.routes import router as billing_router
 from bird_mach.config import AppConfig
@@ -57,6 +58,7 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 app.include_router(web_router)
+app.include_router(api_router)
 app.include_router(auth_router)
 app.include_router(billing_router)
 

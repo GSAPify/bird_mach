@@ -35,3 +35,9 @@ def test_plans_endpoint_serves():
 
 def test_protected_route_requires_auth():
     assert client.get("/auth/me").status_code == 401
+
+
+def test_api_v1_router_mounted():
+    paths = {route.path for route in app.routes}
+    assert "/api/v1/analyze" in paths
+    assert "/api/v1/health" in paths
