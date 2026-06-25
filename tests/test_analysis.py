@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import pytest
 import numpy as np
 
 from bird_mach.analysis import (
@@ -58,6 +59,28 @@ class TestSpectralBandwidth:
         bw = compute_spectral_bandwidth(sine_wave, sr=sample_rate)
         assert bw.ndim == 1
         assert bw.dtype == np.float32
+
+
+class TestInvalidSr:
+    """All sr-taking functions should raise ValueError for sr <= 0."""
+
+    Y = np.ones(22050, dtype=np.float32) * 0.1
+
+    def test_track_beats_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            track_beats(self.Y, sr=0)
+
+    def test_detect_onsets_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            detect_onsets(self.Y, sr=0)
+
+    def test_spectral_bandwidth_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            compute_spectral_bandwidth(self.Y, sr=0)
+
+    def test_summarize_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            summarize(self.Y, sr=0)
 
 
 class TestSummarize:
