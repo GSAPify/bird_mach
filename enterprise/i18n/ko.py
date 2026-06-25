@@ -27,3 +27,4 @@ TRANSLATIONS = {
 "cancel": "취소",
 
 "sort": "정렬",
+}

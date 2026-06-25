@@ -5,3 +5,4 @@ TRANSLATIONS = {
 "profile": "Profil",
 
 "filter": "Filtrer",
+}

@@ -7,3 +7,4 @@ TRANSLATIONS = {
 "error": "Error",
 
 "save": "Guardar",
+}
