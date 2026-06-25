@@ -151,6 +151,19 @@ class AnalysisSummary:
 
 def summarize(y: np.ndarray, *, sr: int) -> AnalysisSummary:
     """Run a full analysis pass and return an aggregated summary."""
+    if y.size == 0:
+        return AnalysisSummary(
+            duration_s=0.0,
+            sample_rate=sr,
+            rms_mean=0.0,
+            rms_max=0.0,
+            spectral_centroid_mean=0.0,
+            spectral_bandwidth_mean=0.0,
+            zero_crossing_rate_mean=0.0,
+            tempo_bpm=0.0,
+            onset_count=0,
+            tags=[],
+        )
     duration = float(len(y)) / sr
     rms = librosa.feature.rms(y=y).squeeze()
     centroid = librosa.feature.spectral_centroid(y=y, sr=sr).squeeze()

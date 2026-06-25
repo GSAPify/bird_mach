@@ -7,12 +7,14 @@ import numpy as np
 from bird_mach.analysis import (
     OnsetResult,
     BeatResult,
+    AnalysisSummary,
     detect_onsets,
     track_beats,
     compute_rms_energy,
     compute_zero_crossing_rate,
     compute_spectral_bandwidth,
     compute_spectral_rolloff,
+    summarize,
 )
 
 
@@ -56,6 +58,18 @@ class TestSpectralBandwidth:
         bw = compute_spectral_bandwidth(sine_wave, sr=sample_rate)
         assert bw.ndim == 1
         assert bw.dtype == np.float32
+
+
+class TestSummarize:
+    def test_empty_input_returns_zero_summary(self):
+        # Previously raised ValueError from librosa when given an empty array.
+        empty = np.array([], dtype=np.float32)
+        result = summarize(empty, sr=22050)
+        assert isinstance(result, AnalysisSummary)
+        assert result.duration_s == 0.0
+        assert result.rms_mean == 0.0
+        assert result.onset_count == 0
+        assert result.tags == []
 
 
 class TestSingleFrameOutputIsAlways1D:
