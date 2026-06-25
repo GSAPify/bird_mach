@@ -37,6 +37,12 @@ def apply_fade(
 
 
 def mix(y1: np.ndarray, y2: np.ndarray, *, ratio: float = 0.5) -> np.ndarray:
-    """Mix two audio signals. ratio=0.5 means equal blend."""
+    """Mix two audio signals. ratio=0.5 means equal blend.
+
+    Args:
+        ratio: Blend weight in [0.0, 1.0].  0.0 returns y2 only; 1.0 returns y1 only.
+    """
+    if not (0.0 <= ratio <= 1.0):
+        raise ValueError(f"ratio must be in [0.0, 1.0], got {ratio}")
     min_len = min(len(y1), len(y2))
     return (ratio * y1[:min_len] + (1.0 - ratio) * y2[:min_len]).astype(np.float32)

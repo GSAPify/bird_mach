@@ -1,5 +1,6 @@
 """Tests for bird_mach.effects."""
 
+import pytest
 import numpy as np
 
 from bird_mach.effects import apply_fade, mix
@@ -45,3 +46,20 @@ class TestMix:
         b = np.ones(50, dtype=np.float32)
         result = mix(a, b)
         assert len(result) == 50
+
+    def test_ratio_above_one_raises(self):
+        # ratio > 1 silently amplified signals past 1.0, causing hidden clipping.
+        a = np.ones(10, dtype=np.float32)
+        with pytest.raises(ValueError, match="ratio must be in"):
+            mix(a, a, ratio=1.5)
+
+    def test_ratio_below_zero_raises(self):
+        a = np.ones(10, dtype=np.float32)
+        with pytest.raises(ValueError, match="ratio must be in"):
+            mix(a, a, ratio=-0.1)
+
+    def test_boundary_ratios_accepted(self):
+        a = np.ones(10, dtype=np.float32)
+        b = np.zeros(10, dtype=np.float32)
+        assert np.allclose(mix(a, b, ratio=1.0), 1.0)
+        assert np.allclose(mix(a, b, ratio=0.0), 0.0)
