@@ -68,3 +68,17 @@ class TestProjectManager:
         p.add_audio("audio-1")
         p.add_audio("audio-1")
         assert p.audio_ids.count("audio-1") == 1
+
+    def test_create_empty_name_raises(self):
+        import pytest
+        pm = ProjectManager()
+        with pytest.raises(ValueError, match="name"):
+            pm.create("", "u1")
+        with pytest.raises(ValueError, match="name"):
+            pm.create("   ", "u1")
+
+    def test_create_empty_owner_raises(self):
+        import pytest
+        pm = ProjectManager()
+        with pytest.raises(ValueError, match="owner_id"):
+            pm.create("Valid Name", "")

@@ -27,6 +27,10 @@ class ProjectManager:
         self._projects: dict[str, AudioProject] = {}
 
     def create(self, name: str, owner_id: str, description: str = "") -> AudioProject:
+        if not name or not name.strip():
+            raise ValueError("project name must not be empty")
+        if not owner_id or not owner_id.strip():
+            raise ValueError("owner_id must not be empty")
         project = AudioProject(
             id=str(uuid.uuid4())[:8], name=name,
             owner_id=owner_id, description=description,
