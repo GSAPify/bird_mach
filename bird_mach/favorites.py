@@ -11,7 +11,8 @@ class FavoritesManager:
         self._favorites[user_id][audio_id] = datetime.now()
 
     def remove(self, user_id: str, audio_id: str) -> None:
-        self._favorites[user_id].pop(audio_id, None)
+        if user_id in self._favorites:
+            self._favorites[user_id].pop(audio_id, None)
 
     def get(self, user_id: str) -> list[str]:
         stamps = self._favorites.get(user_id, {})
