@@ -26,6 +26,8 @@ def compute_waveform_stats(y: np.ndarray, *, sr: int) -> WaveformStats:
     """Compute time-domain statistics without spectral analysis."""
     if sr <= 0:
         raise ValueError("sr must be positive")
+    if y.size > 0 and np.any(np.isnan(y)):
+        raise ValueError("y contains NaN values; clean the signal before analysis")
     if y.size == 0:
         return WaveformStats(
             peak=0.0,

@@ -38,6 +38,11 @@ class BeatResult:
     beat_count: int
 
 
+def _check_sr(sr: int) -> None:
+    if sr <= 0:
+        raise ValueError(f"sr must be positive, got {sr}")
+
+
 def track_beats(y: np.ndarray, *, sr: int) -> BeatResult:
     """Estimate tempo and locate beat positions.
 
@@ -47,6 +52,7 @@ def track_beats(y: np.ndarray, *, sr: int) -> BeatResult:
     the dedicated tempo estimator in that case so ``tempo_bpm`` reflects the
     signal's periodicity rather than the presence of detected beats.
     """
+    _check_sr(sr)
     tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
     tempo_bpm = float(np.atleast_1d(tempo)[0])
     if tempo_bpm <= 0.0:
@@ -63,6 +69,7 @@ def detect_onsets(
     y: np.ndarray, *, sr: int, hop_length: int = 512
 ) -> OnsetResult:
     """Detect note onsets and return their timestamps and strengths."""
+    _check_sr(sr)
     onset_env = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
     onset_frames = librosa.onset.onset_detect(
         onset_envelope=onset_env, sr=sr, hop_length=hop_length
@@ -84,7 +91,7 @@ def compute_rms_energy(
     Useful for detecting loud/quiet passages and as an envelope follower.
     """
     rms = librosa.feature.rms(y=y, hop_length=hop_length)
-    return rms.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(rms.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_zero_crossing_rate(
@@ -92,25 +99,27 @@ def compute_zero_crossing_rate(
 ) -> np.ndarray:
     """Compute per-frame zero-crossing rate."""
     zcr = librosa.feature.zero_crossing_rate(y, hop_length=hop_length)
-    return zcr.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(zcr.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_spectral_bandwidth(
     y: np.ndarray, *, sr: int, hop_length: int = 512
 ) -> np.ndarray:
     """Compute per-frame spectral bandwidth in Hz."""
+    _check_sr(sr)
     bw = librosa.feature.spectral_bandwidth(y=y, sr=sr, hop_length=hop_length)
-    return bw.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(bw.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_spectral_rolloff(
     y: np.ndarray, *, sr: int, hop_length: int = 512, roll_percent: float = 0.85
 ) -> np.ndarray:
     """Compute per-frame spectral rolloff frequency."""
+    _check_sr(sr)
     rolloff = librosa.feature.spectral_rolloff(
         y=y, sr=sr, hop_length=hop_length, roll_percent=roll_percent
     )
-    return rolloff.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(rolloff.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_mfcc(
@@ -120,6 +129,7 @@ def compute_mfcc(
 
     Returns shape (n_mfcc, n_frames).
     """
+    _check_sr(sr)
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc, hop_length=hop_length)
     return mfccs.astype(np.float32, copy=False)
 
@@ -131,6 +141,7 @@ def compute_chromagram(
 
     Returns shape (12, n_frames).
     """
+    _check_sr(sr)
     chroma = librosa.feature.chroma_stft(y=y, sr=sr, hop_length=hop_length)
     return chroma.astype(np.float32, copy=False)
 
@@ -161,6 +172,20 @@ class AnalysisSummary:
 
 def summarize(y: np.ndarray, *, sr: int) -> AnalysisSummary:
     """Run a full analysis pass and return an aggregated summary."""
+    _check_sr(sr)
+    if y.size == 0:
+        return AnalysisSummary(
+            duration_s=0.0,
+            sample_rate=sr,
+            rms_mean=0.0,
+            rms_max=0.0,
+            spectral_centroid_mean=0.0,
+            spectral_bandwidth_mean=0.0,
+            zero_crossing_rate_mean=0.0,
+            tempo_bpm=0.0,
+            onset_count=0,
+            tags=[],
+        )
     duration = float(len(y)) / sr
     rms = librosa.feature.rms(y=y).squeeze()
     centroid = librosa.feature.spectral_centroid(y=y, sr=sr).squeeze()

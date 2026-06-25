@@ -2,15 +2,20 @@
 
 from __future__ import annotations
 
+import pytest
 import numpy as np
 
 from bird_mach.analysis import (
     OnsetResult,
     BeatResult,
+    AnalysisSummary,
     detect_onsets,
     track_beats,
+    compute_rms_energy,
     compute_zero_crossing_rate,
     compute_spectral_bandwidth,
+    compute_spectral_rolloff,
+    summarize,
 )
 
 
@@ -54,3 +59,63 @@ class TestSpectralBandwidth:
         bw = compute_spectral_bandwidth(sine_wave, sr=sample_rate)
         assert bw.ndim == 1
         assert bw.dtype == np.float32
+
+
+class TestInvalidSr:
+    """All sr-taking functions should raise ValueError for sr <= 0."""
+
+    Y = np.ones(22050, dtype=np.float32) * 0.1
+
+    def test_track_beats_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            track_beats(self.Y, sr=0)
+
+    def test_detect_onsets_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            detect_onsets(self.Y, sr=0)
+
+    def test_spectral_bandwidth_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            compute_spectral_bandwidth(self.Y, sr=0)
+
+    def test_summarize_sr_zero(self):
+        with pytest.raises(ValueError, match="sr must be positive"):
+            summarize(self.Y, sr=0)
+
+
+class TestSummarize:
+    def test_empty_input_returns_zero_summary(self):
+        # Previously raised ValueError from librosa when given an empty array.
+        empty = np.array([], dtype=np.float32)
+        result = summarize(empty, sr=22050)
+        assert isinstance(result, AnalysisSummary)
+        assert result.duration_s == 0.0
+        assert result.rms_mean == 0.0
+        assert result.onset_count == 0
+        assert result.tags == []
+
+
+class TestSingleFrameOutputIsAlways1D:
+    """Verify that sub-hop-length inputs yield 1-D arrays, not 0-D scalars.
+
+    librosa feature functions return shape (1, 1) for very short signals;
+    .squeeze() on that gives a 0-D array which breaks any ndim==1 assumption.
+    """
+
+    SHORT = np.ones(256, dtype=np.float32) * 0.1  # fewer samples than hop_length=512
+
+    def test_rms_is_1d(self):
+        result = compute_rms_energy(self.SHORT, hop_length=512)
+        assert result.ndim == 1
+
+    def test_zcr_is_1d(self):
+        result = compute_zero_crossing_rate(self.SHORT, hop_length=512)
+        assert result.ndim == 1
+
+    def test_spectral_bandwidth_is_1d(self):
+        result = compute_spectral_bandwidth(self.SHORT, sr=22050, hop_length=512)
+        assert result.ndim == 1
+
+    def test_spectral_rolloff_is_1d(self):
+        result = compute_spectral_rolloff(self.SHORT, sr=22050, hop_length=512)
+        assert result.ndim == 1
