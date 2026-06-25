@@ -46,6 +46,8 @@ def segment_fixed_length(
     overlap_s: float = 0.0,
 ) -> list[Segment]:
     """Create fixed-length overlapping segments."""
+    if segment_length_s <= 0:
+        raise ValueError(f"segment_length_s must be positive, got {segment_length_s}")
     step = segment_length_s - overlap_s
     if step <= 0:
         step = segment_length_s

@@ -1,5 +1,7 @@
 """Tests for bird_mach.segmentation."""
 
+import pytest
+
 from bird_mach.segmentation import Segment, segment_fixed_length
 
 
@@ -24,3 +26,12 @@ class TestFixedLength:
         segs = segment_fixed_length(2.0, segment_length_s=5.0)
         assert len(segs) == 1
         assert segs[0].end_s == 2.0
+
+    def test_zero_segment_length_raises(self):
+        # Previously caused an infinite loop; step became 0 and t never advanced.
+        with pytest.raises(ValueError, match="segment_length_s must be positive"):
+            segment_fixed_length(10.0, segment_length_s=0.0)
+
+    def test_negative_segment_length_raises(self):
+        with pytest.raises(ValueError, match="segment_length_s must be positive"):
+            segment_fixed_length(10.0, segment_length_s=-1.0)
