@@ -54,6 +54,13 @@ def _validate_email(email: str) -> str:
 def _validate_password(password: str) -> None:
     if len(password) < _MIN_PASSWORD_LEN:
         raise ValueError(f"password must be at least {_MIN_PASSWORD_LEN} characters")
+    # Reject trivially weak passwords that pass the length check: a single
+    # repeated character ("aaaaaaaa") or all digits ("12345678"). These are
+    # among the most common brute-force guesses.
+    if len(set(password)) == 1:
+        raise ValueError("password must not be a single repeated character")
+    if password.isdigit():
+        raise ValueError("password must not be entirely numeric")
 
 
 class AuthService:

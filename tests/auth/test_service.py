@@ -43,6 +43,14 @@ class TestRegister:
         with pytest.raises(ValueError):
             svc.register("a@b.com", "short")
 
+    def test_all_numeric_password_rejected(self, svc):
+        with pytest.raises(ValueError):
+            svc.register("a@b.com", "12345678")
+
+    def test_single_repeated_char_password_rejected(self, svc):
+        with pytest.raises(ValueError):
+            svc.register("a@b.com", "aaaaaaaa")
+
 
 class TestLogin:
     def test_login_returns_token_pair(self, svc):
