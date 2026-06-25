@@ -3,7 +3,7 @@
 import pytest
 import numpy as np
 
-from bird_mach.segmentation import Segment, segment_fixed_length, extract_segment_audio
+from bird_mach.segmentation import Segment, segment_by_silence, segment_fixed_length, extract_segment_audio
 
 
 class TestSegment:
@@ -38,6 +38,15 @@ class TestFixedLength:
             segment_fixed_length(10.0, segment_length_s=-1.0)
 
 
+class TestSegmentBySilence:
+    def test_invalid_sr_raises(self):
+        # sr=0 previously produced nan/inf timestamps due to integer divide by
+        # zero, then silently returned [] after the min_segment_s filter.
+        y = np.ones(100, dtype=np.float32)
+        with pytest.raises(ValueError, match="sr must be positive"):
+            segment_by_silence(y, sr=0)
+
+
 class TestExtractSegmentAudio:
     """Cover the clamping logic in extract_segment_audio."""
 
@@ -63,3 +72,10 @@ class TestExtractSegmentAudio:
         seg = Segment(start_s=999.0, end_s=1000.0)
         out = extract_segment_audio(self.SIGNAL, seg, sr=self.SR)
         assert len(out) == 0
+
+    def test_invalid_sr_raises(self):
+        # sr=0 caused int(start_s * 0) == 0 for all segments, silently returning
+        # an empty slice instead of raising an error.
+        seg = Segment(start_s=0.01, end_s=0.05)
+        with pytest.raises(ValueError, match="sr must be positive"):
+            extract_segment_audio(self.SIGNAL, seg, sr=0)
