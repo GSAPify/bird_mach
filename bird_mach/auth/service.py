@@ -116,6 +116,22 @@ class AuthService:
         user.is_active = False
         return self._repo.update(user)
 
+    def reactivate(self, user_id: str) -> User:
+        user = self._require_user(user_id)
+        user.is_active = True
+        return self._repo.update(user)
+
+    def set_role(self, user_id: str, role: Role) -> User:
+        user = self._require_user(user_id)
+        user.role = role
+        return self._repo.update(user)
+
+    def list_users(self, *, limit: int = 100, offset: int = 0) -> list[User]:
+        return self._repo.list_all(limit=limit, offset=offset)
+
+    def get_user(self, user_id: str) -> User:
+        return self._require_user(user_id)
+
     def delete(self, user_id: str) -> None:
         if not self._repo.delete(user_id):
             raise UserNotFoundError(user_id)

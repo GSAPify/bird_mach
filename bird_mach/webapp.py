@@ -21,6 +21,7 @@ from fastapi.staticfiles import StaticFiles
 
 from bird_mach.api.account import router as account_router
 from bird_mach.api.routes import router as api_router
+from bird_mach.auth.admin import router as admin_router
 from bird_mach.auth.routes import router as auth_router
 from bird_mach.billing.routes import router as billing_router
 from bird_mach.config import AppConfig
@@ -53,9 +54,9 @@ app = FastAPI(title=APP_NAME, version=APP_VERSION, lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=list(config.cors_origins),
-    # DELETE is needed for account deletion (/auth/me); the auth/billing APIs
-    # also use Authorization headers, so allow them explicitly.
-    allow_methods=["GET", "POST", "DELETE"],
+    # DELETE for account deletion (/auth/me) and PUT for admin role updates;
+    # the auth/billing APIs also use Authorization headers.
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
 
@@ -65,6 +66,7 @@ app.include_router(web_router)
 app.include_router(api_router)
 app.include_router(account_router)
 app.include_router(auth_router)
+app.include_router(admin_router)
 app.include_router(billing_router)
 
 
