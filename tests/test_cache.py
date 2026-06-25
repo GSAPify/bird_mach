@@ -43,6 +43,10 @@ class TestAnalysisCache:
         with pytest.raises(ValueError, match="max_size must be at least 1"):
             AnalysisCache(max_size=-5)
 
+    def test_content_hash_empty_bytes_raises(self):
+        with pytest.raises(ValueError, match="non-empty"):
+            AnalysisCache.content_hash(b"")
+
     def test_get_refreshes_lru_recency(self):
         """A get() on the oldest entry should protect it from eviction."""
         cache = AnalysisCache(max_size=2)

@@ -22,6 +22,8 @@ class AnalysisCache:
 
     @staticmethod
     def content_hash(data: bytes) -> str:
+        if not data:
+            raise ValueError("content_hash requires non-empty data")
         return hashlib.sha256(data).hexdigest()[:16]
 
     def get(self, key: str) -> Any | None:
