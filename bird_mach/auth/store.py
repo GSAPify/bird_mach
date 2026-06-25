@@ -47,6 +47,9 @@ class UserRepository(ABC):
     def get_by_email(self, email: str) -> User | None: ...
 
     @abstractmethod
+    def get_by_stripe_customer_id(self, customer_id: str) -> User | None: ...
+
+    @abstractmethod
     def update(self, user: User) -> User: ...
 
     @abstractmethod
@@ -77,6 +80,12 @@ class InMemoryUserRepository(UserRepository):
         target = _normalise_email(email)
         return next(
             (u for u in self._by_id.values() if _normalise_email(u.email) == target),
+            None,
+        )
+
+    def get_by_stripe_customer_id(self, customer_id: str) -> User | None:
+        return next(
+            (u for u in self._by_id.values() if u.stripe_customer_id == customer_id),
             None,
         )
 
@@ -140,6 +149,12 @@ class SqliteUserRepository(UserRepository):
     def get_by_email(self, email: str) -> User | None:
         row = self._db.query_one(
             "SELECT * FROM users WHERE email = ?", [_normalise_email(email)]
+        )
+        return self._row_to_user(row) if row else None
+
+    def get_by_stripe_customer_id(self, customer_id: str) -> User | None:
+        row = self._db.query_one(
+            "SELECT * FROM users WHERE stripe_customer_id = ?", [customer_id]
         )
         return self._row_to_user(row) if row else None
 

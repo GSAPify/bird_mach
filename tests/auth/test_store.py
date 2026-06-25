@@ -68,6 +68,13 @@ class TestUserRepository:
         assert repo.get("u1") is None
         assert repo.delete("u1") is False
 
+    def test_get_by_stripe_customer_id(self, repo):
+        u = _user()
+        u.stripe_customer_id = "cus_abc"
+        repo.add(u)
+        assert repo.get_by_stripe_customer_id("cus_abc").id == "u1"
+        assert repo.get_by_stripe_customer_id("cus_missing") is None
+
     def test_count(self, repo):
         assert repo.count() == 0
         repo.add(_user(uid="a", email="a@x.com"))
