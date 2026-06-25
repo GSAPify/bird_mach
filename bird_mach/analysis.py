@@ -39,11 +39,21 @@ class BeatResult:
 
 
 def track_beats(y: np.ndarray, *, sr: int) -> BeatResult:
-    """Estimate tempo and locate beat positions."""
+    """Estimate tempo and locate beat positions.
+
+    Tempo is estimated independently of beat positions: ``beat_track``
+    reports a tempo of 0 whenever it locates no discrete beats (e.g. a
+    steady tone), even though a tempo estimate still exists. Fall back to
+    the dedicated tempo estimator in that case so ``tempo_bpm`` reflects the
+    signal's periodicity rather than the presence of detected beats.
+    """
     tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
+    tempo_bpm = float(np.atleast_1d(tempo)[0])
+    if tempo_bpm <= 0.0:
+        tempo_bpm = float(np.atleast_1d(librosa.feature.tempo(y=y, sr=sr))[0])
     beat_times = librosa.frames_to_time(beat_frames, sr=sr)
     return BeatResult(
-        tempo_bpm=float(np.atleast_1d(tempo)[0]),
+        tempo_bpm=tempo_bpm,
         beat_times_s=beat_times,
         beat_count=len(beat_frames),
     )
