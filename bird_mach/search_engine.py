@@ -25,6 +25,8 @@ class AudioSearchEngine:
         }
 
     def search(self, query: str, limit: int = 20) -> list[SearchResult]:
+        if limit < 0:
+            raise ValueError(f"limit must be non-negative, got {limit}")
         terms = query.lower().split()
         if not terms:
             return []
