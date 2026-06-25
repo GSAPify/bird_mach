@@ -20,6 +20,9 @@ def concat_features(*arrays: np.ndarray, align: str = "min") -> np.ndarray:
     """
     if not arrays:
         raise ValueError("concat_features requires at least one array")
+    _valid_align = {"min"}
+    if align not in _valid_align:
+        raise ValueError(f"unknown align {align!r}; expected one of {sorted(_valid_align)}")
     normalized = []
     for arr in arrays:
         if arr.ndim == 1:
