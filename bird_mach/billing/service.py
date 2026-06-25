@@ -90,6 +90,22 @@ class BillingService:
             customer_id=user.stripe_customer_id, return_url=return_url
         )
 
+    def cancel_subscription(self, user: User, *, at_period_end: bool = True) -> Subscription:
+        """Request cancellation of the user's active subscription.
+
+        Delegates to the provider; the authoritative status change still
+        arrives via the subscription webhook, so we don't optimistically flip
+        local state to canceled here (that would briefly under-report access
+        the user has already paid for through the period end).
+        """
+        sub = self._subs.get_by_user(user.id)
+        if sub is None or not sub.is_active or not sub.stripe_subscription_id:
+            raise BillingError("no active subscription to cancel")
+        self._provider.cancel_subscription(
+            sub.stripe_subscription_id, at_period_end=at_period_end
+        )
+        return sub
+
     def get_subscription(self, user: User) -> Subscription | None:
         return self._subs.get_by_user(user.id)
 

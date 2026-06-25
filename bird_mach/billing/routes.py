@@ -78,6 +78,22 @@ def create_checkout(
     return {"checkout_url": session.url, "session_id": session.id}
 
 
+@router.post("/cancel")
+def cancel_subscription(
+    user: User = Depends(get_current_user),
+    billing: BillingService = Depends(get_billing_service),
+) -> dict:
+    """Cancel the caller's subscription at the end of the current period."""
+    try:
+        sub = billing.cancel_subscription(user, at_period_end=True)
+    except BillingError as exc:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, str(exc)) from exc
+    except PaymentProviderError as exc:
+        logger.error("cancel failed: %s", exc)
+        raise HTTPException(status.HTTP_502_BAD_GATEWAY, "Payment provider error") from exc
+    return {"status": "cancellation_requested", "subscription": sub.public_dict()}
+
+
 @router.post("/portal")
 def billing_portal(
     body: PortalRequest,

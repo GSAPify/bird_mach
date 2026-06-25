@@ -50,6 +50,10 @@ class PaymentProvider(ABC):
         """Return a URL to the customer's self-service billing portal."""
 
     @abstractmethod
+    def cancel_subscription(self, subscription_id: str, *, at_period_end: bool = True) -> None:
+        """Cancel a subscription, by default at the end of the paid period."""
+
+    @abstractmethod
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
         """Verify a webhook signature and return the parsed event."""
 
@@ -67,6 +71,7 @@ class FakePaymentProvider(PaymentProvider):
         self.customers: list[dict] = []
         self.checkouts: list[dict] = []
         self.portal_sessions: list[dict] = []
+        self.cancellations: list[dict] = []
 
     def create_customer(self, email: str, *, metadata: dict | None = None) -> str:
         cid = f"cus_fake_{next(self._ids)}"
@@ -86,6 +91,9 @@ class FakePaymentProvider(PaymentProvider):
         sid = f"bps_fake_{next(self._ids)}"
         self.portal_sessions.append({"id": sid, "customer": customer_id})
         return f"https://fake.stripe/portal/{sid}"
+
+    def cancel_subscription(self, subscription_id: str, *, at_period_end: bool = True) -> None:
+        self.cancellations.append({"id": subscription_id, "at_period_end": at_period_end})
 
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
         if signature != "valid":
@@ -138,6 +146,15 @@ class StripePaymentProvider(PaymentProvider):
         except self._stripe.error.StripeError as exc:
             raise PaymentProviderError(f"create_billing_portal_session failed: {exc}") from exc
         return session.url
+
+    def cancel_subscription(self, subscription_id: str, *, at_period_end: bool = True) -> None:
+        try:
+            if at_period_end:
+                self._stripe.Subscription.modify(subscription_id, cancel_at_period_end=True)
+            else:
+                self._stripe.Subscription.delete(subscription_id)
+        except self._stripe.error.StripeError as exc:
+            raise PaymentProviderError(f"cancel_subscription failed: {exc}") from exc
 
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
         try:

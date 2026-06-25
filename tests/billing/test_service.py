@@ -125,6 +125,19 @@ class TestWebhookEntitlement:
         # Same subscription id → one record, not two.
         assert subs.get("sub_1") is not None
 
+    def test_cancel_active_subscription(self, env):
+        svc, user, users, subs, provider = env
+        self._attach_customer(svc, user, users)
+        svc.handle_webhook(_sub_event("customer.subscription.created"), "valid", "whsec")
+        svc.cancel_subscription(user)
+        assert provider.cancellations[0]["id"] == "sub_1"
+        assert provider.cancellations[0]["at_period_end"] is True
+
+    def test_cancel_without_subscription_raises(self, env):
+        svc, user, *_ = env
+        with pytest.raises(BillingError):
+            svc.cancel_subscription(user)
+
     def test_unhandled_event_ignored(self, env):
         svc, *_ = env
         result = svc.handle_webhook(

@@ -95,6 +95,25 @@ class TestCheckoutAndSubscription:
         assert resp.json()["entitled"] is False
 
 
+class TestCancel:
+    def test_cancel_requires_active_subscription(self, ctx):
+        client, headers, *_ = ctx
+        assert client.post("/billing/cancel", headers=headers).status_code == 400
+
+    def test_cancel_after_subscription(self, ctx):
+        client, headers, billing, users = ctx
+        client.post("/billing/checkout", json={"plan_id": "pro"}, headers=headers)
+        customer_id = users.get_by_email("a@b.com").stripe_customer_id
+        client.post(
+            "/billing/webhook",
+            content=_sub_event(customer_id),
+            headers={"stripe-signature": "valid"},
+        )
+        resp = client.post("/billing/cancel", headers=headers)
+        assert resp.status_code == 200
+        assert resp.json()["status"] == "cancellation_requested"
+
+
 class TestWebhook:
     def test_webhook_grants_entitlement(self, ctx):
         client, headers, billing, users = ctx

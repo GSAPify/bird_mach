@@ -53,3 +53,7 @@ class TestFakeProvider:
     def test_webhook_bad_payload_rejected(self, provider):
         with pytest.raises(WebhookVerificationError):
             provider.verify_webhook(b"not json", "valid", "whsec_x")
+
+    def test_cancel_subscription_records_call(self, provider):
+        provider.cancel_subscription("sub_1", at_period_end=True)
+        assert provider.cancellations == [{"id": "sub_1", "at_period_end": True}]
