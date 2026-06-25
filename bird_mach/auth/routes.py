@@ -66,6 +66,11 @@ class VerifyEmailConfirm(BaseModel):
     token: str
 
 
+class ChangeEmailRequest(BaseModel):
+    new_email: str
+    password: str
+
+
 @router.post(
     "/register",
     status_code=status.HTTP_201_CREATED,
@@ -199,6 +204,24 @@ def logout(body: RefreshRequest, service: AuthService = Depends(get_auth_service
         service.logout(body.refresh_token)
     except TokenError:
         return  # already expired/invalid — nothing to revoke
+
+
+@router.put("/email")
+def change_email(
+    body: ChangeEmailRequest,
+    user: User = Depends(get_current_user),
+    service: AuthService = Depends(get_auth_service),
+) -> dict:
+    """Change the current user's email (requires the password). Resets verification."""
+    try:
+        updated = service.change_email(user.id, body.new_email, body.password)
+    except InvalidCredentialsError as exc:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Password is incorrect") from exc
+    except EmailAlreadyRegisteredError as exc:
+        raise HTTPException(status.HTTP_409_CONFLICT, "Email already in use") from exc
+    except ValueError as exc:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc)) from exc
+    return updated.public_dict()
 
 
 @router.get("/me")

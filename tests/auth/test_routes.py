@@ -174,6 +174,51 @@ class TestPasswordReset:
         assert resp.status_code == 400
 
 
+class TestChangeEmail:
+    def test_change_email_resets_verification(self, client):
+        tokens = _register_and_login(client)
+        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+        # Verify first so we can prove it resets.
+        vt = client.post("/auth/verify-email/request", headers=headers).json()[
+            "debug_verification_token"
+        ]
+        client.post("/auth/verify-email/confirm", json={"token": vt})
+
+        resp = client.put(
+            "/auth/email",
+            json={"new_email": "new@b.com", "password": "supersecret"},
+            headers=headers,
+        )
+        assert resp.status_code == 200
+        assert resp.json()["email"] == "new@b.com"
+        assert resp.json()["is_verified"] is False
+        # Can log in with the new email.
+        assert client.post(
+            "/auth/login", json={"email": "new@b.com", "password": "supersecret"}
+        ).status_code == 200
+
+    def test_change_email_wrong_password(self, client):
+        tokens = _register_and_login(client)
+        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+        resp = client.put(
+            "/auth/email",
+            json={"new_email": "new@b.com", "password": "wrongpass"},
+            headers=headers,
+        )
+        assert resp.status_code == 400
+
+    def test_change_to_taken_email_conflicts(self, client):
+        client.post("/auth/register", json={"email": "taken@b.com", "password": "supersecret"})
+        tokens = _register_and_login(client)
+        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+        resp = client.put(
+            "/auth/email",
+            json={"new_email": "taken@b.com", "password": "supersecret"},
+            headers=headers,
+        )
+        assert resp.status_code == 409
+
+
 class TestEmailVerification:
     def test_full_verification_flow(self, client):
         tokens = _register_and_login(client)

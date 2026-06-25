@@ -170,6 +170,23 @@ class AuthService:
         user.password_hash = hash_password(new)
         self._repo.update(user)
 
+    def change_email(self, user_id: str, new_email: str, password: str) -> User:
+        """Change a user's email after verifying their password.
+
+        Re-verification is required afterwards, so is_verified is reset — the
+        new address hasn't been proven to belong to the user yet.
+        """
+        user = self._require_user(user_id)
+        if not verify_password(password, user.password_hash):
+            raise InvalidCredentialsError("password is incorrect")
+        new_email = _validate_email(new_email)
+        existing = self._repo.get_by_email(new_email)
+        if existing is not None and existing.id != user_id:
+            raise EmailAlreadyRegisteredError(new_email)
+        user.email = new_email
+        user.is_verified = False
+        return self._repo.update(user)
+
     def deactivate(self, user_id: str) -> User:
         user = self._require_user(user_id)
         user.is_active = False
