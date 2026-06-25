@@ -52,3 +52,23 @@ class TestAppMetrics:
             m.record_analysis(-5.0)
         assert m.analyses_total == 1
         assert m.total_audio_seconds_processed == 10.0
+
+    def test_error_rate_zero_requests(self):
+        m = AppMetrics()
+        assert m.error_rate == 0.0
+
+    def test_error_rate_normal(self):
+        m = AppMetrics()
+        for _ in range(4):
+            m.record_request()
+        m.record_error()
+        assert abs(m.error_rate - 0.25) < 1e-9
+
+    def test_to_dict_contains_error_rate_rounded(self):
+        m = AppMetrics()
+        for _ in range(3):
+            m.record_request()
+        m.record_error()
+        d = m.to_dict()
+        # error_rate = 1/3 ≈ 0.3333; to_dict rounds to 4 decimal places
+        assert d["error_rate"] == round(1 / 3, 4)
