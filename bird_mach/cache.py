@@ -15,11 +15,15 @@ class AnalysisCache:
     """
 
     def __init__(self, max_size: int = 32) -> None:
+        if max_size < 1:
+            raise ValueError(f"max_size must be at least 1, got {max_size}")
         self._max_size = max_size
         self._store: OrderedDict[str, Any] = OrderedDict()
 
     @staticmethod
     def content_hash(data: bytes) -> str:
+        if not data:
+            raise ValueError("content_hash requires non-empty data")
         return hashlib.sha256(data).hexdigest()[:16]
 
     def get(self, key: str) -> Any | None:

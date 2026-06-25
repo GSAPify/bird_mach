@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 import time
 
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -11,13 +12,26 @@ from starlette.responses import Response
 
 logger = logging.getLogger(__name__)
 
+# Allowlist for inbound X-Request-Id: printable ASCII, no control chars, max 64 chars.
+_REQUEST_ID_RE = re.compile(r"^[\x21-\x7E]{1,64}$")
+
 
 class TimingMiddleware(BaseHTTPMiddleware):
     """Add X-Process-Time header and log request duration."""
 
     async def dispatch(self, request: Request, call_next) -> Response:
         start = time.perf_counter()
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        except Exception:
+            elapsed_ms = (time.perf_counter() - start) * 1000
+            logger.error(
+                "%s %s -> ERROR (%.1f ms)",
+                request.method,
+                request.url.path,
+                elapsed_ms,
+            )
+            raise
         elapsed_ms = (time.perf_counter() - start) * 1000
         response.headers["X-Process-Time-Ms"] = f"{elapsed_ms:.1f}"
         logger.info(
@@ -41,8 +55,10 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
     _counter: int = 0
 
     async def dispatch(self, request: Request, call_next) -> Response:
-        request_id = request.headers.get("X-Request-Id")
-        if not request_id:
+        inbound = request.headers.get("X-Request-Id", "")
+        if inbound and _REQUEST_ID_RE.match(inbound):
+            request_id = inbound
+        else:
             RequestIdMiddleware._counter += 1
             request_id = f"req-{RequestIdMiddleware._counter:08d}"
         request.state.request_id = request_id

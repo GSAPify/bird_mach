@@ -31,6 +31,8 @@ class AppMetrics:
         self.requests_total += 1
 
     def record_analysis(self, duration_s: float) -> None:
+        if duration_s < 0:
+            raise ValueError(f"duration_s must be non-negative, got {duration_s}")
         self.analyses_total += 1
         self.total_audio_seconds_processed += duration_s
 
