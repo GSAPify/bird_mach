@@ -74,7 +74,7 @@ def compute_rms_energy(
     Useful for detecting loud/quiet passages and as an envelope follower.
     """
     rms = librosa.feature.rms(y=y, hop_length=hop_length)
-    return rms.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(rms.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_zero_crossing_rate(
@@ -82,7 +82,7 @@ def compute_zero_crossing_rate(
 ) -> np.ndarray:
     """Compute per-frame zero-crossing rate."""
     zcr = librosa.feature.zero_crossing_rate(y, hop_length=hop_length)
-    return zcr.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(zcr.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_spectral_bandwidth(
@@ -90,7 +90,7 @@ def compute_spectral_bandwidth(
 ) -> np.ndarray:
     """Compute per-frame spectral bandwidth in Hz."""
     bw = librosa.feature.spectral_bandwidth(y=y, sr=sr, hop_length=hop_length)
-    return bw.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(bw.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_spectral_rolloff(
@@ -100,7 +100,7 @@ def compute_spectral_rolloff(
     rolloff = librosa.feature.spectral_rolloff(
         y=y, sr=sr, hop_length=hop_length, roll_percent=roll_percent
     )
-    return rolloff.squeeze().astype(np.float32, copy=False)
+    return np.atleast_1d(rolloff.squeeze()).astype(np.float32, copy=False)
 
 
 def compute_mfcc(

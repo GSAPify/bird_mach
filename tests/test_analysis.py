@@ -9,8 +9,10 @@ from bird_mach.analysis import (
     BeatResult,
     detect_onsets,
     track_beats,
+    compute_rms_energy,
     compute_zero_crossing_rate,
     compute_spectral_bandwidth,
+    compute_spectral_rolloff,
 )
 
 
@@ -54,3 +56,29 @@ class TestSpectralBandwidth:
         bw = compute_spectral_bandwidth(sine_wave, sr=sample_rate)
         assert bw.ndim == 1
         assert bw.dtype == np.float32
+
+
+class TestSingleFrameOutputIsAlways1D:
+    """Verify that sub-hop-length inputs yield 1-D arrays, not 0-D scalars.
+
+    librosa feature functions return shape (1, 1) for very short signals;
+    .squeeze() on that gives a 0-D array which breaks any ndim==1 assumption.
+    """
+
+    SHORT = np.ones(256, dtype=np.float32) * 0.1  # fewer samples than hop_length=512
+
+    def test_rms_is_1d(self):
+        result = compute_rms_energy(self.SHORT, hop_length=512)
+        assert result.ndim == 1
+
+    def test_zcr_is_1d(self):
+        result = compute_zero_crossing_rate(self.SHORT, hop_length=512)
+        assert result.ndim == 1
+
+    def test_spectral_bandwidth_is_1d(self):
+        result = compute_spectral_bandwidth(self.SHORT, sr=22050, hop_length=512)
+        assert result.ndim == 1
+
+    def test_spectral_rolloff_is_1d(self):
+        result = compute_spectral_rolloff(self.SHORT, sr=22050, hop_length=512)
+        assert result.ndim == 1
