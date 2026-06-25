@@ -13,12 +13,14 @@ class TagManager:
         self._reverse[tag].add(resource_id)
 
     def untag(self, resource_id: str, tag: str) -> None:
-        self._tags[resource_id].discard(tag)
-        self._reverse[tag].discard(resource_id)
-        if not self._tags[resource_id]:
-            del self._tags[resource_id]
-        if not self._reverse[tag]:
-            del self._reverse[tag]
+        if resource_id in self._tags:
+            self._tags[resource_id].discard(tag)
+            if not self._tags[resource_id]:
+                del self._tags[resource_id]
+        if tag in self._reverse:
+            self._reverse[tag].discard(resource_id)
+            if not self._reverse[tag]:
+                del self._reverse[tag]
 
     def get_tags(self, resource_id: str) -> set[str]:
         return set(self._tags.get(resource_id, set()))

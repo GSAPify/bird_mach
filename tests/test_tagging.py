@@ -37,3 +37,15 @@ class TestTagManager:
         resources = tm.find_by_tag("rock")
         resources.add("phantom")
         assert "phantom" not in tm.find_by_tag("rock")
+
+    def test_untag_nonexistent_no_side_effect(self):
+        """untag() on an unknown resource/tag must not create spurious entries."""
+        tm = TagManager()
+        tm.untag("ghost", "jazz")
+        # defaultdict must not have created empty sets for unknown keys
+        assert tm.get_tags("ghost") == set()
+        assert tm.find_by_tag("jazz") == set()
+
+    def test_popular_tags_empty(self):
+        tm = TagManager()
+        assert tm.popular_tags() == []
