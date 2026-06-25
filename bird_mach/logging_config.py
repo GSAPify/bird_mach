@@ -19,8 +19,12 @@ def setup_logging(*, level: str = "INFO", json_format: bool = False) -> None:
         else "%(asctime)s [%(levelname)-8s] %(name)s: %(message)s"
     )
 
+    numeric_level = getattr(logging, level.upper(), None)
+    if not isinstance(numeric_level, int):
+        raise ValueError(f"Unknown log level: {level!r}")
+
     logging.basicConfig(
-        level=getattr(logging, level.upper(), logging.INFO),
+        level=numeric_level,
         format=fmt,
         datefmt="%Y-%m-%dT%H:%M:%S",
         stream=sys.stderr,
