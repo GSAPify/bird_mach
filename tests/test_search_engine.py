@@ -26,3 +26,41 @@ class TestAudioSearchEngine:
         engine.index("a1", "Test", "test content")
         engine.remove("a1")
         assert engine.document_count == 0
+
+    def test_empty_query_returns_empty(self):
+        engine = AudioSearchEngine()
+        engine.index("a1", "Piano", "piano music")
+        assert engine.search("") == []
+        assert engine.search("   ") == []
+
+    def test_limit_respected(self):
+        engine = AudioSearchEngine()
+        for i in range(5):
+            engine.index(f"a{i}", f"Track {i}", "piano music")
+        results = engine.search("piano", limit=2)
+        assert len(results) == 2
+
+    def test_negative_limit_raises(self):
+        import pytest
+        engine = AudioSearchEngine()
+        engine.index("a1", "Piano", "piano music")
+        with pytest.raises(ValueError, match="non-negative"):
+            engine.search("piano", limit=-1)
+
+    def test_remove_nonexistent_returns_false(self):
+        engine = AudioSearchEngine()
+        assert engine.remove("does-not-exist") is False
+
+    def test_snippet_included_in_result(self):
+        engine = AudioSearchEngine()
+        engine.index("a1", "Piano Concerto", "a grand piano in a concert hall")
+        results = engine.search("piano")
+        assert results[0].snippet != ""
+
+    def test_index_empty_doc_id_raises(self):
+        import pytest
+        engine = AudioSearchEngine()
+        with pytest.raises(ValueError, match="doc_id"):
+            engine.index("", "Title", "content")
+        with pytest.raises(ValueError, match="doc_id"):
+            engine.index("   ", "Title", "content")

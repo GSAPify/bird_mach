@@ -18,7 +18,7 @@ def validate_audio_extension(filename: str) -> bool:
 
 def validate_file_size(size_bytes: int) -> bool:
     """Check if file size is within the upload limit."""
-    return size_bytes <= MAX_UPLOAD_SIZE_MB * 1024 * 1024
+    return 0 <= size_bytes <= MAX_UPLOAD_SIZE_MB * 1024 * 1024
 
 
 def clamp(value: float, low: float, high: float) -> float:
@@ -36,6 +36,6 @@ def sanitize_url(url: str) -> str | None:
     url = url.strip()
     if not url:
         return None
-    if not url.startswith(("http://", "https://")):
+    if not url.lower().startswith(("http://", "https://")):
         return None
     return url

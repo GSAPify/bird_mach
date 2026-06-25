@@ -42,6 +42,8 @@ def cluster_dbscan(
     X: np.ndarray, *, eps: float = 0.5, min_samples: int = 5
 ) -> ClusterResult:
     """Cluster feature vectors using DBSCAN (density-based)."""
+    if X.shape[0] == 0:
+        raise ValueError("cannot cluster an empty feature matrix")
     model = DBSCAN(eps=eps, min_samples=min_samples)
     labels = model.fit_predict(X)
     n_clusters = len(set(labels)) - (1 if -1 in labels else 0)

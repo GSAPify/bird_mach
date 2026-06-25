@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import html
 import json
 from io import StringIO
 from pathlib import Path
@@ -16,6 +17,8 @@ def to_json(data: dict[str, Any], *, indent: int = 2) -> str:
     def _default(obj: Any) -> Any:
         if isinstance(obj, np.ndarray):
             return obj.tolist()
+        if isinstance(obj, np.bool_):
+            return bool(obj)
         if isinstance(obj, np.floating):
             return float(obj)
         if isinstance(obj, np.integer):
@@ -74,14 +77,14 @@ def save_csv(content: str, path: Path) -> Path:
 def summary_to_html(summary_dict: dict[str, Any], *, title: str = "Analysis Report") -> str:
     """Render an analysis summary dict as a standalone HTML report."""
     rows = "".join(
-        f"<tr><td><strong>{k}</strong></td><td>{v}</td></tr>"
+        f"<tr><td><strong>{html.escape(str(k))}</strong></td><td>{html.escape(str(v))}</td></tr>"
         for k, v in summary_dict.items()
     )
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>{title}</title>
+<title>{html.escape(title)}</title>
 <style>
 body {{ font-family: system-ui, sans-serif; margin: 2rem; background: #0f172a; color: #e2e8f0; }}
 h1 {{ color: #38bdf8; }}
@@ -91,7 +94,7 @@ td:first-child {{ color: #94a3b8; }}
 </style>
 </head>
 <body>
-<h1>{title}</h1>
+<h1>{html.escape(title)}</h1>
 <table>{rows}</table>
 </body>
 </html>"""

@@ -13,18 +13,20 @@ class TagManager:
         self._reverse[tag].add(resource_id)
 
     def untag(self, resource_id: str, tag: str) -> None:
-        self._tags[resource_id].discard(tag)
-        self._reverse[tag].discard(resource_id)
-        if not self._tags[resource_id]:
-            del self._tags[resource_id]
-        if not self._reverse[tag]:
-            del self._reverse[tag]
+        if resource_id in self._tags:
+            self._tags[resource_id].discard(tag)
+            if not self._tags[resource_id]:
+                del self._tags[resource_id]
+        if tag in self._reverse:
+            self._reverse[tag].discard(resource_id)
+            if not self._reverse[tag]:
+                del self._reverse[tag]
 
     def get_tags(self, resource_id: str) -> set[str]:
-        return self._tags.get(resource_id, set())
+        return set(self._tags.get(resource_id, set()))
 
     def find_by_tag(self, tag: str) -> set[str]:
-        return self._reverse.get(tag, set())
+        return set(self._reverse.get(tag, set()))
 
     def popular_tags(self, n: int = 10) -> list[tuple[str, int]]:
         counts = [(tag, len(ids)) for tag, ids in self._reverse.items()]

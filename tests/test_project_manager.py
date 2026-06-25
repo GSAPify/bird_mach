@@ -31,3 +31,54 @@ class TestProjectManager:
         pm.create("Speech Test", "u1")
         results = pm.search("music")
         assert len(results) == 1
+
+    def test_search_empty_query_returns_empty(self):
+        """Empty query must not silently return all projects."""
+        pm = ProjectManager()
+        pm.create("Music Analysis", "u1")
+        assert pm.search("") == []
+        assert pm.search("   ") == []
+
+    def test_search_excludes_archived(self):
+        pm = ProjectManager()
+        p = pm.create("Archive Me", "u1")
+        pm.archive(p.id)
+        assert pm.search("archive") == []
+
+    def test_search_matches_tags(self):
+        pm = ProjectManager()
+        p = pm.create("My Project", "u1")
+        p.tags.append("birdsong")
+        results = pm.search("birdsong")
+        assert any(r.id == p.id for r in results)
+
+    def test_delete(self):
+        pm = ProjectManager()
+        p = pm.create("Throwaway", "u1")
+        assert pm.delete(p.id) is True
+        assert pm.get(p.id) is None
+
+    def test_delete_nonexistent_returns_false(self):
+        pm = ProjectManager()
+        assert pm.delete("does-not-exist") is False
+
+    def test_add_audio_no_duplicates(self):
+        pm = ProjectManager()
+        p = pm.create("P1", "u1")
+        p.add_audio("audio-1")
+        p.add_audio("audio-1")
+        assert p.audio_ids.count("audio-1") == 1
+
+    def test_create_empty_name_raises(self):
+        import pytest
+        pm = ProjectManager()
+        with pytest.raises(ValueError, match="name"):
+            pm.create("", "u1")
+        with pytest.raises(ValueError, match="name"):
+            pm.create("   ", "u1")
+
+    def test_create_empty_owner_raises(self):
+        import pytest
+        pm = ProjectManager()
+        with pytest.raises(ValueError, match="owner_id"):
+            pm.create("Valid Name", "")
