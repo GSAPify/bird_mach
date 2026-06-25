@@ -48,7 +48,7 @@ def features_to_csv(
         CSV string with header row.
     """
     buf = StringIO()
-    writer = csv.writer(buf)
+    writer = csv.writer(buf, lineterminator="\n")
     header = ["time_s", *columns.keys()]
     writer.writerow(header)
 

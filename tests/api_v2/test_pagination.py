@@ -23,7 +23,7 @@ class TestCursorPagination:
         items = list(range(50))
         p1 = paginate_cursor(items, limit=10)
         p2 = paginate_cursor(items, after=p1.cursor, limit=10)
-        assert p2.items[0] == 11
+        assert p2.items[0] == 10
 
 class TestCursorCodec:
     def test_roundtrip(self):
