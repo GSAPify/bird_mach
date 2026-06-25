@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Added
+- **User management** (`bird_mach.auth`): registration, login, JWT
+  access/refresh tokens (PyJWT), PBKDF2 password hashing, roles, password
+  change, and account deletion, exposed under `/auth`. Durable SQLite-backed
+  storage with an in-memory test backend.
+- **Payments** (`bird_mach.billing`): Stripe-backed subscriptions with a plan
+  catalog, hosted checkout, billing portal, and signature-verified webhooks
+  under `/billing`. `require_subscription` gates premium features (402). State
+  is persisted in SQLite and stays idempotent against replayed webhooks.
+  Note: the live Stripe path is **not** exercised by the test suite — it needs
+  real test-mode keys and webhook replay (see `docs/billing.md`).
+- SQLite persistence helper (`bird_mach.db`) with WAL mode for the durable
+  user/subscription stores.
+
+### Fixed
+- Repaired the test suite: a syntax error in `api/v2/versioning.py`, a missing
+  `DEFAULT_DARK_BG` constant, ~198 over-indented enterprise test files, and 14
+  pre-existing core test failures. The full suite (1467 tests) now passes.
+
 ### Changed
 - Web UI overhauled into a near-black instrument-panel theme.
   Palette swung from green/yellow glass to amber primary
