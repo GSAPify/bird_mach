@@ -26,11 +26,13 @@ def apply_fade(
     """Apply linear fade-in and/or fade-out."""
     y = y.copy()
     if fade_in_s > 0:
-        n = int(fade_in_s * sr)
-        y[:n] *= np.linspace(0.0, 1.0, n, dtype=y.dtype)
+        n = min(int(fade_in_s * sr), len(y))
+        if n > 0:
+            y[:n] *= np.linspace(0.0, 1.0, n, dtype=y.dtype)
     if fade_out_s > 0:
-        n = int(fade_out_s * sr)
-        y[-n:] *= np.linspace(1.0, 0.0, n, dtype=y.dtype)
+        n = min(int(fade_out_s * sr), len(y))
+        if n > 0:
+            y[-n:] *= np.linspace(1.0, 0.0, n, dtype=y.dtype)
     return y
 
 
