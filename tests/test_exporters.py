@@ -6,7 +6,7 @@ import json
 
 import numpy as np
 
-from bird_mach.exporters import to_json, features_to_csv
+from bird_mach.exporters import to_json, features_to_csv, summary_to_html
 
 
 class TestToJson:
@@ -26,6 +26,12 @@ class TestToJson:
         original = {"name": "test", "score": 0.95, "tags": ["a", "b"]}
         result = json.loads(to_json(original))
         assert result == original
+
+    def test_serializes_numpy_bool(self):
+        data = {"is_silent": np.bool_(False), "has_onset": np.bool_(True)}
+        result = json.loads(to_json(data))
+        assert result["is_silent"] is False
+        assert result["has_onset"] is True
 
 
 class TestFeaturesToCsv:
@@ -47,3 +53,25 @@ class TestFeaturesToCsv:
         header = csv_str.strip().split("\n")[0]
         assert "energy" in header
         assert "zcr" in header
+
+
+class TestSummaryToHtml:
+    def test_contains_title(self):
+        html = summary_to_html({"bpm": 120}, title="My Report")
+        assert "My Report" in html
+
+    def test_contains_key_and_value(self):
+        html = summary_to_html({"tempo": "120 bpm"})
+        assert "tempo" in html
+        assert "120 bpm" in html
+
+    def test_escapes_special_chars_in_title(self):
+        html = summary_to_html({}, title="<script>alert(1)</script>")
+        assert "<script>" not in html
+        assert "&lt;script&gt;" in html
+
+    def test_escapes_special_chars_in_values(self):
+        html = summary_to_html({"<key>": "<value>"})
+        assert "<key>" not in html.split("<table>")[1]
+        assert "&lt;key&gt;" in html
+        assert "&lt;value&gt;" in html

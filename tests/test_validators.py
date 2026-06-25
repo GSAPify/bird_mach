@@ -35,6 +35,9 @@ class TestValidateFileSize:
     def test_over_limit(self):
         assert validate_file_size(51 * 1024 * 1024) is False
 
+    def test_negative_size_rejected(self):
+        assert validate_file_size(-1) is False
+
 
 class TestClamp:
     def test_within_range(self):
@@ -70,3 +73,9 @@ class TestSanitizeUrl:
 
     def test_strips_whitespace(self):
         assert sanitize_url("  https://example.com  ") == "https://example.com"
+
+    def test_accepts_uppercase_scheme(self):
+        assert sanitize_url("HTTP://example.com") == "HTTP://example.com"
+
+    def test_accepts_mixed_case_scheme(self):
+        assert sanitize_url("Https://example.com") == "Https://example.com"

@@ -15,6 +15,8 @@
 - **Analysis** — Spectral, temporal, harmonic analysis with UMAP visualization
 - **Reporting** — Markdown, HTML, CSV, JSONL export with scheduled reports
 - **Dashboard** — Usage analytics, alerts, leaderboard
+- **Accounts** — User registration, JWT auth, and roles ([docs](docs/auth.md))
+- **Billing** — Stripe subscriptions, checkout, and a paywall ([docs](docs/billing.md))
 - **API** — RESTful API v1 with Pydantic validation
 - **Glassmorphism UI** — Frosted surfaces, ambient gradient backdrop, and
   fully accessible fallbacks for reduced-motion / reduced-transparency users

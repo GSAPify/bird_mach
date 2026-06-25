@@ -22,6 +22,11 @@ dist/
 *.egg-info/
 .eggs/
 
+# Local SQLite state (users, subscriptions) and WAL sidecars
+*.db
+*.db-wal
+*.db-shm
+
 # OS / editor
 .DS_Store
 Thumbs.db

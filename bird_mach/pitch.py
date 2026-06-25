@@ -64,7 +64,7 @@ def estimate_pitch(
 
 def hz_to_note(freq_hz: float) -> str:
     """Convert a frequency in Hz to the nearest musical note name."""
-    if freq_hz <= 0:
+    if not np.isfinite(freq_hz) or freq_hz <= 0:
         return "—"
     note_names = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
     midi = 12 * np.log2(freq_hz / 440.0) + 69

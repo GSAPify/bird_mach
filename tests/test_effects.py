@@ -1,5 +1,6 @@
 """Tests for bird_mach.effects."""
 
+import pytest
 import numpy as np
 
 from bird_mach.effects import apply_fade, mix
@@ -18,6 +19,20 @@ class TestApplyFade:
         result = apply_fade(sine_wave, sr=sample_rate, fade_out_s=0.1)
         assert abs(result[-1]) < 1e-6
 
+    def test_fade_out_sub_sample_duration_does_not_raise(self, sample_rate):
+        # fade_out_s so small that int(fade_out_s * sr) == 0;
+        # previously y[-0:] *= linspace(..., 0) corrupted the whole buffer.
+        y = np.ones(100, dtype=np.float32)
+        result = apply_fade(y, sr=sample_rate, fade_out_s=0.000001)
+        assert np.allclose(result, 1.0)
+
+    def test_fade_longer_than_signal_does_not_raise(self, sample_rate):
+        # fade_in_s * sr > len(y); previously caused a broadcast ValueError.
+        y = np.ones(100, dtype=np.float32)
+        result = apply_fade(y, sr=sample_rate, fade_in_s=10.0)
+        assert abs(result[0]) < 1e-6
+        assert len(result) == 100
+
 
 class TestMix:
     def test_equal_mix(self):
@@ -31,3 +46,20 @@ class TestMix:
         b = np.ones(50, dtype=np.float32)
         result = mix(a, b)
         assert len(result) == 50
+
+    def test_ratio_above_one_raises(self):
+        # ratio > 1 silently amplified signals past 1.0, causing hidden clipping.
+        a = np.ones(10, dtype=np.float32)
+        with pytest.raises(ValueError, match="ratio must be in"):
+            mix(a, a, ratio=1.5)
+
+    def test_ratio_below_zero_raises(self):
+        a = np.ones(10, dtype=np.float32)
+        with pytest.raises(ValueError, match="ratio must be in"):
+            mix(a, a, ratio=-0.1)
+
+    def test_boundary_ratios_accepted(self):
+        a = np.ones(10, dtype=np.float32)
+        b = np.zeros(10, dtype=np.float32)
+        assert np.allclose(mix(a, b, ratio=1.0), 1.0)
+        assert np.allclose(mix(a, b, ratio=0.0), 0.0)

@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+### Added
+- **User management** (`bird_mach.auth`): registration, login, JWT
+  access/refresh tokens (PyJWT), PBKDF2 password hashing, roles, password
+  change/reset, email verification, authenticated email change, refresh-token
+  revocation (logout), a durable security audit log, per-IP brute-force rate
+  limiting, and an admin user-management API. Durable SQLite-backed storage
+  with an in-memory test backend and an idempotent schema migration.
+- **Payments** (`bird_mach.billing`): Stripe-backed subscriptions with a plan
+  catalog, hosted checkout, billing portal, cancellation, invoice history, and
+  signature-verified webhooks under `/billing`. `require_subscription` gates a
+  premium batch endpoint (402) and free accounts get a per-day analysis quota.
+  State is persisted in SQLite and stays idempotent against replayed webhooks.
+  Note: the live Stripe path is **not** exercised by the test suite — it needs
+  real test-mode keys and webhook replay (see `docs/billing.md`).
+- **Usage metering** (`bird_mach.usage`): durable per-user daily analysis
+  counter backing the free-tier quota.
+- SQLite persistence helper (`bird_mach.db`) with WAL mode for the durable
+  user/subscription/usage stores, and a `/health/ready` database readiness probe.
+
+### Fixed
+- Repaired the test suite: a syntax error in `api/v2/versioning.py`, a missing
+  `DEFAULT_DARK_BG` constant, ~198 over-indented enterprise test files, and 14
+  pre-existing core test failures; mounted the previously-unwired API v1 router.
+- Hardened audio-core and utility modules: edge-case/empty-input guards across
+  analysis, effects, segmentation, pitch, exporters, search, tagging,
+  clustering, history, favorites, and validators, plus HTML escaping in report
+  output and case-insensitive URL scheme validation.
+
 ### Changed
 - Web UI overhauled into a near-black instrument-panel theme.
   Palette swung from green/yellow glass to amber primary

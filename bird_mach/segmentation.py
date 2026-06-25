@@ -29,6 +29,8 @@ def segment_by_silence(
     min_segment_s: float = 0.5,
 ) -> list[Segment]:
     """Split audio at silence boundaries."""
+    if sr <= 0:
+        raise ValueError(f"sr must be positive, got {sr}")
     intervals = librosa.effects.split(y, top_db=top_db)
     segments = []
     for start_sample, end_sample in intervals:
@@ -46,6 +48,8 @@ def segment_fixed_length(
     overlap_s: float = 0.0,
 ) -> list[Segment]:
     """Create fixed-length overlapping segments."""
+    if segment_length_s <= 0:
+        raise ValueError(f"segment_length_s must be positive, got {segment_length_s}")
     step = segment_length_s - overlap_s
     if step <= 0:
         step = segment_length_s
@@ -62,6 +66,8 @@ def extract_segment_audio(
     y: np.ndarray, segment: Segment, *, sr: int
 ) -> np.ndarray:
     """Extract the waveform slice for a given segment."""
+    if sr <= 0:
+        raise ValueError(f"sr must be positive, got {sr}")
     start = max(0, int(segment.start_s * sr))
     end = min(len(y), int(segment.end_s * sr))
     if end <= start:

@@ -35,3 +35,39 @@ class AudioTooLargeError(MachError):
 
 class URLFetchError(MachError):
     """Raised when fetching audio from a remote URL fails."""
+
+
+class AuthError(MachError):
+    """Base class for authentication and account errors."""
+
+
+class EmailAlreadyRegisteredError(AuthError):
+    """Raised when registering an email that already has an account."""
+
+
+class InvalidCredentialsError(AuthError):
+    """Raised when login fails due to a bad email/password combination."""
+
+
+class UserNotFoundError(AuthError):
+    """Raised when an account lookup finds no matching user."""
+
+
+class InactiveUserError(AuthError):
+    """Raised when a deactivated account attempts to authenticate."""
+
+
+class TokenError(AuthError):
+    """Raised when a token is missing, malformed, expired, or invalid."""
+
+
+class BillingError(MachError):
+    """Base class for payment and subscription errors."""
+
+
+class PaymentProviderError(BillingError):
+    """Raised when the upstream payment provider rejects or fails a call."""
+
+
+class WebhookVerificationError(BillingError):
+    """Raised when a payment webhook signature cannot be verified."""

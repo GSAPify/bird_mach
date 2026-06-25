@@ -26,15 +26,23 @@ def apply_fade(
     """Apply linear fade-in and/or fade-out."""
     y = y.copy()
     if fade_in_s > 0:
-        n = int(fade_in_s * sr)
-        y[:n] *= np.linspace(0.0, 1.0, n, dtype=y.dtype)
+        n = min(int(fade_in_s * sr), len(y))
+        if n > 0:
+            y[:n] *= np.linspace(0.0, 1.0, n, dtype=y.dtype)
     if fade_out_s > 0:
-        n = int(fade_out_s * sr)
-        y[-n:] *= np.linspace(1.0, 0.0, n, dtype=y.dtype)
+        n = min(int(fade_out_s * sr), len(y))
+        if n > 0:
+            y[-n:] *= np.linspace(1.0, 0.0, n, dtype=y.dtype)
     return y
 
 
 def mix(y1: np.ndarray, y2: np.ndarray, *, ratio: float = 0.5) -> np.ndarray:
-    """Mix two audio signals. ratio=0.5 means equal blend."""
+    """Mix two audio signals. ratio=0.5 means equal blend.
+
+    Args:
+        ratio: Blend weight in [0.0, 1.0].  0.0 returns y2 only; 1.0 returns y1 only.
+    """
+    if not (0.0 <= ratio <= 1.0):
+        raise ValueError(f"ratio must be in [0.0, 1.0], got {ratio}")
     min_len = min(len(y1), len(y2))
     return (ratio * y1[:min_len] + (1.0 - ratio) * y2[:min_len]).astype(np.float32)

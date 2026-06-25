@@ -17,6 +17,12 @@ class HistoryTracker:
         self._entries: deque[HistoryEntry] = deque(maxlen=max_entries)
 
     def record(self, audio_id: str, user_id: str, action: str, **params) -> HistoryEntry:
+        if not audio_id or not audio_id.strip():
+            raise ValueError("audio_id must not be empty")
+        if not user_id or not user_id.strip():
+            raise ValueError("user_id must not be empty")
+        if not action or not action.strip():
+            raise ValueError("action must not be empty")
         entry = HistoryEntry(audio_id=audio_id, user_id=user_id, action=action, params=params)
         self._entries.append(entry)
         return entry

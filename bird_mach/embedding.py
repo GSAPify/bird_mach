@@ -60,7 +60,7 @@ class UmapConfig:
 
     n_neighbors: int = 15
     min_dist: float = 0.1
-    metric: str = "cosine"
+    metric: str = "euclidean"
     random_state: int = 42
 
 

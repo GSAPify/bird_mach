@@ -1,5 +1,7 @@
 """Tests for bird_mach.cache."""
 
+import pytest
+
 from bird_mach.cache import AnalysisCache
 
 
@@ -32,3 +34,39 @@ class TestAnalysisCache:
         h = AnalysisCache.content_hash(b"hello")
         assert isinstance(h, str)
         assert len(h) == 16
+
+    def test_max_size_zero_raises(self):
+        with pytest.raises(ValueError, match="max_size must be at least 1"):
+            AnalysisCache(max_size=0)
+
+    def test_max_size_negative_raises(self):
+        with pytest.raises(ValueError, match="max_size must be at least 1"):
+            AnalysisCache(max_size=-5)
+
+    def test_content_hash_empty_bytes_raises(self):
+        with pytest.raises(ValueError, match="non-empty"):
+            AnalysisCache.content_hash(b"")
+
+    def test_get_refreshes_lru_recency(self):
+        """A get() on the oldest entry should protect it from eviction."""
+        cache = AnalysisCache(max_size=2)
+        cache.put("a", 1)
+        cache.put("b", 2)
+        # Touch "a" so "b" becomes the least-recently-used
+        cache.get("a")
+        cache.put("c", 3)  # should evict "b", not "a"
+        assert cache.get("a") == 1
+        assert cache.get("b") is None
+        assert cache.get("c") == 3
+
+    def test_put_existing_key_refreshes_recency(self):
+        """Overwriting an existing key should move it to most-recently-used."""
+        cache = AnalysisCache(max_size=2)
+        cache.put("a", 1)
+        cache.put("b", 2)
+        # Re-put "a" (oldest) with new value — it should survive next eviction
+        cache.put("a", 99)
+        cache.put("c", 3)  # should evict "b"
+        assert cache.get("a") == 99
+        assert cache.get("b") is None
+        assert cache.get("c") == 3

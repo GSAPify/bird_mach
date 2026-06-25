@@ -18,6 +18,8 @@ class AudioSearchEngine:
 
     def index(self, doc_id: str, title: str, content: str,
               resource_type: str = "audio", metadata: dict | None = None):
+        if not doc_id or not doc_id.strip():
+            raise ValueError("doc_id must not be empty")
         self._documents[doc_id] = {
             "title": title, "content": content.lower(),
             "resource_type": resource_type,
@@ -25,6 +27,8 @@ class AudioSearchEngine:
         }
 
     def search(self, query: str, limit: int = 20) -> list[SearchResult]:
+        if limit < 0:
+            raise ValueError(f"limit must be non-negative, got {limit}")
         terms = query.lower().split()
         if not terms:
             return []

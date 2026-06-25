@@ -27,6 +27,10 @@ class ProjectManager:
         self._projects: dict[str, AudioProject] = {}
 
     def create(self, name: str, owner_id: str, description: str = "") -> AudioProject:
+        if not name or not name.strip():
+            raise ValueError("project name must not be empty")
+        if not owner_id or not owner_id.strip():
+            raise ValueError("owner_id must not be empty")
         project = AudioProject(
             id=str(uuid.uuid4())[:8], name=name,
             owner_id=owner_id, description=description,
@@ -52,7 +56,9 @@ class ProjectManager:
         return self._projects.pop(project_id, None) is not None
 
     def search(self, query: str) -> list[AudioProject]:
-        q = query.lower()
+        q = query.strip().lower()
+        if not q:
+            return []
         return [p for p in self._projects.values()
                 if not p.is_archived
                 and (q in p.name.lower() or q in p.description.lower()

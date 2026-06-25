@@ -20,11 +20,18 @@ def concat_features(*arrays: np.ndarray, align: str = "min") -> np.ndarray:
     """
     if not arrays:
         raise ValueError("concat_features requires at least one array")
+    _valid_align = {"min"}
+    if align not in _valid_align:
+        raise ValueError(f"unknown align {align!r}; expected one of {sorted(_valid_align)}")
     normalized = []
-    for arr in arrays:
+    for i, arr in enumerate(arrays):
+        if arr.ndim not in (1, 2):
+            raise ValueError(
+                f"arrays[{i}] has {arr.ndim} dimensions; expected 1 or 2"
+            )
         if arr.ndim == 1:
             arr = arr[:, np.newaxis]
-        elif arr.ndim == 2 and arr.shape[0] < arr.shape[1]:
+        elif arr.shape[0] < arr.shape[1]:
             arr = arr.T
         normalized.append(arr.astype(np.float32, copy=False))
 

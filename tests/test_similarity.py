@@ -47,3 +47,22 @@ class TestDistanceMatrix:
         X = np.random.default_rng(42).random((4, 2)).astype(np.float32)
         D = feature_distance_matrix(X)
         assert np.allclose(np.diag(D), 0.0)
+
+    def test_cosine_metric(self):
+        X = np.random.default_rng(0).random((4, 3)).astype(np.float32)
+        D = feature_distance_matrix(X, metric="cosine")
+        # cosine distance is 1 - similarity; diagonal should be ~0 (self-similarity=1)
+        assert np.allclose(np.diag(D), 0.0, atol=1e-5)
+        assert np.allclose(D, D.T, atol=1e-5)
+
+    def test_manhattan_metric(self):
+        X = np.array([[0.0, 0.0], [3.0, 4.0]], dtype=np.float32)
+        D = feature_distance_matrix(X, metric="manhattan")
+        assert abs(D[0, 1] - 7.0) < 1e-5
+        assert abs(D[1, 0] - 7.0) < 1e-5
+
+    def test_unknown_metric_raises(self):
+        import pytest
+        X = np.ones((3, 2), dtype=np.float32)
+        with pytest.raises(ValueError, match="unknown metric"):
+            feature_distance_matrix(X, metric="chebyshev")

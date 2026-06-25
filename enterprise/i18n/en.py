@@ -3,3 +3,4 @@
 TRANSLATIONS = {
 
 "save": "Save",
+}
