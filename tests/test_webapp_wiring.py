@@ -41,3 +41,9 @@ def test_api_v1_router_mounted():
     paths = {route.path for route in app.routes}
     assert "/api/v1/analyze" in paths
     assert "/api/v1/health" in paths
+
+
+def test_readiness_probe_checks_database():
+    resp = client.get("/health/ready")
+    assert resp.status_code == 200
+    assert resp.json() == {"status": "ready", "database": "ok"}
