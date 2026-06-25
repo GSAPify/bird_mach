@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 
 from bird_mach.auth.dependencies import get_auth_service, get_current_user
 from bird_mach.auth.models import User
+from bird_mach.auth.ratelimit import login_rate_limit
 from bird_mach.auth.service import AuthService
 from bird_mach.exceptions import (
     EmailAlreadyRegisteredError,
@@ -38,7 +39,11 @@ class ChangePasswordRequest(BaseModel):
     new_password: str = Field(min_length=8, max_length=128)
 
 
-@router.post("/register", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/register",
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(login_rate_limit)],
+)
 def register(body: RegisterRequest, service: AuthService = Depends(get_auth_service)) -> dict:
     try:
         user = service.register(body.email, body.password)
@@ -49,7 +54,7 @@ def register(body: RegisterRequest, service: AuthService = Depends(get_auth_serv
     return user.public_dict()
 
 
-@router.post("/login")
+@router.post("/login", dependencies=[Depends(login_rate_limit)])
 def login(body: LoginRequest, service: AuthService = Depends(get_auth_service)) -> dict:
     try:
         return service.login(body.email, body.password).as_dict()

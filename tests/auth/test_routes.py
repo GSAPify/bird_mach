@@ -7,10 +7,12 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from bird_mach.auth.dependencies import get_auth_service
+from bird_mach.auth.ratelimit import get_login_limiter
 from bird_mach.auth.routes import router
 from bird_mach.auth.service import AuthService
 from bird_mach.auth.store import InMemoryUserRepository
 from bird_mach.auth.tokens import TokenService
+from bird_mach.rate_limiter import TokenBucketLimiter
 
 SECRET = "routes-test-secret-at-least-32-bytes!!!"
 
@@ -23,6 +25,11 @@ def client():
     # get_current_user resolves the service via get_auth_service, so overriding
     # that one dependency is enough to bind the whole router to this instance.
     app.dependency_overrides[get_auth_service] = lambda: service
+    # Generous limiter so rate limiting doesn't interfere with these cases;
+    # the limiter itself is covered in test_ratelimit.py.
+    app.dependency_overrides[get_login_limiter] = lambda: TokenBucketLimiter(
+        capacity=1000, refill_rate=1000
+    )
     return TestClient(app)
 
 
