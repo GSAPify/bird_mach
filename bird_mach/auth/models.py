@@ -35,6 +35,7 @@ class User:
     password_hash: str
     role: Role = Role.USER
     is_active: bool = True
+    is_verified: bool = False
     created_at: datetime = field(default_factory=_now)
     # Set when Stripe issues a customer for this user; links auth to billing
     # without the auth layer depending on the billing package.
@@ -47,6 +48,7 @@ class User:
             "email": self.email,
             "role": self.role.value,
             "is_active": self.is_active,
+            "is_verified": self.is_verified,
             "created_at": self.created_at.isoformat(),
             "stripe_customer_id": self.stripe_customer_id,
         }

@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash      TEXT NOT NULL,
     role               TEXT NOT NULL DEFAULT 'user',
     is_active          INTEGER NOT NULL DEFAULT 1,
+    is_verified        INTEGER NOT NULL DEFAULT 0,
     created_at         TEXT NOT NULL,
     stripe_customer_id TEXT
 );
@@ -118,6 +119,18 @@ class SqliteUserRepository(UserRepository):
     def __init__(self, db: Database) -> None:
         self._db = db
         self._db.executescript(_SCHEMA)
+        self._migrate()
+
+    def _migrate(self) -> None:
+        """Add columns introduced after the initial schema, for existing DBs.
+
+        CREATE TABLE IF NOT EXISTS won't add a new column to a table created by
+        an older version, so a deploy onto an existing mach.db would otherwise
+        crash on the missing column. Add it idempotently.
+        """
+        existing = {row["name"] for row in self._db.query_all("PRAGMA table_info(users)")}
+        if "is_verified" not in existing:
+            self._db.execute("ALTER TABLE users ADD COLUMN is_verified INTEGER NOT NULL DEFAULT 0")
 
     @staticmethod
     def _row_to_user(row) -> User:
@@ -127,6 +140,7 @@ class SqliteUserRepository(UserRepository):
             password_hash=row["password_hash"],
             role=Role(row["role"]),
             is_active=bool(row["is_active"]),
+            is_verified=bool(row["is_verified"]),
             created_at=datetime.fromisoformat(row["created_at"]),
             stripe_customer_id=row["stripe_customer_id"],
         )
@@ -135,13 +149,14 @@ class SqliteUserRepository(UserRepository):
         try:
             self._db.execute(
                 "INSERT INTO users (id, email, password_hash, role, is_active, "
-                "created_at, stripe_customer_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "is_verified, created_at, stripe_customer_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 [
                     user.id,
                     _normalise_email(user.email),
                     user.password_hash,
                     user.role.value,
                     int(user.is_active),
+                    int(user.is_verified),
                     user.created_at.isoformat(),
                     user.stripe_customer_id,
                 ],
@@ -169,12 +184,13 @@ class SqliteUserRepository(UserRepository):
     def update(self, user: User) -> User:
         cur = self._db.execute(
             "UPDATE users SET email = ?, password_hash = ?, role = ?, is_active = ?, "
-            "stripe_customer_id = ? WHERE id = ?",
+            "is_verified = ?, stripe_customer_id = ? WHERE id = ?",
             [
                 _normalise_email(user.email),
                 user.password_hash,
                 user.role.value,
                 int(user.is_active),
+                int(user.is_verified),
                 user.stripe_customer_id,
                 user.id,
             ],

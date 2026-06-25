@@ -97,3 +97,33 @@ def test_sqlite_repository_persists_across_handles(tmp_path):
 
     reopened = SqliteUserRepository(Database(tmp_path / "users.db"))
     assert reopened.get_by_email("alice@example.com") is not None
+
+
+def test_is_verified_roundtrips(repo):
+    u = _user()
+    u.is_verified = True
+    repo.add(u)
+    assert repo.get("u1").is_verified is True
+
+
+def test_migration_adds_is_verified_to_old_schema(tmp_path):
+    # Simulate a DB created before is_verified existed.
+    db = Database(tmp_path / "old.db")
+    db.executescript(
+        """
+        CREATE TABLE users (
+            id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL,
+            role TEXT NOT NULL DEFAULT 'user', is_active INTEGER NOT NULL DEFAULT 1,
+            created_at TEXT NOT NULL, stripe_customer_id TEXT
+        );
+        """
+    )
+    db.execute(
+        "INSERT INTO users (id, email, password_hash, role, is_active, created_at) "
+        "VALUES ('u1', 'a@b.com', 'h', 'user', 1, '2026-01-01T00:00:00+00:00')"
+    )
+    # Opening the repository should ALTER the table and read the legacy row.
+    repo = SqliteUserRepository(db)
+    user = repo.get("u1")
+    assert user is not None
+    assert user.is_verified is False
