@@ -15,6 +15,8 @@ class AnalysisCache:
     """
 
     def __init__(self, max_size: int = 32) -> None:
+        if max_size < 1:
+            raise ValueError(f"max_size must be at least 1, got {max_size}")
         self._max_size = max_size
         self._store: OrderedDict[str, Any] = OrderedDict()
 

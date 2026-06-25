@@ -1,5 +1,7 @@
 """Tests for bird_mach.cache."""
 
+import pytest
+
 from bird_mach.cache import AnalysisCache
 
 
@@ -32,3 +34,11 @@ class TestAnalysisCache:
         h = AnalysisCache.content_hash(b"hello")
         assert isinstance(h, str)
         assert len(h) == 16
+
+    def test_max_size_zero_raises(self):
+        with pytest.raises(ValueError, match="max_size must be at least 1"):
+            AnalysisCache(max_size=0)
+
+    def test_max_size_negative_raises(self):
+        with pytest.raises(ValueError, match="max_size must be at least 1"):
+            AnalysisCache(max_size=-5)
