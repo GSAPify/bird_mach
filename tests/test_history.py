@@ -34,3 +34,21 @@ class TestHistory:
         ht.record("a2", "u1", "analyze")
         entries = ht.get_recent("u1")
         assert entries[0].audio_id == "a2"
+
+    def test_record_empty_audio_id_raises(self):
+        import pytest
+        ht = HistoryTracker()
+        with pytest.raises(ValueError, match="audio_id"):
+            ht.record("", "u1", "analyze")
+
+    def test_record_empty_user_id_raises(self):
+        import pytest
+        ht = HistoryTracker()
+        with pytest.raises(ValueError, match="user_id"):
+            ht.record("a1", "", "analyze")
+
+    def test_record_empty_action_raises(self):
+        import pytest
+        ht = HistoryTracker()
+        with pytest.raises(ValueError, match="action"):
+            ht.record("a1", "u1", "")
