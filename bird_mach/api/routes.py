@@ -18,24 +18,12 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1", tags=["api"])
 
 
-@router.get("/health", response_model=HealthResponse)
-async def api_health():
-    return HealthResponse(version=APP_VERSION)
+def analyze_bytes(contents: bytes, sr: int = 22050) -> AnalysisSummaryResponse:
+    """Decode audio bytes and return the analysis summary.
 
-
-@router.post(
-    "/analyze",
-    response_model=AnalysisSummaryResponse,
-    responses={400: {"model": ErrorResponse}},
-)
-async def api_analyze(
-    file: UploadFile = File(...),
-    sr: int = 22050,
-):
-    """Analyze an uploaded audio file and return a JSON summary."""
-    logger.info("API analyze: %s", file.filename)
-    contents = await file.read()
-
+    Shared by the anonymous endpoint and the authenticated/metered routes so
+    the load-and-summarize logic lives in exactly one place.
+    """
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmp:
         tmp.write(contents)
         tmp.flush()
@@ -54,3 +42,23 @@ async def api_analyze(
         zero_crossing_rate_mean=summary.zero_crossing_rate_mean,
         tags=summary.tags,
     )
+
+
+@router.get("/health", response_model=HealthResponse)
+async def api_health():
+    return HealthResponse(version=APP_VERSION)
+
+
+@router.post(
+    "/analyze",
+    response_model=AnalysisSummaryResponse,
+    responses={400: {"model": ErrorResponse}},
+)
+async def api_analyze(
+    file: UploadFile = File(...),
+    sr: int = 22050,
+):
+    """Analyze an uploaded audio file and return a JSON summary."""
+    logger.info("API analyze: %s", file.filename)
+    contents = await file.read()
+    return analyze_bytes(contents, sr)
