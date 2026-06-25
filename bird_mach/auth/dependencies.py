@@ -47,7 +47,7 @@ def _resolve_secret(config: AppConfig) -> str:
 def build_auth_service(config: AppConfig, repo: UserRepository | None = None) -> AuthService:
     """Construct an AuthService from config. ``repo`` override is for tests."""
     if repo is None:
-        repo = SqliteUserRepository(Database(config.auth_db_path))
+        repo = get_user_repository()
     tokens = TokenService(
         _resolve_secret(config),
         access_ttl_s=config.access_token_ttl_s,
@@ -56,9 +56,18 @@ def build_auth_service(config: AppConfig, repo: UserRepository | None = None) ->
     return AuthService(repo, tokens)
 
 
-# Single shared instance for the running app. Tests build their own via
-# build_auth_service() and override get_auth_service.
+# Shared singletons for the running app. The user repository is shared with the
+# billing layer (which writes stripe_customer_id back onto accounts), so both
+# must see the same store. Tests build their own and override the dependencies.
+_repo: UserRepository | None = None
 _service: AuthService | None = None
+
+
+def get_user_repository() -> UserRepository:
+    global _repo
+    if _repo is None:
+        _repo = SqliteUserRepository(Database(AppConfig.from_env().auth_db_path))
+    return _repo
 
 
 def get_auth_service() -> AuthService:
