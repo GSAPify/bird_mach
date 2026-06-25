@@ -35,3 +35,17 @@ class TestConcatFeatures:
         a = np.ones(10, dtype=np.float32)
         with pytest.raises(ValueError, match="unknown align"):
             concat_features(a, align="MINIMUM")
+
+    def test_0d_array_raises(self):
+        # 0-D array previously caused IndexError from arr.ndim == 1 branch's
+        # arr[:, np.newaxis] attempt failing with "tuple index out of range".
+        scalar = np.array(1.0, dtype=np.float32)
+        with pytest.raises(ValueError, match="dimensions"):
+            concat_features(scalar)
+
+    def test_3d_array_raises(self):
+        # 3-D arrays slipped through the ndim checks and were silently passed
+        # to np.hstack, potentially producing garbage output shapes.
+        volume = np.ones((3, 4, 5), dtype=np.float32)
+        with pytest.raises(ValueError, match="dimensions"):
+            concat_features(volume)
