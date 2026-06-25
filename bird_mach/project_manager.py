@@ -52,7 +52,9 @@ class ProjectManager:
         return self._projects.pop(project_id, None) is not None
 
     def search(self, query: str) -> list[AudioProject]:
-        q = query.lower()
+        q = query.strip().lower()
+        if not q:
+            return []
         return [p for p in self._projects.values()
                 if not p.is_archived
                 and (q in p.name.lower() or q in p.description.lower()
