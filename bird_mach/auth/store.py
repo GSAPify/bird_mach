@@ -58,6 +58,10 @@ class UserRepository(ABC):
     @abstractmethod
     def count(self) -> int: ...
 
+    @abstractmethod
+    def list_all(self, *, limit: int = 100, offset: int = 0) -> list[User]:
+        """Return users ordered by creation time (oldest first), for admin views."""
+
 
 class InMemoryUserRepository(UserRepository):
     """Thread-safe dict-backed repository for tests and ephemeral runs."""
@@ -102,6 +106,10 @@ class InMemoryUserRepository(UserRepository):
 
     def count(self) -> int:
         return len(self._by_id)
+
+    def list_all(self, *, limit: int = 100, offset: int = 0) -> list[User]:
+        ordered = sorted(self._by_id.values(), key=lambda u: u.created_at)
+        return ordered[offset : offset + limit]
 
 
 class SqliteUserRepository(UserRepository):
@@ -181,3 +189,10 @@ class SqliteUserRepository(UserRepository):
 
     def count(self) -> int:
         return self._db.query_one("SELECT COUNT(*) AS c FROM users")["c"]
+
+    def list_all(self, *, limit: int = 100, offset: int = 0) -> list[User]:
+        rows = self._db.query_all(
+            "SELECT * FROM users ORDER BY created_at ASC LIMIT ? OFFSET ?",
+            [limit, offset],
+        )
+        return [self._row_to_user(r) for r in rows]

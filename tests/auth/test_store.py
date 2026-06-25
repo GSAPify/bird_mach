@@ -81,6 +81,14 @@ class TestUserRepository:
         repo.add(_user(uid="b", email="b@x.com"))
         assert repo.count() == 2
 
+    def test_list_all_paginates(self, repo):
+        for i in range(5):
+            repo.add(_user(uid=f"u{i}", email=f"u{i}@x.com"))
+        assert len(repo.list_all(limit=2)) == 2
+        assert len(repo.list_all(limit=2, offset=4)) == 1
+        all_ids = {u.id for u in repo.list_all()}
+        assert all_ids == {f"u{i}" for i in range(5)}
+
 
 def test_sqlite_repository_persists_across_handles(tmp_path):
     db = Database(tmp_path / "users.db")
