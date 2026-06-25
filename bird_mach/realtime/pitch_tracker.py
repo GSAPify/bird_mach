@@ -20,6 +20,8 @@ class RealtimePitchTracker:
         search = corr[self._min_lag:self._max_lag]
         if len(search) == 0:
             return 0.0
+        if corr[0] <= 0.0:
+            return 0.0
         peak_idx = np.argmax(search) + self._min_lag
         if corr[peak_idx] < 0.1 * corr[0]:
             return 0.0
