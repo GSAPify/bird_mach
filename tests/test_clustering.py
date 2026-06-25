@@ -30,3 +30,9 @@ class TestDBSCAN:
         result = cluster_dbscan(X, eps=0.3, min_samples=3)
         assert isinstance(result, ClusterResult)
         assert len(result.labels) == 30
+
+    def test_empty_input_raises(self):
+        import pytest
+        X = np.empty((0, 3), dtype=np.float32)
+        with pytest.raises(ValueError, match="empty"):
+            cluster_dbscan(X)
