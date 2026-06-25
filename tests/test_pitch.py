@@ -19,6 +19,15 @@ class TestHzToNote:
     def test_negative(self):
         assert hz_to_note(-100.0) == "—"
 
+    def test_nan_returns_sentinel(self):
+        # pyin returns NaN for unvoiced frames; hz_to_note previously crashed
+        # with "cannot convert float NaN to integer" on such values.
+        assert hz_to_note(float("nan")) == "—"
+
+    def test_inf_returns_sentinel(self):
+        # np.inf caused OverflowError in int(round(...)); treat it as invalid.
+        assert hz_to_note(float("inf")) == "—"
+
 
 class TestEstimatePitchEmpty:
     """The empty-input fast path in estimate_pitch was previously untested."""
