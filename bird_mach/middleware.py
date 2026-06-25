@@ -21,7 +21,17 @@ class TimingMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next) -> Response:
         start = time.perf_counter()
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        except Exception:
+            elapsed_ms = (time.perf_counter() - start) * 1000
+            logger.error(
+                "%s %s -> ERROR (%.1f ms)",
+                request.method,
+                request.url.path,
+                elapsed_ms,
+            )
+            raise
         elapsed_ms = (time.perf_counter() - start) * 1000
         response.headers["X-Process-Time-Ms"] = f"{elapsed_ms:.1f}"
         logger.info(

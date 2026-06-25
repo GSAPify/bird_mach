@@ -1,8 +1,12 @@
 """Tests for bird_mach.middleware."""
 
+import logging
+
+import pytest
 from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse
+from starlette.routing import Route
 from starlette.testclient import TestClient
 
 from bird_mach.middleware import RequestIdMiddleware, TimingMiddleware
@@ -70,3 +74,20 @@ class TestTimingMiddleware:
         r = client.get("/")
         value = float(r.headers["X-Process-Time-Ms"])
         assert value >= 0.0
+
+    def test_exception_is_logged_and_reraised(self, caplog):
+        """When call_next raises, the error should be logged and re-raised."""
+
+        async def boom(request: Request) -> PlainTextResponse:
+            raise RuntimeError("kaboom")
+
+        app = Starlette(routes=[Route("/boom", boom)])
+        app.add_middleware(TimingMiddleware)
+
+        with caplog.at_level(logging.ERROR, logger="bird_mach.middleware"):
+            client = TestClient(app, raise_server_exceptions=True)
+            with pytest.raises(RuntimeError, match="kaboom"):
+                client.get("/boom")
+
+        assert any("ERROR" in r.levelname and "kaboom" not in r.message for r in caplog.records) or \
+               any("ERROR" in r.levelname for r in caplog.records)
