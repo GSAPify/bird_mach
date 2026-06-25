@@ -32,3 +32,15 @@ class TestFavorites:
         time.sleep(0.01)
         fm.add("u1", "new")
         assert fm.get("u1")[0] == "new"
+
+    def test_add_empty_user_id_raises(self):
+        import pytest
+        fm = FavoritesManager()
+        with pytest.raises(ValueError, match="user_id"):
+            fm.add("", "a1")
+
+    def test_add_empty_audio_id_raises(self):
+        import pytest
+        fm = FavoritesManager()
+        with pytest.raises(ValueError, match="audio_id"):
+            fm.add("u1", "")

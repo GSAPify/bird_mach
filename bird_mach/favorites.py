@@ -8,6 +8,10 @@ class FavoritesManager:
         self._favorites: dict[str, dict[str, datetime]] = defaultdict(dict)
 
     def add(self, user_id: str, audio_id: str) -> None:
+        if not user_id or not user_id.strip():
+            raise ValueError("user_id must not be empty")
+        if not audio_id or not audio_id.strip():
+            raise ValueError("audio_id must not be empty")
         self._favorites[user_id][audio_id] = datetime.now()
 
     def remove(self, user_id: str, audio_id: str) -> None:
