@@ -56,3 +56,11 @@ class TestAudioSearchEngine:
         engine.index("a1", "Piano Concerto", "a grand piano in a concert hall")
         results = engine.search("piano")
         assert results[0].snippet != ""
+
+    def test_index_empty_doc_id_raises(self):
+        import pytest
+        engine = AudioSearchEngine()
+        with pytest.raises(ValueError, match="doc_id"):
+            engine.index("", "Title", "content")
+        with pytest.raises(ValueError, match="doc_id"):
+            engine.index("   ", "Title", "content")
