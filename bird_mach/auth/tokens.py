@@ -24,6 +24,7 @@ from bird_mach.exceptions import TokenError
 ACCESS_TOKEN = "access"
 REFRESH_TOKEN = "refresh"
 PASSWORD_RESET = "password_reset"
+VERIFY_EMAIL = "verify_email"
 _ALGORITHM = "HS256"
 
 
@@ -105,6 +106,34 @@ class TokenService:
             "exp": now + timedelta(seconds=ttl_s),
         }
         return jwt.encode(payload, self._secret, algorithm=_ALGORITHM)
+
+    def issue_email_verification(self, subject: str, *, ttl_s: int = 60 * 60 * 24) -> str:
+        """Issue an email-verification token (default 24h)."""
+        now = datetime.now(timezone.utc)
+        payload = {
+            "sub": subject,
+            "type": VERIFY_EMAIL,
+            "iss": self._issuer,
+            "iat": now,
+            "exp": now + timedelta(seconds=ttl_s),
+        }
+        return jwt.encode(payload, self._secret, algorithm=_ALGORITHM)
+
+    def verify_email_token(self, token: str) -> str:
+        """Validate an email-verification token and return the subject."""
+        try:
+            payload = jwt.decode(
+                token,
+                self._secret,
+                algorithms=[_ALGORITHM],
+                issuer=self._issuer,
+                options={"require": ["exp", "sub", "iss"]},
+            )
+        except jwt.PyJWTError as exc:
+            raise TokenError(str(exc)) from exc
+        if payload.get("type") != VERIFY_EMAIL:
+            raise TokenError("not an email-verification token")
+        return payload["sub"]
 
     def password_reset_subject(self, token: str) -> str:
         """Return the subject of a reset token after validating signature/exp/type.

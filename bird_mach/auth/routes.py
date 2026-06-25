@@ -62,6 +62,10 @@ class PasswordResetConfirm(BaseModel):
     new_password: str = Field(min_length=8, max_length=128)
 
 
+class VerifyEmailConfirm(BaseModel):
+    token: str
+
+
 @router.post(
     "/register",
     status_code=status.HTTP_201_CREATED,
@@ -150,6 +154,38 @@ def confirm_password_reset(
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid or expired reset token") from exc
     except ValueError as exc:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc)) from exc
+
+
+@router.post("/verify-email/request", status_code=status.HTTP_202_ACCEPTED)
+def request_email_verification(
+    user: User = Depends(get_current_user),
+    service: AuthService = Depends(get_auth_service),
+) -> dict:
+    """Issue an email-verification token for the current user.
+
+    Production emails the link; with no email provider wired, the token is
+    logged and returned in non-production for local testing.
+    """
+    if user.is_verified:
+        return {"status": "already_verified"}
+    token = service.issue_email_verification(user.id)
+    logger.info("email verification requested for %s", user.email)
+    response: dict = {"status": "accepted"}
+    if not config.is_production:
+        response["debug_verification_token"] = token
+    return response
+
+
+@router.post("/verify-email/confirm")
+def confirm_email_verification(
+    body: VerifyEmailConfirm,
+    service: AuthService = Depends(get_auth_service),
+) -> dict:
+    try:
+        user = service.verify_email(body.token)
+    except (TokenError, UserNotFoundError) as exc:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Invalid or expired token") from exc
+    return {"status": "verified", "email": user.email, "is_verified": user.is_verified}
 
 
 @router.get("/me")

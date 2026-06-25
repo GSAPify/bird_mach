@@ -126,6 +126,22 @@ class AuthService:
         user.password_hash = hash_password(new_password)
         self._repo.update(user)
 
+    def issue_email_verification(self, user_id: str) -> str:
+        """Issue an email-verification token for an existing user."""
+        user = self._require_user(user_id)
+        return self._tokens.issue_email_verification(user.id)
+
+    def verify_email(self, token: str) -> User:
+        """Consume a verification token and mark the account verified."""
+        subject = self._tokens.verify_email_token(token)
+        user = self._repo.get(subject)
+        if user is None:
+            raise UserNotFoundError(subject)
+        if not user.is_verified:
+            user.is_verified = True
+            self._repo.update(user)
+        return user
+
     def change_password(self, user_id: str, current: str, new: str) -> None:
         user = self._require_user(user_id)
         if not verify_password(current, user.password_hash):

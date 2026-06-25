@@ -156,6 +156,41 @@ class TestPasswordReset:
         assert resp.status_code == 400
 
 
+class TestEmailVerification:
+    def test_full_verification_flow(self, client):
+        tokens = _register_and_login(client)
+        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+        # Newly-registered users are unverified.
+        assert client.get("/auth/me", headers=headers).json()["is_verified"] is False
+
+        req = client.post("/auth/verify-email/request", headers=headers)
+        assert req.status_code == 202
+        token = req.json()["debug_verification_token"]
+
+        confirm = client.post("/auth/verify-email/confirm", json={"token": token})
+        assert confirm.status_code == 200
+        assert confirm.json()["is_verified"] is True
+        assert client.get("/auth/me", headers=headers).json()["is_verified"] is True
+
+    def test_request_requires_auth(self, client):
+        assert client.post("/auth/verify-email/request").status_code == 401
+
+    def test_invalid_token_rejected(self, client):
+        resp = client.post("/auth/verify-email/confirm", json={"token": "garbage"})
+        assert resp.status_code == 400
+
+    def test_already_verified_short_circuits(self, client):
+        tokens = _register_and_login(client)
+        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+        token = client.post("/auth/verify-email/request", headers=headers).json()[
+            "debug_verification_token"
+        ]
+        client.post("/auth/verify-email/confirm", json={"token": token})
+        assert client.post("/auth/verify-email/request", headers=headers).json()["status"] == (
+            "already_verified"
+        )
+
+
 class TestAuditEvents:
     def test_login_recorded_in_events(self, client):
         tokens = _register_and_login(client)
