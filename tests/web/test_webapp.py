@@ -78,8 +78,11 @@ def test_live_page_has_browser_audio_controls(client: TestClient) -> None:
 
     assert response.status_code == 200
     assert 'id="startFileBtn"' in response.text
+    assert 'id="checkMicBtn"' in response.text
     assert 'id="startMicBtn"' in response.text
     assert 'id="startScreenBtn"' in response.text
+    assert 'id="micDevice"' in response.text
+    assert 'id="micPermission"' in response.text
     assert 'src="/static/js/live.js"' in response.text
 
 
@@ -99,6 +102,9 @@ def test_live_static_script_contains_audio_lifecycle_guards(client: TestClient) 
     assert "createMediaElementSource" in response.text
     assert "player.addEventListener(\"play\"" in response.text
     assert "disconnectCurrentSource" in response.text
+    assert "navigator.permissions.query" in response.text
+    assert "enumerateDevices" in response.text
+    assert "micAudioConstraints" in response.text
 
 
 def test_upload_static_script_contains_preflight_guards(client: TestClient) -> None:
