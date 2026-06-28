@@ -28,8 +28,22 @@
     </div>
     <audio id="player" class="player" controls preload="metadata"></audio>
 
+    <div class="grid-2 compact-grid mic-grid">
+      <div>
+        <label for="micDevice">Mic input</label>
+        <select id="micDevice" disabled>
+          <option value="">Default microphone</option>
+        </select>
+      </div>
+      <div>
+        <label for="micPermission">Mic permission</label>
+        <div id="micPermission" class="permission-state" role="status" aria-live="polite">Checking...</div>
+      </div>
+    </div>
+
     <div class="btn-row">
       <button id="startFileBtn" class="btn">Play file</button>
+      <button id="checkMicBtn" class="btn ghost" type="button">Check mic</button>
       <button id="startMicBtn" class="btn warm">Mic</button>
       <button id="startScreenBtn" class="btn ghost">Tab audio</button>
       <button id="stopBtn" class="btn danger" disabled>Stop</button>
@@ -79,7 +93,7 @@
       <div class="metric"><div class="label">Time</div><div class="value" id="statTime">--</div></div>
     </div>
 
-    <p class="note">Tip: lower <code>max points</code> or <code>bins</code> if it gets choppy. Mic and tab audio require <code>https</code> or <code>localhost</code>.</p>
+    <p class="note">Tip: lower <code>max points</code> or <code>bins</code> if it gets choppy. Mic and tab audio require <code>https</code>, <code>localhost</code>, or <code>127.0.0.1</code>.</p>
   </section>
 
   <section class="visual-stack">

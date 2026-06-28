@@ -7,11 +7,14 @@
   const fileLabel = document.getElementById("fileLabel");
   const player = document.getElementById("player");
   const startFileBtn = document.getElementById("startFileBtn");
+  const checkMicBtn = document.getElementById("checkMicBtn");
   const startMicBtn = document.getElementById("startMicBtn");
   const startScreenBtn = document.getElementById("startScreenBtn");
   const stopBtn = document.getElementById("stopBtn");
   const clearBtn = document.getElementById("clearBtn");
   const fullscreenBtn = document.getElementById("fullscreenBtn");
+  const micDeviceEl = document.getElementById("micDevice");
+  const micPermissionEl = document.getElementById("micPermission");
   const motionEl = document.getElementById("motion");
   const loopSpeedEl = document.getElementById("loopSpeed");
   const colorByEl = document.getElementById("colorBy");
@@ -80,6 +83,168 @@
     if (state) statusEl.classList.add(state);
   }
 
+  function setMicPermission(text, state) {
+    if (!micPermissionEl) return;
+    micPermissionEl.textContent = text;
+    micPermissionEl.classList.remove("is-ok", "is-warn", "is-danger");
+    if (state) micPermissionEl.classList.add(state);
+  }
+
+  function isLocalCaptureHost() {
+    const host = window.location.hostname;
+    return host === "localhost" || host === "127.0.0.1" || host === "::1";
+  }
+
+  function mediaCaptureContextReady() {
+    return window.isSecureContext || isLocalCaptureHost();
+  }
+
+  function micAudioConstraints() {
+    const audio = {
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: false,
+    };
+    if (micDeviceEl && micDeviceEl.value) {
+      audio.deviceId = { exact: micDeviceEl.value };
+    }
+    return { audio: audio };
+  }
+
+  function mediaErrorMessage(error) {
+    if (!error) return "Unknown media error.";
+    if (error.name === "NotAllowedError" || error.name === "SecurityError") {
+      return "Microphone access was blocked. Allow this site in browser settings and try again.";
+    }
+    if (error.name === "NotFoundError" || error.name === "DevicesNotFoundError") {
+      return "No microphone was found on this device.";
+    }
+    if (error.name === "NotReadableError" || error.name === "TrackStartError") {
+      return "The microphone is already in use by another app or browser tab.";
+    }
+    if (error.name === "OverconstrainedError" || error.name === "ConstraintNotSatisfiedError") {
+      return "The selected microphone is unavailable. Choose another input and try again.";
+    }
+    return error.message || "Microphone capture failed.";
+  }
+
+  function stopStream(stream) {
+    if (!stream) return;
+    stream.getTracks().forEach(function (track) { track.stop(); });
+  }
+
+  function setMicButtonsDisabled(disabled) {
+    if (startMicBtn) startMicBtn.disabled = disabled;
+    if (checkMicBtn) checkMicBtn.disabled = disabled;
+  }
+
+  async function refreshMicDevices(preferredDeviceId) {
+    if (!micDeviceEl) return;
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+      micDeviceEl.innerHTML = "<option value=''>Device list unavailable</option>";
+      micDeviceEl.disabled = true;
+      return;
+    }
+
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const audioInputs = devices.filter(function (device) {
+      return device.kind === "audioinput";
+    });
+    const selected = preferredDeviceId || micDeviceEl.value;
+    micDeviceEl.innerHTML = "";
+
+    if (!audioInputs.length) {
+      const emptyOption = document.createElement("option");
+      emptyOption.value = "";
+      emptyOption.textContent = "No microphones found";
+      micDeviceEl.appendChild(emptyOption);
+      micDeviceEl.disabled = true;
+      return;
+    }
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Default microphone";
+    micDeviceEl.appendChild(defaultOption);
+
+    audioInputs.forEach(function (device, index) {
+      if (!device.deviceId || device.deviceId === "default") return;
+      const option = document.createElement("option");
+      option.value = device.deviceId;
+      option.textContent = device.label || "Microphone " + (index + 1);
+      micDeviceEl.appendChild(option);
+    });
+
+    micDeviceEl.disabled = false;
+    if (selected) {
+      const hasSelectedDevice = Array.from(micDeviceEl.options).some(function (option) {
+        return option.value === selected;
+      });
+      if (hasSelectedDevice) micDeviceEl.value = selected;
+    }
+  }
+
+  async function refreshMicPermission() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setMicPermission("Unavailable", "is-danger");
+      setMicButtonsDisabled(true);
+      return;
+    }
+    if (!mediaCaptureContextReady()) {
+      setMicPermission("HTTPS needed", "is-danger");
+      setMicButtonsDisabled(true);
+      return;
+    }
+    setMicButtonsDisabled(false);
+
+    if (!navigator.permissions || !navigator.permissions.query) {
+      setMicPermission("Click Check mic", "is-warn");
+      return;
+    }
+
+    try {
+      const status = await navigator.permissions.query({ name: "microphone" });
+      function renderPermissionState() {
+        if (status.state === "granted") setMicPermission("Allowed", "is-ok");
+        else if (status.state === "denied") setMicPermission("Blocked", "is-danger");
+        else setMicPermission("Ask on click", "is-warn");
+      }
+      renderPermissionState();
+      status.onchange = renderPermissionState;
+    } catch (error) {
+      setMicPermission("Click Check mic", "is-warn");
+    }
+  }
+
+  async function checkMicrophonePermission() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setMicPermission("Unavailable", "is-danger");
+      setStatus("Microphone capture is unavailable in this browser or context.");
+      return;
+    }
+    if (!mediaCaptureContextReady()) {
+      setMicPermission("HTTPS needed", "is-danger");
+      setStatus("Mic and tab audio need HTTPS, localhost, or 127.0.0.1.");
+      return;
+    }
+
+    setMicButtonsDisabled(true);
+    setMicPermission("Requesting...", "is-warn");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(micAudioConstraints());
+      stopStream(stream);
+      await refreshMicDevices();
+      setMicPermission("Allowed", "is-ok");
+      setStatus("Microphone permission is ready.", "is-ok");
+    } catch (error) {
+      const message = mediaErrorMessage(error);
+      setMicPermission("Blocked", "is-danger");
+      setStatus(message);
+    } finally {
+      setMicButtonsDisabled(false);
+    }
+  }
+
   function clampNumber(value, fallback, min, max) {
     const parsed = Number.parseFloat(value);
     if (Number.isNaN(parsed)) return fallback;
@@ -141,10 +306,8 @@
         // Analyzer may already be detached when switching sources quickly.
       }
     }
-    if (mediaStream) {
-      mediaStream.getTracks().forEach(function (track) { track.stop(); });
-      mediaStream = null;
-    }
+    stopStream(mediaStream);
+    mediaStream = null;
     activeSource = null;
   }
 
@@ -561,18 +724,24 @@
       setStatus("Microphone capture is unavailable in this browser or context.");
       return;
     }
+    if (!mediaCaptureContextReady()) {
+      setMicPermission("HTTPS needed", "is-danger");
+      setStatus("Mic and tab audio need HTTPS, localhost, or 127.0.0.1.");
+      return;
+    }
 
     disconnectCurrentSource();
     player.pause();
     initAnalyser();
     const ctx = await resumeAudioContext();
-    mediaStream = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        echoCancellation: false,
-        noiseSuppression: false,
-        autoGainControl: false,
-      },
-    });
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia(micAudioConstraints());
+      await refreshMicDevices();
+      setMicPermission("Allowed", "is-ok");
+    } catch (error) {
+      setMicPermission("Blocked", "is-danger");
+      throw new Error(mediaErrorMessage(error));
+    }
     sourceNode = ctx.createMediaStreamSource(mediaStream);
     sourceNode.connect(analyser);
     activeSource = "mic";
@@ -592,7 +761,7 @@
     mediaStream = await navigator.mediaDevices.getDisplayMedia({ audio: true, video: true });
     const audioTracks = mediaStream.getAudioTracks();
     if (!audioTracks.length) {
-      mediaStream.getTracks().forEach(function (track) { track.stop(); });
+      stopStream(mediaStream);
       mediaStream = null;
       setStatus("No tab audio found. Select a tab and enable audio sharing.");
       return;
@@ -665,6 +834,13 @@
         setStatus("File audio failed: " + error.message);
       });
     });
+    if (checkMicBtn) {
+      checkMicBtn.addEventListener("click", function () {
+        checkMicrophonePermission().catch(function (error) {
+          setStatus("Microphone check failed: " + error.message);
+        });
+      });
+    }
     startMicBtn.addEventListener("click", function () {
       startFromMic().catch(function (error) {
         setStatus("Microphone failed: " + error.message);
@@ -693,6 +869,18 @@
     maxPointsEl.addEventListener("change", function () {
       savePrefs({ maxPoints: maxPointsEl.value });
     });
+    if (micDeviceEl) {
+      micDeviceEl.addEventListener("change", function () {
+        savePrefs({ micDeviceId: micDeviceEl.value });
+      });
+    }
+    if (navigator.mediaDevices && navigator.mediaDevices.addEventListener) {
+      navigator.mediaDevices.addEventListener("devicechange", function () {
+        refreshMicDevices().catch(function () {
+          setMicPermission("Device list unavailable", "is-warn");
+        });
+      });
+    }
     player.addEventListener("play", function () {
       if (isStartingFile || rafId || !player.src) return;
       startFromFile().catch(function (error) {
@@ -762,6 +950,7 @@
     if (prefs.loopSpeed != null && loopSpeedEl) loopSpeedEl.value = prefs.loopSpeed;
     if (prefs.maxPoints != null && maxPointsEl) maxPointsEl.value = prefs.maxPoints;
     if (prefs.nBins != null && nBinsEl) nBinsEl.value = prefs.nBins;
+    if (prefs.micDeviceId != null && micDeviceEl) micDeviceEl.dataset.preferredDeviceId = prefs.micDeviceId;
   }
 
   function init() {
@@ -770,8 +959,15 @@
     initCloud();
     wireDropZone();
     wireControls();
-    if (!window.isSecureContext && window.location.hostname !== "localhost") {
-      setStatus("Mic and tab audio need HTTPS. File mode still works.");
+    const preferredMicDevice = micDeviceEl ? micDeviceEl.dataset.preferredDeviceId : "";
+    refreshMicDevices(preferredMicDevice).catch(function () {
+      setMicPermission("Device list unavailable", "is-warn");
+    });
+    refreshMicPermission().catch(function () {
+      setMicPermission("Click Check mic", "is-warn");
+    });
+    if (!mediaCaptureContextReady()) {
+      setStatus("Mic and tab audio need HTTPS, localhost, or 127.0.0.1. File mode still works.");
       return;
     }
     setStatus("Idle. Load a file, start Mic, or capture tab audio.");
