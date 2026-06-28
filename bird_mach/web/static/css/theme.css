@@ -862,6 +862,15 @@ a:focus-visible,
   border-color: rgba(255, 85, 119, 0.55);
   background: rgba(255, 85, 119, 0.08);
 }
+.form-status {
+  min-height: 20px;
+  margin-top: 10px;
+  color: var(--text-mute);
+  font: 500 12px/1.35 "JetBrains Mono", ui-monospace, monospace;
+}
+.form-status.is-ok { color: var(--ok); }
+.form-status.is-warn { color: var(--accent); }
+.form-status.is-danger { color: var(--danger); }
 .dot {
   width: 7px;
   height: 7px;

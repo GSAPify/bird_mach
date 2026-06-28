@@ -108,8 +108,9 @@
     </div>
 
     <div class="btn-row">
-      <button type="submit" class="btn full">Generate visualization</button>
+      <button id="submitBtn" type="submit" class="btn full">Generate visualization</button>
     </div>
+    <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
 
     <p class="note">Tip: if the plot feels slow, increase <code>stride</code> or drop <code>n_neighbors</code>. Hosted uploads are capped at {{ max_upload_mb }} MB.</p>
   </form>

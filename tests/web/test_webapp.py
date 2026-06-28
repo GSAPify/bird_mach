@@ -38,6 +38,8 @@ def test_home_page_links_static_assets(client: TestClient) -> None:
     assert 'href="/static/css/theme.css"' in response.text
     assert 'src="/static/js/index.js"' in response.text
     assert 'action="/visualize"' in response.text
+    assert 'id="submitBtn"' in response.text
+    assert 'id="formStatus"' in response.text
     assert "up to 50 MB" in response.text
     assert "aac, flac, m4a, mp3, ogg, wav" in response.text
 
@@ -114,6 +116,8 @@ def test_upload_static_script_contains_preflight_guards(client: TestClient) -> N
     assert "maxUploadMb" in response.text
     assert "supportedFormats" in response.text
     assert "is-invalid" in response.text
+    assert "Building visualization..." in response.text
+    assert "Add an audio file or direct audio URL." in response.text
 
 
 def test_embedding_section_title_matches_dimension() -> None:
