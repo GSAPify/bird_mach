@@ -148,7 +148,8 @@ async def visualize(
     if not audio_extension_allowed(filename):
         logger.warning("Unsupported audio extension: %s", filename)
         return visualization_error(
-            f"Unsupported audio format. Supported formats: {supported_formats_label()}."
+            "Unsupported audio format. Upload a supported file or use a direct audio URL. "
+            f"Supported formats: {supported_formats_label()}."
         )
 
     logger.info("Processing: %s (%d bytes)", filename, len(raw))

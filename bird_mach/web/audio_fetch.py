@@ -7,14 +7,30 @@ in one easy-to-audit place.
 from __future__ import annotations
 
 import urllib.request
+from email.message import Message
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
-from bird_mach.constants import APP_VERSION
+from bird_mach.constants import APP_VERSION, SUPPORTED_AUDIO_EXTENSIONS
 
 MAX_REMOTE_BYTES = 50 * 1024 * 1024  # 50 MB
 USER_AGENT = f"Mach/{APP_VERSION} (+https://github.com/GSAPify/bird_mach)"
 REQUEST_TIMEOUT_S = 30
+CONTENT_TYPE_EXTENSIONS = {
+    "audio/aac": ".aac",
+    "audio/flac": ".flac",
+    "audio/mp3": ".mp3",
+    "audio/mp4": ".m4a",
+    "audio/mpeg": ".mp3",
+    "audio/ogg": ".ogg",
+    "audio/wav": ".wav",
+    "audio/wave": ".wav",
+    "audio/x-aac": ".aac",
+    "audio/x-flac": ".flac",
+    "audio/x-m4a": ".m4a",
+    "audio/x-wav": ".wav",
+    "application/ogg": ".ogg",
+}
 
 
 def _remote_content_length(headers: object) -> int | None:
@@ -27,6 +43,36 @@ def _remote_content_length(headers: object) -> int | None:
         return None
 
 
+def _header_content_type(headers: object) -> str:
+    raw = headers.get("Content-Type", "") if hasattr(headers, "get") else ""
+    return raw.split(";", 1)[0].strip().lower()
+
+
+def _header_filename(headers: object) -> str:
+    raw = headers.get("Content-Disposition", "") if hasattr(headers, "get") else ""
+    if not raw:
+        return ""
+    message = Message()
+    message["Content-Disposition"] = raw
+    filename = message.get_filename() or ""
+    return Path(unquote(filename)).name
+
+
+def _response_filename(url_path: str, headers: object) -> str:
+    header_name = _header_filename(headers)
+    path_name = Path(unquote(url_path)).name
+    filename = header_name or path_name or "remote_audio"
+
+    suffix = Path(filename).suffix.lower()
+    content_type_suffix = CONTENT_TYPE_EXTENSIONS.get(_header_content_type(headers), "")
+    if suffix in SUPPORTED_AUDIO_EXTENSIONS:
+        return filename
+    if content_type_suffix:
+        stem = Path(filename).stem or "remote_audio"
+        return f"{stem}{content_type_suffix}"
+    return filename
+
+
 def fetch_audio_from_url(url: str) -> tuple[bytes, str]:
     """Download audio from an http(s) URL.
 
@@ -36,7 +82,6 @@ def fetch_audio_from_url(url: str) -> tuple[bytes, str]:
     parsed = urlparse(url)
     if parsed.scheme not in ("http", "https"):
         raise ValueError("Only http/https URLs are supported")
-    filename = Path(parsed.path).name or "remote_audio.wav"
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT_S) as resp:
         content_length = _remote_content_length(resp.headers)
@@ -45,4 +90,5 @@ def fetch_audio_from_url(url: str) -> tuple[bytes, str]:
         data = resp.read(MAX_REMOTE_BYTES + 1)
         if len(data) > MAX_REMOTE_BYTES:
             raise ValueError("Remote audio exceeds the 50 MB limit")
+        filename = _response_filename(parsed.path, resp.headers)
     return data, filename

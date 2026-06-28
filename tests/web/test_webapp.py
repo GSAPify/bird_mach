@@ -145,6 +145,7 @@ def test_visualize_rejects_unsupported_upload_extension(client: TestClient) -> N
 
     assert response.status_code == 400
     assert "Unsupported audio format" in response.text
+    assert "direct audio URL" in response.text
 
 
 def test_visualize_rejects_oversized_upload(

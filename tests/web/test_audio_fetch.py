@@ -54,3 +54,37 @@ def test_fetch_audio_returns_remote_filename(monkeypatch: pytest.MonkeyPatch) ->
 
     assert data == b"audio"
     assert filename == "song.mp3"
+
+
+def test_fetch_audio_infers_extension_from_content_type(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def fake_urlopen(request: object, timeout: int) -> FakeResponse:
+        return FakeResponse(b"audio", {"Content-Type": "audio/mpeg; charset=binary"})
+
+    monkeypatch.setattr(audio_fetch.urllib.request, "urlopen", fake_urlopen)
+
+    data, filename = audio_fetch.fetch_audio_from_url("https://cdn.example.com/watch?id=1")
+
+    assert data == b"audio"
+    assert filename == "watch.mp3"
+
+
+def test_fetch_audio_prefers_content_disposition_filename(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def fake_urlopen(request: object, timeout: int) -> FakeResponse:
+        return FakeResponse(
+            b"audio",
+            {
+                "Content-Disposition": 'attachment; filename="mixdown.wav"',
+                "Content-Type": "application/octet-stream",
+            },
+        )
+
+    monkeypatch.setattr(audio_fetch.urllib.request, "urlopen", fake_urlopen)
+
+    data, filename = audio_fetch.fetch_audio_from_url("https://cdn.example.com/download")
+
+    assert data == b"audio"
+    assert filename == "mixdown.wav"
