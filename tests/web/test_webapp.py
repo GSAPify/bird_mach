@@ -170,6 +170,13 @@ def test_favicon_is_served(client: TestClient) -> None:
     assert "<svg" in response.text
 
 
+def test_browser_favicon_path_redirects_to_svg(client: TestClient) -> None:
+    response = client.get("/favicon.ico", follow_redirects=False)
+
+    assert response.status_code == 307
+    assert response.headers["location"] == "/static/img/favicon.svg"
+
+
 def test_fetch_audio_rejects_non_http_urls() -> None:
     with pytest.raises(ValueError, match="Only http/https URLs"):
         fetch_audio_from_url("file:///tmp/audio.wav")
