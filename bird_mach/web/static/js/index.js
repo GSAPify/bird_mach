@@ -4,6 +4,9 @@
   const dropZone = document.getElementById("dropZone");
   const fileInput = document.getElementById("audio");
   const fileNameEl = document.getElementById("fileName");
+  const audioUrlInput = document.getElementById("audioUrl");
+  const submitBtn = document.getElementById("submitBtn");
+  const formStatus = document.getElementById("formStatus");
   if (!uploadForm || !dropZone || !fileInput || !fileNameEl) return;
 
   const maxUploadMb = Number(uploadForm.dataset.maxUploadMb || 0);
@@ -17,10 +20,26 @@
     return pieces.length > 1 ? pieces.pop().toLowerCase() : "";
   }
 
+  function hasUrl() {
+    return Boolean(audioUrlInput && audioUrlInput.value.trim().length > 0);
+  }
+
+  function setFormStatus(text, state) {
+    if (!formStatus) return;
+    formStatus.textContent = text;
+    formStatus.classList.remove("is-ok", "is-warn", "is-danger");
+    if (state) formStatus.classList.add(state);
+  }
+
   function showFileName() {
     if (!fileInput.files || !fileInput.files.length) {
       fileNameEl.textContent = "";
       dropZone.classList.remove("is-invalid");
+      if (hasUrl()) {
+        setFormStatus("Remote audio URL ready.", "is-ok");
+      } else {
+        setFormStatus("");
+      }
       return true;
     }
     if (fileInput.files && fileInput.files.length) {
@@ -33,13 +52,16 @@
       dropZone.classList.toggle("is-invalid", unsupported || tooLarge);
       if (unsupported) {
         fileNameEl.textContent = "Unsupported file type: " + file.name;
+        setFormStatus("Choose a supported audio file.", "is-danger");
         return false;
       }
       if (tooLarge) {
         fileNameEl.textContent = "File is larger than " + maxUploadMb + " MB: " + file.name;
+        setFormStatus("Choose a smaller audio file.", "is-danger");
         return false;
       }
       fileNameEl.textContent = file.name;
+      setFormStatus("Audio file ready.", "is-ok");
     }
     return true;
   }
@@ -53,9 +75,20 @@
   });
   fileInput.addEventListener("change", showFileName);
   uploadForm.addEventListener("submit", function (e) {
-    if (fileInput.files && fileInput.files.length && !showFileName()) {
+    if (!showFileName()) {
       e.preventDefault();
+      return;
     }
+    if ((!fileInput.files || !fileInput.files.length) && !hasUrl()) {
+      e.preventDefault();
+      setFormStatus("Add an audio file or direct audio URL.", "is-danger");
+      return;
+    }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Analyzing...";
+    }
+    setFormStatus("Building visualization...", "is-warn");
   });
 
   dropZone.addEventListener("dragover", function (e) {
@@ -74,10 +107,10 @@
     }
   });
 
-  const audioUrlInput = document.getElementById("audioUrl");
   if (audioUrlInput) {
     function reflectUrlState() {
       audioUrlInput.classList.toggle("has-value", audioUrlInput.value.trim().length > 0);
+      if (!fileInput.files || !fileInput.files.length) showFileName();
     }
     audioUrlInput.addEventListener("input", reflectUrlState);
     reflectUrlState();

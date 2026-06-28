@@ -616,6 +616,10 @@ p { margin: 0 0 12px; color: var(--text-dim); }
 }
 .settings-kicker { margin-top: 18px; }
 .compact-grid { gap: 10px; }
+.mic-grid {
+  margin-top: 12px;
+  align-items: end;
+}
 
 /* ── Form controls ───────────────────────────────────────── */
 
@@ -830,6 +834,43 @@ a:focus-visible,
   border-color: rgba(74, 222, 128, 0.45);
   background: rgba(74, 222, 128, 0.06);
 }
+.permission-state {
+  min-height: 37px;
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.42);
+  color: var(--text-dim);
+  font: 600 11px/1.25 "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.permission-state.is-ok {
+  color: var(--ok);
+  border-color: rgba(74, 222, 128, 0.45);
+  background: rgba(74, 222, 128, 0.06);
+}
+.permission-state.is-warn {
+  color: var(--accent);
+  border-color: rgba(255, 180, 84, 0.45);
+  background: rgba(255, 180, 84, 0.06);
+}
+.permission-state.is-danger {
+  color: var(--danger);
+  border-color: rgba(255, 85, 119, 0.55);
+  background: rgba(255, 85, 119, 0.08);
+}
+.form-status {
+  min-height: 20px;
+  margin-top: 10px;
+  color: var(--text-mute);
+  font: 500 12px/1.35 "JetBrains Mono", ui-monospace, monospace;
+}
+.form-status.is-ok { color: var(--ok); }
+.form-status.is-warn { color: var(--accent); }
+.form-status.is-danger { color: var(--danger); }
 .dot {
   width: 7px;
   height: 7px;

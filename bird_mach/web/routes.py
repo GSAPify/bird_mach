@@ -12,7 +12,7 @@ import tempfile
 from pathlib import Path
 
 from fastapi import APIRouter, File, Form, Request, UploadFile
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from bird_mach.config import AppConfig
@@ -106,6 +106,11 @@ def live(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(request, "live.html")
 
 
+@router.get("/favicon.ico", include_in_schema=False)
+def favicon() -> RedirectResponse:
+    return RedirectResponse(url="/static/img/favicon.svg", status_code=307)
+
+
 @router.post("/visualize", response_class=HTMLResponse)
 async def visualize(
     request: Request,
@@ -148,7 +153,8 @@ async def visualize(
     if not audio_extension_allowed(filename):
         logger.warning("Unsupported audio extension: %s", filename)
         return visualization_error(
-            f"Unsupported audio format. Supported formats: {supported_formats_label()}."
+            "Unsupported audio format. Upload a supported file or use a direct audio URL. "
+            f"Supported formats: {supported_formats_label()}."
         )
 
     logger.info("Processing: %s (%d bytes)", filename, len(raw))

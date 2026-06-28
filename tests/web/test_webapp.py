@@ -38,6 +38,8 @@ def test_home_page_links_static_assets(client: TestClient) -> None:
     assert 'href="/static/css/theme.css"' in response.text
     assert 'src="/static/js/index.js"' in response.text
     assert 'action="/visualize"' in response.text
+    assert 'id="submitBtn"' in response.text
+    assert 'id="formStatus"' in response.text
     assert "up to 50 MB" in response.text
     assert "aac, flac, m4a, mp3, ogg, wav" in response.text
 
@@ -78,8 +80,11 @@ def test_live_page_has_browser_audio_controls(client: TestClient) -> None:
 
     assert response.status_code == 200
     assert 'id="startFileBtn"' in response.text
+    assert 'id="checkMicBtn"' in response.text
     assert 'id="startMicBtn"' in response.text
     assert 'id="startScreenBtn"' in response.text
+    assert 'id="micDevice"' in response.text
+    assert 'id="micPermission"' in response.text
     assert 'src="/static/js/live.js"' in response.text
 
 
@@ -99,6 +104,9 @@ def test_live_static_script_contains_audio_lifecycle_guards(client: TestClient) 
     assert "createMediaElementSource" in response.text
     assert "player.addEventListener(\"play\"" in response.text
     assert "disconnectCurrentSource" in response.text
+    assert "navigator.permissions.query" in response.text
+    assert "enumerateDevices" in response.text
+    assert "micAudioConstraints" in response.text
 
 
 def test_upload_static_script_contains_preflight_guards(client: TestClient) -> None:
@@ -108,6 +116,8 @@ def test_upload_static_script_contains_preflight_guards(client: TestClient) -> N
     assert "maxUploadMb" in response.text
     assert "supportedFormats" in response.text
     assert "is-invalid" in response.text
+    assert "Building visualization..." in response.text
+    assert "Add an audio file or direct audio URL." in response.text
 
 
 def test_embedding_section_title_matches_dimension() -> None:
@@ -139,6 +149,7 @@ def test_visualize_rejects_unsupported_upload_extension(client: TestClient) -> N
 
     assert response.status_code == 400
     assert "Unsupported audio format" in response.text
+    assert "direct audio URL" in response.text
 
 
 def test_visualize_rejects_oversized_upload(
@@ -161,6 +172,13 @@ def test_favicon_is_served(client: TestClient) -> None:
 
     assert response.status_code == 200
     assert "<svg" in response.text
+
+
+def test_browser_favicon_path_redirects_to_svg(client: TestClient) -> None:
+    response = client.get("/favicon.ico", follow_redirects=False)
+
+    assert response.status_code == 307
+    assert response.headers["location"] == "/static/img/favicon.svg"
 
 
 def test_fetch_audio_rejects_non_http_urls() -> None:
