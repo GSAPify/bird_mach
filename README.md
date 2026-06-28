@@ -30,6 +30,12 @@ python -m bird_mach serve
 
 Open http://localhost:8000 for the upload-based 3D audio map, or
 http://localhost:8000/live for real-time file, mic, and tab-audio visuals.
+For the browser microphone prompt during local development, run on
+`127.0.0.1` or `localhost`, then use the **Check mic** control on `/live`:
+
+```bash
+python -m bird_mach serve --host 127.0.0.1 --port 8000
+```
 
 ### Keyboard shortcuts on /live
 
