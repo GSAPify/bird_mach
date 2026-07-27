@@ -136,7 +136,9 @@ async def visualize(
             raw, filename = fetch_audio_from_url(audio_url.strip())
         except Exception as e:
             logger.warning("URL fetch failed: %s", e)
-            return visualization_error(f"Failed to fetch audio from URL: {e}")
+            # Fixed message on purpose: echoing the exception turns this
+            # unauthenticated endpoint into an internal host/port scanner.
+            return visualization_error("Failed to fetch audio from URL.")
 
     if not raw:
         logger.warning("No audio provided (neither file nor URL)")
