@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import logging
-
 from fastapi import Depends, HTTPException, status
 
 from bird_mach.auth.dependencies import get_current_user, get_user_repository
@@ -20,20 +18,20 @@ from bird_mach.billing.store import SqliteSubscriptionRepository
 from bird_mach.config import AppConfig
 from bird_mach.db import Database
 
-logger = logging.getLogger(__name__)
-
 
 def _build_provider(config: AppConfig) -> PaymentProvider:
-    """Use real Stripe when a key is configured, else an offline fake.
+    """Use real Stripe when a key is configured, else an offline fake outside production.
 
-    Running without a Stripe key in production is a misconfiguration; log a
-    warning rather than failing the whole app, so non-billing routes still
-    serve while billing degrades to offline mode.
+    The fake accepts any webhook signed with the literal string ``"valid"``,
+    and the webhook route is unauthenticated (as Stripe requires). Falling
+    back to it in production would let anyone forge a subscription event and
+    grant themselves entitlement, so an unset key is fatal there rather than a
+    silent downgrade. Outside production the fake keeps local dev working.
     """
     if config.stripe_api_key:
         return StripePaymentProvider(config.stripe_api_key)
     if config.is_production:
-        logger.warning("STRIPE_API_KEY unset in production; billing runs in offline mode")
+        raise RuntimeError("STRIPE_API_KEY must be set in production")
     return FakePaymentProvider()
 
 
