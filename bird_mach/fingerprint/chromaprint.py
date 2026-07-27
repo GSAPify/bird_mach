@@ -1,6 +1,5 @@
 """Simplified chromaprint-style audio fingerprinting."""
 from __future__ import annotations
-import hashlib
 import numpy as np
 
 class AudioFingerprinter:
@@ -27,7 +26,7 @@ class AudioFingerprinter:
             for j in range(len(bands) - 1):
                 bits.append("1" if bands[j] > bands[j+1] else "0")
         bitstring = "".join(bits)
-        return hashlib.sha256(bitstring.encode()).hexdigest()
+        return bitstring
 
     def similarity(self, fp1: str, fp2: str) -> float:
         if not fp1 or not fp2 or len(fp1) != len(fp2):
