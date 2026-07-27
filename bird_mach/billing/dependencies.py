@@ -20,7 +20,7 @@ from bird_mach.db import Database
 
 
 def _build_provider(config: AppConfig) -> PaymentProvider:
-    """Use real Stripe when a key is configured, else an offline fake.
+    """Use real Stripe when a key is configured, else an offline fake outside production.
 
     The fake accepts any webhook signed with the literal string ``"valid"``,
     and the webhook route is unauthenticated (as Stripe requires). Falling
