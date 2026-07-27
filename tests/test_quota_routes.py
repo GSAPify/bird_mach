@@ -10,6 +10,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from bird_mach.api.account import router
+from bird_mach.api.routes import router as api_router
 from bird_mach.auth.dependencies import get_auth_service
 from bird_mach.auth.service import AuthService
 from bird_mach.auth.store import InMemoryUserRepository
@@ -51,6 +52,7 @@ def ctx():
 
     app = FastAPI()
     app.include_router(router)
+    app.include_router(api_router)
     app.dependency_overrides[get_auth_service] = lambda: auth
     app.dependency_overrides[get_billing_service] = lambda: billing
     app.dependency_overrides[get_usage_service] = lambda: usage
@@ -100,6 +102,45 @@ class TestMeteredAnalyze:
             assert client.post(
                 "/api/v1/analyze/metered", files={"file": ("a.wav", wav)}, headers=headers
             ).status_code == 200
+
+
+class TestPublicAnalyzeIsMetered:
+    """`/api/v1/analyze` used to be an anonymous, unmetered clone of the metered route."""
+
+    def test_requires_auth(self, ctx):
+        client, *_ = ctx
+        resp = client.post("/api/v1/analyze", files={"file": ("a.wav", _wav_bytes())})
+        assert resp.status_code == 401
+
+    def test_free_user_blocked_after_quota(self, ctx):
+        client, headers, *_ = ctx
+        wav = _wav_bytes()
+        for _ in range(3):  # free_daily_limit=3
+            assert client.post(
+                "/api/v1/analyze", files={"file": ("a.wav", wav)}, headers=headers
+            ).status_code == 200
+        resp = client.post("/api/v1/analyze", files={"file": ("a.wav", wav)}, headers=headers)
+        assert resp.status_code == 402
+
+    def test_cannot_bypass_metered_quota_by_dropping_path_segment(self, ctx):
+        client, headers, *_ = ctx
+        wav = _wav_bytes()
+        for _ in range(3):
+            client.post(
+                "/api/v1/analyze/metered", files={"file": ("a.wav", wav)}, headers=headers
+            )
+        resp = client.post("/api/v1/analyze", files={"file": ("a.wav", wav)}, headers=headers)
+        assert resp.status_code == 402
+
+    def test_oversized_upload_rejected_without_decoding(self, ctx, monkeypatch):
+        client, headers, *_ = ctx
+        monkeypatch.setenv("MAX_UPLOAD_MB", "1")
+        payload = b"0" * (1024 * 1024 + 1)
+        resp = client.post(
+            "/api/v1/analyze", files={"file": ("large.wav", payload)}, headers=headers
+        )
+        assert resp.status_code == 413
+        assert "exceeds the 1 MB limit" in resp.json()["detail"]
 
 
 class TestPremiumBatch:
