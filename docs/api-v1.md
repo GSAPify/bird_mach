@@ -46,4 +46,7 @@ All errors follow this format:
 
 ## Authentication
 
-No authentication required for local development. For production, add an API key middleware.
+`GET /api/v1/health` is open. `POST /api/v1/analyze` requires a bearer token and is
+metered: it counts against the caller's free-tier daily quota (`402` once exhausted,
+unlimited for subscribers). Uploads larger than `MAX_UPLOAD_MB` (default 50) are
+rejected with `413`.
