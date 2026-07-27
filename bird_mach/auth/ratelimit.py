@@ -8,12 +8,20 @@ than introducing new infrastructure.
 
 from __future__ import annotations
 
+import ipaddress
+import os
 import time
 from collections.abc import Callable
+from functools import lru_cache
 
 from fastapi import Depends, HTTPException, Request, status
 
 from bird_mach.rate_limiter import TokenBucketLimiter
+
+#: Comma-separated IPs/CIDRs of proxies allowed to set X-Forwarded-For.
+#: Empty (the default) means trust nothing — anyone can forge the header, so
+#: an unconfigured deployment must key off the socket peer only.
+TRUSTED_PROXIES_ENV = "TRUSTED_PROXY_IPS"
 
 # Allow a small burst (typos, a retried form) then ~1 attempt every 30s. This
 # is deliberately strict: legitimate users rarely hit it, brute-forcers do.
@@ -29,12 +37,60 @@ def get_login_limiter() -> TokenBucketLimiter:
     return _LOGIN_LIMITER
 
 
-def _client_key(request: Request) -> str:
-    # Honour a single proxy hop's X-Forwarded-For; fall back to the socket peer.
+@lru_cache(maxsize=8)
+def parse_trusted_proxies(raw: str) -> tuple[ipaddress.IPv4Network | ipaddress.IPv6Network, ...]:
+    """Parse the allowlist env value into networks; unparseable entries are dropped."""
+    networks = []
+    for part in raw.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        try:
+            networks.append(ipaddress.ip_network(part, strict=False))
+        except ValueError:
+            continue
+    return tuple(networks)
+
+
+def is_trusted_proxy(host: str | None) -> bool:
+    """True if ``host`` is an IP inside the configured trusted-proxy allowlist."""
+    if not host:
+        return False
+    networks = parse_trusted_proxies(os.getenv(TRUSTED_PROXIES_ENV, ""))
+    if not networks:
+        return False
+    try:
+        addr = ipaddress.ip_address(host)
+    except ValueError:
+        return False
+    return any(addr in network for network in networks)
+
+
+def client_ip(request: Request) -> str | None:
+    """Resolve the real client IP.
+
+    ``X-Forwarded-For`` is attacker-controlled unless the immediate peer is a
+    proxy we trust, so it is ignored entirely otherwise. When the peer *is*
+    trusted, the chain is walked right-to-left: entries appended by trusted
+    proxies are skipped and the first untrusted hop is the closest address we
+    can actually attribute to the client. The leftmost entry is never used —
+    that is the one the attacker gets to write.
+    """
+    peer = request.client.host if request.client else None
+    if not is_trusted_proxy(peer):
+        return peer
     forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else "unknown"
+    if not forwarded:
+        return peer
+    for hop in reversed(forwarded.split(",")):
+        hop = hop.strip()
+        if hop and not is_trusted_proxy(hop):
+            return hop
+    return peer
+
+
+def _client_key(request: Request) -> str:
+    return client_ip(request) or "unknown"
 
 
 def rate_limit(limiter: TokenBucketLimiter) -> Callable[[Request], None]:

@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 from bird_mach.auth.audit import AuditLog, AuthEvent, AuthEventType
 from bird_mach.auth.dependencies import get_audit_log, get_auth_service, get_current_user
 from bird_mach.auth.models import User
-from bird_mach.auth.ratelimit import login_rate_limit
+from bird_mach.auth.ratelimit import client_ip as _ip, login_rate_limit
 from bird_mach.auth.service import AuthService
 from bird_mach.config import AppConfig
 from bird_mach.exceptions import (
@@ -25,13 +25,6 @@ logger = logging.getLogger(__name__)
 config = AppConfig.from_env()
 
 router = APIRouter(prefix="/auth", tags=["auth"])
-
-
-def _ip(request: Request) -> str | None:
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else None
 
 
 class RegisterRequest(BaseModel):
