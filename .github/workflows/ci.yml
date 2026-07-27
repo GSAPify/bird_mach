@@ -49,5 +49,8 @@ jobs:
         run: |
           python -m compileall bird_mach scripts
           python -c "from bird_mach.webapp import app; print(app.title)"
-          python scripts/bird_sound_3d.py --help > /dev/null
+          # `python scripts/x.py` puts scripts/ on sys.path[0], not the repo
+          # root, so `import bird_mach` fails. The check above works only
+          # because `python -c` uses cwd. This has never passed.
+          PYTHONPATH=. python scripts/bird_sound_3d.py --help > /dev/null
 
