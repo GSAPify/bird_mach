@@ -184,3 +184,14 @@ def test_browser_favicon_path_redirects_to_svg(client: TestClient) -> None:
 def test_fetch_audio_rejects_non_http_urls() -> None:
     with pytest.raises(ValueError, match="Only http/https URLs"):
         fetch_audio_from_url("file:///tmp/audio.wav")
+
+
+def test_visualize_url_failure_does_not_leak_probe_details(client: TestClient) -> None:
+    response = client.post(
+        "/visualize", data={"audio_url": "http://169.254.169.254/latest/meta-data/"}
+    )
+
+    assert "Failed to fetch audio from URL." in response.text
+    assert "non-public" not in response.text
+    assert "Errno" not in response.text
+    assert "169.254.169.254" not in response.text
