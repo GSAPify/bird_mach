@@ -15,6 +15,8 @@ class CursorSyncManager:
         self._cursors: dict[str, CursorState] = {}
 
     def update(self, user_id: str, position_s: float, is_playing: bool = False) -> CursorState:
+        if position_s < 0:
+            raise ValueError("position_s must not be negative")
         cursor = CursorState(user_id=user_id, position_s=position_s, is_playing=is_playing)
         self._cursors[user_id] = cursor
         return cursor
