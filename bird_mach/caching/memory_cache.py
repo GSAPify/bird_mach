@@ -14,6 +14,8 @@ class MemoryCache:
     def __init__(self, max_size: int = 1000, ttl_s: float = 300.0):
         if max_size < 1:
             raise ValueError("max_size must be at least 1")
+        if ttl_s <= 0:
+            raise ValueError("ttl_s must be positive")
         self._max = max_size
         self._ttl = ttl_s
         self._store: OrderedDict[str, CacheEntry] = OrderedDict()
@@ -35,6 +37,9 @@ class MemoryCache:
         return entry.value
 
     def set(self, key: str, value: object, ttl_s: float | None = None) -> None:
+        ttl = self._ttl if ttl_s is None else ttl_s
+        if ttl <= 0:
+            raise ValueError("ttl_s must be positive")
         if key in self._store:
             self._store.pop(key)
         else:
@@ -43,7 +48,7 @@ class MemoryCache:
                 self._store.popitem(last=False)
         self._store[key] = CacheEntry(
             value=value,
-            expires_at=time.time() + (self._ttl if ttl_s is None else ttl_s),
+            expires_at=time.time() + ttl,
         )
 
     def _evict_expired(self) -> None:
