@@ -43,7 +43,10 @@ class WebhookEvent:
         return hmac.new(secret.encode(), body.encode(), hashlib.sha256).hexdigest()
 
     def verify(self, secret: str, signature: str) -> bool:
-        return hmac.compare_digest(self.sign(secret), signature)
+        expected = self.sign(secret)
+        if not isinstance(signature, str) or len(signature) != len(expected):
+            return False
+        return hmac.compare_digest(expected, signature)
 
 class WebhookDispatcher:
     def __init__(self, max_log_entries: int = 1000):
