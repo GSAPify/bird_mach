@@ -1,6 +1,7 @@
 """Scheduled report generation configuration."""
 from __future__ import annotations
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from enum import Enum
 
 class Schedule(Enum):
@@ -16,6 +17,7 @@ class ScheduledReport:
     query: str
     format: str = "html"
     enabled: bool = True
+    last_sent: datetime | None = None
 
 class ReportScheduler:
     def __init__(self):
@@ -26,6 +28,9 @@ class ReportScheduler:
 
     def get_due(self, schedule: Schedule) -> list[ScheduledReport]:
         return [r for r in self._schedules if r.schedule == schedule and r.enabled]
+
+    def mark_sent(self, report: ScheduledReport, when: datetime | None = None) -> None:
+        report.last_sent = when or datetime.now(timezone.utc)
 
     @property
     def count(self) -> int:
