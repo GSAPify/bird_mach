@@ -54,6 +54,8 @@ def verify_password(password: str, encoded: str) -> bool:
     if not 1 <= iterations <= _MAX_ITERATIONS:
         return False
     derived = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, iterations)
+    if len(derived) != len(expected):
+        return False
     # Constant-time comparison to avoid leaking equality timing.
     return hmac.compare_digest(derived, expected)
 
@@ -62,6 +64,7 @@ def needs_rehash(encoded: str, *, iterations: int = _DEFAULT_ITERATIONS) -> bool
     """True if ``encoded`` was produced with a weaker cost than the current one."""
     try:
         algorithm, iterations_s, _, _ = encoded.split("$")
-    except (ValueError, AttributeError):
+        stored = int(iterations_s)
+    except (ValueError, AttributeError, TypeError):
         return True
-    return algorithm != _ALGORITHM or int(iterations_s) < iterations
+    return algorithm != _ALGORITHM or stored < iterations
