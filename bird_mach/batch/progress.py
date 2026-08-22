@@ -12,19 +12,20 @@ class BatchProgress:
 
     @property
     def remaining(self) -> int:
-        return self.total - self.completed - self.failed
+        return max(0, self.total - self.completed - self.failed)
 
     @property
     def percent(self) -> float:
-        if self.total == 0:
+        if self.total <= 0:
             return 0.0
-        return (self.completed + self.failed) / self.total * 100
+        done = min(self.completed + self.failed, self.total)
+        return done / self.total * 100
 
     @property
     def elapsed_s(self) -> float:
         if self.started_at == 0:
             return 0.0
-        return time.time() - self.started_at
+        return time.monotonic() - self.started_at
 
     @property
     def eta_s(self) -> float:
@@ -41,4 +42,4 @@ class BatchProgress:
         self.failed += 1
 
     def start(self) -> None:
-        self.started_at = time.time()
+        self.started_at = time.monotonic()
