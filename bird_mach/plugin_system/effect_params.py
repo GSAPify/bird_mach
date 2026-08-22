@@ -10,6 +10,12 @@ class ParamSpec:
     default: float
     unit: str = ""
 
+    def __post_init__(self) -> None:
+        if self.min_val > self.max_val:
+            raise ValueError("min_val must not exceed max_val")
+        if not self.min_val <= self.default <= self.max_val:
+            raise ValueError("default must be within [min_val, max_val]")
+
     def validate(self, value: float) -> float:
         return max(self.min_val, min(self.max_val, value))
 
