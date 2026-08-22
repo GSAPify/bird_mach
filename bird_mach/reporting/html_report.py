@@ -11,9 +11,12 @@ class HTMLReportRenderer:
         author = html.escape(report.author)
         sections = ""
         for s in report._sections:
+            chart = ""
+            if s.chart_data:
+                chart = f"<pre>{html.escape(str(s.chart_data))}</pre>"
             sections += (
                 f"<section><h2>{html.escape(s.title)}</h2>"
-                f"<p>{html.escape(s.content)}</p></section>\n"
+                f"<p>{html.escape(s.content)}</p>{chart}</section>\n"
             )
         return f"""<!DOCTYPE html>
 <html><head><title>{title}</title>
