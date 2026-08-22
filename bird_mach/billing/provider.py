@@ -107,10 +107,15 @@ class FakePaymentProvider(PaymentProvider):
         self.invoices.setdefault(customer_id, []).insert(0, invoice)
 
     def list_invoices(self, customer_id: str, *, limit: int = 20) -> list[dict]:
+        if limit < 1:
+            raise ValueError("limit must be at least 1")
         return self.invoices.get(customer_id, [])[:limit]
 
     def verify_webhook(self, payload: bytes, signature: str, secret: str) -> WebhookEvent:
-        if not hmac.compare_digest(signature, "valid"):
+        expected = "valid"
+        if not isinstance(signature, str) or len(signature) != len(expected):
+            raise WebhookVerificationError("invalid fake signature")
+        if not hmac.compare_digest(signature, expected):
             raise WebhookVerificationError("invalid fake signature")
         try:
             event = json.loads(payload)
