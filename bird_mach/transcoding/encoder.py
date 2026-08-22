@@ -27,6 +27,8 @@ class EncoderConfig:
             raise ValueError("channels must be at least 1")
         if self.bitrate_kbps <= 0:
             raise ValueError("bitrate_kbps must be positive")
+        if not 0 <= self.quality <= 10:
+            raise ValueError("quality must be in 0..10")
 
     def to_ffmpeg_args(self) -> list[str]:
         args = ["-ar", str(self.sample_rate), "-ac", str(self.channels)]
