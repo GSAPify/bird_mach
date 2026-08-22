@@ -36,7 +36,7 @@ class JobQueue:
         # still reported it pending, so it could never be dispatched.
         if len(self._queue) >= self._max_size:
             raise RuntimeError(f"queue is full ({self._max_size} jobs)")
-        job = Job(id=str(uuid.uuid4())[:8], file_path=file_path)
+        job = Job(id=uuid.uuid4().hex, file_path=file_path)
         self._queue.append(job)
         self._jobs[job.id] = job
         return job
@@ -55,6 +55,7 @@ class JobQueue:
             job.status = JobStatus.COMPLETED
             job.completed_at = datetime.now()
             job.result = result
+            self._drop_from_queue(job)
 
     def fail(self, job_id: str, error: str) -> None:
         job = self._jobs.get(job_id)
@@ -62,6 +63,13 @@ class JobQueue:
             job.status = JobStatus.FAILED
             job.completed_at = datetime.now()
             job.error = error
+            self._drop_from_queue(job)
+
+    def _drop_from_queue(self, job: Job) -> None:
+        try:
+            self._queue.remove(job)
+        except ValueError:
+            pass
 
     @property
     def pending_count(self) -> int:
