@@ -26,6 +26,10 @@ class AudioInfo:
 
 def probe_audio(path: Path, *, sr: int | None = None) -> AudioInfo:
     """Return basic metadata for an audio file."""
+    if not path.exists():
+        raise FileNotFoundError(path)
+    if sr is not None and sr <= 0:
+        raise ValueError("sr must be positive")
     duration = librosa.get_duration(path=str(path))
     file_info = sf.info(str(path))
     return AudioInfo(
@@ -50,5 +54,7 @@ def trim_silence(
     y: np.ndarray, *, sr: int, top_db: float = 30.0
 ) -> tuple[np.ndarray, int, int]:
     """Trim leading/trailing silence. Returns (trimmed, start_sample, end_sample)."""
+    if sr <= 0:
+        raise ValueError("sr must be positive")
     trimmed, idx = librosa.effects.trim(y, top_db=top_db)
     return trimmed, int(idx[0]), int(idx[1])
