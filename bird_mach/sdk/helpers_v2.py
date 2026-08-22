@@ -10,4 +10,7 @@ def format_result_v2(data: dict) -> str:
 
 def validate_params_v2(**kwargs) -> bool:
     required = {"path"}
-    return required.issubset(set(kwargs.keys()))
+    if not required.issubset(set(kwargs.keys())):
+        return False
+    path = kwargs["path"]
+    return isinstance(path, str) and bool(path.strip())
