@@ -9,6 +9,8 @@ class AuthenticationError(MachSDKError):
 class RateLimitError(MachSDKError):
     """Raised when API rate limit is exceeded."""
     def __init__(self, retry_after_s: float = 60.0):
+        if retry_after_s < 0:
+            raise ValueError("retry_after_s must not be negative")
         super().__init__(f"Rate limited. Retry after {retry_after_s}s")
         self.retry_after_s = retry_after_s
 
