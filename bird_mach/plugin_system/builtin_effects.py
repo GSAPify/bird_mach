@@ -14,6 +14,8 @@ class GainEffect:
 class LowPassFilter:
     name = "lowpass"
     def __init__(self, cutoff_hz: float = 5000.0):
+        if cutoff_hz <= 0:
+            raise ValueError("cutoff_hz must be positive")
         self._cutoff = cutoff_hz
     def process(self, samples: np.ndarray, sr: int) -> np.ndarray:
         if sr <= 0:
@@ -34,6 +36,8 @@ class LowPassFilter:
 class HighPassFilter:
     name = "highpass"
     def __init__(self, cutoff_hz: float = 100.0):
+        if cutoff_hz <= 0:
+            raise ValueError("cutoff_hz must be positive")
         self._cutoff = cutoff_hz
     def process(self, samples: np.ndarray, sr: int) -> np.ndarray:
         if sr <= 0:
