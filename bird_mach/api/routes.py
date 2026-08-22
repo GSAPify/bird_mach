@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import logging
 import tempfile
-from pathlib import Path
 
 import librosa
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
@@ -14,7 +13,7 @@ from bird_mach.api.schemas import AnalysisSummaryResponse, ErrorResponse, Health
 from bird_mach.auth.models import User
 from bird_mach.billing.quota import enforce_analysis_quota
 from bird_mach.config import AppConfig
-from bird_mach.constants import APP_NAME, APP_VERSION
+from bird_mach.constants import APP_VERSION
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +48,11 @@ def analyze_bytes(contents: bytes, sr: int = 22050) -> AnalysisSummaryResponse:
     Shared by the anonymous endpoint and the authenticated/metered routes so
     the load-and-summarize logic lives in exactly one place.
     """
+    if sr <= 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Sample rate must be positive.",
+        )
     if not contents:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
