@@ -25,9 +25,17 @@ class MachClient:
         return {"status": "queued", "path": audio_path, "params": params}
 
     def get_result(self, job_id: str) -> dict:
+        if not self._session_active:
+            raise ConnectionError("Not connected")
+        if not job_id:
+            raise ValueError("job_id must not be empty")
         return {"job_id": job_id, "status": "completed"}
 
     def search(self, query: str, limit: int = 20) -> list[dict]:
+        if not self._session_active:
+            raise ConnectionError("Not connected")
+        if limit < 1:
+            raise ValueError("limit must be at least 1")
         return [{"id": f"result_{i}", "score": 1.0 - i * 0.1} for i in range(min(limit, 5))]
 
     def close(self) -> None:
