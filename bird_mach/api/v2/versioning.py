@@ -1,14 +1,22 @@
 """API versioning helpers."""
 from __future__ import annotations
+import re
 
 SUPPORTED_VERSIONS = {"v1", "v2"}
 DEFAULT_VERSION = "v2"
 
+# Match version=2 or a path/token "v2", but not substrings like "v20" or
+# "application/vnd.foo" accidentally containing "v1".
+_VERSION_RE = re.compile(
+    r"(?:(?:^|[;,\s/])\s*version\s*=\s*|[/;,\s]v)([12])(?:[^\d]|$)",
+    re.I,
+)
+
+
 def parse_version(accept_header: str) -> str:
-    if "version=2" in accept_header or "v2" in accept_header:
-        return "v2"
-    if "version=1" in accept_header or "v1" in accept_header:
-        return "v1"
+    match = _VERSION_RE.search(f" {accept_header}")
+    if match:
+        return f"v{match.group(1)}"
     return DEFAULT_VERSION
 
 def is_deprecated(version: str) -> bool:
