@@ -28,6 +28,10 @@ class CollabRoom:
     def add_participant(self, user_id: str, name: str, role: str = "viewer") -> Participant:
         # The caller-supplied role is self-declared, so it cannot authorize a
         # bypass; only the owner may join a locked room.
+        if user_id in self.participants:
+            existing = self.participants[user_id]
+            existing.display_name = name
+            return existing
         if self.is_locked and user_id != self.owner_id:
             raise PermissionError("Room is locked")
         if user_id not in self.participants and len(self.participants) >= self.max_participants:
@@ -48,7 +52,7 @@ class RoomManager:
         self._rooms: dict[str, CollabRoom] = {}
 
     def create_room(self, name: str, owner_id: str) -> CollabRoom:
-        room_id = str(uuid.uuid4())[:8]
+        room_id = uuid.uuid4().hex
         room = CollabRoom(room_id=room_id, name=name, owner_id=owner_id)
         self._rooms[room_id] = room
         return room
