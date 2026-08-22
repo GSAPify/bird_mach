@@ -30,6 +30,8 @@ class ConstellationFingerprinter:
     """Extract spectral peaks and create hash pairs for matching."""
 
     def __init__(self, fan_out: int = 10, target_zone: int = 50):
+        if fan_out < 1 or target_zone < 1:
+            raise ValueError("fan_out and target_zone must be at least 1")
         self._fan_out = fan_out
         self._target_zone = target_zone
 
