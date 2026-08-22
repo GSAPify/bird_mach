@@ -73,6 +73,8 @@ class TokenService:
         # too-short secret fails at startup, not as a runtime warning.
         if not secret or len(secret.encode("utf-8")) < 32:
             raise ValueError("JWT secret must be at least 32 bytes")
+        if access_ttl_s <= 0 or refresh_ttl_s <= 0:
+            raise ValueError("token TTLs must be positive")
         self._secret = secret
         self._access_ttl = access_ttl_s
         self._refresh_ttl = refresh_ttl_s
@@ -101,6 +103,8 @@ class TokenService:
         self, subject: str, password_hash: str, *, ttl_s: int = 3600
     ) -> str:
         """Issue a short-lived reset token bound to the current password hash."""
+        if ttl_s <= 0:
+            raise ValueError("ttl_s must be positive")
         now = datetime.now(timezone.utc)
         payload = {
             "sub": subject,
@@ -114,6 +118,8 @@ class TokenService:
 
     def issue_email_verification(self, subject: str, *, ttl_s: int = 60 * 60 * 24) -> str:
         """Issue an email-verification token (default 24h)."""
+        if ttl_s <= 0:
+            raise ValueError("ttl_s must be positive")
         now = datetime.now(timezone.utc)
         payload = {
             "sub": subject,
