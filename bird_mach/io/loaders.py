@@ -27,6 +27,8 @@ def load_audio(
     Raises AudioLoadError if the file can't be decoded,
     AudioTooLongError if it exceeds the duration limit.
     """
+    if sr <= 0:
+        raise AudioLoadError("sr must be positive")
     if not path.exists():
         raise AudioLoadError(f"File not found: {path}")
 
