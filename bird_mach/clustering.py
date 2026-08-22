@@ -26,6 +26,8 @@ def cluster_kmeans(
     X: np.ndarray, *, n_clusters: int = 5, random_state: int = 42
 ) -> ClusterResult:
     """Cluster feature vectors using K-Means."""
+    if X.ndim != 2:
+        raise ValueError(f"expected a 2D feature matrix, got shape {X.shape}")
     if X.shape[0] == 0:
         raise ValueError("cannot cluster an empty feature matrix")
     n_clusters = max(1, min(n_clusters, X.shape[0]))
@@ -42,6 +44,8 @@ def cluster_dbscan(
     X: np.ndarray, *, eps: float = 0.5, min_samples: int = 5
 ) -> ClusterResult:
     """Cluster feature vectors using DBSCAN (density-based)."""
+    if X.ndim != 2:
+        raise ValueError(f"expected a 2D feature matrix, got shape {X.shape}")
     if X.shape[0] == 0:
         raise ValueError("cannot cluster an empty feature matrix")
     model = DBSCAN(eps=eps, min_samples=min_samples)
