@@ -22,6 +22,8 @@ class EventBus:
         self._max_history = 1000
 
     def on(self, event_name: str, handler: Callable[[Event], None]) -> None:
+        if not callable(handler):
+            raise TypeError("handler must be callable")
         self._handlers[event_name].append(handler)
 
     def off(self, event_name: str, handler: Callable[[Event], None]) -> None:
