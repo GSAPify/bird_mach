@@ -108,6 +108,8 @@ class BillingService:
 
     def invoice_history(self, user: User, *, limit: int = 20) -> list[dict]:
         """Return the user's recent invoices, or [] if they have no customer yet."""
+        if limit < 1:
+            raise ValueError("limit must be at least 1")
         if not user.stripe_customer_id:
             return []
         return self._provider.list_invoices(user.stripe_customer_id, limit=limit)
