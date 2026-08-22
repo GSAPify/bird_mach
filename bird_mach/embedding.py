@@ -53,6 +53,14 @@ class AudioFeatureConfig:
     fmin: float = 20.0
     fmax: float | None = None
 
+    def __post_init__(self) -> None:
+        if self.sr <= 0:
+            raise ValueError("sr must be positive")
+        if self.n_fft < 1 or self.hop_length < 1 or self.n_mels < 1:
+            raise ValueError("n_fft, hop_length, and n_mels must be at least 1")
+        if self.fmin < 0:
+            raise ValueError("fmin must not be negative")
+
 
 @dataclass(frozen=True)
 class UmapConfig:
@@ -63,6 +71,12 @@ class UmapConfig:
     metric: str = "euclidean"
     random_state: int = 42
 
+    def __post_init__(self) -> None:
+        if self.n_neighbors < 2:
+            raise ValueError("n_neighbors must be at least 2")
+        if self.min_dist < 0:
+            raise ValueError("min_dist must not be negative")
+
 
 DEFAULT_AUDIO_FEATURE_CONFIG = AudioFeatureConfig()
 DEFAULT_UMAP_CONFIG = UmapConfig()
@@ -70,6 +84,8 @@ DEFAULT_UMAP_CONFIG = UmapConfig()
 
 def load_audio_mono_from_path(audio_path: Path, *, sr: int) -> tuple[np.ndarray, int]:
     """Load an audio file as a mono waveform at the given sample rate."""
+    if sr <= 0:
+        raise ValueError("sr must be positive")
     if not audio_path.exists():
         raise FileNotFoundError(f"Input audio not found: {audio_path}")
 
