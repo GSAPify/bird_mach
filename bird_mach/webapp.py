@@ -101,13 +101,16 @@ def readiness() -> Response:
     rotation for liveness while pulling it out if its database is unreachable.
     Returns 503 (not 200) on failure so orchestrators stop routing traffic.
     """
+    conn = None
     try:
         conn = connect(config.auth_db_path)
         conn.execute("SELECT 1").fetchone()
-        conn.close()
     except sqlite3.Error as exc:
         logger.error("readiness check failed: database unreachable: %s", exc)
         return JSONResponse(
             status_code=503, content={"status": "unavailable", "database": "error"}
         )
+    finally:
+        if conn is not None:
+            conn.close()
     return JSONResponse(status_code=200, content={"status": "ready", "database": "ok"})
