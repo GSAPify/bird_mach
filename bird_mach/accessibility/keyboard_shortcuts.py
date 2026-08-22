@@ -29,6 +29,8 @@ class ShortcutRegistry:
         self._shortcuts = list(DEFAULT_SHORTCUTS)
 
     def add(self, shortcut: Shortcut) -> None:
+        if self.get_by_key(shortcut.key) is not None:
+            raise ValueError(f"shortcut {shortcut.key!r} is already registered")
         self._shortcuts.append(shortcut)
 
     def get_by_key(self, key: str) -> Shortcut | None:
