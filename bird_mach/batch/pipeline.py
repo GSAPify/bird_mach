@@ -41,7 +41,9 @@ class BatchPipeline:
                 outputs[step.name] = step.func(path, outputs)
             except Exception as e:
                 logger.error("Step %s failed for %s: %s", step.name, path, e)
-                return PipelineResult(path=path, success=False, error=str(e))
+                return PipelineResult(
+                    path=path, success=False, outputs=outputs, error=str(e)
+                )
         return PipelineResult(path=path, success=True, outputs=outputs)
 
     def process_batch(self, paths: list[Path]) -> list[PipelineResult]:
