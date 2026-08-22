@@ -48,6 +48,11 @@ class EffectsChain:
             if not node.enabled:
                 continue
             wet = node.effect.process(result, sr)
+            if wet.shape != result.shape:
+                raise ValueError(
+                    f"effect {node.effect.name!r} changed sample shape "
+                    f"{result.shape} -> {wet.shape}"
+                )
             result = node.wet_mix * wet + (1.0 - node.wet_mix) * result
         return result.astype(np.float32)
 
