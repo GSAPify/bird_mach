@@ -29,7 +29,9 @@ class AlertManager:
         for rule in self._rules:
             if not rule.enabled:
                 continue
-            value = metrics.get(rule.metric, 0)
+            if rule.metric not in metrics:
+                continue
+            value = metrics[rule.metric]
             if value >= rule.threshold:
                 alert = {"rule": rule.name, "value": value, "threshold": rule.threshold, "severity": rule.severity.value}
                 alerts.append(alert)
