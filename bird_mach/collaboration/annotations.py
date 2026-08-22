@@ -4,6 +4,8 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 
+from bird_mach.constants import MAX_ANNOTATIONS_PER_ROOM
+
 @dataclass
 class Annotation:
     id: str
@@ -28,12 +30,15 @@ class AnnotationStore:
             duration_s: float, text: str, color: str = "#38bdf8") -> Annotation:
         if timestamp_s < 0 or duration_s < 0:
             raise ValueError("timestamp_s and duration_s must not be negative")
+        anns = self._annotations.setdefault(room_id, [])
+        if len(anns) >= MAX_ANNOTATIONS_PER_ROOM:
+            raise ValueError(f"room is at the {MAX_ANNOTATIONS_PER_ROOM} annotation cap")
         ann = Annotation(
-            id=str(uuid.uuid4())[:8], user_id=user_id,
+            id=uuid.uuid4().hex, user_id=user_id,
             timestamp_s=timestamp_s, duration_s=duration_s,
             text=text, color=color,
         )
-        self._annotations.setdefault(room_id, []).append(ann)
+        anns.append(ann)
         return ann
 
     def get_for_room(self, room_id: str) -> list[Annotation]:
