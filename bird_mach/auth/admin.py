@@ -10,7 +10,7 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel
 
-from bird_mach.auth.dependencies import get_auth_service, require_role
+from bird_mach.auth.dependencies import get_auth_service, get_current_user, require_role
 from bird_mach.auth.models import Role, User
 from bird_mach.auth.service import AuthService
 from bird_mach.exceptions import UserNotFoundError
@@ -46,7 +46,15 @@ def get_user(user_id: str, service: AuthService = Depends(get_auth_service)) -> 
 
 
 @router.post("/users/{user_id}/deactivate")
-def deactivate_user(user_id: str, service: AuthService = Depends(get_auth_service)) -> dict:
+def deactivate_user(
+    user_id: str,
+    current: User = Depends(get_current_user),
+    service: AuthService = Depends(get_auth_service),
+) -> dict:
+    if user_id == current.id:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "Cannot deactivate your own account"
+        )
     try:
         return service.deactivate(user_id).public_dict()
     except UserNotFoundError as exc:
@@ -65,8 +73,13 @@ def activate_user(user_id: str, service: AuthService = Depends(get_auth_service)
 def set_user_role(
     user_id: str,
     body: RoleUpdate,
+    current: User = Depends(get_current_user),
     service: AuthService = Depends(get_auth_service),
 ) -> dict:
+    if user_id == current.id and body.role is not Role.ADMIN:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "Cannot demote your own admin role"
+        )
     try:
         return service.set_role(user_id, body.role).public_dict()
     except UserNotFoundError as exc:
