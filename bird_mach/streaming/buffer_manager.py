@@ -5,6 +5,10 @@ from collections import deque
 class AdaptiveBuffer:
     """Buffer that adjusts size based on network conditions."""
     def __init__(self, min_size: int = 4096, max_size: int = 65536):
+        if min_size < 1 or max_size < 1:
+            raise ValueError("buffer sizes must be at least 1")
+        if max_size < min_size:
+            min_size = max_size
         self._min = min_size
         self._max = max_size
         self._current_size = min_size
