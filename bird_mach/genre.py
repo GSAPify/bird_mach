@@ -32,9 +32,12 @@ def hint_genre(summary: AnalysisSummary) -> list[str]:
     elif summary.zero_crossing_rate_mean < 0.03:
         hints.append("tonal/sustained")
 
-    if summary.onset_count / max(summary.duration_s, 0.1) > 8:
+    if summary.duration_s <= 0:
+        return hints
+    density = summary.onset_count / summary.duration_s
+    if density > 8:
         hints.append("rhythmically-dense")
-    elif summary.onset_count / max(summary.duration_s, 0.1) < 1:
+    elif density < 1:
         hints.append("sparse/atmospheric")
 
     return hints

@@ -43,6 +43,12 @@ class Plan:
     stripe_price_id: str = ""
     features: tuple[str, ...] = ()
 
+    def __post_init__(self) -> None:
+        if self.price_cents < 0:
+            raise ValueError("price_cents must not be negative")
+        if self.interval not in {"month", "year"}:
+            raise ValueError("interval must be 'month' or 'year'")
+
     @property
     def is_free(self) -> bool:
         return self.price_cents == 0

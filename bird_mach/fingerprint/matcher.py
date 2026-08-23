@@ -18,6 +18,13 @@ class FingerprintDB:
         self._tracks: dict[str, dict] = {}
 
     def insert(self, track_id: str, hashes: list, metadata: dict | None = None):
+        if track_id in self._tracks:
+            for hv in list(self._index):
+                remaining = [(tid, t) for tid, t in self._index[hv] if tid != track_id]
+                if remaining:
+                    self._index[hv] = remaining
+                else:
+                    del self._index[hv]
         self._tracks[track_id] = metadata or {}
         for h in hashes:
             self._index[h.hash_value].append((track_id, h.anchor_time))

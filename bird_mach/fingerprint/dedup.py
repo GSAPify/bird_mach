@@ -11,7 +11,11 @@ class AudioDeduplicator:
         self._hashes: dict[str, str] = {}
 
     def add(self, file_id: str, audio: np.ndarray) -> str:
+        if audio.size == 0:
+            raise ValueError("cannot fingerprint empty audio")
         h = self._fp.fingerprint(audio)
+        if not h:
+            raise ValueError("fingerprint is empty")
         self._hashes[file_id] = h
         return h
 

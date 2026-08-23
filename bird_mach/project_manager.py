@@ -32,7 +32,7 @@ class ProjectManager:
         if not owner_id or not owner_id.strip():
             raise ValueError("owner_id must not be empty")
         project = AudioProject(
-            id=str(uuid.uuid4())[:8], name=name,
+            id=uuid.uuid4().hex, name=name.strip(),
             owner_id=owner_id, description=description,
         )
         self._projects[project.id] = project

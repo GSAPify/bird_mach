@@ -125,11 +125,23 @@ async def visualize(
     multi_view: bool = Form(False),
     connect: bool = Form(False),
 ) -> HTMLResponse:
+    cfg = current_config()
     raw: bytes = b""
     filename = "audio"
 
     if audio and audio.filename:
-        raw = await audio.read()
+        limit = upload_limit_bytes(cfg)
+        chunks: list[bytes] = []
+        total = 0
+        while chunk := await audio.read(1 << 20):
+            total += len(chunk)
+            if total > limit:
+                return visualization_error(
+                    f"Audio upload exceeds the {cfg.max_upload_mb} MB limit.",
+                    status_code=413,
+                )
+            chunks.append(chunk)
+        raw = b"".join(chunks)
         filename = audio.filename
     elif audio_url.strip():
         try:
@@ -144,7 +156,6 @@ async def visualize(
         logger.warning("No audio provided (neither file nor URL)")
         return visualization_error("No audio received. Upload a file or provide a URL.")
 
-    cfg = current_config()
     if len(raw) > upload_limit_bytes(cfg):
         logger.warning("Upload too large: %s (%d bytes)", filename, len(raw))
         return visualization_error(
@@ -262,11 +273,10 @@ async def visualize(
                 "sections": sections,
             },
         )
-    except Exception as e:
+    except Exception:
         logger.exception("Visualization failed for %s", filename)
-        msg = html.escape(str(e))
         return HTMLResponse(
-            f"<pre>Failed to visualize audio:\n{msg}</pre>", status_code=500
+            "<pre>Failed to visualize audio.</pre>", status_code=500
         )
     finally:
         if tmp_path is not None:

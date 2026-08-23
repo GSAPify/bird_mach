@@ -84,10 +84,12 @@ class Database:
             return cur
 
     def query_one(self, sql: str, params: Iterable = ()) -> sqlite3.Row | None:
-        return self._conn.execute(sql, tuple(params)).fetchone()
+        with self._lock:
+            return self._conn.execute(sql, tuple(params)).fetchone()
 
     def query_all(self, sql: str, params: Iterable = ()) -> list[sqlite3.Row]:
-        return self._conn.execute(sql, tuple(params)).fetchall()
+        with self._lock:
+            return self._conn.execute(sql, tuple(params)).fetchall()
 
     def close(self) -> None:
         with self._lock:

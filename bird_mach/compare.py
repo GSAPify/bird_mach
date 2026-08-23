@@ -41,6 +41,9 @@ class ComparisonResult:
         for f in fields:
             va = getattr(self.a, f)
             vb = getattr(self.b, f)
+            if va is None or vb is None:
+                result[f] = {"a": va, "b": vb, "diff": None}
+                continue
             result[f] = {"a": float(va), "b": float(vb), "diff": float(vb - va)}
         return result
 

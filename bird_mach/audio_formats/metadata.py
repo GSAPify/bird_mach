@@ -20,6 +20,8 @@ class AudioMetadata:
         return self.file_size_bytes / (1024 * 1024)
 
 def extract_metadata(path: Path) -> AudioMetadata:
+    if not path.exists():
+        raise FileNotFoundError(path)
     stat = path.stat()
     return AudioMetadata(
         file_size_bytes=stat.st_size,

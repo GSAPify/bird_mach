@@ -13,6 +13,14 @@ class RetryPolicy:
     max_delay_s: float = 300.0
     backoff_factor: float = 2.0
 
+    def __post_init__(self) -> None:
+        if self.max_retries < 0:
+            raise ValueError("max_retries must not be negative")
+        if self.base_delay_s < 0 or self.max_delay_s < 0:
+            raise ValueError("delays must not be negative")
+        if self.backoff_factor < 1:
+            raise ValueError("backoff_factor must be at least 1")
+
     def get_delay(self, attempt: int) -> float:
         try:
             delay = self.base_delay_s * (self.backoff_factor ** attempt)

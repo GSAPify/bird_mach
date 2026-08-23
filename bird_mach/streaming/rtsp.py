@@ -20,7 +20,7 @@ class RTSPServer:
         self._sessions: dict[str, RTSPSession] = {}
 
     def create_session(self, client_ip: str) -> RTSPSession:
-        sid = str(uuid.uuid4())[:8]
+        sid = uuid.uuid4().hex
         session = RTSPSession(session_id=sid, client_ip=client_ip)
         self._sessions[sid] = session
         return session

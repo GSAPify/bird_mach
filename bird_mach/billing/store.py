@@ -52,6 +52,11 @@ class InMemorySubscriptionRepository(SubscriptionRepository):
 
     def upsert(self, sub: Subscription) -> Subscription:
         with self._lock:
+            existing = self._by_id.get(sub.id)
+            if existing is not None:
+                # Preserve original created_at so webhook replays do not
+                # look like a brand-new subscription.
+                sub.created_at = existing.created_at
             self._by_id[sub.id] = sub
             return sub
 
@@ -120,9 +125,12 @@ class SqliteSubscriptionRepository(SubscriptionRepository):
         return self._row_to_sub(row) if row else None
 
     def get_by_user(self, user_id: str) -> Subscription | None:
+        # Prefer an entitling subscription over a newer incomplete/canceled
+        # row so a failed renewal cannot hide paid access.
         row = self._db.query_one(
             "SELECT * FROM subscriptions WHERE user_id = ? "
-            "ORDER BY created_at DESC LIMIT 1",
+            "ORDER BY CASE WHEN status IN ('active', 'trialing') THEN 0 ELSE 1 END, "
+            "created_at DESC LIMIT 1",
             [user_id],
         )
         return self._row_to_sub(row) if row else None

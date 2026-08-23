@@ -70,4 +70,6 @@ ALL_PRESETS: dict[str, VisualizationPreset] = {
 
 def get_preset(name: str) -> VisualizationPreset | None:
     """Look up a preset by name (case-insensitive)."""
+    if not name:
+        return None
     return ALL_PRESETS.get(name.lower())

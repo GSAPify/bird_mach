@@ -4,6 +4,11 @@ import hashlib
 import json
 
 def make_key(*parts: str) -> str:
+    # Colon-join is unambiguous for parts that themselves contain no colon,
+    # which is the documented contract of analysis_cache_key. Escape when a
+    # part includes the delimiter so ("a:b", "c") cannot collide with ("a", "b:c").
+    if any(":" in part for part in parts):
+        return json.dumps(parts, separators=(",", ":"))
     return ":".join(parts)
 
 def content_hash(data: bytes) -> str:

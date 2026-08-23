@@ -14,6 +14,9 @@ def get_palette(mode: str = "default") -> list[str]:
     return list(PALETTES.get(mode, PALETTES["default"]))
 
 def get_high_contrast(bg: str = "dark") -> dict[str, str]:
-    if bg == "dark":
+    mode = (bg or "dark").strip().lower()
+    if mode == "dark":
         return {"background": "#000000", "text": "#FFFFFF", "accent": "#FFFF00", "error": "#FF6B6B"}
-    return {"background": "#FFFFFF", "text": "#000000", "accent": "#0000FF", "error": "#CC0000"}
+    if mode == "light":
+        return {"background": "#FFFFFF", "text": "#000000", "accent": "#0000FF", "error": "#CC0000"}
+    raise ValueError(f"bg must be 'dark' or 'light', got {bg!r}")

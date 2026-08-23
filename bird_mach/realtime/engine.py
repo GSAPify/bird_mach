@@ -17,6 +17,8 @@ class AudioFrame:
 
     @property
     def duration_ms(self) -> float:
+        if self.sample_rate <= 0:
+            raise ValueError("sample_rate must be positive")
         return len(self.samples) / self.sample_rate * 1000
 
     @property
@@ -30,6 +32,16 @@ class EngineConfig:
     channels: int = 1
     overlap: float = 0.5
     fft_size: int = 4096
+
+    def __post_init__(self) -> None:
+        if self.buffer_size < 1 or self.fft_size < 1:
+            raise ValueError("buffer_size and fft_size must be at least 1")
+        if self.sample_rate <= 0:
+            raise ValueError("sample_rate must be positive")
+        if self.channels < 1:
+            raise ValueError("channels must be at least 1")
+        if not 0.0 <= self.overlap < 1.0:
+            raise ValueError("overlap must be in [0, 1)")
 
 class RealtimeEngine:
     """Manages the audio processing pipeline for live visualization."""

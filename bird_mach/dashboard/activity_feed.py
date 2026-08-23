@@ -1,7 +1,7 @@
 """Activity feed for tracking user actions."""
 from __future__ import annotations
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import deque
 
 @dataclass
@@ -10,11 +10,13 @@ class Activity:
     action: str
     resource_type: str
     resource_id: str
-    timestamp: datetime = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: dict = field(default_factory=dict)
 
 class ActivityFeed:
     def __init__(self, max_items: int = 1000):
+        if max_items < 1:
+            raise ValueError("max_items must be at least 1")
         self._items: deque[Activity] = deque(maxlen=max_items)
 
     def log(self, user_id: str, action: str,

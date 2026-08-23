@@ -10,11 +10,17 @@ class FormatConverter:
         self._ffmpeg = ffmpeg_path
 
     def convert(self, src: Path, dst: Path, sr: int | None = None) -> Path:
+        if not src.exists():
+            raise FileNotFoundError(src)
+        if dst.resolve() == src.resolve():
+            raise ValueError("destination must not overwrite the source")
         cmd = [self._ffmpeg, "-i", str(src), "-y"]
-        if sr:
+        if sr is not None:
+            if sr <= 0:
+                raise ValueError("sr must be positive")
             cmd.extend(["-ar", str(sr)])
         cmd.append(str(dst))
-        subprocess.run(cmd, capture_output=True, check=True)
+        subprocess.run(cmd, capture_output=True, check=True, timeout=120)
         return dst
 
     def to_wav(self, src: Path, sr: int = 22050) -> Path:

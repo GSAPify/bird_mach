@@ -34,7 +34,9 @@ class ConfigVersioning:
 
     @property
     def latest(self) -> ConfigVersion | None:
-        return self._versions[-1] if self._versions else None
+        if not self._versions:
+            return None
+        return copy.deepcopy(self._versions[-1])
 
     @property
     def version_count(self) -> int:

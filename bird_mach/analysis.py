@@ -69,11 +69,17 @@ def track_beats(y: np.ndarray, *, sr: int) -> BeatResult:
     )
 
 
+def _check_hop(hop_length: int) -> None:
+    if hop_length < 1:
+        raise ValueError(f"hop_length must be at least 1, got {hop_length}")
+
+
 def detect_onsets(
     y: np.ndarray, *, sr: int, hop_length: int = 512
 ) -> OnsetResult:
     """Detect note onsets and return their timestamps and strengths."""
     _check_sr(sr)
+    _check_hop(hop_length)
     onset_env = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
     onset_frames = librosa.onset.onset_detect(
         onset_envelope=onset_env, sr=sr, hop_length=hop_length
@@ -94,6 +100,7 @@ def compute_rms_energy(
 
     Useful for detecting loud/quiet passages and as an envelope follower.
     """
+    _check_hop(hop_length)
     rms = librosa.feature.rms(y=y, hop_length=hop_length)
     return np.atleast_1d(rms.squeeze()).astype(np.float32, copy=False)
 
@@ -102,6 +109,7 @@ def compute_zero_crossing_rate(
     y: np.ndarray, *, hop_length: int = 512
 ) -> np.ndarray:
     """Compute per-frame zero-crossing rate."""
+    _check_hop(hop_length)
     zcr = librosa.feature.zero_crossing_rate(y, hop_length=hop_length)
     return np.atleast_1d(zcr.squeeze()).astype(np.float32, copy=False)
 
@@ -111,6 +119,7 @@ def compute_spectral_bandwidth(
 ) -> np.ndarray:
     """Compute per-frame spectral bandwidth in Hz."""
     _check_sr(sr)
+    _check_hop(hop_length)
     bw = librosa.feature.spectral_bandwidth(y=y, sr=sr, hop_length=hop_length)
     return np.atleast_1d(bw.squeeze()).astype(np.float32, copy=False)
 
@@ -120,6 +129,9 @@ def compute_spectral_rolloff(
 ) -> np.ndarray:
     """Compute per-frame spectral rolloff frequency."""
     _check_sr(sr)
+    _check_hop(hop_length)
+    if not 0.0 < roll_percent <= 1.0:
+        raise ValueError("roll_percent must be in (0, 1]")
     rolloff = librosa.feature.spectral_rolloff(
         y=y, sr=sr, hop_length=hop_length, roll_percent=roll_percent
     )

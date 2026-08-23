@@ -14,6 +14,8 @@ class PipelineGraph:
         self._edges.setdefault(name, [])
 
     def add_edge(self, from_node: str, to_node: str) -> None:
+        if from_node not in self._nodes or to_node not in self._nodes:
+            raise KeyError(f"unknown node in edge {from_node!r} -> {to_node!r}")
         self._edges.setdefault(from_node, []).append(to_node)
 
     def _topo_sort(self) -> list[str]:
@@ -40,15 +42,18 @@ class PipelineGraph:
         data = dict(initial_data)
         for name in self._topo_sort():
             node = self._nodes[name]
-            start = time.time()
+            start = time.monotonic()
             try:
                 output = node.process(data)
                 data.update(output)
-                dur = (time.time() - start) * 1000
+                dur = (time.monotonic() - start) * 1000
                 results.append(NodeResult(name, True, output, dur))
             except Exception as e:
-                dur = (time.time() - start) * 1000
+                dur = (time.monotonic() - start) * 1000
                 results.append(NodeResult(name, False, {}, dur, str(e)))
+                # Later nodes would otherwise run on incomplete data and
+                # report success.
+                break
         return results
 
     @property

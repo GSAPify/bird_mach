@@ -19,6 +19,8 @@ class AudioClassifier:
         self._labels: list[str] = []
 
     def fit(self, features: list[np.ndarray], labels: list[str]) -> None:
+        if len(features) != len(labels):
+            raise ValueError("features and labels must have the same length")
         self._features = features
         self._labels = labels
 

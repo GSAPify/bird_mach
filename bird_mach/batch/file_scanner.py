@@ -9,6 +9,10 @@ def scan_directory(
 ) -> list[Path]:
     # Suffixes are compared lowercased, so the caller's set must be too, or
     # {".WAV"} would match nothing.
+    if not root.exists():
+        raise FileNotFoundError(root)
+    if not root.is_dir():
+        raise NotADirectoryError(root)
     exts = {e.lower() for e in (extensions or AUDIO_EXTENSIONS)}
     entries = root.rglob("*") if recursive else root.iterdir()
     return sorted(f for f in entries if f.is_file() and f.suffix.lower() in exts)

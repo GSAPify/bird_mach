@@ -13,6 +13,8 @@ class AudioEmbedding:
         self._sr = sr
 
     def embed(self, y: np.ndarray) -> np.ndarray:
+        if y.size == 0:
+            raise ValueError("cannot embed empty audio")
         n_frames = max(1, len(y) // self._sr)
         features = []
         for i in range(n_frames):
@@ -39,6 +41,8 @@ class EmbeddingIndex:
         self._embeddings[doc_id] = embedding
 
     def search(self, query: np.ndarray, top_k: int = 5) -> list[tuple[str, float]]:
+        if top_k < 1:
+            raise ValueError("top_k must be at least 1")
         scores = [(did, float(np.dot(query, emb)))
                   for did, emb in self._embeddings.items()]
         scores.sort(key=lambda x: -x[1])

@@ -18,6 +18,10 @@ class PresenceTracker:
         self._users: dict[str, UserPresence] = {}
 
     def update(self, user_id: str, **kwargs) -> UserPresence:
+        allowed = {"status", "cursor_time_s", "is_typing"}
+        unknown = set(kwargs) - allowed
+        if unknown:
+            raise ValueError(f"unsupported presence fields: {sorted(unknown)}")
         if user_id not in self._users:
             self._users[user_id] = UserPresence(user_id=user_id)
         p = self._users[user_id]

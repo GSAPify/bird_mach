@@ -14,10 +14,14 @@ class Leaderboard:
         self._scores: dict[str, tuple[str, int]] = {}
 
     def add_points(self, user_id: str, name: str, points: int) -> None:
+        if points < 0:
+            raise ValueError("points must not be negative")
         current = self._scores.get(user_id, (name, 0))
         self._scores[user_id] = (name, current[1] + points)
 
     def get_top(self, n: int = 10) -> list[LeaderboardEntry]:
+        if n < 1:
+            raise ValueError("n must be at least 1")
         sorted_users = sorted(self._scores.items(), key=lambda x: -x[1][1])
         return [
             LeaderboardEntry(uid, name, score, rank+1)

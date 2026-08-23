@@ -32,4 +32,6 @@ class BatchResult:
 
     @property
     def success_rate(self) -> float:
-        return self.completed / max(self.total, 1) * 100
+        if self.total <= 0:
+            return 0.0
+        return self.completed / self.total * 100

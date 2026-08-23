@@ -16,6 +16,8 @@ def save_wav(
     subtype: str = "PCM_16",
 ) -> Path:
     """Write a waveform to a WAV file."""
+    if sr <= 0:
+        raise ValueError("sr must be positive")
     path.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(path), y, sr, subtype=subtype)
     return path

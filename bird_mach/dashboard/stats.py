@@ -19,10 +19,14 @@ class StatsAggregator:
         self._analyses: list[dict] = []
 
     def record(self, duration_s: float, format: str, processing_ms: float):
+        if duration_s < 0 or processing_ms < 0:
+            raise ValueError("duration_s and processing_ms must not be negative")
         self._analyses.append({
             "duration_s": duration_s, "format": format,
             "processing_ms": processing_ms, "timestamp": datetime.now(),
         })
+        cutoff = datetime.now() - timedelta(days=90)
+        self._analyses = [a for a in self._analyses if a["timestamp"] >= cutoff]
 
     def compute(self) -> DashboardStats:
         now = datetime.now()

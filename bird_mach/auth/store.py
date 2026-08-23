@@ -79,25 +79,34 @@ class InMemoryUserRepository(UserRepository):
             return user
 
     def get(self, user_id: str) -> User | None:
-        return self._by_id.get(user_id)
+        with self._lock:
+            return self._by_id.get(user_id)
 
     def get_by_email(self, email: str) -> User | None:
         target = _normalise_email(email)
-        return next(
-            (u for u in self._by_id.values() if _normalise_email(u.email) == target),
-            None,
-        )
+        with self._lock:
+            return next(
+                (u for u in self._by_id.values() if _normalise_email(u.email) == target),
+                None,
+            )
 
     def get_by_stripe_customer_id(self, customer_id: str) -> User | None:
-        return next(
-            (u for u in self._by_id.values() if u.stripe_customer_id == customer_id),
-            None,
-        )
+        if not customer_id:
+            return None
+        with self._lock:
+            return next(
+                (u for u in self._by_id.values() if u.stripe_customer_id == customer_id),
+                None,
+            )
 
     def update(self, user: User) -> User:
         with self._lock:
             if user.id not in self._by_id:
                 raise KeyError(user.id)
+            target = _normalise_email(user.email)
+            for other in self._by_id.values():
+                if other.id != user.id and _normalise_email(other.email) == target:
+                    raise ValueError(f"email already exists: {user.email}")
             self._by_id[user.id] = user
             return user
 
@@ -106,13 +115,15 @@ class InMemoryUserRepository(UserRepository):
             return self._by_id.pop(user_id, None) is not None
 
     def count(self) -> int:
-        return len(self._by_id)
+        with self._lock:
+            return len(self._by_id)
 
     def list_all(self, *, limit: int = 100, offset: int = 0) -> list[User]:
         if limit < 1 or offset < 0:
             raise ValueError("limit must be >= 1 and offset must be >= 0")
-        ordered = sorted(self._by_id.values(), key=lambda u: u.created_at)
-        return ordered[offset : offset + limit]
+        with self._lock:
+            ordered = sorted(self._by_id.values(), key=lambda u: u.created_at)
+            return ordered[offset : offset + limit]
 
 
 class SqliteUserRepository(UserRepository):
@@ -178,25 +189,30 @@ class SqliteUserRepository(UserRepository):
         return self._row_to_user(row) if row else None
 
     def get_by_stripe_customer_id(self, customer_id: str) -> User | None:
+        if not customer_id:
+            return None
         row = self._db.query_one(
             "SELECT * FROM users WHERE stripe_customer_id = ?", [customer_id]
         )
         return self._row_to_user(row) if row else None
 
     def update(self, user: User) -> User:
-        cur = self._db.execute(
-            "UPDATE users SET email = ?, password_hash = ?, role = ?, is_active = ?, "
-            "is_verified = ?, stripe_customer_id = ? WHERE id = ?",
-            [
-                _normalise_email(user.email),
-                user.password_hash,
-                user.role.value,
-                int(user.is_active),
-                int(user.is_verified),
-                user.stripe_customer_id,
-                user.id,
-            ],
-        )
+        try:
+            cur = self._db.execute(
+                "UPDATE users SET email = ?, password_hash = ?, role = ?, is_active = ?, "
+                "is_verified = ?, stripe_customer_id = ? WHERE id = ?",
+                [
+                    _normalise_email(user.email),
+                    user.password_hash,
+                    user.role.value,
+                    int(user.is_active),
+                    int(user.is_verified),
+                    user.stripe_customer_id,
+                    user.id,
+                ],
+            )
+        except sqlite3.IntegrityError as exc:
+            raise ValueError(f"email already exists: {user.email}") from exc
         if cur.rowcount == 0:
             raise KeyError(user.id)
         return user
@@ -209,6 +225,8 @@ class SqliteUserRepository(UserRepository):
         return self._db.query_one("SELECT COUNT(*) AS c FROM users")["c"]
 
     def list_all(self, *, limit: int = 100, offset: int = 0) -> list[User]:
+        if limit < 1 or offset < 0:
+            raise ValueError("limit must be >= 1 and offset must be >= 0")
         rows = self._db.query_all(
             "SELECT * FROM users ORDER BY created_at ASC LIMIT ? OFFSET ?",
             [limit, offset],

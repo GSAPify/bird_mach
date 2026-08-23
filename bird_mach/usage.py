@@ -52,7 +52,8 @@ class InMemoryUsageRepository(UsageRepository):
             return new
 
     def count(self, user_id: str, day: str) -> int:
-        return self._counts.get((user_id, day), 0)
+        with self._lock:
+            return self._counts.get((user_id, day), 0)
 
 
 class SqliteUsageRepository(UsageRepository):
@@ -78,6 +79,8 @@ class SqliteUsageRepository(UsageRepository):
 
 class UsageService:
     def __init__(self, repo: UsageRepository, *, free_daily_limit: int = FREE_DAILY_ANALYSES):
+        if free_daily_limit < 1:
+            raise ValueError("free_daily_limit must be at least 1")
         self._repo = repo
         self._limit = free_daily_limit
 

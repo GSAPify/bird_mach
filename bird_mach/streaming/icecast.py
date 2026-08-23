@@ -14,6 +14,14 @@ class IcecastConfig:
     bitrate: int = 128
     format: str = "mp3"
 
+    def __post_init__(self) -> None:
+        if not 1 <= self.port <= 65535:
+            raise ValueError("port must be in 1..65535")
+        if self.bitrate < 1:
+            raise ValueError("bitrate must be at least 1")
+        if not self.mount.startswith("/"):
+            raise ValueError("mount must start with '/'")
+
 class IcecastClient:
     """Stream audio to an Icecast server."""
     def __init__(self, config: IcecastConfig):

@@ -81,7 +81,16 @@ class SqliteRevokedTokenStore(RevokedTokenStore):
     def is_revoked(self, jti: str) -> bool:
         if not jti:
             return False
-        return self._db.query_one("SELECT 1 FROM revoked_tokens WHERE jti = ?", [jti]) is not None
+        now = datetime.now(timezone.utc).isoformat()
+        # Match the in-memory store: an expired denylist row is not an
+        # active revocation, even if purge_expired has not run yet.
+        return (
+            self._db.query_one(
+                "SELECT 1 FROM revoked_tokens WHERE jti = ? AND expires_at > ?",
+                [jti, now],
+            )
+            is not None
+        )
 
     def purge_expired(self, *, now: datetime | None = None) -> int:
         cutoff = (now or datetime.now(timezone.utc)).isoformat()

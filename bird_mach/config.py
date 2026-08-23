@@ -44,9 +44,13 @@ def _env_log_level(name: str, default: str) -> str:
 
 
 def _env_csv(name: str, default: str) -> tuple[str, ...]:
-    raw = os.getenv(name, default)
+    raw = os.getenv(name)
+    if raw is None:
+        raw = default
     values = tuple(part.strip() for part in raw.split(",") if part.strip())
-    return values or (default,)
+    # An explicitly empty CORS_ORIGINS must not collapse to "*" and open
+    # every origin; that would ignore an operator trying to lock CORS down.
+    return values
 
 
 @dataclass(frozen=True)

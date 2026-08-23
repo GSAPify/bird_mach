@@ -32,7 +32,10 @@ class AnalysisReport:
             "title": self.title,
             "author": self.author,
             "created_at": self.created_at.isoformat(),
-            "sections": [{"title": s.title, "content": s.content} for s in self._sections],
+            "sections": [
+                {"title": s.title, "content": s.content, "chart_data": s.chart_data}
+                for s in self._sections
+            ],
         }
 
     @property

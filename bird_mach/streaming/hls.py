@@ -23,6 +23,8 @@ class HLSGenerator:
         self._index = 0
 
     def segment(self, audio: np.ndarray) -> list[HLSSegment]:
+        if audio.ndim > 1:
+            audio = np.asarray(audio).reshape(-1)
         segments = []
         for i in range(0, len(audio), self._seg_samples):
             chunk = audio[i:i + self._seg_samples]

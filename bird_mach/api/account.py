@@ -11,7 +11,7 @@ These routes turn the auth + billing layers into actual product behaviour:
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 
 from bird_mach.api.routes import analyze_bytes, read_capped
 from bird_mach.api.schemas import AnalysisSummaryResponse
@@ -25,6 +25,9 @@ from bird_mach.usage import UsageService
 router = APIRouter(prefix="/api/v1", tags=["account"])
 
 
+MAX_BATCH_FILES = 20
+
+
 @router.post("/analyze/metered", response_model=AnalysisSummaryResponse)
 async def metered_analyze(
     file: UploadFile = File(...),
@@ -32,6 +35,8 @@ async def metered_analyze(
     user: User = Depends(enforce_analysis_quota),
 ):
     """Analyze one file, counting against the caller's daily quota."""
+    if sr <= 0:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Sample rate must be positive.")
     contents = await read_capped(file)
     return analyze_bytes(contents, sr)
 
@@ -43,6 +48,13 @@ async def batch_analyze(
     user: User = Depends(require_subscription),
 ):
     """Premium: analyze multiple files in one request. Requires a subscription."""
+    if sr <= 0:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Sample rate must be positive.")
+    if len(files) > MAX_BATCH_FILES:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST,
+            f"Batch is limited to {MAX_BATCH_FILES} files",
+        )
     results = []
     for f in files:
         results.append(analyze_bytes(await read_capped(f), sr))
