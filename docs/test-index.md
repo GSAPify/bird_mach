@@ -90,3 +90,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/cache/test_i18n.py`](../tests/enterprise/cache/test_i18n.py) | Tests for enterprise.cache.i18n |
 | [`tests/enterprise/cache/test_image_resize.py`](../tests/enterprise/cache/test_image_resize.py) | Tests for enterprise.cache.image_resize |
 | [`tests/enterprise/cache/test_s3_storage.py`](../tests/enterprise/cache/test_s3_storage.py) | Tests for enterprise.cache.s3_storage |
+| [`tests/enterprise/compliance/test_analytics.py`](../tests/enterprise/compliance/test_analytics.py) | Tests for enterprise.compliance.analytics |
