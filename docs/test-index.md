@@ -100,3 +100,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/crypto/test_analytics.py`](../tests/enterprise/crypto/test_analytics.py) | Tests for enterprise.crypto.analytics |
 | [`tests/enterprise/crypto/test_connection_pool.py`](../tests/enterprise/crypto/test_connection_pool.py) | Tests for enterprise.crypto.connection_pool |
 | [`tests/enterprise/crypto/test_encryption.py`](../tests/enterprise/crypto/test_encryption.py) | Tests for enterprise.crypto.encryption |
+| [`tests/enterprise/crypto/test_real_time.py`](../tests/enterprise/crypto/test_real_time.py) | Tests for enterprise.crypto.real_time |
