@@ -107,3 +107,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/database_migrations/test_jwt_auth.py`](../tests/enterprise/database_migrations/test_jwt_auth.py) | Tests for enterprise.database.migrations.jwt_auth |
 | [`tests/enterprise/database_migrations/test_report_generation.py`](../tests/enterprise/database_migrations/test_report_generation.py) | Tests for enterprise.database.migrations.report_generation |
 | [`tests/enterprise/database_migrations/test_terraform.py`](../tests/enterprise/database_migrations/test_terraform.py) | Tests for enterprise.database.migrations.terraform |
+| [`tests/enterprise/database_migrations/test_video_thumb.py`](../tests/enterprise/database_migrations/test_video_thumb.py) | Tests for enterprise.database.migrations.video_thumb |
