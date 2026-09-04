@@ -72,3 +72,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/auth/test_admin.py`](../tests/auth/test_admin.py) | End-to-end tests for the admin user-management API |
 | [`tests/auth/test_audit.py`](../tests/auth/test_audit.py) | Tests for the auth audit log |
 | [`tests/auth/test_passwords.py`](../tests/auth/test_passwords.py) | Tests for PBKDF2 password hashing |
+| [`tests/auth/test_ratelimit.py`](../tests/auth/test_ratelimit.py) | Tests for auth rate limiting |
