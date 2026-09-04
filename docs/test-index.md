@@ -103,3 +103,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/crypto/test_real_time.py`](../tests/enterprise/crypto/test_real_time.py) | Tests for enterprise.crypto.real_time |
 | [`tests/enterprise/database/test_docker_compose.py`](../tests/enterprise/database/test_docker_compose.py) | Tests for enterprise.database.docker_compose |
 | [`tests/enterprise/database/test_e2e_testing.py`](../tests/enterprise/database/test_e2e_testing.py) | Tests for enterprise.database.e2e_testing |
+| [`tests/enterprise/database_migrations/test_db_seeding.py`](../tests/enterprise/database_migrations/test_db_seeding.py) | Tests for enterprise.database.migrations.db_seeding |
