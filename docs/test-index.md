@@ -85,3 +85,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/billing/test_service.py`](../tests/billing/test_service.py) | Tests for the billing service, including the webhook → entitlement flow |
 | [`tests/billing/test_store.py`](../tests/billing/test_store.py) | Tests for subscription repositories (both backends, same cases) |
 | [`tests/enterprise/billing/test_key_rotation.py`](../tests/enterprise/billing/test_key_rotation.py) | Tests for enterprise.billing.key_rotation |
+| [`tests/enterprise/billing/test_redis_cache.py`](../tests/enterprise/billing/test_redis_cache.py) | Tests for enterprise.billing.redis_cache |
