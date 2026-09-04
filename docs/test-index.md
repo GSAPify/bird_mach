@@ -79,3 +79,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/auth/test_store.py`](../tests/auth/test_store.py) | Tests for the user repositories |
 | [`tests/auth/test_tokens.py`](../tests/auth/test_tokens.py) | Tests for JWT issuance and verification |
 | [`tests/billing/test_dependencies.py`](../tests/billing/test_dependencies.py) | Tests for billing dependency wiring |
+| [`tests/billing/test_models.py`](../tests/billing/test_models.py) | Tests for billing models and the plan catalog |
