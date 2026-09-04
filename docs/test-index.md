@@ -69,3 +69,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/auth_providers/test_db_backup.py`](../tests/enterprise/auth_providers/test_db_backup.py) | Reference for tests/enterprise/auth_providers/test_db_backup.py |
 | [`tests/enterprise/auth_providers/test_long_polling.py`](../tests/enterprise/auth_providers/test_long_polling.py) | Reference for tests/enterprise/auth_providers/test_long_polling.py |
 | [`tests/enterprise/billing/test_canary_deploy.py`](../tests/enterprise/billing/test_canary_deploy.py) | Reference for tests/enterprise/billing/test_canary_deploy.py |
+| [`tests/auth/test_admin.py`](../tests/auth/test_admin.py) | End-to-end tests for the admin user-management API |
