@@ -93,3 +93,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/compliance/test_analytics.py`](../tests/enterprise/compliance/test_analytics.py) | Tests for enterprise.compliance.analytics |
 | [`tests/enterprise/compliance/test_batch_processing.py`](../tests/enterprise/compliance/test_batch_processing.py) | Tests for enterprise.compliance.batch_processing |
 | [`tests/enterprise/compliance/test_billing.py`](../tests/enterprise/compliance/test_billing.py) | Tests for enterprise.compliance.billing |
+| [`tests/enterprise/compliance/test_image_resize.py`](../tests/enterprise/compliance/test_image_resize.py) | Tests for enterprise.compliance.image_resize |
