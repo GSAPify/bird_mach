@@ -69,3 +69,43 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/auth_providers/test_db_backup.py`](../tests/enterprise/auth_providers/test_db_backup.py) | Reference for tests/enterprise/auth_providers/test_db_backup.py |
 | [`tests/enterprise/auth_providers/test_long_polling.py`](../tests/enterprise/auth_providers/test_long_polling.py) | Reference for tests/enterprise/auth_providers/test_long_polling.py |
 | [`tests/enterprise/billing/test_canary_deploy.py`](../tests/enterprise/billing/test_canary_deploy.py) | Reference for tests/enterprise/billing/test_canary_deploy.py |
+| [`tests/auth/test_admin.py`](../tests/auth/test_admin.py) | End-to-end tests for the admin user-management API |
+| [`tests/auth/test_audit.py`](../tests/auth/test_audit.py) | Tests for the auth audit log |
+| [`tests/auth/test_passwords.py`](../tests/auth/test_passwords.py) | Tests for PBKDF2 password hashing |
+| [`tests/auth/test_ratelimit.py`](../tests/auth/test_ratelimit.py) | Tests for auth rate limiting |
+| [`tests/auth/test_revocation.py`](../tests/auth/test_revocation.py) | Tests for the refresh-token revocation denylist |
+| [`tests/auth/test_routes.py`](../tests/auth/test_routes.py) | End-to-end API tests for the auth router |
+| [`tests/auth/test_service.py`](../tests/auth/test_service.py) | Tests for the authentication service |
+| [`tests/auth/test_store.py`](../tests/auth/test_store.py) | Tests for the user repositories |
+| [`tests/auth/test_tokens.py`](../tests/auth/test_tokens.py) | Tests for JWT issuance and verification |
+| [`tests/billing/test_dependencies.py`](../tests/billing/test_dependencies.py) | Tests for billing dependency wiring |
+| [`tests/billing/test_models.py`](../tests/billing/test_models.py) | Tests for billing models and the plan catalog |
+| [`tests/billing/test_provider.py`](../tests/billing/test_provider.py) | Tests for the fake payment provider (real Stripe path is integration-only) |
+| [`tests/billing/test_routes.py`](../tests/billing/test_routes.py) | End-to-end API tests for the billing router |
+| [`tests/billing/test_service.py`](../tests/billing/test_service.py) | Tests for the billing service, including the webhook → entitlement flow |
+| [`tests/billing/test_store.py`](../tests/billing/test_store.py) | Tests for subscription repositories (both backends, same cases) |
+| [`tests/enterprise/billing/test_key_rotation.py`](../tests/enterprise/billing/test_key_rotation.py) | Tests for enterprise.billing.key_rotation |
+| [`tests/enterprise/billing/test_redis_cache.py`](../tests/enterprise/billing/test_redis_cache.py) | Tests for enterprise.billing.redis_cache |
+| [`tests/enterprise/cache/test_connection_pool.py`](../tests/enterprise/cache/test_connection_pool.py) | Tests for enterprise.cache.connection_pool |
+| [`tests/enterprise/cache/test_i18n.py`](../tests/enterprise/cache/test_i18n.py) | Tests for enterprise.cache.i18n |
+| [`tests/enterprise/cache/test_image_resize.py`](../tests/enterprise/cache/test_image_resize.py) | Tests for enterprise.cache.image_resize |
+| [`tests/enterprise/cache/test_s3_storage.py`](../tests/enterprise/cache/test_s3_storage.py) | Tests for enterprise.cache.s3_storage |
+| [`tests/enterprise/compliance/test_analytics.py`](../tests/enterprise/compliance/test_analytics.py) | Tests for enterprise.compliance.analytics |
+| [`tests/enterprise/compliance/test_batch_processing.py`](../tests/enterprise/compliance/test_batch_processing.py) | Tests for enterprise.compliance.batch_processing |
+| [`tests/enterprise/compliance/test_billing.py`](../tests/enterprise/compliance/test_billing.py) | Tests for enterprise.compliance.billing |
+| [`tests/enterprise/compliance/test_image_resize.py`](../tests/enterprise/compliance/test_image_resize.py) | Tests for enterprise.compliance.image_resize |
+| [`tests/enterprise/compliance/test_mfa.py`](../tests/enterprise/compliance/test_mfa.py) | Tests for enterprise.compliance.mfa |
+| [`tests/enterprise/compliance/test_notifications.py`](../tests/enterprise/compliance/test_notifications.py) | Tests for enterprise.compliance.notifications |
+| [`tests/enterprise/compliance/test_task_queue.py`](../tests/enterprise/compliance/test_task_queue.py) | Tests for enterprise.compliance.task_queue |
+| [`tests/enterprise/crypto/test_analytics.py`](../tests/enterprise/crypto/test_analytics.py) | Tests for enterprise.crypto.analytics |
+| [`tests/enterprise/crypto/test_connection_pool.py`](../tests/enterprise/crypto/test_connection_pool.py) | Tests for enterprise.crypto.connection_pool |
+| [`tests/enterprise/crypto/test_encryption.py`](../tests/enterprise/crypto/test_encryption.py) | Tests for enterprise.crypto.encryption |
+| [`tests/enterprise/crypto/test_real_time.py`](../tests/enterprise/crypto/test_real_time.py) | Tests for enterprise.crypto.real_time |
+| [`tests/enterprise/database/test_docker_compose.py`](../tests/enterprise/database/test_docker_compose.py) | Tests for enterprise.database.docker_compose |
+| [`tests/enterprise/database/test_e2e_testing.py`](../tests/enterprise/database/test_e2e_testing.py) | Tests for enterprise.database.e2e_testing |
+| [`tests/enterprise/database_migrations/test_db_seeding.py`](../tests/enterprise/database_migrations/test_db_seeding.py) | Tests for enterprise.database.migrations.db_seeding |
+| [`tests/enterprise/database_migrations/test_jwt_auth.py`](../tests/enterprise/database_migrations/test_jwt_auth.py) | Tests for enterprise.database.migrations.jwt_auth |
+| [`tests/enterprise/database_migrations/test_report_generation.py`](../tests/enterprise/database_migrations/test_report_generation.py) | Tests for enterprise.database.migrations.report_generation |
+| [`tests/enterprise/database_migrations/test_terraform.py`](../tests/enterprise/database_migrations/test_terraform.py) | Tests for enterprise.database.migrations.terraform |
+| [`tests/enterprise/database_migrations/test_video_thumb.py`](../tests/enterprise/database_migrations/test_video_thumb.py) | Tests for enterprise.database.migrations.video_thumb |
+| [`tests/enterprise/deployment/test_gcs_storage.py`](../tests/enterprise/deployment/test_gcs_storage.py) | Tests for enterprise.deployment.gcs_storage |
