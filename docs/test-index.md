@@ -79,3 +79,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/auth/test_blue_green.py`](../tests/enterprise/auth/test_blue_green.py) | Tests for enterprise.auth.blue_green |
 | [`tests/enterprise/auth/test_ci_pipeline.py`](../tests/enterprise/auth/test_ci_pipeline.py) | Tests for enterprise.auth.ci_pipeline |
 | [`tests/enterprise/auth/test_ml_inference.py`](../tests/enterprise/auth/test_ml_inference.py) | Tests for enterprise.auth.ml_inference |
+| [`tests/enterprise/auth/test_notifications.py`](../tests/enterprise/auth/test_notifications.py) | Tests for enterprise.auth.notifications |
