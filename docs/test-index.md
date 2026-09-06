@@ -26,3 +26,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/batch/test_progress.py`](../tests/batch/test_progress.py) | Tests for batch progress |
 | [`tests/batch/test_queue.py`](../tests/batch/test_queue.py) | Tests for job queue |
 | [`tests/batch/test_scanner.py`](../tests/batch/test_scanner.py) | Tests for file scanner |
+| [`tests/billing/test_dependencies.py`](../tests/billing/test_dependencies.py) | Tests for billing dependency wiring |
