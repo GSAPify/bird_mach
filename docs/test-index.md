@@ -82,3 +82,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/auth/test_notifications.py`](../tests/enterprise/auth/test_notifications.py) | Tests for enterprise.auth.notifications |
 | [`tests/enterprise/auth/test_redis_cache.py`](../tests/enterprise/auth/test_redis_cache.py) | Tests for enterprise.auth.redis_cache |
 | [`tests/enterprise/auth_providers/test_db_backup.py`](../tests/enterprise/auth_providers/test_db_backup.py) | Tests for enterprise.auth.providers.db_backup |
+| [`tests/enterprise/auth_providers/test_long_polling.py`](../tests/enterprise/auth_providers/test_long_polling.py) | Tests for enterprise.auth.providers.long_polling |
