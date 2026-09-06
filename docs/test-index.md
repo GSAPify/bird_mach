@@ -32,3 +32,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/billing/test_routes.py`](../tests/billing/test_routes.py) | End-to-end API tests for the billing router |
 | [`tests/billing/test_service.py`](../tests/billing/test_service.py) | Tests for the billing service, including the webhook → entitlement flow |
 | [`tests/billing/test_store.py`](../tests/billing/test_store.py) | Tests for subscription repositories (both backends, same cases) |
+| [`tests/caching/test_cache_key.py`](../tests/caching/test_cache_key.py) | Tests for cache key generation |
