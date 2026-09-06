@@ -41,3 +41,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/collaboration/test_permissions.py`](../tests/collaboration/test_permissions.py) | Tests for permissions |
 | [`tests/collaboration/test_presence.py`](../tests/collaboration/test_presence.py) | Tests for presence tracker |
 | [`tests/collaboration/test_rooms.py`](../tests/collaboration/test_rooms.py) | Tests for collaboration rooms |
+| [`tests/collaboration/test_sharing.py`](../tests/collaboration/test_sharing.py) | Tests for sharing service |
