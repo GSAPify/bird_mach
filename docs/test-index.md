@@ -28,3 +28,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/batch/test_scanner.py`](../tests/batch/test_scanner.py) | Tests for file scanner |
 | [`tests/billing/test_dependencies.py`](../tests/billing/test_dependencies.py) | Tests for billing dependency wiring |
 | [`tests/billing/test_models.py`](../tests/billing/test_models.py) | Tests for billing models and the plan catalog |
+| [`tests/billing/test_provider.py`](../tests/billing/test_provider.py) | Tests for the fake payment provider (real Stripe path is integration-only) |
