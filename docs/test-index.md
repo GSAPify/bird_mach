@@ -87,3 +87,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/billing/test_key_rotation.py`](../tests/enterprise/billing/test_key_rotation.py) | Tests for enterprise.billing.key_rotation |
 | [`tests/enterprise/billing/test_redis_cache.py`](../tests/enterprise/billing/test_redis_cache.py) | Tests for enterprise.billing.redis_cache |
 | [`tests/enterprise/cache/test_connection_pool.py`](../tests/enterprise/cache/test_connection_pool.py) | Tests for enterprise.cache.connection_pool |
+| [`tests/enterprise/cache/test_i18n.py`](../tests/enterprise/cache/test_i18n.py) | Tests for enterprise.cache.i18n |
