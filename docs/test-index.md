@@ -55,3 +55,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/admin/test_integration_testing.py`](../tests/enterprise/admin/test_integration_testing.py) | Tests for enterprise.admin.integration_testing |
 | [`tests/enterprise/admin/test_memcached.py`](../tests/enterprise/admin/test_memcached.py) | Tests for enterprise.admin.memcached |
 | [`tests/enterprise/admin/test_rate_limit.py`](../tests/enterprise/admin/test_rate_limit.py) | Tests for enterprise.admin.rate_limit |
+| [`tests/enterprise/analytics/test_audio_transcode.py`](../tests/enterprise/analytics/test_audio_transcode.py) | Tests for enterprise.analytics.audio_transcode |
