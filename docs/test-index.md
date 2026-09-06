@@ -76,3 +76,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/audit/test_alerting.py`](../tests/enterprise/audit/test_alerting.py) | Tests for enterprise.audit.alerting |
 | [`tests/enterprise/audit/test_ci_pipeline.py`](../tests/enterprise/audit/test_ci_pipeline.py) | Tests for enterprise.audit.ci_pipeline |
 | [`tests/enterprise/audit/test_distributed_cache.py`](../tests/enterprise/audit/test_distributed_cache.py) | Tests for enterprise.audit.distributed_cache |
+| [`tests/enterprise/auth/test_blue_green.py`](../tests/enterprise/auth/test_blue_green.py) | Tests for enterprise.auth.blue_green |
