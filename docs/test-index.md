@@ -23,3 +23,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/auth/test_store.py`](../tests/auth/test_store.py) | Tests for the user repositories |
 | [`tests/auth/test_tokens.py`](../tests/auth/test_tokens.py) | Tests for JWT issuance and verification |
 | [`tests/batch/test_pipeline.py`](../tests/batch/test_pipeline.py) | Tests for batch pipeline |
+| [`tests/batch/test_progress.py`](../tests/batch/test_progress.py) | Tests for batch progress |
