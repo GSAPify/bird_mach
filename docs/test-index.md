@@ -97,3 +97,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/compliance/test_mfa.py`](../tests/enterprise/compliance/test_mfa.py) | Tests for enterprise.compliance.mfa |
 | [`tests/enterprise/compliance/test_notifications.py`](../tests/enterprise/compliance/test_notifications.py) | Tests for enterprise.compliance.notifications |
 | [`tests/enterprise/compliance/test_task_queue.py`](../tests/enterprise/compliance/test_task_queue.py) | Tests for enterprise.compliance.task_queue |
+| [`tests/enterprise/crypto/test_analytics.py`](../tests/enterprise/crypto/test_analytics.py) | Tests for enterprise.crypto.analytics |
