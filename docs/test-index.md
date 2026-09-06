@@ -75,3 +75,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/api_v2_middleware/test_ml_inference.py`](../tests/enterprise/api_v2_middleware/test_ml_inference.py) | Tests for enterprise.api.v2.middleware.ml_inference |
 | [`tests/enterprise/audit/test_alerting.py`](../tests/enterprise/audit/test_alerting.py) | Tests for enterprise.audit.alerting |
 | [`tests/enterprise/audit/test_ci_pipeline.py`](../tests/enterprise/audit/test_ci_pipeline.py) | Tests for enterprise.audit.ci_pipeline |
+| [`tests/enterprise/audit/test_distributed_cache.py`](../tests/enterprise/audit/test_distributed_cache.py) | Tests for enterprise.audit.distributed_cache |
