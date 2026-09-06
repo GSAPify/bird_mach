@@ -80,3 +80,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/auth/test_ci_pipeline.py`](../tests/enterprise/auth/test_ci_pipeline.py) | Tests for enterprise.auth.ci_pipeline |
 | [`tests/enterprise/auth/test_ml_inference.py`](../tests/enterprise/auth/test_ml_inference.py) | Tests for enterprise.auth.ml_inference |
 | [`tests/enterprise/auth/test_notifications.py`](../tests/enterprise/auth/test_notifications.py) | Tests for enterprise.auth.notifications |
+| [`tests/enterprise/auth/test_redis_cache.py`](../tests/enterprise/auth/test_redis_cache.py) | Tests for enterprise.auth.redis_cache |
