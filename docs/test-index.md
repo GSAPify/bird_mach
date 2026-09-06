@@ -36,3 +36,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/caching/test_disk_cache.py`](../tests/caching/test_disk_cache.py) | Tests for disk cache |
 | [`tests/caching/test_memory_cache.py`](../tests/caching/test_memory_cache.py) | Tests for memory cache |
 | [`tests/caching/test_tiered_cache.py`](../tests/caching/test_tiered_cache.py) | Tests for tiered cache |
+| [`tests/collaboration/test_annotations.py`](../tests/collaboration/test_annotations.py) | Tests for annotations |
