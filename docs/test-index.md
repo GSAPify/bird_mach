@@ -57,3 +57,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/admin/test_rate_limit.py`](../tests/enterprise/admin/test_rate_limit.py) | Tests for enterprise.admin.rate_limit |
 | [`tests/enterprise/analytics/test_audio_transcode.py`](../tests/enterprise/analytics/test_audio_transcode.py) | Tests for enterprise.analytics.audio_transcode |
 | [`tests/enterprise/analytics/test_plugin_system.py`](../tests/enterprise/analytics/test_plugin_system.py) | Tests for enterprise.analytics.plugin_system |
+| [`tests/enterprise/api_v2/test_caching.py`](../tests/enterprise/api_v2/test_caching.py) | Tests for enterprise.api.v2.caching |
