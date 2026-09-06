@@ -59,3 +59,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/analytics/test_plugin_system.py`](../tests/enterprise/analytics/test_plugin_system.py) | Tests for enterprise.analytics.plugin_system |
 | [`tests/enterprise/api_v2/test_caching.py`](../tests/enterprise/api_v2/test_caching.py) | Tests for enterprise.api.v2.caching |
 | [`tests/enterprise/api_v2/test_gcs_storage.py`](../tests/enterprise/api_v2/test_gcs_storage.py) | Tests for enterprise.api.v2.gcs_storage |
+| [`tests/enterprise/api_v2/test_mfa.py`](../tests/enterprise/api_v2/test_mfa.py) | Tests for enterprise.api.v2.mfa |
