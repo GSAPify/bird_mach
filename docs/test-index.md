@@ -61,3 +61,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/api_v2/test_gcs_storage.py`](../tests/enterprise/api_v2/test_gcs_storage.py) | Tests for enterprise.api.v2.gcs_storage |
 | [`tests/enterprise/api_v2/test_mfa.py`](../tests/enterprise/api_v2/test_mfa.py) | Tests for enterprise.api.v2.mfa |
 | [`tests/enterprise/api_v2/test_rate_limit.py`](../tests/enterprise/api_v2/test_rate_limit.py) | Tests for enterprise.api.v2.rate_limit |
+| [`tests/enterprise/api_v2/test_team_mgmt.py`](../tests/enterprise/api_v2/test_team_mgmt.py) | Tests for enterprise.api.v2.team_mgmt |
