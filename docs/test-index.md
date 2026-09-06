@@ -11,3 +11,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/api_v2/test_pagination.py`](../tests/api_v2/test_pagination.py) | Tests for pagination |
 | [`tests/api_v2/test_rate_limit.py`](../tests/api_v2/test_rate_limit.py) | Tests for rate limiter |
 | [`tests/api_v2/test_versioning.py`](../tests/api_v2/test_versioning.py) | Tests for API versioning |
+| [`tests/audio_formats/test_detector.py`](../tests/audio_formats/test_detector.py) | Tests for format detection |
