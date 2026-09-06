@@ -18,3 +18,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/auth/test_passwords.py`](../tests/auth/test_passwords.py) | Tests for PBKDF2 password hashing |
 | [`tests/auth/test_ratelimit.py`](../tests/auth/test_ratelimit.py) | Tests for auth rate limiting |
 | [`tests/auth/test_revocation.py`](../tests/auth/test_revocation.py) | Tests for the refresh-token revocation denylist |
+| [`tests/auth/test_routes.py`](../tests/auth/test_routes.py) | End-to-end API tests for the auth router |
