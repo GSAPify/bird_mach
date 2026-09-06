@@ -34,3 +34,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/billing/test_store.py`](../tests/billing/test_store.py) | Tests for subscription repositories (both backends, same cases) |
 | [`tests/caching/test_cache_key.py`](../tests/caching/test_cache_key.py) | Tests for cache key generation |
 | [`tests/caching/test_disk_cache.py`](../tests/caching/test_disk_cache.py) | Tests for disk cache |
+| [`tests/caching/test_memory_cache.py`](../tests/caching/test_memory_cache.py) | Tests for memory cache |
