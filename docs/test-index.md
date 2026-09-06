@@ -114,3 +114,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/deployment/test_invoicing.py`](../tests/enterprise/deployment/test_invoicing.py) | Tests for enterprise.deployment.invoicing |
 | [`tests/enterprise/deployment/test_locale.py`](../tests/enterprise/deployment/test_locale.py) | Tests for enterprise.deployment.locale |
 | [`tests/enterprise/deployment/test_websockets.py`](../tests/enterprise/deployment/test_websockets.py) | Tests for enterprise.deployment.websockets |
+| [`tests/enterprise/downloads/test_i18n.py`](../tests/enterprise/downloads/test_i18n.py) | Tests for enterprise.downloads.i18n |
