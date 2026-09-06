@@ -101,3 +101,12 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/crypto/test_connection_pool.py`](../tests/enterprise/crypto/test_connection_pool.py) | Tests for enterprise.crypto.connection_pool |
 | [`tests/enterprise/crypto/test_encryption.py`](../tests/enterprise/crypto/test_encryption.py) | Tests for enterprise.crypto.encryption |
 | [`tests/enterprise/crypto/test_real_time.py`](../tests/enterprise/crypto/test_real_time.py) | Tests for enterprise.crypto.real_time |
+| [`tests/enterprise/database/test_docker_compose.py`](../tests/enterprise/database/test_docker_compose.py) | Tests for enterprise.database.docker_compose |
+| [`tests/enterprise/database/test_e2e_testing.py`](../tests/enterprise/database/test_e2e_testing.py) | Tests for enterprise.database.e2e_testing |
+| [`tests/enterprise/database_migrations/test_db_seeding.py`](../tests/enterprise/database_migrations/test_db_seeding.py) | Tests for enterprise.database.migrations.db_seeding |
+| [`tests/enterprise/database_migrations/test_jwt_auth.py`](../tests/enterprise/database_migrations/test_jwt_auth.py) | Tests for enterprise.database.migrations.jwt_auth |
+| [`tests/enterprise/database_migrations/test_report_generation.py`](../tests/enterprise/database_migrations/test_report_generation.py) | Tests for enterprise.database.migrations.report_generation |
+| [`tests/enterprise/database_migrations/test_terraform.py`](../tests/enterprise/database_migrations/test_terraform.py) | Tests for enterprise.database.migrations.terraform |
+| [`tests/enterprise/database_migrations/test_video_thumb.py`](../tests/enterprise/database_migrations/test_video_thumb.py) | Tests for enterprise.database.migrations.video_thumb |
+| [`tests/enterprise/deployment/test_gcs_storage.py`](../tests/enterprise/deployment/test_gcs_storage.py) | Tests for enterprise.deployment.gcs_storage |
+| [`tests/enterprise/deployment/test_health_check.py`](../tests/enterprise/deployment/test_health_check.py) | Tests for enterprise.deployment.health_check |
