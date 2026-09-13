@@ -119,3 +119,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/events/test_caching.py`](../tests/enterprise/events/test_caching.py) | Tests for enterprise.events.caching |
 | [`tests/enterprise/events/test_email.py`](../tests/enterprise/events/test_email.py) | Tests for enterprise.events.email |
 | [`tests/enterprise/exports/test_event_bus.py`](../tests/enterprise/exports/test_event_bus.py) | Tests for enterprise.exports.event_bus |
+| [`tests/enterprise/exports/test_middleware_chain.py`](../tests/enterprise/exports/test_middleware_chain.py) | Tests for enterprise.exports.middleware_chain |
