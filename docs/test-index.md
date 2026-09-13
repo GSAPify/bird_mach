@@ -117,3 +117,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/downloads/test_i18n.py`](../tests/enterprise/downloads/test_i18n.py) | Tests for enterprise.downloads.i18n |
 | [`tests/enterprise/downloads/test_timezone.py`](../tests/enterprise/downloads/test_timezone.py) | Tests for enterprise.downloads.timezone |
 | [`tests/enterprise/events/test_caching.py`](../tests/enterprise/events/test_caching.py) | Tests for enterprise.events.caching |
+| [`tests/enterprise/events/test_email.py`](../tests/enterprise/events/test_email.py) | Tests for enterprise.events.email |
