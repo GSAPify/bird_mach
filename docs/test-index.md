@@ -127,3 +127,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/exports/test_ab_testing.py`](../tests/enterprise/exports/test_ab_testing.py) | Tests for enterprise.exports.ab_testing |
 | [`tests/enterprise/exports/test_activity_feed.py`](../tests/enterprise/exports/test_activity_feed.py) | Tests for enterprise.exports.activity_feed |
 | [`tests/enterprise/exports/test_azure_blob.py`](../tests/enterprise/exports/test_azure_blob.py) | Tests for enterprise.exports.azure_blob |
+| [`tests/enterprise/exports/test_gcs_storage.py`](../tests/enterprise/exports/test_gcs_storage.py) | Tests for enterprise.exports.gcs_storage |
