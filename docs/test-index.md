@@ -123,3 +123,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/downloads/test_mfa.py`](../tests/enterprise/downloads/test_mfa.py) | Tests for enterprise.downloads.mfa |
 | [`tests/enterprise/downloads/test_search.py`](../tests/enterprise/downloads/test_search.py) | Tests for enterprise.downloads.search |
 | [`tests/enterprise/events/test_docker_compose.py`](../tests/enterprise/events/test_docker_compose.py) | Tests for enterprise.events.docker_compose |
+| [`tests/enterprise/events/test_locale.py`](../tests/enterprise/events/test_locale.py) | Tests for enterprise.events.locale |
