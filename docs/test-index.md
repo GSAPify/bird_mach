@@ -125,3 +125,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/events/test_docker_compose.py`](../tests/enterprise/events/test_docker_compose.py) | Tests for enterprise.events.docker_compose |
 | [`tests/enterprise/events/test_locale.py`](../tests/enterprise/events/test_locale.py) | Tests for enterprise.events.locale |
 | [`tests/enterprise/exports/test_ab_testing.py`](../tests/enterprise/exports/test_ab_testing.py) | Tests for enterprise.exports.ab_testing |
+| [`tests/enterprise/exports/test_activity_feed.py`](../tests/enterprise/exports/test_activity_feed.py) | Tests for enterprise.exports.activity_feed |
