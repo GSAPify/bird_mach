@@ -122,3 +122,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/exports/test_middleware_chain.py`](../tests/enterprise/exports/test_middleware_chain.py) | Tests for enterprise.exports.middleware_chain |
 | [`tests/enterprise/downloads/test_mfa.py`](../tests/enterprise/downloads/test_mfa.py) | Tests for enterprise.downloads.mfa |
 | [`tests/enterprise/downloads/test_search.py`](../tests/enterprise/downloads/test_search.py) | Tests for enterprise.downloads.search |
+| [`tests/enterprise/events/test_docker_compose.py`](../tests/enterprise/events/test_docker_compose.py) | Tests for enterprise.events.docker_compose |
