@@ -163,3 +163,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/models/test_mfa.py`](../tests/enterprise/models/test_mfa.py) | Tests for enterprise.models.mfa. |
 | [`tests/enterprise/monitoring/test_analytics.py`](../tests/enterprise/monitoring/test_analytics.py) | Tests for enterprise.monitoring.analytics. |
 | [`tests/enterprise/monitoring/test_pagination.py`](../tests/enterprise/monitoring/test_pagination.py) | Tests for enterprise.monitoring.pagination. |
+| [`tests/enterprise/notifications/test_billing.py`](../tests/enterprise/notifications/test_billing.py) | Tests for enterprise.notifications.billing. |
