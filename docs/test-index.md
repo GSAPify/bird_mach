@@ -165,3 +165,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/monitoring/test_pagination.py`](../tests/enterprise/monitoring/test_pagination.py) | Tests for enterprise.monitoring.pagination. |
 | [`tests/enterprise/notifications/test_billing.py`](../tests/enterprise/notifications/test_billing.py) | Tests for enterprise.notifications.billing. |
 | [`tests/enterprise/notifications/test_blue_green.py`](../tests/enterprise/notifications/test_blue_green.py) | Tests for enterprise.notifications.blue_green. |
+| [`tests/enterprise/notifications/test_docker_compose.py`](../tests/enterprise/notifications/test_docker_compose.py) | Tests for enterprise.notifications.docker_compose. |
