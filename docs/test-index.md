@@ -132,3 +132,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/exports/test_notifications.py`](../tests/enterprise/exports/test_notifications.py) | Tests for enterprise.exports.notifications |
 | [`tests/enterprise/health/test_connection_pool.py`](../tests/enterprise/health/test_connection_pool.py) | Tests for enterprise.health.connection_pool |
 | [`tests/enterprise/health/test_plugin_system.py`](../tests/enterprise/health/test_plugin_system.py) | Tests for enterprise.health.plugin_system. |
+| [`tests/enterprise/health/test_webhooks.py`](../tests/enterprise/health/test_webhooks.py) | Tests for enterprise.health.webhooks. |
