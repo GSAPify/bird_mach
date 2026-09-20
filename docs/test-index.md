@@ -137,3 +137,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/hooks/test_ci_pipeline.py`](../tests/enterprise/hooks/test_ci_pipeline.py) | Tests for enterprise.hooks.ci_pipeline. |
 | [`tests/enterprise/hooks/test_db_migration.py`](../tests/enterprise/hooks/test_db_migration.py) | Tests for enterprise.hooks.db_migration. |
 | [`tests/enterprise/hooks/test_push.py`](../tests/enterprise/hooks/test_push.py) | Tests for enterprise.hooks.push. |
+| [`tests/enterprise/i18n/test_i18n.py`](../tests/enterprise/i18n/test_i18n.py) | Tests for enterprise.i18n.i18n. |
