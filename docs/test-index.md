@@ -149,3 +149,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/ml/test_in_memory_cache.py`](../tests/enterprise/ml/test_in_memory_cache.py) | Tests for enterprise.ml.in_memory_cache. |
 | [`tests/enterprise/ml/test_metrics.py`](../tests/enterprise/ml/test_metrics.py) | Tests for enterprise.ml.metrics. |
 | [`tests/enterprise/ml/test_notifications.py`](../tests/enterprise/ml/test_notifications.py) | Tests for enterprise.ml.notifications. |
+| [`tests/enterprise/ml/test_real_time.py`](../tests/enterprise/ml/test_real_time.py) | Tests for enterprise.ml.real_time. |
