@@ -135,3 +135,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/health/test_webhooks.py`](../tests/enterprise/health/test_webhooks.py) | Tests for enterprise.health.webhooks. |
 | [`tests/enterprise/health/test_websockets.py`](../tests/enterprise/health/test_websockets.py) | Tests for enterprise.health.websockets. |
 | [`tests/enterprise/hooks/test_ci_pipeline.py`](../tests/enterprise/hooks/test_ci_pipeline.py) | Tests for enterprise.hooks.ci_pipeline. |
+| [`tests/enterprise/hooks/test_db_migration.py`](../tests/enterprise/hooks/test_db_migration.py) | Tests for enterprise.hooks.db_migration. |
