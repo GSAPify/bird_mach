@@ -156,3 +156,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/ml_pipelines/test_distributed_cache.py`](../tests/enterprise/ml_pipelines/test_distributed_cache.py) | Tests for enterprise.ml.pipelines.distributed_cache. |
 | [`tests/enterprise/ml_pipelines/test_fuzzy_match.py`](../tests/enterprise/ml_pipelines/test_fuzzy_match.py) | Tests for enterprise.ml.pipelines.fuzzy_match. |
 | [`tests/enterprise/ml_pipelines/test_s3_storage.py`](../tests/enterprise/ml_pipelines/test_s3_storage.py) | Tests for enterprise.ml.pipelines.s3_storage. |
+| [`tests/enterprise/ml_pipelines/test_team_mgmt.py`](../tests/enterprise/ml_pipelines/test_team_mgmt.py) | Tests for enterprise.ml.pipelines.team_mgmt. |
