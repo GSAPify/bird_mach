@@ -153,3 +153,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/ml/test_report_generation.py`](../tests/enterprise/ml/test_report_generation.py) | Tests for enterprise.ml.report_generation. |
 | [`tests/enterprise/ml_models/test_blue_green.py`](../tests/enterprise/ml_models/test_blue_green.py) | Tests for enterprise.ml.models.blue_green. |
 | [`tests/enterprise/ml_models/test_file_upload.py`](../tests/enterprise/ml_models/test_file_upload.py) | Tests for enterprise.ml.models.file_upload. |
+| [`tests/enterprise/ml_pipelines/test_distributed_cache.py`](../tests/enterprise/ml_pipelines/test_distributed_cache.py) | Tests for enterprise.ml.pipelines.distributed_cache. |
