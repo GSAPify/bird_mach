@@ -160,3 +160,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/models/test_api_keys.py`](../tests/enterprise/models/test_api_keys.py) | Tests for enterprise.models.api_keys. |
 | [`tests/enterprise/models/test_db_seeding.py`](../tests/enterprise/models/test_db_seeding.py) | Tests for enterprise.models.db_seeding. |
 | [`tests/enterprise/models/test_distributed_cache.py`](../tests/enterprise/models/test_distributed_cache.py) | Tests for enterprise.models.distributed_cache. |
+| [`tests/enterprise/models/test_mfa.py`](../tests/enterprise/models/test_mfa.py) | Tests for enterprise.models.mfa. |
