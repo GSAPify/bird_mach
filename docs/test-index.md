@@ -158,3 +158,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/ml_pipelines/test_s3_storage.py`](../tests/enterprise/ml_pipelines/test_s3_storage.py) | Tests for enterprise.ml.pipelines.s3_storage. |
 | [`tests/enterprise/ml_pipelines/test_team_mgmt.py`](../tests/enterprise/ml_pipelines/test_team_mgmt.py) | Tests for enterprise.ml.pipelines.team_mgmt. |
 | [`tests/enterprise/models/test_api_keys.py`](../tests/enterprise/models/test_api_keys.py) | Tests for enterprise.models.api_keys. |
+| [`tests/enterprise/models/test_db_seeding.py`](../tests/enterprise/models/test_db_seeding.py) | Tests for enterprise.models.db_seeding. |
