@@ -140,3 +140,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/i18n/test_i18n.py`](../tests/enterprise/i18n/test_i18n.py) | Tests for enterprise.i18n.i18n. |
 | [`tests/enterprise/i18n/test_model_registry.py`](../tests/enterprise/i18n/test_model_registry.py) | Tests for enterprise.i18n.model_registry. |
 | [`tests/enterprise/i18n/test_real_time.py`](../tests/enterprise/i18n/test_real_time.py) | Tests for enterprise.i18n.real_time. |
+| [`tests/enterprise/integrations/test_distributed_cache.py`](../tests/enterprise/integrations/test_distributed_cache.py) | Tests for enterprise.integrations.distributed_cache. |
