@@ -170,3 +170,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/permissions/test_db_migration.py`](../tests/enterprise/permissions/test_db_migration.py) | Tests for enterprise.permissions.db_migration. |
 | [`tests/enterprise/permissions/test_full_text_search.py`](../tests/enterprise/permissions/test_full_text_search.py) | Tests for enterprise.permissions.full_text_search. |
 | [`tests/enterprise/permissions/test_integration_testing.py`](../tests/enterprise/permissions/test_integration_testing.py) | Tests for enterprise.permissions.integration_testing. |
+| [`tests/enterprise/plugins/test_batch_processing.py`](../tests/enterprise/plugins/test_batch_processing.py) | Tests for enterprise.plugins.batch_processing. |
