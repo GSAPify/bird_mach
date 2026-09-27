@@ -227,3 +227,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_billing_integration.py`](../tests/enterprise/test_billing_integration.py) | Integration test for billing. |
 | [`tests/enterprise/test_blue_green_integration.py`](../tests/enterprise/test_blue_green_integration.py) | Integration test for blue_green. |
 | [`tests/enterprise/test_caching_integration.py`](../tests/enterprise/test_caching_integration.py) | Integration test for caching. |
+| [`tests/enterprise/test_canary_deploy_integration.py`](../tests/enterprise/test_canary_deploy_integration.py) | Integration test for canary_deploy. |
