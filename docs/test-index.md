@@ -175,3 +175,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/profiling/test_adrs.py`](../tests/enterprise/profiling/test_adrs.py) | Tests for enterprise.profiling.adrs. |
 | [`tests/enterprise/profiling/test_invoicing.py`](../tests/enterprise/profiling/test_invoicing.py) | Tests for enterprise.profiling.invoicing. |
 | [`tests/enterprise/profiling/test_sse.py`](../tests/enterprise/profiling/test_sse.py) | Tests for enterprise.profiling.sse. |
+| [`tests/enterprise/projects/test_distributed_cache.py`](../tests/enterprise/projects/test_distributed_cache.py) | Tests for enterprise.projects.distributed_cache. |
