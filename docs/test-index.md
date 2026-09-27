@@ -202,3 +202,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/sessions/test_integration_testing.py`](../tests/enterprise/sessions/test_integration_testing.py) | Tests for enterprise.sessions.integration_testing. |
 | [`tests/enterprise/sessions/test_report_generation.py`](../tests/enterprise/sessions/test_report_generation.py) | Tests for enterprise.sessions.report_generation. |
 | [`tests/enterprise/storage/test_currency.py`](../tests/enterprise/storage/test_currency.py) | Tests for enterprise.storage.currency. |
+| [`tests/enterprise/storage/test_dashboard.py`](../tests/enterprise/storage/test_dashboard.py) | Tests for enterprise.storage.dashboard. |
