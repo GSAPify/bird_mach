@@ -213,3 +213,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/teams/test_api_keys.py`](../tests/enterprise/teams/test_api_keys.py) | Tests for enterprise.teams.api_keys. |
 | [`tests/enterprise/teams/test_in_memory_cache.py`](../tests/enterprise/teams/test_in_memory_cache.py) | Tests for enterprise.teams.in_memory_cache. |
 | [`tests/enterprise/teams/test_push.py`](../tests/enterprise/teams/test_push.py) | Tests for enterprise.teams.push. |
+| [`tests/enterprise/test_ab_testing_integration.py`](../tests/enterprise/test_ab_testing_integration.py) | Integration test for ab_testing. |
