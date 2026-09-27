@@ -199,3 +199,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/security/test_terraform.py`](../tests/enterprise/security/test_terraform.py) | Tests for enterprise.security.terraform. |
 | [`tests/enterprise/sessions/test_email.py`](../tests/enterprise/sessions/test_email.py) | Tests for enterprise.sessions.email. |
 | [`tests/enterprise/sessions/test_file_upload.py`](../tests/enterprise/sessions/test_file_upload.py) | Tests for enterprise.sessions.file_upload. |
+| [`tests/enterprise/sessions/test_integration_testing.py`](../tests/enterprise/sessions/test_integration_testing.py) | Tests for enterprise.sessions.integration_testing. |
