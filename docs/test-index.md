@@ -217,3 +217,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_activity_feed_integration.py`](../tests/enterprise/test_activity_feed_integration.py) | Integration test for activity_feed. |
 | [`tests/enterprise/test_adrs_integration.py`](../tests/enterprise/test_adrs_integration.py) | Integration test for adrs. |
 | [`tests/enterprise/test_alerting_integration.py`](../tests/enterprise/test_alerting_integration.py) | Integration test for alerting. |
+| [`tests/enterprise/test_analytics_integration.py`](../tests/enterprise/test_analytics_integration.py) | Integration test for analytics. |
