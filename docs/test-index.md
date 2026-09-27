@@ -182,3 +182,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/queue/test_activity_feed.py`](../tests/enterprise/queue/test_activity_feed.py) | Tests for enterprise.queue.activity_feed. |
 | [`tests/enterprise/rate_limiting/test_docker_compose.py`](../tests/enterprise/rate_limiting/test_docker_compose.py) | Tests for enterprise.rate_limiting.docker_compose. |
 | [`tests/enterprise/rate_limiting/test_model_registry.py`](../tests/enterprise/rate_limiting/test_model_registry.py) | Tests for enterprise.rate_limiting.model_registry. |
+| [`tests/enterprise/rate_limiting/test_video_thumb.py`](../tests/enterprise/rate_limiting/test_video_thumb.py) | Tests for enterprise.rate_limiting.video_thumb. |
