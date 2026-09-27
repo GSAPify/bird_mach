@@ -207,3 +207,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/storage/test_websockets.py`](../tests/enterprise/storage/test_websockets.py) | Tests for enterprise.storage.websockets. |
 | [`tests/enterprise/streaming/test_encryption.py`](../tests/enterprise/streaming/test_encryption.py) | Tests for enterprise.streaming.encryption. |
 | [`tests/enterprise/streaming/test_event_bus.py`](../tests/enterprise/streaming/test_event_bus.py) | Tests for enterprise.streaming.event_bus. |
+| [`tests/enterprise/streaming/test_hashing.py`](../tests/enterprise/streaming/test_hashing.py) | Tests for enterprise.streaming.hashing. |
