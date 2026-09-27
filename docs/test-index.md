@@ -185,3 +185,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/rate_limiting/test_video_thumb.py`](../tests/enterprise/rate_limiting/test_video_thumb.py) | Tests for enterprise.rate_limiting.video_thumb. |
 | [`tests/enterprise/scheduler/test_changelogs.py`](../tests/enterprise/scheduler/test_changelogs.py) | Tests for enterprise.scheduler.changelogs. |
 | [`tests/enterprise/scheduler/test_ci_pipeline.py`](../tests/enterprise/scheduler/test_ci_pipeline.py) | Tests for enterprise.scheduler.ci_pipeline. |
+| [`tests/enterprise/scheduler/test_currency.py`](../tests/enterprise/scheduler/test_currency.py) | Tests for enterprise.scheduler.currency. |
