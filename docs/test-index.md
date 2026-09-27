@@ -180,3 +180,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/projects/test_report_generation.py`](../tests/enterprise/projects/test_report_generation.py) | Tests for enterprise.projects.report_generation. |
 | [`tests/enterprise/queue/test_ab_testing.py`](../tests/enterprise/queue/test_ab_testing.py) | Tests for enterprise.queue.ab_testing. |
 | [`tests/enterprise/queue/test_activity_feed.py`](../tests/enterprise/queue/test_activity_feed.py) | Tests for enterprise.queue.activity_feed. |
+| [`tests/enterprise/rate_limiting/test_docker_compose.py`](../tests/enterprise/rate_limiting/test_docker_compose.py) | Tests for enterprise.rate_limiting.docker_compose. |
