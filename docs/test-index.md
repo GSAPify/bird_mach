@@ -197,3 +197,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/security/test_e2e_testing.py`](../tests/enterprise/security/test_e2e_testing.py) | Tests for enterprise.security.e2e_testing. |
 | [`tests/enterprise/security/test_metrics.py`](../tests/enterprise/security/test_metrics.py) | Tests for enterprise.security.metrics. |
 | [`tests/enterprise/security/test_terraform.py`](../tests/enterprise/security/test_terraform.py) | Tests for enterprise.security.terraform. |
+| [`tests/enterprise/sessions/test_email.py`](../tests/enterprise/sessions/test_email.py) | Tests for enterprise.sessions.email. |
