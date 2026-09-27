@@ -215,3 +215,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/teams/test_push.py`](../tests/enterprise/teams/test_push.py) | Tests for enterprise.teams.push. |
 | [`tests/enterprise/test_ab_testing_integration.py`](../tests/enterprise/test_ab_testing_integration.py) | Integration test for ab_testing. |
 | [`tests/enterprise/test_activity_feed_integration.py`](../tests/enterprise/test_activity_feed_integration.py) | Integration test for activity_feed. |
+| [`tests/enterprise/test_adrs_integration.py`](../tests/enterprise/test_adrs_integration.py) | Integration test for adrs. |
