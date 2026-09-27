@@ -190,3 +190,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/scheduler/test_filtering.py`](../tests/enterprise/scheduler/test_filtering.py) | Tests for enterprise.scheduler.filtering. |
 | [`tests/enterprise/scheduler/test_i18n.py`](../tests/enterprise/scheduler/test_i18n.py) | Tests for enterprise.scheduler.i18n. |
 | [`tests/enterprise/scheduler/test_mfa.py`](../tests/enterprise/scheduler/test_mfa.py) | Tests for enterprise.scheduler.mfa. |
+| [`tests/enterprise/sdk/test_distributed_cache.py`](../tests/enterprise/sdk/test_distributed_cache.py) | Tests for enterprise.sdk.distributed_cache. |
