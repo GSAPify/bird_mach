@@ -192,3 +192,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/scheduler/test_mfa.py`](../tests/enterprise/scheduler/test_mfa.py) | Tests for enterprise.scheduler.mfa. |
 | [`tests/enterprise/sdk/test_distributed_cache.py`](../tests/enterprise/sdk/test_distributed_cache.py) | Tests for enterprise.sdk.distributed_cache. |
 | [`tests/enterprise/sdk/test_image_resize.py`](../tests/enterprise/sdk/test_image_resize.py) | Tests for enterprise.sdk.image_resize. |
+| [`tests/enterprise/sdk/test_report_generation.py`](../tests/enterprise/sdk/test_report_generation.py) | Tests for enterprise.sdk.report_generation. |
