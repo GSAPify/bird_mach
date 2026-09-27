@@ -194,3 +194,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/sdk/test_image_resize.py`](../tests/enterprise/sdk/test_image_resize.py) | Tests for enterprise.sdk.image_resize. |
 | [`tests/enterprise/sdk/test_report_generation.py`](../tests/enterprise/sdk/test_report_generation.py) | Tests for enterprise.sdk.report_generation. |
 | [`tests/enterprise/search/test_ci_pipeline.py`](../tests/enterprise/search/test_ci_pipeline.py) | Tests for enterprise.search.ci_pipeline. |
+| [`tests/enterprise/security/test_e2e_testing.py`](../tests/enterprise/security/test_e2e_testing.py) | Tests for enterprise.security.e2e_testing. |
