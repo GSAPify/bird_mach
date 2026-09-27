@@ -188,3 +188,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/scheduler/test_currency.py`](../tests/enterprise/scheduler/test_currency.py) | Tests for enterprise.scheduler.currency. |
 | [`tests/enterprise/scheduler/test_encryption.py`](../tests/enterprise/scheduler/test_encryption.py) | Tests for enterprise.scheduler.encryption. |
 | [`tests/enterprise/scheduler/test_filtering.py`](../tests/enterprise/scheduler/test_filtering.py) | Tests for enterprise.scheduler.filtering. |
+| [`tests/enterprise/scheduler/test_i18n.py`](../tests/enterprise/scheduler/test_i18n.py) | Tests for enterprise.scheduler.i18n. |
