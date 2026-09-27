@@ -210,3 +210,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/streaming/test_hashing.py`](../tests/enterprise/streaming/test_hashing.py) | Tests for enterprise.streaming.hashing. |
 | [`tests/enterprise/streaming/test_hook_registry.py`](../tests/enterprise/streaming/test_hook_registry.py) | Tests for enterprise.streaming.hook_registry. |
 | [`tests/enterprise/teams/test_activity_feed.py`](../tests/enterprise/teams/test_activity_feed.py) | Tests for enterprise.teams.activity_feed. |
+| [`tests/enterprise/teams/test_api_keys.py`](../tests/enterprise/teams/test_api_keys.py) | Tests for enterprise.teams.api_keys. |
