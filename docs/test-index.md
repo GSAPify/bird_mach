@@ -221,3 +221,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_api_docs_integration.py`](../tests/enterprise/test_api_docs_integration.py) | Integration test for api_docs. |
 | [`tests/enterprise/test_api_keys_integration.py`](../tests/enterprise/test_api_keys_integration.py) | Integration test for api_keys. |
 | [`tests/enterprise/test_audio_transcode_integration.py`](../tests/enterprise/test_audio_transcode_integration.py) | Integration test for audio_transcode. |
+| [`tests/enterprise/test_audit_log_integration.py`](../tests/enterprise/test_audit_log_integration.py) | Integration test for audit_log. |
