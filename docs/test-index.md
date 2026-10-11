@@ -237,3 +237,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_db_migration_integration.py`](../tests/enterprise/test_db_migration_integration.py) | Integration test for db_migration. |
 | [`tests/enterprise/test_db_seeding_integration.py`](../tests/enterprise/test_db_seeding_integration.py) | Integration test for db_seeding. |
 | [`tests/enterprise/test_distributed_cache_integration.py`](../tests/enterprise/test_distributed_cache_integration.py) | Integration test for distributed_cache. |
+| [`tests/enterprise/test_docker_compose_integration.py`](../tests/enterprise/test_docker_compose_integration.py) | Integration test for docker_compose. |
