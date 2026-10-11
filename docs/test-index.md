@@ -233,3 +233,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_ci_pipeline_integration.py`](../tests/enterprise/test_ci_pipeline_integration.py) | Integration test for ci_pipeline. |
 | [`tests/enterprise/test_connection_pool_integration.py`](../tests/enterprise/test_connection_pool_integration.py) | Integration test for connection_pool. |
 | [`tests/enterprise/test_currency_integration.py`](../tests/enterprise/test_currency_integration.py) | Integration test for currency. |
+| [`tests/enterprise/test_db_backup_integration.py`](../tests/enterprise/test_db_backup_integration.py) | Integration test for db_backup. |
