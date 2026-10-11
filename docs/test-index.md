@@ -230,3 +230,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_canary_deploy_integration.py`](../tests/enterprise/test_canary_deploy_integration.py) | Integration test for canary_deploy. |
 | [`tests/enterprise/test_cd_pipeline_integration.py`](../tests/enterprise/test_cd_pipeline_integration.py) | Integration test for cd_pipeline. |
 | [`tests/enterprise/test_changelogs_integration.py`](../tests/enterprise/test_changelogs_integration.py) | Integration test for changelogs. |
+| [`tests/enterprise/test_ci_pipeline_integration.py`](../tests/enterprise/test_ci_pipeline_integration.py) | Integration test for ci_pipeline. |
