@@ -243,3 +243,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_email_integration.py`](../tests/enterprise/test_email_integration.py) | Integration test for email. |
 | [`tests/enterprise/test_encryption_integration.py`](../tests/enterprise/test_encryption_integration.py) | Integration test for encryption. |
 | [`tests/enterprise/test_event_bus_integration.py`](../tests/enterprise/test_event_bus_integration.py) | Integration test for event_bus. |
+| [`tests/enterprise/test_feature_store_integration.py`](../tests/enterprise/test_feature_store_integration.py) | Integration test for feature_store. |
