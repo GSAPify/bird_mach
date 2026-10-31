@@ -245,3 +245,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_event_bus_integration.py`](../tests/enterprise/test_event_bus_integration.py) | Integration test for event_bus. |
 | [`tests/enterprise/test_feature_store_integration.py`](../tests/enterprise/test_feature_store_integration.py) | Integration test for feature_store. |
 | [`tests/enterprise/test_file_upload_integration.py`](../tests/enterprise/test_file_upload_integration.py) | Integration test for file_upload. |
+| [`tests/enterprise/test_filtering_integration.py`](../tests/enterprise/test_filtering_integration.py) | Integration test for filtering. |
