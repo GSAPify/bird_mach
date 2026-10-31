@@ -251,3 +251,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_gcs_storage_integration.py`](../tests/enterprise/test_gcs_storage_integration.py) | Integration test for gcs_storage. |
 | [`tests/enterprise/test_hashing_integration.py`](../tests/enterprise/test_hashing_integration.py) | Integration test for hashing. |
 | [`tests/enterprise/test_health_check_integration.py`](../tests/enterprise/test_health_check_integration.py) | Integration test for health_check. |
+| [`tests/enterprise/test_helm_charts_integration.py`](../tests/enterprise/test_helm_charts_integration.py) | Integration test for helm_charts. |
