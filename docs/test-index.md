@@ -249,3 +249,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_full_text_search_integration.py`](../tests/enterprise/test_full_text_search_integration.py) | Integration test for full_text_search. |
 | [`tests/enterprise/test_fuzzy_match_integration.py`](../tests/enterprise/test_fuzzy_match_integration.py) | Integration test for fuzzy_match. |
 | [`tests/enterprise/test_gcs_storage_integration.py`](../tests/enterprise/test_gcs_storage_integration.py) | Integration test for gcs_storage. |
+| [`tests/enterprise/test_hashing_integration.py`](../tests/enterprise/test_hashing_integration.py) | Integration test for hashing. |
