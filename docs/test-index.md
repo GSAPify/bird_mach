@@ -247,3 +247,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_file_upload_integration.py`](../tests/enterprise/test_file_upload_integration.py) | Integration test for file_upload. |
 | [`tests/enterprise/test_filtering_integration.py`](../tests/enterprise/test_filtering_integration.py) | Integration test for filtering. |
 | [`tests/enterprise/test_full_text_search_integration.py`](../tests/enterprise/test_full_text_search_integration.py) | Integration test for full_text_search. |
+| [`tests/enterprise/test_fuzzy_match_integration.py`](../tests/enterprise/test_fuzzy_match_integration.py) | Integration test for fuzzy_match. |
