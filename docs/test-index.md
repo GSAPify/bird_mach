@@ -241,3 +241,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_e2e_testing_integration.py`](../tests/enterprise/test_e2e_testing_integration.py) | Integration test for e2e_testing. |
 | [`tests/enterprise/test_elasticsearch_integration.py`](../tests/enterprise/test_elasticsearch_integration.py) | Integration test for elasticsearch. |
 | [`tests/enterprise/test_email_integration.py`](../tests/enterprise/test_email_integration.py) | Integration test for email. |
+| [`tests/enterprise/test_encryption_integration.py`](../tests/enterprise/test_encryption_integration.py) | Integration test for encryption. |
