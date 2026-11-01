@@ -257,3 +257,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_image_resize_integration.py`](../tests/enterprise/test_image_resize_integration.py) | Integration test for image_resize. |
 | [`tests/enterprise/test_in_memory_cache_integration.py`](../tests/enterprise/test_in_memory_cache_integration.py) | Integration test for in_memory_cache. |
 | [`tests/enterprise/test_integration_testing_integration.py`](../tests/enterprise/test_integration_testing_integration.py) | Integration test for integration_testing. |
+| [`tests/enterprise/test_invoicing_integration.py`](../tests/enterprise/test_invoicing_integration.py) | Integration test for invoicing. |
