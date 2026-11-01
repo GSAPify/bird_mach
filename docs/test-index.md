@@ -254,3 +254,4 @@ This index maps representative test files to the behavior they cover so contribu
 | [`tests/enterprise/test_helm_charts_integration.py`](../tests/enterprise/test_helm_charts_integration.py) | Integration test for helm_charts. |
 | [`tests/enterprise/test_hook_registry_integration.py`](../tests/enterprise/test_hook_registry_integration.py) | Integration test for hook_registry. |
 | [`tests/enterprise/test_i18n_integration.py`](../tests/enterprise/test_i18n_integration.py) | Integration test for i18n. |
+| [`tests/enterprise/test_image_resize_integration.py`](../tests/enterprise/test_image_resize_integration.py) | Integration test for image_resize. |
