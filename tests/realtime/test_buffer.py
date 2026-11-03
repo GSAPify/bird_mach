@@ -1,3 +1,4 @@
+import pytest
 """Tests for ring buffer."""
 import numpy as np
 from bird_mach.realtime.buffer import RingBuffer
@@ -35,3 +36,11 @@ class TestRingBuffer:
         buf.write(np.arange(50, dtype=np.float32))
         data = buf.read(10)
         assert len(data) == 10
+
+
+def test_read_rejects_negative_count():
+    from bird_mach.realtime.buffer import RingBuffer
+    buf = RingBuffer(4)
+    buf.write(__import__("numpy").ones(3, dtype="float32"))
+    with pytest.raises(ValueError):
+        buf.read(-1)
