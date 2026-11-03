@@ -1,6 +1,12 @@
 """Pre-configured effect chain presets."""
 from bird_mach.plugin_system.effects_chain import EffectsChain
-from bird_mach.plugin_system.builtin_effects import *
+from bird_mach.plugin_system.builtin_effects import (
+    CompressorEffect,
+    GainEffect,
+    HighPassFilter,
+    LowPassFilter,
+    ReverbEffect,
+)
 
 def vocal_chain() -> EffectsChain:
     chain = EffectsChain()
