@@ -9,7 +9,11 @@ class AudioRouter:
         self._gains: dict[str, float] = {}
 
     def connect(self, source: str, dest: str, gain: float = 1.0) -> None:
-        self._routes.setdefault(source, []).append(dest)
+        dests = self._routes.setdefault(source, [])
+        # Reconnecting an existing route updates its gain instead of
+        # duplicating the destination (which would double the signal).
+        if dest not in dests:
+            dests.append(dest)
         self._gains[f"{source}->{dest}"] = gain
 
     def disconnect(self, source: str, dest: str) -> None:
