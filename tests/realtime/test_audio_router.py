@@ -22,3 +22,9 @@ class TestAudioRouter:
         router.disconnect("mic", "out")
         assert router.get_destinations("mic") == []
         assert router.get_gain("mic", "out") == 1.0
+
+    def test_get_destinations_returns_copy(self):
+        router = AudioRouter()
+        router.connect("mic", "out")
+        router.get_destinations("mic").append("rogue")
+        assert router.get_destinations("mic") == ["out"]

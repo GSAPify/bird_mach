@@ -1,6 +1,5 @@
 """Route audio between multiple sources and destinations."""
 from __future__ import annotations
-import numpy as np
 
 class AudioRouter:
     """Route audio frames between sources, effects, and outputs."""
@@ -22,7 +21,7 @@ class AudioRouter:
         self._gains.pop(f"{source}->{dest}", None)
 
     def get_destinations(self, source: str) -> list[str]:
-        return self._routes.get(source, [])
+        return list(self._routes.get(source, []))
 
     def get_gain(self, source: str, dest: str) -> float:
         return self._gains.get(f"{source}->{dest}", 1.0)
