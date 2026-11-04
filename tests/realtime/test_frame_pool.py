@@ -19,3 +19,13 @@ class TestFramePool:
         pool = FramePool(frame_size=512, pool_size=2)
         pool.acquire()
         assert pool.stats["reused"] == 1
+
+
+def test_release_ignores_wrong_dtype():
+    import numpy as np
+    from bird_mach.realtime.frame_pool import FramePool
+    pool = FramePool(frame_size=8, pool_size=2)
+    pool.acquire()
+    pool.release(np.zeros(8, dtype=np.float64))
+    assert pool.stats["pool_size"] == 1
+    assert pool.acquire().dtype == np.float32
