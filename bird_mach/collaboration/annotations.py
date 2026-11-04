@@ -30,6 +30,8 @@ class AnnotationStore:
             duration_s: float, text: str, color: str = "#38bdf8") -> Annotation:
         if timestamp_s < 0 or duration_s < 0:
             raise ValueError("timestamp_s and duration_s must not be negative")
+        if not text or not text.strip():
+            raise ValueError("annotation text must not be empty")
         anns = self._annotations.setdefault(room_id, [])
         if len(anns) >= MAX_ANNOTATIONS_PER_ROOM:
             raise ValueError(f"room is at the {MAX_ANNOTATIONS_PER_ROOM} annotation cap")
