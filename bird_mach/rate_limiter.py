@@ -29,4 +29,6 @@ class TokenBucketLimiter:
             self._buckets[key] = (tokens, now)
             return RateLimitResult(allowed=True, remaining=int(tokens), reset_at=now + (1/self._refill_rate))
         self._buckets[key] = (tokens, now)
-        return RateLimitResult(allowed=False, remaining=0, reset_at=now + (1/self._refill_rate))
+        # Denied: the caller can retry once the partial token refills to 1.
+        wait = (1 - tokens) / self._refill_rate
+        return RateLimitResult(allowed=False, remaining=0, reset_at=now + wait)
