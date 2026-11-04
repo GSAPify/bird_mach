@@ -29,3 +29,14 @@ def test_release_ignores_wrong_dtype():
     pool.release(np.zeros(8, dtype=np.float64))
     assert pool.stats["pool_size"] == 1
     assert pool.acquire().dtype == np.float32
+
+
+def test_double_release_does_not_share_buffers():
+    from bird_mach.realtime.frame_pool import FramePool
+    pool = FramePool(frame_size=8, pool_size=4)
+    while pool.stats["pool_size"]:
+        pool.acquire()
+    frame = pool.acquire()
+    pool.release(frame)
+    pool.release(frame)
+    assert pool.acquire() is not pool.acquire()
