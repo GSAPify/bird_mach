@@ -1,6 +1,5 @@
 """WebSocket protocol handler for streaming audio data."""
 from __future__ import annotations
-import json
 import logging
 from dataclasses import dataclass, field
 
@@ -66,7 +65,6 @@ class AudioWebSocketManager:
 
     async def broadcast(self, channel: str, data: dict) -> int:
         clients = self.get_channel_clients(channel)
-        msg = json.dumps(data)
         sent = 0
         for cid in clients:
             if cid in self._clients:
