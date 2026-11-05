@@ -1,4 +1,6 @@
 """Tests for webhook event type registry."""
+import pytest
+
 from bird_mach.webhooks.event_types import ALL_EVENTS, describe_event, list_events
 
 
@@ -18,3 +20,8 @@ def test_list_events_returns_copy():
 
 def test_describe_unknown_event():
     assert describe_event("nope") == "Unknown event type"
+
+
+def test_list_events_rejects_unknown_category():
+    with pytest.raises(ValueError, match="colab"):
+        list_events("colab")

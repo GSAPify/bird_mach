@@ -34,5 +34,10 @@ EVENT_CATEGORIES = {
 }
 
 def list_events(category: str = "all") -> dict[str, str]:
+    # A typo like "colab" used to silently return every event; fail loudly instead.
+    if category not in EVENT_CATEGORIES:
+        raise ValueError(
+            f"Unknown event category {category!r}; expected one of {sorted(EVENT_CATEGORIES)}"
+        )
     # Copy: returning the live registries lets a caller mutate them globally.
-    return dict(EVENT_CATEGORIES.get(category, ALL_EVENTS))
+    return dict(EVENT_CATEGORIES[category])
