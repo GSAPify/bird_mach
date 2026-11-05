@@ -26,9 +26,18 @@ ALL_EVENTS = {**AUDIO_EVENTS, **COLLAB_EVENTS, **SYSTEM_EVENTS}
 def describe_event(event_type: str) -> str:
     return ALL_EVENTS.get(event_type, "Unknown event type")
 
+EVENT_CATEGORIES = {
+    "audio": AUDIO_EVENTS,
+    "collab": COLLAB_EVENTS,
+    "system": SYSTEM_EVENTS,
+    "all": ALL_EVENTS,
+}
+
 def list_events(category: str = "all") -> dict[str, str]:
+    # A typo like "colab" used to silently return every event; fail loudly instead.
+    if category not in EVENT_CATEGORIES:
+        raise ValueError(
+            f"Unknown event category {category!r}; expected one of {sorted(EVENT_CATEGORIES)}"
+        )
     # Copy: returning the live registries lets a caller mutate them globally.
-    if category == "audio": return dict(AUDIO_EVENTS)
-    if category == "collab": return dict(COLLAB_EVENTS)
-    if category == "system": return dict(SYSTEM_EVENTS)
-    return dict(ALL_EVENTS)
+    return dict(EVENT_CATEGORIES[category])

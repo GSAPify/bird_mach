@@ -36,3 +36,14 @@ class TestAudioWebSocketManager:
         mgr.subscribe("c1", "audio")
         sent = await mgr.broadcast("audio", {"rms": 0.5})
         assert sent == 1
+
+
+def test_empty_channels_are_pruned():
+    mgr = AudioWebSocketManager()
+    mgr.register("c1", 1.0)
+    mgr.subscribe("c1", "a")
+    mgr.subscribe("c1", "b")
+    mgr.unsubscribe("c1", "a")
+    assert "a" not in mgr._channels
+    mgr.unregister("c1")
+    assert mgr._channels == {}

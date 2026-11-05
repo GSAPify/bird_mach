@@ -1,6 +1,5 @@
 """WebSocket protocol handler for streaming audio data."""
 from __future__ import annotations
-import json
 import logging
 from dataclasses import dataclass, field
 
@@ -40,7 +39,7 @@ class AudioWebSocketManager:
         client = self._clients.pop(client_id, None)
         if client:
             for ch in client.subscriptions:
-                self._channels.get(ch, set()).discard(client_id)
+                self.leave_channel(client_id, ch)
             logger.info("Client %s disconnected", client_id)
 
     def subscribe(self, client_id: str, channel: str) -> None:
@@ -51,14 +50,21 @@ class AudioWebSocketManager:
     def unsubscribe(self, client_id: str, channel: str) -> None:
         if client_id in self._clients:
             self._clients[client_id].subscriptions.discard(channel)
-            self._channels.get(channel, set()).discard(client_id)
+            self.leave_channel(client_id, channel)
+
+    def leave_channel(self, client_id: str, channel: str) -> None:
+        # Drop channels once empty so churned channel names don't accumulate.
+        members = self._channels.get(channel)
+        if members is not None:
+            members.discard(client_id)
+            if not members:
+                del self._channels[channel]
 
     def get_channel_clients(self, channel: str) -> list[str]:
         return list(self._channels.get(channel, set()))
 
     async def broadcast(self, channel: str, data: dict) -> int:
         clients = self.get_channel_clients(channel)
-        msg = json.dumps(data)
         sent = 0
         for cid in clients:
             if cid in self._clients:

@@ -1,6 +1,5 @@
 """Route audio between multiple sources and destinations."""
 from __future__ import annotations
-import numpy as np
 
 class AudioRouter:
     """Route audio frames between sources, effects, and outputs."""
@@ -9,7 +8,11 @@ class AudioRouter:
         self._gains: dict[str, float] = {}
 
     def connect(self, source: str, dest: str, gain: float = 1.0) -> None:
-        self._routes.setdefault(source, []).append(dest)
+        dests = self._routes.setdefault(source, [])
+        # Reconnecting an existing route updates its gain instead of
+        # duplicating the destination (which would double the signal).
+        if dest not in dests:
+            dests.append(dest)
         self._gains[f"{source}->{dest}"] = gain
 
     def disconnect(self, source: str, dest: str) -> None:
@@ -18,7 +21,7 @@ class AudioRouter:
         self._gains.pop(f"{source}->{dest}", None)
 
     def get_destinations(self, source: str) -> list[str]:
-        return self._routes.get(source, [])
+        return list(self._routes.get(source, []))
 
     def get_gain(self, source: str, dest: str) -> float:
         return self._gains.get(f"{source}->{dest}", 1.0)
