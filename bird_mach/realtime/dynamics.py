@@ -6,6 +6,9 @@ from collections import deque
 class DynamicsAnalyzer:
     """Track dynamic range statistics over a sliding window."""
     def __init__(self, window_size: int = 100):
+        # deque(maxlen=0) keeps nothing, so update() would call max() on empty.
+        if window_size < 1:
+            raise ValueError("window_size must be at least 1")
         self._peaks = deque(maxlen=window_size)
         self._rms_vals = deque(maxlen=window_size)
 
