@@ -18,7 +18,11 @@ class LoudnessMeter:
             return {
                 "momentary_lufs": -70.0,
                 "short_term_lufs": -70.0,
-                "integrated_lufs": self._integrated_sum / max(self._integrated_count, 1),
+                # 0.0 here would read as full-scale loudness; use the same floor as the others.
+                "integrated_lufs": (
+                    self._integrated_sum / self._integrated_count
+                    if self._integrated_count else -70.0
+                ),
                 "peak_dbfs": -200.0,
             }
         rms = float(np.sqrt(np.mean(samples ** 2)))
