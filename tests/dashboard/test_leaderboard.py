@@ -12,3 +12,8 @@ class TestLeaderboard:
         lb.add_points("u1", "A", 50)
         lb.add_points("u2", "B", 100)
         assert lb.get_rank("u2") == 1
+
+
+def test_get_rank_on_empty_leaderboard():
+    from bird_mach.dashboard.leaderboard import Leaderboard
+    assert Leaderboard().get_rank("nobody") is None
