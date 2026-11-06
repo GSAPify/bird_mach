@@ -24,7 +24,7 @@ class SpectrogramBuffer:
 
     def get_image(self) -> np.ndarray:
         if self._pos <= self._n_frames:
-            return self._buffer[:, :self._pos]
+            return self._buffer[:, :self._pos].copy()
         start = self._pos % self._n_frames
         return np.hstack([self._buffer[:, start:], self._buffer[:, :start]])
 
