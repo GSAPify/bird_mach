@@ -30,11 +30,16 @@ class ActivityFeed:
         return activity
 
     def get_recent(self, n: int = 20) -> list[Activity]:
+        # n=-1 used to slice off the oldest item instead of failing.
+        if n < 1:
+            raise ValueError("n must be at least 1")
         items = list(self._items)
         items.reverse()
         return items[:n]
 
     def get_for_user(self, user_id: str, n: int = 20) -> list[Activity]:
+        if n < 1:
+            raise ValueError("n must be at least 1")
         return [a for a in reversed(self._items) if a.user_id == user_id][:n]
 
     def get_for_resource(self, resource_type: str, resource_id: str) -> list[Activity]:

@@ -36,3 +36,14 @@ def test_get_for_resource_is_newest_first():
     assert [a.action for a in feed.get_for_resource("audio", "a1")] == [
         "shared", "edited", "created",
     ]
+
+
+def test_negative_n_rejected():
+    import pytest
+    from bird_mach.dashboard.activity_feed import ActivityFeed
+    feed = ActivityFeed()
+    feed.log("u1", "created", "audio", "a1")
+    with pytest.raises(ValueError):
+        feed.get_recent(-1)
+    with pytest.raises(ValueError):
+        feed.get_for_user("u1", 0)
