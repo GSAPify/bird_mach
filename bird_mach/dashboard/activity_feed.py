@@ -38,7 +38,8 @@ class ActivityFeed:
         return [a for a in reversed(self._items) if a.user_id == user_id][:n]
 
     def get_for_resource(self, resource_type: str, resource_id: str) -> list[Activity]:
-        return [a for a in self._items
+        # Newest-first, consistent with get_recent and get_for_user.
+        return [a for a in reversed(self._items)
                 if a.resource_type == resource_type and a.resource_id == resource_id]
 
     @property

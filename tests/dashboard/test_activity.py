@@ -26,3 +26,13 @@ class TestActivityFeed:
         for i in range(10):
             feed.log("u1", "x", "y", str(i))
         assert feed.total_activities == 5
+
+
+def test_get_for_resource_is_newest_first():
+    from bird_mach.dashboard.activity_feed import ActivityFeed
+    feed = ActivityFeed()
+    for action in ("created", "edited", "shared"):
+        feed.log("u1", action, "audio", "a1")
+    assert [a.action for a in feed.get_for_resource("audio", "a1")] == [
+        "shared", "edited", "created",
+    ]
