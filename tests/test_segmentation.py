@@ -79,3 +79,10 @@ class TestExtractSegmentAudio:
         seg = Segment(start_s=0.01, end_s=0.05)
         with pytest.raises(ValueError, match="sr must be positive"):
             extract_segment_audio(self.SIGNAL, seg, sr=0)
+
+
+def test_fixed_length_has_no_float_drift_sliver():
+    from bird_mach.segmentation import segment_fixed_length
+    segments = segment_fixed_length(1.0, segment_length_s=0.1)
+    assert len(segments) == 10
+    assert segments[-1].end_s == 1.0
