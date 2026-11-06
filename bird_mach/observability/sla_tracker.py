@@ -1,5 +1,6 @@
 """SLA tracking and uptime monitoring."""
 from __future__ import annotations
+import math
 from collections import deque
 from dataclasses import dataclass
 
@@ -39,5 +40,6 @@ class SLATracker:
 
     @staticmethod
     def _percentile(sorted_times: list[float], q: float) -> float:
-        idx = min(int(len(sorted_times) * q), len(sorted_times) - 1)
+        # Nearest-rank, matching LatencyMonitor: p50 of [10, 20] is 10, not 20.
+        idx = max(0, math.ceil(q * len(sorted_times)) - 1)
         return sorted_times[idx]
