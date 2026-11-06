@@ -17,3 +17,14 @@ class TestAudioClassifier:
         clf = AudioClassifier()
         pred = clf.predict(np.array([1, 2, 3]))
         assert pred.label == "unknown"
+
+
+def test_fit_is_isolated_from_caller_mutation():
+    import numpy as np
+    from bird_mach.ml.classifier import AudioClassifier
+    feats, labels = [np.array([0.0, 0.0])], ["a"]
+    clf = AudioClassifier(k=1)
+    clf.fit(feats, labels)
+    labels[0] = "b"
+    feats[0][:] = 100
+    assert clf.predict(np.array([0.0, 0.0])).label == "a"
