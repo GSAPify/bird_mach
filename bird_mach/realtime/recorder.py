@@ -25,7 +25,8 @@ class SessionRecorder:
     def add_chunk(self, samples: np.ndarray) -> bool:
         if self._total_samples + len(samples) > self._max_samples:
             return False
-        self._chunks.append(samples.astype(np.float32, copy=False))
+        # Realtime callers reuse frame buffers, so never store theirs by reference.
+        self._chunks.append(samples.astype(np.float32, copy=True))
         self._total_samples += len(samples)
         return True
 
