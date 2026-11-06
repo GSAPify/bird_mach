@@ -29,3 +29,12 @@ class TestWebhookDispatcher:
         event = WebhookEvent("test", {"key": "value"})
         sig = event.sign("secret")
         assert len(sig) == 64
+
+
+def test_reregistering_url_does_not_double_deliver():
+    from bird_mach.webhooks.dispatcher import WebhookDispatcher, WebhookEvent
+    d = WebhookDispatcher()
+    d.register("http://x", "old")
+    ep = d.register("http://x", "new", events={"audio.uploaded"})
+    assert ep.secret == "new"
+    assert d.dispatch(WebhookEvent("audio.uploaded", {})) == 1

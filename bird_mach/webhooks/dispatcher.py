@@ -55,6 +55,12 @@ class WebhookDispatcher:
         self._event_log: deque[dict] = deque(maxlen=max_log_entries)
 
     def register(self, url: str, secret: str, events: set[str] | None = None) -> WebhookEndpoint:
+        # A second endpoint for the same URL would receive every event twice.
+        for existing in self._endpoints:
+            if existing.url == url:
+                existing.secret = secret
+                existing.events = events or {"*"}
+                return existing
         ep = WebhookEndpoint(url=url, secret=secret, events=events or {"*"})
         self._endpoints.append(ep)
         return ep
