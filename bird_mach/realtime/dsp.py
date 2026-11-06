@@ -17,6 +17,8 @@ def compute_fft_bands(
     n_bins = len(spectrum)
     freqs = np.linspace(0, sr / 2, n_bins)
     result = {}
+    # zip() used to drop any custom band past the seventh.
+    band_names += [f"band_{i}" for i in range(len(band_names), len(bands))]
     for name, (lo, hi) in zip(band_names, bands):
         mask = (freqs >= lo) & (freqs < hi)
         energy = float(np.mean(spectrum[mask] ** 2)) if mask.any() else 0.0
