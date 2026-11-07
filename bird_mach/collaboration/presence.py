@@ -22,6 +22,8 @@ class PresenceTracker:
         unknown = set(kwargs) - allowed
         if unknown:
             raise ValueError(f"unsupported presence fields: {sorted(unknown)}")
+        if kwargs.get("cursor_time_s", 0.0) < 0:
+            raise ValueError("cursor_time_s must not be negative")
         if user_id not in self._users:
             self._users[user_id] = UserPresence(user_id=user_id)
         p = self._users[user_id]

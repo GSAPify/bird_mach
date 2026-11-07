@@ -33,6 +33,8 @@ class RingBuffer:
     def read(self, n: int | None = None) -> np.ndarray:
         if n is None:
             n = self._count
+        if n < 0:
+            raise ValueError("n must not be negative")
         n = min(n, self._count)
         start = (self._write_pos - n) % self._capacity
         if start + n <= self._capacity:

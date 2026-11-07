@@ -1,3 +1,4 @@
+import pytest
 """Tests for annotations."""
 from bird_mach.collaboration.annotations import AnnotationStore
 
@@ -25,3 +26,11 @@ class TestAnnotationStore:
         ann = store.add("room1", "u1", 5.0, 1.0, "Great!")
         ann.add_reaction("👍", "u2")
         assert "u2" in ann.reactions["👍"]
+
+
+def test_blank_annotation_text_rejected():
+    from bird_mach.collaboration.annotations import AnnotationStore
+    store = AnnotationStore()
+    with pytest.raises(ValueError):
+        store.add("r1", "u1", timestamp_s=1.0, duration_s=0.5, text="  ")
+    assert store.get_for_room("r1") == []

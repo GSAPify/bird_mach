@@ -23,7 +23,12 @@ class FramePool:
         return np.zeros(self._frame_size, dtype=np.float32)
 
     def release(self, frame: np.ndarray) -> None:
-        if frame.shape != (self._frame_size,):
+        # A float64 frame of the right length would otherwise be handed out
+        # later to code that expects float32.
+        if frame.shape != (self._frame_size,) or frame.dtype != np.float32:
+            return
+        # Releasing the same frame twice would let two acquire() calls share one buffer.
+        if any(pooled is frame for pooled in self._pool):
             return
         frame[:] = 0
         if len(self._pool) < self._pool.maxlen:

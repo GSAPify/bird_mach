@@ -27,6 +27,9 @@ class CommentThread:
         return c
 
     def edit(self, comment_id: str, new_text: str) -> bool:
+        # Same rule as add(): an edit must not blank out a comment.
+        if not new_text or not new_text.strip():
+            raise ValueError("comment text must not be empty")
         c = self._comments.get(comment_id)
         if c:
             c.text = new_text

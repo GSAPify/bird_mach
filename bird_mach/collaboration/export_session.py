@@ -9,7 +9,15 @@ class SessionExporter:
         payload = {
             "exported_at": datetime.now(timezone.utc).isoformat(),
             "room": room_data,
-            "annotations": [{"text": a.text, "time": a.timestamp_s} for a in annotations],
+            "annotations": [
+                {
+                    "user": a.user_id,
+                    "text": a.text,
+                    "time": a.timestamp_s,
+                    "duration": a.duration_s,
+                }
+                for a in annotations
+            ],
             "comments": [{"user": c.user_id, "text": c.text} for c in comments],
             "version": "1.0",
         }

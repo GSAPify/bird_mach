@@ -1,3 +1,4 @@
+import pytest
 """Tests for comments."""
 from bird_mach.collaboration.comments import CommentThread
 class TestCommentThread:
@@ -16,3 +17,12 @@ class TestCommentThread:
         c = ct.add("u1", "Typo")
         ct.edit(c.id, "Fixed")
         assert ct._comments[c.id].edited
+
+
+def test_edit_rejects_blank_text():
+    from bird_mach.collaboration.comments import CommentThread
+    thread = CommentThread()
+    c = thread.add("u1", "hello")
+    with pytest.raises(ValueError):
+        thread.edit(c.id, "   ")
+    assert thread.get_thread()[0].text == "hello"
