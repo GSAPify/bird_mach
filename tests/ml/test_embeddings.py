@@ -22,3 +22,13 @@ class TestEmbeddingIndex:
         idx.add("b", np.array([0, 1, 0], dtype=np.float32))
         results = idx.search(np.array([1, 0.1, 0], dtype=np.float32))
         assert results[0][0] == "a"
+
+
+def test_trailing_partial_second_affects_embedding():
+    import numpy as np
+    from bird_mach.ml.embeddings import AudioEmbedding
+    emb = AudioEmbedding(dim=4, sr=10)
+    base = np.zeros(10)
+    base[0] = 1.0
+    with_tail = np.concatenate([base, np.ones(9)])
+    assert not np.allclose(emb.embed(base), emb.embed(with_tail))

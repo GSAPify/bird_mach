@@ -39,3 +39,12 @@ class TestMelFilterbank:
     def test_shape(self):
         fb = mel_filterbank(sr=22050, n_fft=2048, n_mels=40)
         assert fb.shape == (40, 1025)
+
+
+def test_custom_bands_beyond_defaults_are_kept():
+    import numpy as np
+    from bird_mach.realtime.dsp import compute_fft_bands
+    bands = [(i * 100.0, (i + 1) * 100.0) for i in range(8)]
+    result = compute_fft_bands(np.ones(512), sr=2000, bands=bands)
+    assert len(result) == 8
+    assert "band_7" in result

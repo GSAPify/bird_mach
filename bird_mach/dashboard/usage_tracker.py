@@ -3,6 +3,8 @@ from __future__ import annotations
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
+RETENTION_HOURS = 24
+
 class UsageTracker:
     """Track per-user API usage for quota enforcement."""
 
@@ -17,7 +19,7 @@ class UsageTracker:
         now = datetime.now(timezone.utc)
         calls = self._usage[user_id]
         calls.append(now)
-        cutoff = now - timedelta(hours=24)
+        cutoff = now - timedelta(hours=RETENTION_HOURS)
         self._usage[user_id] = [t for t in calls if t >= cutoff]
 
     def set_quota(self, user_id: str, quota: int) -> None:
@@ -28,6 +30,10 @@ class UsageTracker:
     def get_usage(self, user_id: str, window_hours: int = 24) -> int:
         if window_hours < 1:
             raise ValueError("window_hours must be at least 1")
+        # record() discards calls older than the retention, so a 48h window
+        # would silently undercount.
+        if window_hours > RETENTION_HOURS:
+            raise ValueError(f"window_hours must be at most {RETENTION_HOURS}")
         cutoff = datetime.now(timezone.utc) - timedelta(hours=window_hours)
         calls = self._usage.get(user_id, [])
         return sum(1 for t in calls if t >= cutoff)

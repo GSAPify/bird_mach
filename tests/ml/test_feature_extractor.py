@@ -16,3 +16,9 @@ class TestFeatureExtractor:
         vec = ext.extract(y).to_vector()
         assert vec.ndim == 1
         assert len(vec) == 13 + 13 + 12 + 5
+
+
+def test_single_sample_has_finite_zcr():
+    import numpy as np
+    from bird_mach.ml.feature_extractor import AudioFeatureExtractor
+    assert AudioFeatureExtractor().extract(np.array([0.5])).zero_crossing_rate == 0.0

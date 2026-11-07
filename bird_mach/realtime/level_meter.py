@@ -3,6 +3,10 @@ from __future__ import annotations
 import numpy as np
 from dataclasses import dataclass
 
+# dB the held peak falls per reading. Scaling a negative dB value by 0.995
+# moved it toward 0 dB, so the hold crept *up* during quiet passages.
+PEAK_HOLD_DECAY_DB = 0.05
+
 @dataclass
 class LevelReading:
     rms_db: float
@@ -22,5 +26,5 @@ class LevelMeter:
         peak = float(np.max(np.abs(samples)))
         rms_db = 20 * np.log10(rms + 1e-10)
         peak_db = 20 * np.log10(peak + 1e-10)
-        self._peak_hold = max(self._peak_hold * 0.995, peak_db)
+        self._peak_hold = max(self._peak_hold - PEAK_HOLD_DECAY_DB, peak_db)
         return LevelReading(rms_db=rms_db, peak_db=self._peak_hold, clip=peak_db > self._clip_db)

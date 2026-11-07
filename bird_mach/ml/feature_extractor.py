@@ -38,7 +38,8 @@ class AudioFeatureExtractor:
         freqs = np.fft.rfftfreq(min(len(y), self._sr), 1.0 / self._sr)
         centroid = float(np.sum(freqs * spectrum) / (np.sum(spectrum) + 1e-10))
         bandwidth = float(np.sqrt(np.sum(((freqs - centroid) ** 2) * spectrum) / (np.sum(spectrum) + 1e-10)))
-        zcr = float(np.mean(np.abs(np.diff(np.sign(y)))) / 2)
+        # np.diff of one sample is empty, and its mean is NaN.
+        zcr = float(np.mean(np.abs(np.diff(np.sign(y)))) / 2) if len(y) > 1 else 0.0
         rms = float(np.sqrt(np.mean(y ** 2)))
         mfcc_fake = np.random.default_rng(42).standard_normal((self._n_mfcc,))
         chroma_fake = np.abs(np.random.default_rng(42).standard_normal((self._n_chroma,)))

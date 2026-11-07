@@ -29,6 +29,8 @@ class Leaderboard:
         ]
 
     def get_rank(self, user_id: str) -> int | None:
+        if not self._scores:  # get_top(0) would raise
+            return None
         for entry in self.get_top(len(self._scores)):
             if entry.user_id == user_id:
                 return entry.rank

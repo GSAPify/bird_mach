@@ -12,3 +12,12 @@ class TestSpectrogramBuffer:
             buf.push(np.random.randn(16).astype(np.float32))
         img = buf.get_image()
         assert img.shape == (16, 3)
+
+
+def test_get_image_does_not_expose_internal_buffer():
+    import numpy as np
+    from bird_mach.realtime.spectrogram_buffer import SpectrogramBuffer
+    buf = SpectrogramBuffer(n_frames=4, n_bins=2)
+    buf.push(np.array([1.0, 2.0]))
+    buf.get_image()[:] = 99
+    assert buf.get_image()[:, 0].tolist() == [1.0, 2.0]

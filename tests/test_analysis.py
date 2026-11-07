@@ -119,3 +119,13 @@ class TestSingleFrameOutputIsAlways1D:
     def test_spectral_rolloff_is_1d(self):
         result = compute_spectral_rolloff(self.SHORT, sr=22050, hop_length=512)
         assert result.ndim == 1
+
+
+def test_mfcc_and_chroma_reject_zero_hop():
+    import numpy as np
+    from bird_mach.analysis import compute_chromagram, compute_mfcc
+    y = np.zeros(2048, dtype=np.float32)
+    with pytest.raises(ValueError, match="hop_length"):
+        compute_mfcc(y, sr=22050, hop_length=0)
+    with pytest.raises(ValueError, match="hop_length"):
+        compute_chromagram(y, sr=22050, hop_length=0)

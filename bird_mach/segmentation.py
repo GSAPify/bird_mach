@@ -54,11 +54,15 @@ def segment_fixed_length(
     if step <= 0:
         step = segment_length_s
     segments = []
+    # Multiply instead of accumulating: repeated `t += step` drifts and could
+    # emit a sliver like Segment(0.9999999999999999, 1.0).
+    i = 0
     t = 0.0
-    while t < duration_s:
+    while t < duration_s - 1e-9:
         end = min(t + segment_length_s, duration_s)
         segments.append(Segment(start_s=t, end_s=end))
-        t += step
+        i += 1
+        t = i * step
     return segments
 
 

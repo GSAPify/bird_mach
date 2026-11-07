@@ -146,6 +146,7 @@ def compute_mfcc(
     Returns shape (n_mfcc, n_frames).
     """
     _check_sr(sr)
+    _check_hop(hop_length)
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc, hop_length=hop_length)
     return mfccs.astype(np.float32, copy=False)
 
@@ -158,6 +159,7 @@ def compute_chromagram(
     Returns shape (12, n_frames).
     """
     _check_sr(sr)
+    _check_hop(hop_length)
     chroma = librosa.feature.chroma_stft(y=y, sr=sr, hop_length=hop_length)
     return chroma.astype(np.float32, copy=False)
 

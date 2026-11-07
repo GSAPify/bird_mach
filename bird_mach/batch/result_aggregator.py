@@ -24,8 +24,11 @@ class ResultAggregator:
 
     def add(self, result: dict, format: str = "wav") -> None:
         self._success += 1
-        self._rms_vals.append(result.get("rms", 0))
-        self._tempos.append(result.get("tempo", 0))
+        # A missing metric is unknown, not zero; counting it as 0 dragged averages down.
+        if "rms" in result:
+            self._rms_vals.append(result["rms"])
+        if "tempo" in result:
+            self._tempos.append(result["tempo"])
         self._duration += result.get("duration_s", 0)
         self._formats[format] = self._formats.get(format, 0) + 1
 

@@ -29,3 +29,10 @@ class TestUsageTracker:
         tracker.record("light-user")
         top = tracker.get_top_users(2)
         assert top[0][0] == "heavy-user"
+
+
+def test_window_longer_than_retention_rejected():
+    import pytest
+    from bird_mach.dashboard.usage_tracker import UsageTracker
+    with pytest.raises(ValueError, match="at most 24"):
+        UsageTracker().get_usage("u1", window_hours=48)

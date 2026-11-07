@@ -15,6 +15,10 @@ class KeyDetector:
         chroma = np.asarray(chroma, dtype=float)[:12]
         if chroma.size < 12:
             chroma = np.pad(chroma, (0, 12 - chroma.size))
+        # Flat chroma (e.g. silence) makes every correlation NaN, which used to
+        # fall through to a confident-looking "C major".
+        if np.ptp(chroma) == 0:
+            return {"key": "unknown", "mode": "", "confidence": 0.0}
         best_key, best_corr, best_mode = "C", -1.0, "major"
         notes = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
         for mode, profile in KEY_PROFILES.items():

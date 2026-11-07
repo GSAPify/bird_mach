@@ -1,5 +1,7 @@
 """Audio embedding generation for similarity search."""
 from __future__ import annotations
+import math
+
 import numpy as np
 
 class AudioEmbedding:
@@ -15,7 +17,8 @@ class AudioEmbedding:
     def embed(self, y: np.ndarray) -> np.ndarray:
         if y.size == 0:
             raise ValueError("cannot embed empty audio")
-        n_frames = max(1, len(y) // self._sr)
+        # Round up so 1.9 s of audio isn't embedded as if it were 1 s.
+        n_frames = max(1, math.ceil(len(y) / self._sr))
         features = []
         for i in range(n_frames):
             chunk = y[i * self._sr:(i + 1) * self._sr]

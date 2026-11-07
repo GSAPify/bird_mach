@@ -21,10 +21,18 @@ class SlidingWindowLimiter:
         self._window = window_s
         self._max = max_requests
         self._requests: dict[str, list[float]] = {}
+        self._sweep_at = 1024
 
     def check(self, key: str) -> RateLimitInfo:
         now = time.time()
         cutoff = now - self._window
+        # Every client key ever seen stayed in memory forever; drop idle ones
+        # once the table doubles, so the sweep cost stays amortized O(1).
+        if len(self._requests) >= self._sweep_at:
+            self._requests = {
+                k: ts for k, ts in self._requests.items() if ts and ts[-1] > cutoff
+            }
+            self._sweep_at = max(1024, 2 * len(self._requests))
         timestamps = [t for t in self._requests.get(key, []) if t > cutoff]
         self._requests[key] = timestamps
         remaining = self._max - len(timestamps)

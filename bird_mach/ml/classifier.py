@@ -21,8 +21,9 @@ class AudioClassifier:
     def fit(self, features: list[np.ndarray], labels: list[str]) -> None:
         if len(features) != len(labels):
             raise ValueError("features and labels must have the same length")
-        self._features = features
-        self._labels = labels
+        # Copy so later changes to the caller's lists can't silently retrain the model.
+        self._features = [np.array(f) for f in features]
+        self._labels = list(labels)
 
     def predict(self, feature_vector: np.ndarray) -> Prediction:
         if not self._features:
