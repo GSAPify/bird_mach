@@ -48,6 +48,14 @@ class DiskCache:
                 "_key": key}
         path.write_text(json.dumps(data, default=str))
 
+    def remaining_ttl(self, key: str) -> float | None:
+        """Seconds until `key` expires, or None if it is missing or expired."""
+        if self.get(key) is None:
+            return None
+        data = json.loads(self._key_path(key).read_text())
+        remaining = data["_expires_at"] - time.time()
+        return remaining if remaining > 0 else None
+
     def delete(self, key: str) -> bool:
         path = self._key_path(key)
         if path.exists():
