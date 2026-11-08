@@ -1,5 +1,6 @@
 """Alert rules and notification triggers."""
 from __future__ import annotations
+from collections import deque
 from dataclasses import dataclass
 from enum import Enum
 
@@ -17,9 +18,12 @@ class AlertRule:
     enabled: bool = True
 
 class AlertManager:
-    def __init__(self):
+    def __init__(self, max_history: int = 1000):
         self._rules: list[AlertRule] = []
-        self._fired: list[dict] = []
+        # Bounded: a monitor evaluating every second over threshold used to
+        # append 86,400 dicts a day with no limit.
+        self._fired: deque[dict] = deque(maxlen=max_history)
+        self._total_fired = 0
 
     def add_rule(self, rule: AlertRule) -> None:
         self._rules.append(rule)
@@ -36,8 +40,9 @@ class AlertManager:
                 alert = {"rule": rule.name, "value": value, "threshold": rule.threshold, "severity": rule.severity.value}
                 alerts.append(alert)
                 self._fired.append(alert)
+                self._total_fired += 1
         return alerts
 
     @property
     def total_fired(self) -> int:
-        return len(self._fired)
+        return self._total_fired
