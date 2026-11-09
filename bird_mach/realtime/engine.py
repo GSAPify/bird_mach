@@ -23,7 +23,9 @@ class AudioFrame:
 
     @property
     def rms(self) -> float:
-        return float(np.sqrt(np.mean(self.samples ** 2)))
+        # Squaring int16 samples overflows (300**2 > 32767), so cast first.
+        samples = np.asarray(self.samples, dtype=np.float64)
+        return float(np.sqrt(np.mean(samples ** 2)))
 
 @dataclass
 class EngineConfig:
