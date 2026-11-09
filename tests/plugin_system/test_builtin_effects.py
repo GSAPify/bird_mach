@@ -32,3 +32,12 @@ class TestReverbEffect:
         x[0] = 1.0
         result = fx.process(x, 44100)
         assert np.any(result[440:] != 0)
+
+
+def test_reverb_accepts_int16_input():
+    from bird_mach.plugin_system.builtin_effects import ReverbEffect
+    samples = np.zeros(100, dtype=np.int16)
+    samples[0] = 1
+    out = ReverbEffect(decay=0.5, delay_ms=10).process(samples, sr=1000)
+    assert out.dtype == np.float32
+    assert out[10] > 0

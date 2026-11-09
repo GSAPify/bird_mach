@@ -83,7 +83,8 @@ class ReverbEffect:
         delay_samples = int(self._delay_ms / 1000 * sr)
         if samples.size == 0 or delay_samples < 1:
             return samples.copy()
-        out = samples.copy()
+        # Float working copy: in-place float adds into an int16 array raise UFuncTypeError.
+        out = samples.astype(np.result_type(samples.dtype, np.float32))
         for d in [delay_samples, delay_samples * 2, delay_samples * 3]:
             if d < len(out):
                 decay = self._decay ** (d / delay_samples)
