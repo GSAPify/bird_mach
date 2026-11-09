@@ -34,11 +34,12 @@ def apply_fade(
     if fade_in_s > 0:
         n = min(int(fade_in_s * sr), len(y))
         if n > 0:
-            y[:n] *= np.linspace(0.0, 1.0, n, dtype=y.dtype)
+            # Build the ramp in float: an int16 ramp truncates to all zeros but the end.
+            y[:n] = (y[:n] * np.linspace(0.0, 1.0, n)).astype(y.dtype)
     if fade_out_s > 0:
         n = min(int(fade_out_s * sr), len(y))
         if n > 0:
-            y[-n:] *= np.linspace(1.0, 0.0, n, dtype=y.dtype)
+            y[-n:] = (y[-n:] * np.linspace(1.0, 0.0, n)).astype(y.dtype)
     return y
 
 
