@@ -142,7 +142,8 @@ def compute_spectral_flatness(y: np.ndarray, *, hop_length: int = 512) -> np.nda
     from music or silence from signal.
     """
     flatness = librosa.feature.spectral_flatness(y=y, hop_length=hop_length)
-    return flatness.squeeze().astype(np.float32, copy=False)
+    # reshape, not squeeze: one frame would squeeze to a 0-d array with no len().
+    return flatness.reshape(-1).astype(np.float32, copy=False)
 
 
 def compute_spectral_centroid(
@@ -154,7 +155,7 @@ def compute_spectral_centroid(
     indicating the "brightness" of each frame.
     """
     centroid = librosa.feature.spectral_centroid(y=y, sr=sr, hop_length=hop_length)
-    return centroid.squeeze().astype(np.float32, copy=False)
+    return centroid.reshape(-1).astype(np.float32, copy=False)
 
 
 def stride_downsample(

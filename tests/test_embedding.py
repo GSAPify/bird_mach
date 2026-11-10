@@ -52,3 +52,11 @@ class TestUmapConfig:
         assert cfg.n_neighbors == 15
         assert cfg.min_dist == 0.1
         assert cfg.metric == "euclidean"
+
+
+def test_flatness_and_centroid_are_1d_for_one_frame():
+    import numpy as np
+    from bird_mach.embedding import compute_spectral_centroid, compute_spectral_flatness
+    y = np.random.default_rng(0).standard_normal(100).astype(np.float32)
+    assert compute_spectral_flatness(y).shape == (1,)
+    assert compute_spectral_centroid(y, sr=22050).shape == (1,)
