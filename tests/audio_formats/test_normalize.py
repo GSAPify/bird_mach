@@ -22,3 +22,11 @@ class TestNormalize:
     def test_silence(self):
         y = np.zeros(100, dtype=np.float32)
         assert np.allclose(peak_normalize(y), y)
+
+
+def test_peak_normalize_with_nan_returns_input():
+    import numpy as np
+    from bird_mach.audio_formats.normalize import peak_normalize
+    y = np.array([0.5, np.nan, 0.2])
+    out = peak_normalize(y)
+    assert out[0] == 0.5 and out[2] == 0.2
