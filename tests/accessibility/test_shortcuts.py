@@ -21,3 +21,10 @@ class TestShortcutRegistry:
         text = reg.to_help_text()
         assert "Keyboard Shortcuts" in text
         assert "Space" in text
+
+
+def test_editing_one_registry_does_not_touch_defaults():
+    from bird_mach.accessibility.keyboard_shortcuts import DEFAULT_SHORTCUTS, ShortcutRegistry
+    original = next(s.description for s in DEFAULT_SHORTCUTS if s.key == "M")
+    ShortcutRegistry().get_by_key("M").description = "changed"
+    assert ShortcutRegistry().get_by_key("M").description == original
