@@ -41,3 +41,11 @@ def test_reverb_accepts_int16_input():
     out = ReverbEffect(decay=0.5, delay_ms=10).process(samples, sr=1000)
     assert out.dtype == np.float32
     assert out[10] > 0
+
+
+def test_filters_keep_precision_on_int16_input():
+    from bird_mach.plugin_system.builtin_effects import HighPassFilter, LowPassFilter
+    ints = np.full(4, 1000, dtype=np.int16)
+    floats = ints.astype(np.float32)
+    for fx in (LowPassFilter(cutoff_hz=100.0), HighPassFilter(cutoff_hz=100.0)):
+        np.testing.assert_allclose(fx.process(ints, sr=22050), fx.process(floats, sr=22050), rtol=1e-6)
