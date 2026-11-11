@@ -26,3 +26,10 @@ class TestNotificationService:
         count = svc.mark_all_read("u1")
         assert count == 5
         assert svc.unread_count("u1") == 0
+
+
+def test_max_per_user_must_be_positive():
+    import pytest
+    from bird_mach.notifications_service import NotificationService
+    with pytest.raises(ValueError):
+        NotificationService(max_per_user=0)

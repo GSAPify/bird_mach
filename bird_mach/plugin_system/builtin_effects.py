@@ -25,7 +25,8 @@ class LowPassFilter:
         rc = 1.0 / (2 * np.pi * self._cutoff)
         dt = 1.0 / sr
         alpha = dt / (rc + dt)
-        out = np.zeros_like(samples)
+        # zeros_like(int16) truncated every step, so error built up and quiet signals hit 0.
+        out = np.zeros(samples.shape, dtype=np.result_type(samples.dtype, np.float32))
         out[0] = alpha * samples[0]
         for i in range(1, len(samples)):
             out[i] = out[i-1] + alpha * (samples[i] - out[i-1])
@@ -47,7 +48,7 @@ class HighPassFilter:
         rc = 1.0 / (2 * np.pi * self._cutoff)
         dt = 1.0 / sr
         alpha = rc / (rc + dt)
-        out = np.zeros_like(samples)
+        out = np.zeros(samples.shape, dtype=np.result_type(samples.dtype, np.float32))
         out[0] = samples[0]
         for i in range(1, len(samples)):
             out[i] = alpha * (out[i-1] + samples[i] - samples[i-1])
@@ -83,7 +84,8 @@ class ReverbEffect:
         delay_samples = int(self._delay_ms / 1000 * sr)
         if samples.size == 0 or delay_samples < 1:
             return samples.copy()
-        out = samples.copy()
+        # Float working copy: in-place float adds into an int16 array raise UFuncTypeError.
+        out = samples.astype(np.result_type(samples.dtype, np.float32))
         for d in [delay_samples, delay_samples * 2, delay_samples * 3]:
             if d < len(out):
                 decay = self._decay ** (d / delay_samples)

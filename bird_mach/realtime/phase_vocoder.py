@@ -32,7 +32,8 @@ class PhaseVocoder:
 
     def _stretch_stft(self, stft: np.ndarray, rate: float) -> np.ndarray:
         n_bins, n_frames = stft.shape
-        new_n = int(n_frames / rate)
+        # int() rounded high rates down to 0 frames, so the output was pure silence.
+        new_n = max(1, int(n_frames / rate))
         phases = np.angle(stft)
         magnitudes = np.abs(stft)
         result = np.zeros((n_bins, new_n), dtype=complex)

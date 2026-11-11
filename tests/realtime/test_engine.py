@@ -49,3 +49,8 @@ class TestRealtimeEngine:
         assert "peak" in result
         assert "centroid" in result
         assert result["frame_id"] == 1
+
+
+def test_rms_of_int16_frame_does_not_overflow():
+    frame = AudioFrame(samples=np.full(8, 300, dtype=np.int16), sample_rate=44100, timestamp_ms=0.0)
+    assert frame.rms == pytest.approx(300.0)

@@ -63,3 +63,10 @@ class TestMix:
         b = np.zeros(10, dtype=np.float32)
         assert np.allclose(mix(a, b, ratio=1.0), 1.0)
         assert np.allclose(mix(a, b, ratio=0.0), 0.0)
+
+
+def test_fade_in_on_int16_is_gradual():
+    samples = np.full(10, 1000, dtype=np.int16)
+    out = apply_fade(samples, sr=10, fade_in_s=0.5)
+    assert out.dtype == np.int16
+    assert out[:5].tolist() == [0, 250, 500, 750, 1000]

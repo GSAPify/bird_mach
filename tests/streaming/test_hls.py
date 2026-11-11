@@ -21,3 +21,11 @@ class TestHLSGenerator:
         gen = HLSGenerator(sr=22050)
         gen.segment(np.zeros(22050 * 12, dtype=np.float32))
         assert gen.segment_count == 2
+
+
+def test_stereo_segments_use_frame_count():
+    import numpy as np
+    from bird_mach.streaming.hls import HLSGenerator
+    segments = HLSGenerator(segment_duration_s=1.0, sr=10).segment(np.zeros((10, 2)))
+    assert [s.duration_s for s in segments] == [1.0]
+    assert segments[0].data.shape == (10, 2)

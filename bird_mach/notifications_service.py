@@ -24,6 +24,9 @@ class Notification:
 
 class NotificationService:
     def __init__(self, max_per_user: int = 100):
+        # deque(maxlen=0) silently drops every notification.
+        if max_per_user < 1:
+            raise ValueError("max_per_user must be at least 1")
         self._notifications: dict[str, deque[Notification]] = {}
         self._max = max_per_user
         self._counter = 0

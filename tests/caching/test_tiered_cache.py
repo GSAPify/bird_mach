@@ -19,3 +19,19 @@ class TestTieredCache:
         tc.set("k", {"v": 1})
         tc.invalidate("k")
         assert tc.get("k") is None
+
+
+def test_promotion_uses_remaining_disk_lifetime(tmp_path, monkeypatch):
+    import bird_mach.caching.disk_cache as disk_mod
+    import bird_mach.caching.memory_cache as mem_mod
+    clock = [1000.0]
+    monkeypatch.setattr(disk_mod.time, "time", lambda: clock[0])
+    monkeypatch.setattr(mem_mod.time, "time", lambda: clock[0])
+    if hasattr(mem_mod.time, "monotonic"):
+        monkeypatch.setattr(mem_mod.time, "monotonic", lambda: clock[0])
+    tc = TieredCache(tmp_path, mem_ttl=120.0, disk_ttl=100.0)
+    tc._l2.set("k", {"v": 1})
+    clock[0] += 95  # 5 s of disk lifetime left
+    assert tc.get("k") == {"v": 1}
+    clock[0] += 10  # past the disk entry's expiry
+    assert tc._l1.get("k") is None

@@ -17,6 +17,10 @@ def detect_format(path: Path) -> str | None:
     for magic, fmt in MAGIC_BYTES.items():
         if header.startswith(magic):
             return fmt
+    # Untagged MP3s start with an 11-bit frame sync; only 0xFFFB was matched,
+    # so MPEG-2 (0xFFF3) and other variants came back as unknown.
+    if len(header) >= 2 and header[0] == 0xFF and (header[1] & 0xE0) == 0xE0:
+        return "mp3"
     if header[4:8] == b"ftyp":
         return "m4a"
     return None

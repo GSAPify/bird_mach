@@ -1,6 +1,6 @@
 """Keyboard shortcut registry and documentation."""
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 @dataclass
 class Shortcut:
@@ -26,7 +26,8 @@ DEFAULT_SHORTCUTS = [
 
 class ShortcutRegistry:
     def __init__(self):
-        self._shortcuts = list(DEFAULT_SHORTCUTS)
+        # Copy each Shortcut: a shallow list copy let one registry edit the module defaults.
+        self._shortcuts = [replace(s) for s in DEFAULT_SHORTCUTS]
 
     def add(self, shortcut: Shortcut) -> None:
         if self.get_by_key(shortcut.key) is not None:

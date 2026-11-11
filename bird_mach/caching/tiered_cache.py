@@ -15,10 +15,11 @@ class TieredCache:
         if val is not None:
             return val
         val = self._l2.get(key)
-        if val is not None:
+        remaining = self._l2.remaining_ttl(key) if val is not None else None
+        if val is not None and remaining is not None:
             # Promote with the remaining L2 lifetime, not a fresh L1 TTL,
             # so a near-expiry disk hit cannot outlive its source entry.
-            self._l1.set(key, val, ttl_s=min(self._l1._ttl, self._l2._ttl))
+            self._l1.set(key, val, ttl_s=min(self._l1._ttl, remaining))
         return val
 
     def set(self, key: str, value, ttl_s: float | None = None) -> None:

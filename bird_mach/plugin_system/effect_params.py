@@ -1,5 +1,6 @@
 """Parameterized effect configuration with validation."""
 from __future__ import annotations
+import math
 from dataclasses import dataclass
 
 @dataclass
@@ -17,6 +18,9 @@ class ParamSpec:
             raise ValueError("default must be within [min_val, max_val]")
 
     def validate(self, value: float) -> float:
+        # min/max with NaN returns the bound, so NaN gain became a +24 dB boost.
+        if not math.isfinite(value):
+            return self.default
         return max(self.min_val, min(self.max_val, value))
 
 GAIN_PARAM = ParamSpec("gain", -60.0, 24.0, 0.0, "dB")

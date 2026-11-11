@@ -44,6 +44,9 @@ class InMemoryRevokedTokenStore(RevokedTokenStore):
     def revoke(self, jti: str, expires_at: datetime) -> None:
         if not jti:
             return
+        # A naive datetime would make is_revoked() raise on the aware comparison.
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
         with self._lock:
             self._revoked[jti] = expires_at
 

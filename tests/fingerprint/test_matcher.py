@@ -23,3 +23,11 @@ class TestFingerprintDB:
         hashes = [FingerprintHash(100, 200, 50, 0)]
         results = db.search(hashes, min_matches=5)
         assert len(results) == 0
+
+
+def test_unaligned_hash_hits_are_not_a_match():
+    db = FingerprintDB()
+    db.insert("track1", [FingerprintHash(i, i + 10, 5, i) for i in range(10)])
+    # Same hashes, but every hit lands at a different offset.
+    query = [FingerprintHash(i, i + 10, 5, i * 2) for i in range(10)]
+    assert db.search(query, min_matches=5) == []

@@ -47,3 +47,12 @@ class TestRevocation:
         assert removed == 1
         assert store.is_revoked("stale") is False
         assert store.is_revoked("fresh") is True
+
+
+def test_in_memory_store_accepts_naive_expiry():
+    from datetime import datetime, timedelta, timezone
+    from bird_mach.auth.revocation import InMemoryRevokedTokenStore
+    store = InMemoryRevokedTokenStore()
+    naive = datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=1)
+    store.revoke("j1", naive)
+    assert store.is_revoked("j1")

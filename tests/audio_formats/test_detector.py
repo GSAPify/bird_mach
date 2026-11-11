@@ -32,3 +32,10 @@ class TestDetector:
         f = tmp_path / "test.wav"
         f.write_bytes(b"RIFF" + b"\x00" * 4 + b"WAVE" + b"\x00" * 100)
         assert is_supported(f)
+
+
+def test_mpeg2_frame_sync_detected_as_mp3(tmp_path):
+    from bird_mach.audio_formats.detector import detect_format
+    path = tmp_path / "clip.bin"
+    path.write_bytes(b"\xff\xf3\x90\x00" + b"\x00" * 16)
+    assert detect_format(path) == "mp3"
