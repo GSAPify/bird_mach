@@ -10,3 +10,8 @@ def test_default_target_db():
 
 def test_custom_target_db():
     assert NormalizeNode(target_db=-6.0).process({})["target_db"] == -6.0
+
+
+def test_rejects_nan_target():
+    with pytest.raises(ValueError):
+        NormalizeNode(target_db=float("nan"))
