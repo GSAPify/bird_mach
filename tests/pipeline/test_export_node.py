@@ -22,3 +22,7 @@ def test_unsupported_format_is_rejected():
 def test_format_is_case_sensitive():
     with pytest.raises(ValueError):
         ExportNode("JSON")
+
+
+def test_process_ignores_input_data():
+    assert ExportNode("csv").process({"anything": 1}) == {"exported": True, "format": "csv"}
