@@ -24,3 +24,9 @@ def test_errors_keep_insertion_order():
     for msg in ("a", "b", "c"):
         ctx.log_error(msg)
     assert ctx.errors == ["a", "b", "c"]
+
+
+def test_elapsed_ms_uses_monotonic_clock(monkeypatch):
+    ctx = PipelineContext("p1", started_at=100.0)
+    monkeypatch.setattr(context_mod.time, "monotonic", lambda: 100.25)
+    assert ctx.elapsed_ms == pytest.approx(250.0)
