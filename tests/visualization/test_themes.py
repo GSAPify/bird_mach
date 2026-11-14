@@ -21,3 +21,9 @@ def test_dark_layout_override_replaces_key_only():
 
 def test_dark_layout_accepts_new_keys():
     assert dark_layout(title="Spectrum")["title"] == "Spectrum"
+
+
+def test_light_layout_colors():
+    layout = light_layout()
+    assert layout["plot_bgcolor"] == "#ffffff"
+    assert layout["paper_bgcolor"] == "#f8fafc"
