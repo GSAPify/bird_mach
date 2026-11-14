@@ -17,3 +17,7 @@ def test_dark_layout_override_replaces_key_only():
     layout = dark_layout(margin={"l": 0})
     assert layout["margin"] == {"l": 0}
     assert layout["font"]["color"] == MACH_PALETTE["text"]
+
+
+def test_dark_layout_accepts_new_keys():
+    assert dark_layout(title="Spectrum")["title"] == "Spectrum"
