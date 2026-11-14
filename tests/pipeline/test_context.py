@@ -36,3 +36,9 @@ def test_metadata_is_not_shared_between_instances():
     first, second = PipelineContext("a"), PipelineContext("b")
     first.metadata["k"] = 1
     assert second.metadata == {}
+
+
+def test_errors_are_not_shared_between_instances():
+    first, second = PipelineContext("a"), PipelineContext("b")
+    first.log_error("x")
+    assert second.is_healthy
