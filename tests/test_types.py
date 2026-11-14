@@ -10,3 +10,8 @@ ALIASES = ["AudioArray", "FeatureMatrix", "EmbeddingMatrix", "TimeArray", "Energ
 def test_all_aliases_are_defined():
     for name in ALIASES:
         assert hasattr(mach_types, name), name
+
+
+def test_aliases_are_float32_ndarrays():
+    for name in ALIASES:
+        assert getattr(mach_types, name) == npt.NDArray[np.float32]
