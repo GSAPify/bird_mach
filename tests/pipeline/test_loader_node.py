@@ -25,3 +25,8 @@ def test_negative_sample_rate_is_rejected():
 def test_missing_path_is_rejected():
     with pytest.raises(ValueError, match="No path"):
         LoaderNode().process({})
+
+
+def test_empty_path_is_rejected():
+    with pytest.raises(ValueError):
+        LoaderNode().process({"path": ""})
