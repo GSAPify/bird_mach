@@ -10,3 +10,8 @@ def test_default_sample_rate():
 
 def test_custom_sample_rate():
     assert LoaderNode(sr=44100).process({"path": "a.wav"})["sr"] == 44100
+
+
+def test_zero_sample_rate_is_rejected():
+    with pytest.raises(ValueError):
+        LoaderNode(sr=0)
