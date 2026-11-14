@@ -12,3 +12,8 @@ def test_default_format_is_json():
 def test_every_supported_format_is_accepted():
     for fmt in SUPPORTED_EXPORT_FORMATS:
         assert ExportNode(fmt).process({})["format"] == fmt
+
+
+def test_unsupported_format_is_rejected():
+    with pytest.raises(ValueError, match="xml"):
+        ExportNode("xml")
