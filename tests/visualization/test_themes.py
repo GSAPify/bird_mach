@@ -11,3 +11,9 @@ def test_dark_layout_uses_palette_background():
 
 def test_dark_layout_uses_palette_text_color():
     assert dark_layout()["font"]["color"] == MACH_PALETTE["text"]
+
+
+def test_dark_layout_override_replaces_key_only():
+    layout = dark_layout(margin={"l": 0})
+    assert layout["margin"] == {"l": 0}
+    assert layout["font"]["color"] == MACH_PALETTE["text"]
