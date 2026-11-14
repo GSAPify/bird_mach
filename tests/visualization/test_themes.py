@@ -7,3 +7,7 @@ def test_dark_layout_uses_palette_background():
     layout = dark_layout()
     assert layout["plot_bgcolor"] == MACH_PALETTE["bg_dark"]
     assert layout["paper_bgcolor"] == MACH_PALETTE["bg_dark"]
+
+
+def test_dark_layout_uses_palette_text_color():
+    assert dark_layout()["font"]["color"] == MACH_PALETTE["text"]
