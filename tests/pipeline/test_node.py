@@ -17,3 +17,9 @@ def test_node_result_carries_error():
     assert not result.success
     assert result.error == "boom"
     assert result.duration_ms == 3.5
+
+
+def test_builtin_nodes_match_protocol_shape():
+    for node in (LoaderNode(), NormalizeNode(), AnalysisNode(), ExportNode()):
+        assert isinstance(node.name, str) and node.name
+        assert callable(node.process)
