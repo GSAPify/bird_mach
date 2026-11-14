@@ -27,3 +27,10 @@ def test_light_layout_colors():
     layout = light_layout()
     assert layout["plot_bgcolor"] == "#ffffff"
     assert layout["paper_bgcolor"] == "#f8fafc"
+
+
+def test_layouts_are_independent_copies():
+    dark_layout()["margin"]["l"] = 0
+    light_layout()["margin"]["l"] = 0
+    assert dark_layout()["margin"]["l"] == 40
+    assert light_layout()["margin"]["l"] == 40
