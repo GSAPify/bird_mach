@@ -15,3 +15,8 @@ def test_custom_sample_rate():
 def test_zero_sample_rate_is_rejected():
     with pytest.raises(ValueError):
         LoaderNode(sr=0)
+
+
+def test_negative_sample_rate_is_rejected():
+    with pytest.raises(ValueError):
+        LoaderNode(sr=-1)
