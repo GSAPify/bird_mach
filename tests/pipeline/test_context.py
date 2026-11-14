@@ -30,3 +30,9 @@ def test_elapsed_ms_uses_monotonic_clock(monkeypatch):
     ctx = PipelineContext("p1", started_at=100.0)
     monkeypatch.setattr(context_mod.time, "monotonic", lambda: 100.25)
     assert ctx.elapsed_ms == pytest.approx(250.0)
+
+
+def test_metadata_is_not_shared_between_instances():
+    first, second = PipelineContext("a"), PipelineContext("b")
+    first.metadata["k"] = 1
+    assert second.metadata == {}
