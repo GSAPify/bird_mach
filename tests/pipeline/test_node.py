@@ -10,3 +10,10 @@ def test_node_result_defaults():
     result = NodeResult("loader", True, {"a": 1})
     assert result.duration_ms == 0.0
     assert result.error is None
+
+
+def test_node_result_carries_error():
+    result = NodeResult("loader", False, {}, duration_ms=3.5, error="boom")
+    assert not result.success
+    assert result.error == "boom"
+    assert result.duration_ms == 3.5
