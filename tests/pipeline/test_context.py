@@ -10,3 +10,10 @@ def test_new_context_is_healthy():
     assert ctx.pipeline_id == "p1"
     assert ctx.is_healthy
     assert ctx.errors == []
+
+
+def test_log_error_marks_context_unhealthy():
+    ctx = PipelineContext("p1")
+    ctx.log_error("disk full")
+    assert not ctx.is_healthy
+    assert ctx.errors == ["disk full"]
