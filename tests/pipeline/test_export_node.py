@@ -17,3 +17,8 @@ def test_every_supported_format_is_accepted():
 def test_unsupported_format_is_rejected():
     with pytest.raises(ValueError, match="xml"):
         ExportNode("xml")
+
+
+def test_format_is_case_sensitive():
+    with pytest.raises(ValueError):
+        ExportNode("JSON")
