@@ -15,3 +15,9 @@ def test_custom_target_db():
 def test_rejects_nan_target():
     with pytest.raises(ValueError):
         NormalizeNode(target_db=float("nan"))
+
+
+def test_rejects_infinite_target():
+    for bad in (float("inf"), float("-inf")):
+        with pytest.raises(ValueError):
+            NormalizeNode(target_db=bad)
