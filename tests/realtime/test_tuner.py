@@ -53,3 +53,8 @@ def test_rejects_non_positive_reference():
     for bad in (0, -440.0):
         with pytest.raises(ValueError):
             ChromaticTuner(a4_hz=bad)
+
+
+def test_non_positive_frequency_returns_placeholder():
+    for freq in (0.0, -5.0):
+        assert ChromaticTuner().tune(freq) == PLACEHOLDER
