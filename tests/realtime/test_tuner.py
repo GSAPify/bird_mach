@@ -41,3 +41,9 @@ def test_flat_pitch_reports_negative_cents():
     result = ChromaticTuner().tune(440.0 * 2 ** (-20 / 1200))
     assert result["note"] == "A"
     assert result["cents"] == pytest.approx(-20.0, abs=0.2)
+
+
+def test_custom_reference_pitch():
+    result = ChromaticTuner(a4_hz=432.0).tune(432.0)
+    assert (result["note"], result["octave"]) == ("A", 4)
+    assert result["cents"] == 0.0
