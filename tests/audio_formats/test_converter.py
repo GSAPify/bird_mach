@@ -68,3 +68,9 @@ def test_to_wav_uses_wav_suffix_and_default_rate(src, calls):
 def test_custom_ffmpeg_path_is_used(src, tmp_path, calls):
     FormatConverter(ffmpeg_path="/opt/ffmpeg").convert(src, tmp_path / "out.wav")
     assert calls[0][0][0] == "/opt/ffmpeg"
+
+
+def test_get_info_returns_stderr_and_path(src, calls):
+    info = FormatConverter().get_info(src)
+    assert info == {"stderr": "info text", "path": str(src)}
+    assert "-hide_banner" in calls[0][0]
