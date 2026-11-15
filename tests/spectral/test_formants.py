@@ -20,3 +20,11 @@ def test_too_short_input_returns_no_formants():
 
 def test_silence_returns_no_formants():
     assert estimate_formants(np.zeros(2048), sr=16000) == []
+
+
+def test_formants_are_sorted_and_in_range():
+    sr = 16000
+    formants = estimate_formants(vowel_like(sr), sr)
+    assert formants
+    assert formants == sorted(formants)
+    assert all(90 < f < sr / 2 for f in formants)
