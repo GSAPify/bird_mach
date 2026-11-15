@@ -44,3 +44,9 @@ def test_convert_builds_ffmpeg_command(src, tmp_path, calls):
     cmd, kwargs = calls[0]
     assert cmd == ["ffmpeg", "-i", str(src), "-y", str(dst)]
     assert kwargs["check"] is True and kwargs["timeout"] == 120
+
+
+def test_convert_adds_sample_rate(src, tmp_path, calls):
+    FormatConverter().convert(src, tmp_path / "out.wav", sr=16000)
+    cmd = calls[0][0]
+    assert cmd[cmd.index("-ar") + 1] == "16000"
