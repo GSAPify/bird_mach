@@ -12,3 +12,9 @@ def test_success_wraps_data():
 
 def test_success_accepts_custom_status():
     assert success({}, status_code=201).status_code == 201
+
+
+def test_error_defaults_to_400_without_detail():
+    resp = error("bad request")
+    assert resp.status_code == 400
+    assert json.loads(resp.body) == {"status": "error", "error": "bad request"}
