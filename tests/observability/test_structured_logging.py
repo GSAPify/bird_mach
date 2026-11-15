@@ -41,3 +41,8 @@ def test_timestamp_is_utc_with_z_suffix():
     data = json.loads(JSONFormatter().format(make_record()))
     assert data["timestamp"].endswith("Z")
     assert "+00:00" not in data["timestamp"]
+
+
+def test_message_args_are_interpolated():
+    record = logging.LogRecord("n", logging.INFO, __file__, 1, "x=%d", (5,), None)
+    assert json.loads(JSONFormatter().format(record))["message"] == "x=5"
