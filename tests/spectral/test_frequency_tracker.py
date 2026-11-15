@@ -65,3 +65,10 @@ def test_trend_is_stable_with_short_history():
     for b in range(10, 19):
         tracker.update(spectrum_with_peak(b * 10))
     assert tracker.trend == "stable"
+
+
+def test_trend_rising():
+    tracker = FrequencyTracker(sr=SR)
+    for b in range(10, 110, 10):
+        tracker.update(spectrum_with_peak(b))
+    assert tracker.trend == "rising"
