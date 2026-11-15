@@ -35,3 +35,9 @@ def test_formats_core_fields():
 def test_level_is_lowercase():
     data = json.loads(JSONFormatter().format(make_record(level=logging.WARNING)))
     assert data["level"] == "warning"
+
+
+def test_timestamp_is_utc_with_z_suffix():
+    data = json.loads(JSONFormatter().format(make_record()))
+    assert data["timestamp"].endswith("Z")
+    assert "+00:00" not in data["timestamp"]
