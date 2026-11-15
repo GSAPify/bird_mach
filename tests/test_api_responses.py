@@ -23,3 +23,7 @@ def test_error_defaults_to_400_without_detail():
 def test_error_includes_detail_when_given():
     body = json.loads(error("bad", detail="field x").body)
     assert body["detail"] == "field x"
+
+
+def test_error_accepts_custom_status():
+    assert error("missing", status_code=404).status_code == 404
