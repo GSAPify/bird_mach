@@ -67,3 +67,8 @@ def test_includes_trace_and_request_ids():
     data = json.loads(JSONFormatter().format(make_record(trace_id="t1", request_id="r1")))
     assert data["trace_id"] == "t1"
     assert data["request_id"] == "r1"
+
+
+def test_omits_ids_when_absent():
+    data = json.loads(JSONFormatter().format(make_record()))
+    assert "trace_id" not in data and "request_id" not in data
