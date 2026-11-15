@@ -55,3 +55,9 @@ def test_saved_file_matches_markdown(tmp_path):
     reporter.add_report(report)
     (path,) = reporter.save_all()
     assert path.read_text(encoding="utf-8") == report.to_markdown()
+
+
+def test_save_all_with_no_reports(tmp_path):
+    out = tmp_path / "empty"
+    assert BatchReporter(out).save_all() == []
+    assert out.is_dir()
