@@ -12,3 +12,7 @@ def vowel_like(sr=16000, n=4096):
 
 def test_empty_input_returns_no_formants():
     assert estimate_formants(np.array([]), sr=16000) == []
+
+
+def test_too_short_input_returns_no_formants():
+    assert estimate_formants(np.ones(5), sr=16000) == []
