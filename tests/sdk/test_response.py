@@ -12,3 +12,8 @@ def test_defaults_describe_a_successful_response():
 
 def test_unsuccessful_response_is_error():
     assert SDKResponse(success=False).is_error
+
+
+def test_http_error_status_is_error_even_if_success_flag_set():
+    assert SDKResponse(success=True, status_code=500).is_error
+    assert not SDKResponse(success=True, status_code=399).is_error
