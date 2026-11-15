@@ -30,3 +30,8 @@ def test_formats_core_fields():
     assert data["logger"] == "mach.test"
     assert data["message"] == "hello"
     assert data["line"] == 42
+
+
+def test_level_is_lowercase():
+    data = json.loads(JSONFormatter().format(make_record(level=logging.WARNING)))
+    assert data["level"] == "warning"
