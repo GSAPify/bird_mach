@@ -18,3 +18,8 @@ def test_error_defaults_to_400_without_detail():
     resp = error("bad request")
     assert resp.status_code == 400
     assert json.loads(resp.body) == {"status": "error", "error": "bad request"}
+
+
+def test_error_includes_detail_when_given():
+    body = json.loads(error("bad", detail="field x").body)
+    assert body["detail"] == "field x"
