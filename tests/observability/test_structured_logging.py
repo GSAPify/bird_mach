@@ -72,3 +72,10 @@ def test_includes_trace_and_request_ids():
 def test_omits_ids_when_absent():
     data = json.loads(JSONFormatter().format(make_record()))
     assert "trace_id" not in data and "request_id" not in data
+
+
+def test_configure_sets_level_and_json_handler(restore_root_logger):
+    configure_json_logging("debug")
+    assert logging.root.level == logging.DEBUG
+    assert len(logging.root.handlers) == 1
+    assert isinstance(logging.root.handlers[0].formatter, JSONFormatter)
