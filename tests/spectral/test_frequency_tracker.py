@@ -31,3 +31,9 @@ def test_short_spectrum_returns_zero_and_records_nothing():
     tracker = FrequencyTracker(sr=SR)
     assert tracker.update(np.array([1.0])) == 0.0
     assert tracker.current == 0.0
+
+
+def test_current_is_zero_before_any_update():
+    tracker = FrequencyTracker(sr=SR)
+    assert tracker.current == 0.0
+    assert tracker.smoothed == 0.0
