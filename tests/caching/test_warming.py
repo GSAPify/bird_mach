@@ -51,3 +51,9 @@ def test_empty_key_list_warms_nothing():
     warmer = AnalysisCacheWarmer(DictCache(), lambda key: key)
     assert warmer.warm([]) == 0
     assert warmer.total_warmed == 0
+
+
+def test_second_warm_of_same_keys_is_a_noop():
+    warmer = AnalysisCacheWarmer(DictCache(), lambda key: key)
+    warmer.warm(["a", "b"])
+    assert warmer.warm(["a", "b"]) == 0
