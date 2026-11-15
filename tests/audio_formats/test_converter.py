@@ -30,3 +30,9 @@ def test_convert_missing_source_raises(tmp_path, calls):
     with pytest.raises(FileNotFoundError):
         FormatConverter().convert(tmp_path / "nope.mp3", tmp_path / "out.wav")
     assert calls == []
+
+
+def test_convert_refuses_to_overwrite_source(src, calls):
+    with pytest.raises(ValueError):
+        FormatConverter().convert(src, src)
+    assert calls == []
