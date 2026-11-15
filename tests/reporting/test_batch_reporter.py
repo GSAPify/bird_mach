@@ -47,3 +47,11 @@ def test_save_all_creates_directory_and_numbered_files(tmp_path):
     paths = reporter.save_all()
     assert [p.name for p in paths] == ["report_0000.md", "report_0001.md"]
     assert all(p.exists() for p in paths)
+
+
+def test_saved_file_matches_markdown(tmp_path):
+    reporter = BatchReporter(tmp_path)
+    report = make_report("A", sections=2)
+    reporter.add_report(report)
+    (path,) = reporter.save_all()
+    assert path.read_text(encoding="utf-8") == report.to_markdown()
