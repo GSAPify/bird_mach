@@ -18,3 +18,10 @@ def test_loud_signal_opens_gate_and_passes_unchanged():
     out = gate.process(loud)
     assert gate.is_open
     assert np.array_equal(out, loud)
+
+
+def test_quiet_signal_is_attenuated():
+    gate = NoiseGate(threshold_db=-20.0)
+    quiet = level(0.01)
+    assert np.allclose(gate.process(quiet), quiet * 0.01)
+    assert not gate.is_open
