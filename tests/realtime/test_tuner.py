@@ -58,3 +58,8 @@ def test_rejects_non_positive_reference():
 def test_non_positive_frequency_returns_placeholder():
     for freq in (0.0, -5.0):
         assert ChromaticTuner().tune(freq) == PLACEHOLDER
+
+
+def test_non_finite_frequency_returns_placeholder():
+    for freq in (float("nan"), float("inf"), float("-inf")):
+        assert ChromaticTuner().tune(freq) == PLACEHOLDER
