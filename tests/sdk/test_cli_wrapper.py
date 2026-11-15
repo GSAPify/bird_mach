@@ -54,3 +54,9 @@ def test_run_analyze_closes_client_when_analyze_fails(monkeypatch):
     with pytest.raises(RuntimeError):
         cli_wrapper.run_analyze("a.wav")
     assert FakeClient.instances[0].events[-1] == "close"
+
+
+def test_run_analyze_rejects_blank_path_before_connecting():
+    with pytest.raises(ValueError):
+        cli_wrapper.run_analyze("   ")
+    assert FakeClient.instances == []
