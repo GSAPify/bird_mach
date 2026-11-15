@@ -9,3 +9,8 @@ def test_page_iterates_over_items():
 
 def test_page_length_is_item_count():
     assert len(PageIterator(items=["a", "b"], cursor=None, has_more=False)) == 2
+
+
+def test_merge_pages_preserves_order():
+    pages = [PageIterator([1, 2], "c", True), PageIterator([3], None, False)]
+    assert merge_pages(pages) == [1, 2, 3]
