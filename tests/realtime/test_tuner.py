@@ -14,3 +14,8 @@ def test_middle_c():
     result = ChromaticTuner().tune(261.63)
     assert (result["note"], result["octave"]) == ("C", 4)
     assert abs(result["cents"]) < 1
+
+
+def test_octave_up_is_a5():
+    result = ChromaticTuner().tune(880.0)
+    assert (result["note"], result["octave"]) == ("A", 5)
