@@ -12,3 +12,7 @@ def test_defaults_are_empty():
 
 def test_file_size_mb_conversion():
     assert AudioMetadata(file_size_bytes=1024 * 1024).file_size_mb == 1.0
+
+
+def test_file_size_mb_handles_fractions():
+    assert AudioMetadata(file_size_bytes=512 * 1024).file_size_mb == 0.5
