@@ -14,3 +14,8 @@ def test_page_length_is_item_count():
 def test_merge_pages_preserves_order():
     pages = [PageIterator([1, 2], "c", True), PageIterator([3], None, False)]
     assert merge_pages(pages) == [1, 2, 3]
+
+
+def test_merge_pages_handles_empty_input():
+    assert merge_pages([]) == []
+    assert merge_pages([PageIterator([], None, False)]) == []
