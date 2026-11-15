@@ -44,3 +44,10 @@ def test_every_analyzer_receives_samples_and_rate():
     for rec in (first, second):
         assert rec.calls[0][0] is samples
         assert rec.calls[0][1] == 22050
+
+
+def test_results_follow_registration_order():
+    chain = AnalyzerChain()
+    for name in ("z", "a", "m"):
+        chain.add(name, Recorder({}))
+    assert list(chain.process(np.zeros(2), 8000)) == ["z", "a", "m"]
