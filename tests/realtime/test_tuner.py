@@ -29,3 +29,9 @@ def test_lowest_piano_a():
 def test_sharp_note_name():
     result = ChromaticTuner().tune(466.16)
     assert (result["note"], result["octave"]) == ("A#", 4)
+
+
+def test_sharp_pitch_reports_positive_cents():
+    result = ChromaticTuner().tune(440.0 * 2 ** (25 / 1200))
+    assert result["note"] == "A"
+    assert result["cents"] == pytest.approx(25.0, abs=0.2)
