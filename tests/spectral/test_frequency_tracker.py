@@ -25,3 +25,9 @@ def test_dc_bin_is_ignored():
     spec = spectrum_with_peak(5)
     spec[0] = 10.0
     assert FrequencyTracker(sr=SR).update(spec) == pytest.approx(bin_freq(5))
+
+
+def test_short_spectrum_returns_zero_and_records_nothing():
+    tracker = FrequencyTracker(sr=SR)
+    assert tracker.update(np.array([1.0])) == 0.0
+    assert tracker.current == 0.0
