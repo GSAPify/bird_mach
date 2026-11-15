@@ -18,3 +18,10 @@ def test_empty_chain_returns_empty_results():
     chain = AnalyzerChain()
     assert chain.analyzer_count == 0
     assert chain.process(np.zeros(4), 44100) == {}
+
+
+def test_add_increments_analyzer_count():
+    chain = AnalyzerChain()
+    chain.add("a", Recorder({}))
+    chain.add("b", Recorder({}))
+    assert chain.analyzer_count == 2
