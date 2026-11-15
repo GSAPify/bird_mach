@@ -46,3 +46,13 @@ def test_timestamp_is_utc_with_z_suffix():
 def test_message_args_are_interpolated():
     record = logging.LogRecord("n", logging.INFO, __file__, 1, "x=%d", (5,), None)
     assert json.loads(JSONFormatter().format(record))["message"] == "x=5"
+
+
+def test_includes_error_details_for_exceptions():
+    try:
+        raise ValueError("bad")
+    except ValueError:
+        record = logging.LogRecord("n", logging.ERROR, __file__, 1, "failed", None, sys.exc_info())
+    data = json.loads(JSONFormatter().format(record))
+    assert data["error"] == "bad"
+    assert data["error_type"] == "ValueError"
