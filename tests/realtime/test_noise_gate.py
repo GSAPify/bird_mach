@@ -40,3 +40,10 @@ def test_hysteresis_keeps_open_gate_open():
     gate.process(level(0.5))
     gate.process(level(0.08))  # below threshold, above 70% of it
     assert gate.is_open
+
+
+def test_gate_closes_when_signal_drops_well_below_threshold():
+    gate = NoiseGate(threshold_db=-20.0)
+    gate.process(level(0.5))
+    gate.process(level(0.05))
+    assert not gate.is_open
