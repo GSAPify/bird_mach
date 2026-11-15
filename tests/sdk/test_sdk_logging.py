@@ -26,3 +26,9 @@ def test_enable_debug_does_not_duplicate_handlers():
     sdk_logging.enable_debug()
     sdk_logging.enable_debug()
     assert len(sdk_logging.SDK_LOGGER.handlers) == 1
+
+
+def test_disable_debug_restores_warning_level():
+    sdk_logging.enable_debug()
+    sdk_logging.disable_debug()
+    assert sdk_logging.SDK_LOGGER.level == logging.WARNING
