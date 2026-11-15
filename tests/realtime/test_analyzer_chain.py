@@ -25,3 +25,10 @@ def test_add_increments_analyzer_count():
     chain.add("a", Recorder({}))
     chain.add("b", Recorder({}))
     assert chain.analyzer_count == 2
+
+
+def test_results_are_keyed_by_name():
+    chain = AnalyzerChain()
+    chain.add("rms", Recorder({"v": 1}))
+    chain.add("peak", Recorder({"v": 2}))
+    assert chain.process(np.zeros(4), 44100) == {"rms": {"v": 1}, "peak": {"v": 2}}
