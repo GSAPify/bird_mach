@@ -31,3 +31,9 @@ def test_summary_lists_titles_in_order(tmp_path):
     reporter.add_report(make_report("Second"))
     summary = reporter.generate_summary()
     assert summary.index("## 1. First") < summary.index("## 2. Second")
+
+
+def test_summary_includes_section_counts(tmp_path):
+    reporter = BatchReporter(tmp_path)
+    reporter.add_report(make_report("A", sections=3))
+    assert "Sections: 3" in reporter.generate_summary()
