@@ -47,3 +47,9 @@ def test_gate_closes_when_signal_drops_well_below_threshold():
     gate.process(level(0.5))
     gate.process(level(0.05))
     assert not gate.is_open
+
+
+def test_closed_gate_stays_closed_between_levels():
+    gate = NoiseGate(threshold_db=-20.0)
+    gate.process(level(0.08))
+    assert not gate.is_open
