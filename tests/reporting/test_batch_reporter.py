@@ -37,3 +37,13 @@ def test_summary_includes_section_counts(tmp_path):
     reporter = BatchReporter(tmp_path)
     reporter.add_report(make_report("A", sections=3))
     assert "Sections: 3" in reporter.generate_summary()
+
+
+def test_save_all_creates_directory_and_numbered_files(tmp_path):
+    out = tmp_path / "nested" / "reports"
+    reporter = BatchReporter(out)
+    reporter.add_report(make_report("A"))
+    reporter.add_report(make_report("B"))
+    paths = reporter.save_all()
+    assert [p.name for p in paths] == ["report_0000.md", "report_0001.md"]
+    assert all(p.exists() for p in paths)
