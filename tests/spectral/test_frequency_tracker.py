@@ -37,3 +37,10 @@ def test_current_is_zero_before_any_update():
     tracker = FrequencyTracker(sr=SR)
     assert tracker.current == 0.0
     assert tracker.smoothed == 0.0
+
+
+def test_current_tracks_latest_update():
+    tracker = FrequencyTracker(sr=SR)
+    tracker.update(spectrum_with_peak(10))
+    tracker.update(spectrum_with_peak(20))
+    assert tracker.current == pytest.approx(bin_freq(20))
