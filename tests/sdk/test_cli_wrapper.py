@@ -40,3 +40,10 @@ def fake_client(monkeypatch):
 def test_run_analyze_returns_result_and_closes_client():
     assert cli_wrapper.run_analyze("a.wav") == {"path": "a.wav"}
     assert FakeClient.instances[0].events == ["connect", "analyze", "close"]
+
+
+def test_run_analyze_passes_config_to_client():
+    cli_wrapper.run_analyze("a.wav", api_key="k", base_url="http://example.test")
+    config = FakeClient.instances[0].config
+    assert config.base_url == "http://example.test"
+    assert config.api_key == "k"
