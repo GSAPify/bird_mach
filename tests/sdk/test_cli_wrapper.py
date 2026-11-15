@@ -47,3 +47,10 @@ def test_run_analyze_passes_config_to_client():
     config = FakeClient.instances[0].config
     assert config.base_url == "http://example.test"
     assert config.api_key == "k"
+
+
+def test_run_analyze_closes_client_when_analyze_fails(monkeypatch):
+    monkeypatch.setattr(FakeClient, "fail", True)
+    with pytest.raises(RuntimeError):
+        cli_wrapper.run_analyze("a.wav")
+    assert FakeClient.instances[0].events[-1] == "close"
