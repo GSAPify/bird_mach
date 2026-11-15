@@ -44,3 +44,10 @@ def test_current_tracks_latest_update():
     tracker.update(spectrum_with_peak(10))
     tracker.update(spectrum_with_peak(20))
     assert tracker.current == pytest.approx(bin_freq(20))
+
+
+def test_smoothed_equals_current_with_few_samples():
+    tracker = FrequencyTracker(sr=SR)
+    tracker.update(spectrum_with_peak(10))
+    tracker.update(spectrum_with_peak(30))
+    assert tracker.smoothed == tracker.current
