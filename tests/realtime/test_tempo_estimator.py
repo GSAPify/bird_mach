@@ -21,3 +21,9 @@ def test_bpm_is_zero_until_enough_onsets():
     for _ in range(99):
         est.feed(1.0)
     assert est.bpm == 0.0
+
+
+def test_detects_steady_pulse_train():
+    est = TempoEstimator(sr=44100, hop=512)
+    feed_pulses(est, 400, period=43)  # 43 frames at 512/44100 s is ~120 BPM
+    assert est.bpm == pytest.approx(120.2, abs=1.5)
