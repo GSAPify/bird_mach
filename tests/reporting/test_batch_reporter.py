@@ -16,3 +16,10 @@ def test_empty_reporter_summary(tmp_path):
     assert reporter.report_count == 0
     assert summary.startswith("# Batch Analysis Summary")
     assert "Total files: 0" in summary
+
+
+def test_add_report_increments_count(tmp_path):
+    reporter = BatchReporter(tmp_path)
+    reporter.add_report(make_report("A"))
+    reporter.add_report(make_report("B"))
+    assert reporter.report_count == 2
