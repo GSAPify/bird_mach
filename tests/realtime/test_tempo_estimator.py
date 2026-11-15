@@ -27,3 +27,9 @@ def test_detects_steady_pulse_train():
     est = TempoEstimator(sr=44100, hop=512)
     feed_pulses(est, 400, period=43)  # 43 frames at 512/44100 s is ~120 BPM
     assert est.bpm == pytest.approx(120.2, abs=1.5)
+
+
+def test_tempo_survives_buffer_rollover():
+    est = TempoEstimator(sr=44100, hop=512)
+    feed_pulses(est, 1500, period=43)
+    assert est.bpm == pytest.approx(120.2, abs=1.5)
