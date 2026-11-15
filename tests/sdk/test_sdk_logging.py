@@ -20,3 +20,9 @@ def test_enable_debug_sets_level_and_adds_handler():
     sdk_logging.enable_debug()
     assert sdk_logging.SDK_LOGGER.level == logging.DEBUG
     assert len(sdk_logging.SDK_LOGGER.handlers) == 1
+
+
+def test_enable_debug_does_not_duplicate_handlers():
+    sdk_logging.enable_debug()
+    sdk_logging.enable_debug()
+    assert len(sdk_logging.SDK_LOGGER.handlers) == 1
