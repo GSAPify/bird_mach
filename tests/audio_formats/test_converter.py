@@ -56,3 +56,10 @@ def test_convert_rejects_non_positive_sample_rate(src, tmp_path, calls):
     with pytest.raises(ValueError):
         FormatConverter().convert(src, tmp_path / "out.wav", sr=0)
     assert calls == []
+
+
+def test_to_wav_uses_wav_suffix_and_default_rate(src, calls):
+    out = FormatConverter().to_wav(src)
+    assert out == src.with_suffix(".wav")
+    cmd = calls[0][0]
+    assert cmd[cmd.index("-ar") + 1] == "22050"
