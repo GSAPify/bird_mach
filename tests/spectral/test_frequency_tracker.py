@@ -58,3 +58,10 @@ def test_smoothed_is_median_of_last_five():
     for b in (10, 10, 500, 10, 10):
         tracker.update(spectrum_with_peak(b))
     assert tracker.smoothed == pytest.approx(bin_freq(10))
+
+
+def test_trend_is_stable_with_short_history():
+    tracker = FrequencyTracker(sr=SR)
+    for b in range(10, 19):
+        tracker.update(spectrum_with_peak(b * 10))
+    assert tracker.trend == "stable"
