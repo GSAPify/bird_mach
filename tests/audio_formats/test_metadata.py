@@ -30,3 +30,9 @@ def test_extracts_size_and_format(tmp_path):
     assert meta.file_size_bytes == 2048
     assert meta.format == "wav"
     assert meta.title is None and meta.sample_rate is None
+
+
+def test_file_without_extension_has_empty_format(tmp_path):
+    path = tmp_path / "clip"
+    path.write_bytes(b"x")
+    assert extract_metadata(path).format == ""
