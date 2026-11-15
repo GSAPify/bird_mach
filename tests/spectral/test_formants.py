@@ -16,3 +16,7 @@ def test_empty_input_returns_no_formants():
 
 def test_too_short_input_returns_no_formants():
     assert estimate_formants(np.ones(5), sr=16000) == []
+
+
+def test_silence_returns_no_formants():
+    assert estimate_formants(np.zeros(2048), sr=16000) == []
