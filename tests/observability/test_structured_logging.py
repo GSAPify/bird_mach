@@ -56,3 +56,8 @@ def test_includes_error_details_for_exceptions():
     data = json.loads(JSONFormatter().format(record))
     assert data["error"] == "bad"
     assert data["error_type"] == "ValueError"
+
+
+def test_omits_error_fields_without_exception():
+    data = json.loads(JSONFormatter().format(make_record()))
+    assert "error" not in data and "error_type" not in data
