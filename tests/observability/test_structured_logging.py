@@ -61,3 +61,9 @@ def test_includes_error_details_for_exceptions():
 def test_omits_error_fields_without_exception():
     data = json.loads(JSONFormatter().format(make_record()))
     assert "error" not in data and "error_type" not in data
+
+
+def test_includes_trace_and_request_ids():
+    data = json.loads(JSONFormatter().format(make_record(trace_id="t1", request_id="r1")))
+    assert data["trace_id"] == "t1"
+    assert data["request_id"] == "r1"
