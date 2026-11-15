@@ -38,3 +38,10 @@ def test_failed_key_is_skipped_and_others_still_warm():
     cache = DictCache()
     assert AnalysisCacheWarmer(cache, analyzer).warm(["a", "bad", "b"]) == 2
     assert set(cache.data) == {"a", "b"}
+
+
+def test_total_warmed_accumulates_across_calls():
+    warmer = AnalysisCacheWarmer(DictCache(), lambda key: key)
+    warmer.warm(["a"])
+    warmer.warm(["b", "c"])
+    assert warmer.total_warmed == 3
