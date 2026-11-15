@@ -24,3 +24,8 @@ def test_octave_up_is_a5():
 def test_lowest_piano_a():
     result = ChromaticTuner().tune(27.5)
     assert (result["note"], result["octave"]) == ("A", 0)
+
+
+def test_sharp_note_name():
+    result = ChromaticTuner().tune(466.16)
+    assert (result["note"], result["octave"]) == ("A#", 4)
