@@ -25,3 +25,11 @@ def test_quiet_signal_is_attenuated():
     quiet = level(0.01)
     assert np.allclose(gate.process(quiet), quiet * 0.01)
     assert not gate.is_open
+
+
+def test_threshold_is_converted_from_db():
+    gate = NoiseGate(threshold_db=-20.0)  # 0.1 linear
+    gate.process(level(0.09))
+    assert not gate.is_open
+    gate.process(level(0.11))
+    assert gate.is_open
