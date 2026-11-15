@@ -32,3 +32,9 @@ def test_disable_debug_restores_warning_level():
     sdk_logging.enable_debug()
     sdk_logging.disable_debug()
     assert sdk_logging.SDK_LOGGER.level == logging.WARNING
+
+
+def test_log_request_emits_debug_message(caplog):
+    with caplog.at_level(logging.DEBUG, logger="mach.sdk"):
+        sdk_logging.log_request("GET", "/x", 200, 12.34)
+    assert "GET /x -> 200 (12.3ms)" in caplog.text
