@@ -33,3 +33,10 @@ def test_tempo_survives_buffer_rollover():
     est = TempoEstimator(sr=44100, hop=512)
     feed_pulses(est, 1500, period=43)
     assert est.bpm == pytest.approx(120.2, abs=1.5)
+
+
+def test_silence_has_no_tempo():
+    est = TempoEstimator()
+    for _ in range(200):
+        est.feed(0.0)
+    assert est.bpm == 0.0
