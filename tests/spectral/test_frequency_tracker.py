@@ -51,3 +51,10 @@ def test_smoothed_equals_current_with_few_samples():
     tracker.update(spectrum_with_peak(10))
     tracker.update(spectrum_with_peak(30))
     assert tracker.smoothed == tracker.current
+
+
+def test_smoothed_is_median_of_last_five():
+    tracker = FrequencyTracker(sr=SR)
+    for b in (10, 10, 500, 10, 10):
+        tracker.update(spectrum_with_peak(b))
+    assert tracker.smoothed == pytest.approx(bin_freq(10))
