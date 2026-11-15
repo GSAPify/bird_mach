@@ -45,3 +45,9 @@ def test_total_warmed_accumulates_across_calls():
     warmer.warm(["a"])
     warmer.warm(["b", "c"])
     assert warmer.total_warmed == 3
+
+
+def test_empty_key_list_warms_nothing():
+    warmer = AnalysisCacheWarmer(DictCache(), lambda key: key)
+    assert warmer.warm([]) == 0
+    assert warmer.total_warmed == 0
