@@ -60,3 +60,8 @@ def test_run_analyze_rejects_blank_path_before_connecting():
     with pytest.raises(ValueError):
         cli_wrapper.run_analyze("   ")
     assert FakeClient.instances == []
+
+
+def test_run_search_returns_results_and_passes_limit():
+    assert cli_wrapper.run_search("birds", limit=3) == [{"q": "birds", "limit": 3}]
+    assert FakeClient.instances[0].events == ["connect", "search", "close"]
