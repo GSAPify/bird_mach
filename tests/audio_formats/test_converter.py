@@ -36,3 +36,11 @@ def test_convert_refuses_to_overwrite_source(src, calls):
     with pytest.raises(ValueError):
         FormatConverter().convert(src, src)
     assert calls == []
+
+
+def test_convert_builds_ffmpeg_command(src, tmp_path, calls):
+    dst = tmp_path / "out.wav"
+    assert FormatConverter().convert(src, dst) == dst
+    cmd, kwargs = calls[0]
+    assert cmd == ["ffmpeg", "-i", str(src), "-y", str(dst)]
+    assert kwargs["check"] is True and kwargs["timeout"] == 120
