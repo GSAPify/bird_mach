@@ -47,3 +47,9 @@ def test_custom_reference_pitch():
     result = ChromaticTuner(a4_hz=432.0).tune(432.0)
     assert (result["note"], result["octave"]) == ("A", 4)
     assert result["cents"] == 0.0
+
+
+def test_rejects_non_positive_reference():
+    for bad in (0, -440.0):
+        with pytest.raises(ValueError):
+            ChromaticTuner(a4_hz=bad)
