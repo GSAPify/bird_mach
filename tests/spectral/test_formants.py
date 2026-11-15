@@ -28,3 +28,7 @@ def test_formants_are_sorted_and_in_range():
     assert formants
     assert formants == sorted(formants)
     assert all(90 < f < sr / 2 for f in formants)
+
+
+def test_respects_n_formants():
+    assert len(estimate_formants(vowel_like(), 16000, n_formants=2)) <= 2
