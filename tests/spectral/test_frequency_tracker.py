@@ -19,3 +19,9 @@ def bin_freq(bin_index, n_bins=513):
 
 def test_update_returns_peak_frequency():
     assert FrequencyTracker(sr=SR).update(spectrum_with_peak(100)) == pytest.approx(bin_freq(100))
+
+
+def test_dc_bin_is_ignored():
+    spec = spectrum_with_peak(5)
+    spec[0] = 10.0
+    assert FrequencyTracker(sr=SR).update(spec) == pytest.approx(bin_freq(5))
