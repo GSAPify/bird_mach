@@ -16,3 +16,8 @@ def test_file_size_mb_conversion():
 
 def test_file_size_mb_handles_fractions():
     assert AudioMetadata(file_size_bytes=512 * 1024).file_size_mb == 0.5
+
+
+def test_missing_file_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        extract_metadata(tmp_path / "nope.wav")
