@@ -13,3 +13,7 @@ def test_strategy1_invalidate_counts_calls():
     assert strategy.invalidate("a") is True
     assert strategy.invalidate("b") is True
     assert strategy.count == 2
+
+
+def test_strategy2_starts_at_zero():
+    assert InvalidationStrategy2().count == 0
