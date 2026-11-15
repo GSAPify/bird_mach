@@ -51,3 +51,11 @@ def test_results_follow_registration_order():
     for name in ("z", "a", "m"):
         chain.add(name, Recorder({}))
     assert list(chain.process(np.zeros(2), 8000)) == ["z", "a", "m"]
+
+
+def test_duplicate_name_keeps_last_result():
+    chain = AnalyzerChain()
+    chain.add("x", Recorder({"v": 1}))
+    chain.add("x", Recorder({"v": 2}))
+    assert chain.process(np.zeros(2), 8000) == {"x": {"v": 2}}
+    assert chain.analyzer_count == 2
