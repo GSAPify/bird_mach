@@ -27,3 +27,10 @@ def test_strategy2_invalidate_counts_calls():
 
 def test_strategy3_starts_at_zero():
     assert InvalidationStrategy3().count == 0
+
+
+def test_strategy3_invalidate_counts_calls():
+    strategy = InvalidationStrategy3()
+    assert strategy.invalidate("a") is True
+    assert strategy.invalidate("a") is True
+    assert strategy.count == 2
