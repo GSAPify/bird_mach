@@ -27,3 +27,14 @@ def test_skips_keys_already_cached():
     assert warmer.warm(["a", "b"]) == 1
     assert calls == ["b"]
     assert cache.data["a"] == "old"
+
+
+def test_failed_key_is_skipped_and_others_still_warm():
+    def analyzer(key):
+        if key == "bad":
+            raise RuntimeError("boom")
+        return key
+
+    cache = DictCache()
+    assert AnalysisCacheWarmer(cache, analyzer).warm(["a", "bad", "b"]) == 2
+    assert set(cache.data) == {"a", "b"}
