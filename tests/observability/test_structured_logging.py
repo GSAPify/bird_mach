@@ -79,3 +79,8 @@ def test_configure_sets_level_and_json_handler(restore_root_logger):
     assert logging.root.level == logging.DEBUG
     assert len(logging.root.handlers) == 1
     assert isinstance(logging.root.handlers[0].formatter, JSONFormatter)
+
+
+def test_configure_rejects_unknown_level(restore_root_logger):
+    with pytest.raises(ValueError):
+        configure_json_logging("loud")
