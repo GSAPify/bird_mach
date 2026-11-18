@@ -1,0 +1,40 @@
+"""Tests for SDK debug logging."""
+import logging
+
+import pytest
+
+from bird_mach.sdk import logging as sdk_logging
+
+
+@pytest.fixture(autouse=True)
+def reset_sdk_logger():
+    logger = sdk_logging.SDK_LOGGER
+    level, handlers = logger.level, list(logger.handlers)
+    logger.handlers = []
+    yield
+    logger.setLevel(level)
+    logger.handlers = handlers
+
+
+def test_enable_debug_sets_level_and_adds_handler():
+    sdk_logging.enable_debug()
+    assert sdk_logging.SDK_LOGGER.level == logging.DEBUG
+    assert len(sdk_logging.SDK_LOGGER.handlers) == 1
+
+
+def test_enable_debug_does_not_duplicate_handlers():
+    sdk_logging.enable_debug()
+    sdk_logging.enable_debug()
+    assert len(sdk_logging.SDK_LOGGER.handlers) == 1
+
+
+def test_disable_debug_restores_warning_level():
+    sdk_logging.enable_debug()
+    sdk_logging.disable_debug()
+    assert sdk_logging.SDK_LOGGER.level == logging.WARNING
+
+
+def test_log_request_emits_debug_message(caplog):
+    with caplog.at_level(logging.DEBUG, logger="mach.sdk"):
+        sdk_logging.log_request("GET", "/x", 200, 12.34)
+    assert "GET /x -> 200 (12.3ms)" in caplog.text

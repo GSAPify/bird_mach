@@ -1,0 +1,44 @@
+"""Tests for PipelineContext."""
+import pytest
+
+import bird_mach.pipeline.context as context_mod
+from bird_mach.pipeline.context import PipelineContext
+
+
+def test_new_context_is_healthy():
+    ctx = PipelineContext("p1")
+    assert ctx.pipeline_id == "p1"
+    assert ctx.is_healthy
+    assert ctx.errors == []
+
+
+def test_log_error_marks_context_unhealthy():
+    ctx = PipelineContext("p1")
+    ctx.log_error("disk full")
+    assert not ctx.is_healthy
+    assert ctx.errors == ["disk full"]
+
+
+def test_errors_keep_insertion_order():
+    ctx = PipelineContext("p1")
+    for msg in ("a", "b", "c"):
+        ctx.log_error(msg)
+    assert ctx.errors == ["a", "b", "c"]
+
+
+def test_elapsed_ms_uses_monotonic_clock(monkeypatch):
+    ctx = PipelineContext("p1", started_at=100.0)
+    monkeypatch.setattr(context_mod.time, "monotonic", lambda: 100.25)
+    assert ctx.elapsed_ms == pytest.approx(250.0)
+
+
+def test_metadata_is_not_shared_between_instances():
+    first, second = PipelineContext("a"), PipelineContext("b")
+    first.metadata["k"] = 1
+    assert second.metadata == {}
+
+
+def test_errors_are_not_shared_between_instances():
+    first, second = PipelineContext("a"), PipelineContext("b")
+    first.log_error("x")
+    assert second.is_healthy

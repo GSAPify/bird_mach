@@ -24,6 +24,10 @@ class TempoEstimator:
         data = np.array(self._onset_buf)
         corr = np.correlate(data, data, mode="full")
         corr = corr[len(corr)//2:]
+        # All-zero onsets have no periodicity; argmax would otherwise pick the
+        # shortest lag and report ~207 BPM for silence.
+        if corr[0] <= 0:
+            return 0.0
         bpm_min, bpm_max = 60, 200
         min_lag = max(1, int(60 * self._sr / (self._hop * bpm_max)))
         max_lag = int(60 * self._sr / (self._hop * bpm_min))

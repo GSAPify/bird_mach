@@ -1,5 +1,7 @@
 """Real-time chromatic tuner."""
 from __future__ import annotations
+import math
+
 import numpy as np
 
 NOTE_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
@@ -12,7 +14,8 @@ class ChromaticTuner:
         self._a4 = a4_hz
 
     def tune(self, freq_hz: float) -> dict:
-        if freq_hz <= 0:
+        # NaN fails `<= 0`, then round() raised ValueError (and inf raised OverflowError).
+        if not math.isfinite(freq_hz) or freq_hz <= 0:
             return {"note": "—", "octave": 0, "cents": 0.0, "freq": 0.0}
         semitones = 12 * np.log2(freq_hz / self._a4)
         midi = round(semitones) + 69
