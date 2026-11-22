@@ -11,6 +11,7 @@ from __future__ import annotations
 import sqlite3
 import threading
 from abc import ABC, abstractmethod
+from dataclasses import replace
 from datetime import datetime
 
 from bird_mach.auth.models import Role, User
@@ -75,29 +76,34 @@ class InMemoryUserRepository(UserRepository):
         with self._lock:
             if self.get_by_email(user.email) is not None:
                 raise ValueError(f"email already exists: {user.email}")
-            self._by_id[user.id] = user
+            self._by_id[user.id] = replace(user)
             return user
 
     def get(self, user_id: str) -> User | None:
+        # Copies in and out: handing out the stored object let callers edit the
+        # repository (even a rejected update) without going through update().
         with self._lock:
-            return self._by_id.get(user_id)
+            stored = self._by_id.get(user_id)
+            return replace(stored) if stored is not None else None
 
     def get_by_email(self, email: str) -> User | None:
         target = _normalise_email(email)
         with self._lock:
-            return next(
+            found = next(
                 (u for u in self._by_id.values() if _normalise_email(u.email) == target),
                 None,
             )
+            return replace(found) if found is not None else None
 
     def get_by_stripe_customer_id(self, customer_id: str) -> User | None:
         if not customer_id:
             return None
         with self._lock:
-            return next(
+            found = next(
                 (u for u in self._by_id.values() if u.stripe_customer_id == customer_id),
                 None,
             )
+            return replace(found) if found is not None else None
 
     def update(self, user: User) -> User:
         with self._lock:
@@ -107,7 +113,7 @@ class InMemoryUserRepository(UserRepository):
             for other in self._by_id.values():
                 if other.id != user.id and _normalise_email(other.email) == target:
                     raise ValueError(f"email already exists: {user.email}")
-            self._by_id[user.id] = user
+            self._by_id[user.id] = replace(user)
             return user
 
     def delete(self, user_id: str) -> bool:
