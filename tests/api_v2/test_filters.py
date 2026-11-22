@@ -41,3 +41,10 @@ def test_ne_keeps_records_missing_the_field():
     from bird_mach.api.v2.filters import Filter, apply_filters
     items = [{"id": 1, "genre": "rock"}, {"id": 2}]
     assert apply_filters(items, [Filter("genre", "ne", "rock")]) == [items[1]]
+
+
+def test_in_filter_ignores_records_missing_the_field():
+    from bird_mach.api.v2.filters import Filter, apply_filters
+    items = [{"id": 1, "genre": "rock"}, {"id": 2}, {"id": 3, "genre": "jazz"}]
+    result = apply_filters(items, [Filter("genre", "in", "None,rock")])
+    assert result == [items[0]]

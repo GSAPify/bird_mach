@@ -71,5 +71,5 @@ def apply_filters(items: list[dict], filters: list[Filter]) -> list[dict]:
             result = [i for i in result if str(f.value).lower() in str(i.get(f.field, "")).lower()]
         elif f.operator == "in":
             wanted = {v.strip() for v in str(f.value).split(",") if v.strip()}
-            result = [i for i in result if str(i.get(f.field)) in wanted]
+            result = [i for i in result if f.field in i and str(i[f.field]) in wanted]
     return result
