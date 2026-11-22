@@ -23,10 +23,19 @@ class PluginLoader:
             raise ValueError(f"Plugin {name} resolves outside the plugin directory")
         if not path.exists():
             raise FileNotFoundError(f"Plugin {name} not found")
-        spec = importlib.util.spec_from_file_location(name, path)
+        # A bare name let a plugin called "types" or "json" replace the stdlib
+        # module for the whole process.
+        key = f"mach_plugin_{name}"
+        spec = importlib.util.spec_from_file_location(key, path)
         if spec is None or spec.loader is None:
             raise ImportError(f"Cannot load plugin {name}")
         module = importlib.util.module_from_spec(spec)
-        sys.modules[name] = module
-        spec.loader.exec_module(module)
+        sys.modules[key] = module
+        loaded = False
+        try:
+            spec.loader.exec_module(module)
+            loaded = True
+        finally:
+            if not loaded:
+                sys.modules.pop(key, None)
         return module
