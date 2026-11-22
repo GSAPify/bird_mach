@@ -85,6 +85,9 @@ class InMemoryAuditLog(AuditLog):
             return event
 
     def recent_for_user(self, user_id: str, *, limit: int = 50) -> list[AuthEvent]:
+        # limit=-1 sliced off the newest event here but meant 'no limit' in SQLite.
+        if limit < 1:
+            raise ValueError("limit must be at least 1")
         matches = [e for e in self._events if e.user_id == user_id]
         return sorted(matches, key=lambda e: e.created_at, reverse=True)[:limit]
 
@@ -110,6 +113,8 @@ class SqliteAuditLog(AuditLog):
         return event
 
     def recent_for_user(self, user_id: str, *, limit: int = 50) -> list[AuthEvent]:
+        if limit < 1:
+            raise ValueError("limit must be at least 1")
         rows = self._db.query_all(
             "SELECT * FROM auth_events WHERE user_id = ? "
             "ORDER BY created_at DESC LIMIT ?",
