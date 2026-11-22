@@ -57,3 +57,11 @@ class TestAppConfig:
             assert False, "Should not allow mutation"
         except AttributeError:
             pass
+
+
+def test_environment_value_is_stripped(monkeypatch):
+    from bird_mach.config import AppConfig
+    monkeypatch.setenv("ENVIRONMENT", "production ")
+    config = AppConfig.from_env()
+    assert config.environment == "production"
+    assert config.is_production
