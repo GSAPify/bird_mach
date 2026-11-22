@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import tempfile
 
+import audioread
 import librosa
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 
@@ -61,7 +62,14 @@ def analyze_bytes(contents: bytes, sr: int = 22050) -> AnalysisSummaryResponse:
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmp:
         tmp.write(contents)
         tmp.flush()
-        y, actual_sr = librosa.load(tmp.name, sr=sr, mono=True)
+        try:
+            y, actual_sr = librosa.load(tmp.name, sr=sr, mono=True)
+        except (audioread.exceptions.DecodeError, EOFError) as exc:
+            # Garbage bytes used to surface as an unhandled 500.
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Could not decode audio.",
+            ) from exc
 
     summary = summarize(y, sr=actual_sr)
     return AnalysisSummaryResponse(
