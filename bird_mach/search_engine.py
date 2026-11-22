@@ -37,7 +37,10 @@ class AudioSearchEngine:
             text = f"{doc['title']} {doc['content']}".lower()
             score = sum(text.count(term) for term in terms)
             if score > 0:
-                snippet = self._extract_snippet(doc["content"], terms[0])
+                body = doc["content"].lower()
+                # The first term may only appear in the title; centre on one the content has.
+                term = next((t for t in terms if t in body), terms[0])
+                snippet = self._extract_snippet(doc["content"], term)
                 results.append(SearchResult(
                     id=doc_id, title=doc["title"],
                     score=score, snippet=snippet,
