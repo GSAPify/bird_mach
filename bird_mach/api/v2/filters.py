@@ -33,10 +33,12 @@ def parse_filters(query_params: dict[str, str]) -> list[Filter]:
 def apply_filters(items: list[dict], filters: list[Filter]) -> list[dict]:
     result = items
     for f in filters:
+        # A missing field is not the string "None": ?genre=None used to match
+        # every record that simply had no genre.
         if f.operator == "eq":
-            result = [i for i in result if str(i.get(f.field)) == str(f.value)]
+            result = [i for i in result if f.field in i and str(i[f.field]) == str(f.value)]
         elif f.operator == "ne":
-            result = [i for i in result if str(i.get(f.field)) != str(f.value)]
+            result = [i for i in result if f.field not in i or str(i[f.field]) != str(f.value)]
         elif f.operator == "gt":
             result = [
                 i for i in result

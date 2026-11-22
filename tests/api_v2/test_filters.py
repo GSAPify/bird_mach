@@ -28,3 +28,16 @@ class TestApplyFilters:
         items = [{"title": "Rock Song"}, {"title": "Jazz Night"}]
         filters = parse_filters({"title__contains": "rock"})
         assert len(apply_filters(items, filters)) == 1
+
+
+def test_eq_does_not_match_missing_field_as_none_string():
+    from bird_mach.api.v2.filters import Filter, apply_filters
+    items = [{"id": 1, "genre": "rock"}, {"id": 2}]
+    assert apply_filters(items, [Filter("genre", "eq", "None")]) == []
+    assert apply_filters(items, [Filter("genre", "eq", "rock")]) == [items[0]]
+
+
+def test_ne_keeps_records_missing_the_field():
+    from bird_mach.api.v2.filters import Filter, apply_filters
+    items = [{"id": 1, "genre": "rock"}, {"id": 2}]
+    assert apply_filters(items, [Filter("genre", "ne", "rock")]) == [items[1]]
