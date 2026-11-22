@@ -65,3 +65,9 @@ def test_environment_value_is_stripped(monkeypatch):
     config = AppConfig.from_env()
     assert config.environment == "production"
     assert config.is_production
+
+
+def test_port_is_capped_at_65535(monkeypatch):
+    from bird_mach.config import AppConfig
+    monkeypatch.setenv("PORT", "70000")
+    assert AppConfig.from_env().port == 65535
