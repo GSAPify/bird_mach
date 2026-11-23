@@ -67,3 +67,21 @@ class TestHintGenre:
         # duration_s=0 is guarded by max(duration_s, 0.1) in the source
         hints = hint_genre(_summary(duration_s=0.0, onset_count=0))
         assert isinstance(hints, list)
+
+
+def test_density_hints_use_onsets_per_second():
+    from types import SimpleNamespace
+
+    from bird_mach.genre import hint_genre
+
+    def make(onsets, duration):
+        return SimpleNamespace(
+            tempo_bpm=120.0, spectral_centroid_mean=2500.0,
+            zero_crossing_rate_mean=0.08, duration_s=duration, onset_count=onsets,
+        )
+
+    assert "rhythmically-dense" in hint_genre(make(100, 10.0))
+    assert "sparse/atmospheric" in hint_genre(make(5, 10.0))
+    middle = hint_genre(make(40, 10.0))
+    assert "rhythmically-dense" not in middle and "sparse/atmospheric" not in middle
+    assert hint_genre(make(10, 0.0)) == ["pop/rock"]
