@@ -56,3 +56,22 @@ class TestCompare:
         d = compare(s, s).to_dict()
         for field_data in d.values():
             assert field_data["diff"] == 0.0
+
+
+def test_comparison_table_diffs_and_missing_values():
+    from types import SimpleNamespace
+
+    from bird_mach.compare import compare
+
+    base = dict(
+        duration_s=10.0, tempo_bpm=100.0, rms_mean=0.1, rms_max=0.5,
+        spectral_centroid_mean=2000.0, spectral_bandwidth_mean=1000.0,
+        zero_crossing_rate_mean=0.05, onset_count=20,
+    )
+    a = SimpleNamespace(**base)
+    b = SimpleNamespace(**{**base, "tempo_bpm": 120.0, "zero_crossing_rate_mean": None})
+    result = compare(a, b)
+    assert result.tempo_diff == 20.0
+    table = result.to_dict()
+    assert table["tempo_bpm"] == {"a": 100.0, "b": 120.0, "diff": 20.0}
+    assert table["zero_crossing_rate_mean"] == {"a": 0.05, "b": None, "diff": None}
