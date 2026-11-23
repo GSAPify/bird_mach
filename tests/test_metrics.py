@@ -72,3 +72,12 @@ class TestAppMetrics:
         d = m.to_dict()
         # error_rate = 1/3 ≈ 0.3333; to_dict rounds to 4 decimal places
         assert d["error_rate"] == round(1 / 3, 4)
+
+
+def test_record_analysis_rejects_non_finite_duration():
+    m = AppMetrics()
+    for bad in (float("nan"), float("inf")):
+        with pytest.raises(ValueError):
+            m.record_analysis(bad)
+    assert m.analyses_total == 0
+    assert m.total_audio_seconds_processed == 0.0

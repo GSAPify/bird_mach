@@ -15,9 +15,14 @@ class PluginSandbox:
     def execute(self, func, *args, **kwargs):
         # Measuring elapsed time after the call returns cannot abort a hung
         # plugin. Run it in a worker and bound wait time to max_time_s.
-        with ThreadPoolExecutor(max_workers=1) as pool:
+        # No `with` block: its exit calls shutdown(wait=True), which blocked on the
+        # hung plugin, so the timeout only fired once the plugin had finished anyway.
+        pool = ThreadPoolExecutor(max_workers=1)
+        try:
             future = pool.submit(func, *args, **kwargs)
             try:
                 return future.result(timeout=self._max_time)
             except FuturesTimeout as exc:
                 raise TimeoutError(f"Plugin exceeded {self._max_time}s limit") from exc
+        finally:
+            pool.shutdown(wait=False, cancel_futures=True)

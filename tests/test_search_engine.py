@@ -64,3 +64,11 @@ class TestAudioSearchEngine:
             engine.index("", "Title", "content")
         with pytest.raises(ValueError, match="doc_id"):
             engine.index("   ", "Title", "content")
+
+
+def test_snippet_uses_a_term_found_in_the_content_not_only_the_title():
+    from bird_mach.search_engine import AudioSearchEngine
+    engine = AudioSearchEngine()
+    engine.index("a", "Heron call", "z" * 200 + " marsh recording " + "w" * 200)
+    snippet = engine.search("heron marsh")[0].snippet
+    assert "marsh" in snippet

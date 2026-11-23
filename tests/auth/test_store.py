@@ -127,3 +127,20 @@ def test_migration_adds_is_verified_to_old_schema(tmp_path):
     user = repo.get("u1")
     assert user is not None
     assert user.is_verified is False
+
+
+def test_in_memory_repo_hands_out_copies_not_stored_objects():
+    import pytest
+    from bird_mach.auth.models import User
+    from bird_mach.auth.store import InMemoryUserRepository
+
+    repo = InMemoryUserRepository()
+    repo.add(User(id="1", email="a@x.com", password_hash="h"))
+    repo.add(User(id="2", email="b@x.com", password_hash="h"))
+    user = repo.get("1")
+    user.email = "b@x.com"
+    with pytest.raises(ValueError):
+        repo.update(user)
+    # The rejected update must not have changed what the repository holds.
+    assert repo.get("1").email == "a@x.com"
+    assert repo.get_by_email("b@x.com").id == "2"

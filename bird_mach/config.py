@@ -87,8 +87,8 @@ class AppConfig:
     def from_env(cls) -> AppConfig:
         return cls(
             host=os.getenv("HOST", "0.0.0.0"),
-            port=_env_int("PORT", 8000, minimum=1),
-            environment=os.getenv("ENVIRONMENT", "development"),
+            port=_env_int("PORT", 8000, minimum=1, maximum=65535),
+            environment=os.getenv("ENVIRONMENT", "development").strip(),  # "production " must still count as production
             log_level=_env_log_level("LOG_LEVEL", "INFO"),
             log_json=_env_bool("LOG_JSON"),
             max_upload_mb=_env_int("MAX_UPLOAD_MB", 50, minimum=1),

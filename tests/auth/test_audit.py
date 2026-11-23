@@ -50,3 +50,15 @@ def test_public_dict_shape():
     d = e.public_dict()
     assert d["event_type"] == "password_changed"
     assert set(d) == {"id", "event_type", "user_id", "email", "ip", "created_at"}
+
+
+def test_recent_for_user_rejects_non_positive_limit():
+    import pytest
+    from bird_mach.auth.audit import AuthEvent, AuthEventType, InMemoryAuditLog, SqliteAuditLog
+    from bird_mach.db import Database
+
+    for log in (InMemoryAuditLog(), SqliteAuditLog(Database(":memory:"))):
+        log.record(AuthEvent(AuthEventType.LOGIN_SUCCESS, user_id="u1"))
+        for bad in (0, -1):
+            with pytest.raises(ValueError):
+                log.recent_for_user("u1", limit=bad)
